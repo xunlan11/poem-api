@@ -14,12 +14,17 @@
     <main class="container">
       <section class="section-card">
         <div class="actions">
-          <input id="userSearch" class="search" placeholder="按实名或学号搜索">
-          <button id="userSearchBtn" class="btn">搜索</button>
-          <button id="refresh" class="btn">刷新</button>
-          <button id="create" class="btn">创建用户</button>
+          <input id="userSearch" class="search" placeholder="按实名或完整学号搜索">
         </div>
-        <table class="table">
+        <table class="table user-table">
+          <colgroup>
+            <col class="col-id">
+            <col class="col-username">
+            <col class="col-role">
+            <col class="col-realname">
+            <col class="col-student">
+            <col class="col-actions">
+          </colgroup>
           <thead>
             <tr><th>ID</th><th>用户名</th><th>角色</th><th>实名</th><th>学号</th><th>操作</th></tr>
           </thead>
@@ -95,16 +100,13 @@
           tb.appendChild(tr);
         });
       };
-  document.getElementById('refresh').onclick = refresh;
-  // 搜索按钮与输入回车绑定
-  document.getElementById('userSearchBtn').onclick = refresh;
   const userSearchInput = document.getElementById('userSearch');
+  let searchTimer = null;
+  userSearchInput.addEventListener('input', ()=>{
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(()=>{ refresh(); }, 250);
+  });
   userSearchInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); refresh(); } });
-      document.getElementById('create').onclick = async ()=>{
-        const username = prompt('用户名'); if (!username) return;
-        const password = prompt('初始密码'); if (!password) return;
-        try { await Poem.api('/api/users', { method:'POST', body: JSON.stringify({ username, password }) }); await refresh(); Poem.toast('创建成功'); } catch(e){ Poem.toast('创建失败'); }
-      };
       tb.addEventListener('click', async (e)=>{
         const btn = e.target.closest('button'); if (!btn) return;
         const id = btn.getAttribute('data-id'); const act = btn.getAttribute('data-act');
@@ -116,8 +118,8 @@
     let confirmMsg = '';
     if (act === 'admin') confirmMsg = `确定要将用户 ${user.username} 设为管理员吗？`;
     else if (act === 'reviewer') confirmMsg = `确定要将用户 ${user.username} 设为审核员吗？`;
-  else if (act === 'user') confirmMsg = `确定要将用户 ${user.username} 设为整理员吗？`;
-  else if (act === 'delete') confirmMsg = `确定要删除用户 ${user.username} 吗？此操作不可撤销。`;
+    else if (act === 'user') confirmMsg = `确定要将用户 ${user.username} 设为整理员吗？`;
+    else if (act === 'delete') confirmMsg = `确定要删除用户 ${user.username} 吗？此操作不可撤销。`;
         
         if (confirmMsg && !confirm(confirmMsg)) return;
         

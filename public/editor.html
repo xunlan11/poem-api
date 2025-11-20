@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>信息节点编辑</title>
     <link rel="stylesheet" href="assets/app.css">
-    <link rel="stylesheet" href="assets/try-styles.css">
   </head>
   <body>
     <header class="topbar">
@@ -13,7 +12,7 @@
       <div class="actions">
         <button id="editBtn" class="btn">编辑</button>
         <button id="saveBtn" class="btn primary">保存</button>
-  <button id="linkBtn" class="btn link-mode">链接（关闭）</button>
+        <button id="linkBtn" class="btn link-mode">链接（关闭）</button>
         <button id="reviewBtn" class="btn" style="display:none">审核并保存</button>
         <span class="divider" aria-hidden="true"></span>
         <a id="backAllBtn" href="list.html?type=A" class="link">汇总列表</a>
@@ -37,7 +36,11 @@
             </div>
             <div class="field">
               <label>期望时长</label>
-              <div style="display:flex;align-items:center;gap:8px"><input id="metaExpectedDuration" type="text" style="flex:1;" disabled><span style="white-space:nowrap;margin-left:auto">单位</span></div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input id="metaExpectedDuration" type="text" style="flex:1;" disabled>
+                <span style="white-space:nowrap;margin-left:auto">单位</span>
+                <button id="metaAcceptExpected" type="button" class="btn" style="white-space:nowrap;padding:4px 10px;font-size:13px;">认可期望</button>
+              </div>
             </div>
           </div>
 

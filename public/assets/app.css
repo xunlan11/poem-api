@@ -7,8 +7,11 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-fa
 .topbar h1 { font-size:18px; margin:0; }
 .container { padding:16px; max-width:1080px; margin:0 auto; }
 .row { background:var(--card); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-.row-title { font-weight:600; margin-bottom:8px; }
-.row-actions { display:flex; gap:8px; align-items:center; }
+.row-head { display:flex; align-items:center; gap:16px; margin-bottom:8px; flex-wrap:wrap; }
+.row-title { font-weight:600; margin:0; min-width:120px; }
+.row-actions { display:flex; gap:8px; align-items:center; flex:1; }
+.row-actions .search { flex:1; min-width:200px; margin-right:16px; }
+.row-actions .btn { flex-shrink:0; }
 .btn { background:#eef2ff; border:1px solid var(--border); color:var(--fg); padding:6px 12px; border-radius:6px; cursor:pointer; }
 .btn.primary { background:var(--primary); border-color:var(--primary); color:#fff; }
 .btn.link-mode { background:#22c55e; border-color:#16a34a; color:#fff; }
@@ -26,6 +29,13 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-fa
 .table th.actions-col { width:120px; text-align:center; }
 .table td.actions-cell { vertical-align:middle; }
 .table td.actions-cell .row-actions { display:flex; gap:8px; align-items:center; justify-content:center; }
+.user-table col { width:auto; }
+.user-table col.col-id { width:12%; }
+.user-table col.col-username { width:18%; }
+.user-table col.col-role { width:12%; }
+.user-table col.col-realname { width:18%; }
+.user-table col.col-student { width:18%; }
+.user-table col.col-actions { width:22%; }
 .list-count { font-size:14px; color:var(--muted); white-space:nowrap; padding:4px 0; }
 .list-controls .list-count { margin-left:auto; }
 .pagination-count { margin-left:0; }
@@ -96,7 +106,6 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-fa
 .id { font-weight:700; }
 .actions { display:flex; gap:8px; align-items:center; margin-top:12px; }
 .actions .divider { width:1px; height:20px; background:var(--border); margin:0 8px; align-self:center; }
-.inline-plus { margin-left:6px; cursor:pointer; color:var(--primary); }
 .btn.small { padding:4px 8px; font-size:12px; }
 .btn.danger { background:#fee2e2; border-color:#fecaca; color:#dc2626; }
 .btn.danger:hover { background:#fecaca; }
@@ -207,5 +216,32 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--fg); font-fa
 .modal-header { display:flex; justify-content:space-between; align-items:center; }
 .modal-body { margin-top:8px; }
 
-/* --- try styles merged: start ---
-/* try styles removed from app.css; kept in public/assets/try-styles.css and editor.html links it */
+.note-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.note-item{display:flex;gap:6px;margin-bottom:6px;align-items:center}
+.note-item input[type="text"], .note-item input{flex:1;min-width:0}
+.note-item input, .note-item textarea{padding:8px;border:1px solid #ddd;border-radius:6px}
+.muted{color:var(--muted)}
+
+/* simple annotation colors */
+.annotation{background:rgba(255,230,150,0.6)}
+.annotation.depth-1{background:rgba(255,230,150,0.6)}
+.annotation.depth-2{background:rgba(255,200,120,0.75)}
+.annotation.depth-3{background:rgba(255,170,90,0.85)}
+
+#f-body-render{white-space:pre-wrap}
+#f-body-render .annotation{padding:0 2px;border-radius:2px}
+#f-body-render .annotation:hover{outline:2px solid rgba(43,108,176,0.18);cursor:pointer}
+
+.anno-list{display:flex;flex-direction:column;gap:4px}
+.anno-note-display.empty{color:var(--muted);font-style:italic}
+#annotation-area .annotation,
+#annotation-area .annotation.depth-1,
+#annotation-area .annotation.depth-2,
+#annotation-area .annotation.depth-3{background:none;color:inherit}
+
+.anno-editor{box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+.anno-editor .anno-input{padding:6px;border:1px solid #ddd;border-radius:4px}
+.anno-editor button{background:var(--primary);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+.anno-editor button:hover{opacity:0.95}
+
+#f-body-render span{display:inline}

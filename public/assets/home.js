@@ -1,5 +1,4 @@
 (function(){
-  const typeNames = { W:'诗词（W）', G:'文集（G）', C:'人物（C）', E:'典故（E）', S:'鸟兽草木（S）' };
   function bindRow(type){
     const searchInput = document.getElementById(`search-${type}`);
     const resultsEl = document.getElementById(`results-${type}`);

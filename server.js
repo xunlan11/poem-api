@@ -27,13 +27,68 @@ const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 
 fs.ensureDirSync(UPLOAD_DIR);
 
+function sanitizeNodeId(rawId) {
+  if (!rawId) return '';
+  const cleaned = String(rawId).trim().toUpperCase();
+  // Keep alphanumeric characters only to avoid filesystem issues
+  const safe = cleaned.replace(/[^A-Z0-9]/g, '');
+  return safe;
+}
+
+function safeExtname(filename) {
+  const ext = path.extname(filename || '').toLowerCase();
+  if (!ext) return '.png';
+  return /^\.[a-z0-9]+$/i.test(ext) ? ext : '.png';
+}
+
+function extractUploadFilename(imagePath = '') {
+  if (!imagePath || typeof imagePath !== 'string') return '';
+  const match = imagePath.match(/\/uploads\/([^/?#]+)/i);
+  if (match && match[1]) return match[1];
+  return path.basename(imagePath);
+}
+
+async function ensureNodeImageFilename(node) {
+  if (!node || !node.extra || !node.extra.image) return;
+  const nodeId = sanitizeNodeId(node.id);
+  if (!nodeId) return;
+  const filename = extractUploadFilename(node.extra.image);
+  if (!filename) return;
+  const currentPath = path.join(UPLOAD_DIR, filename);
+  if (!(await fs.pathExists(currentPath))) return;
+  const desiredExt = safeExtname(filename);
+  const desiredName = `node_${nodeId}${desiredExt}`;
+  if (desiredName === filename) return;
+  const targetPath = path.join(UPLOAD_DIR, desiredName);
+  await fs.move(currentPath, targetPath, { overwrite: true });
+  node.extra.image = `/uploads/${desiredName}`;
+}
+
+async function deleteNodeImageByPath(nodeId, imagePath) {
+  const cleanId = sanitizeNodeId(nodeId);
+  if (!cleanId) return;
+  const filename = extractUploadFilename(imagePath);
+  if (!filename) return;
+  const prefix = `node_${cleanId}`.toLowerCase();
+  if (!filename.toLowerCase().startsWith(prefix)) return;
+  const filePath = path.join(UPLOAD_DIR, filename);
+  try {
+    if (await fs.pathExists(filePath)) {
+      await fs.remove(filePath);
+    }
+  } catch (err) {
+    console.error('Failed to remove node image', filePath, err);
+  }
+}
+
 const uploadStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOAD_DIR),
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname || '').toLowerCase() || '.png';
-    const safeExt = ext.match(/^\.[a-z0-9]+$/i) ? ext : '.png';
-    const base = `${req.params?.id || 'node'}_${Date.now()}`;
-    cb(null, `${base}${safeExt}`);
+    const ext = safeExtname(file.originalname || '');
+    const nodeId = sanitizeNodeId(req.body?.nodeId || req.query?.nodeId || req.params?.id);
+    const stamp = Date.now();
+    const base = nodeId ? `node_${nodeId}` : `node_${stamp}`;
+    cb(null, `${base}${ext}`);
   }
 });
 
@@ -135,7 +190,6 @@ function simplify(node) {
   } else {
     displayName = node.name || node.title || node.person?.name || node.explanation?.slice(0, 16) || '';
   }
-  function stripParen(s){ if (!s) return ''; return String(s).replace(/\s*\(.*\)\s*$/,''); }
   const rawReviewer = node.meta?.reviewedBy || node.meta?.reviewedByName || '';
   const rawCreator = node.meta?.createdBy || node.meta?.createdByName || '';
   // Extract evaluation/review entries from node.extra.evaluation (various shapes)
@@ -163,8 +217,7 @@ function simplify(node) {
     name: displayName,
     creator: rawCreator || '',
     createdAt: node.meta?.createdAt || '',
-  // show full reviewer string, preserving 学号 部分 in parentheses
-  reviewer: rawReviewer || '',
+    reviewer: rawReviewer || '',
     duration: reviewDurationVal,
     reviewDuration: reviewDurationVal,
     expectedDuration: expectedDurationVal,
@@ -283,7 +336,6 @@ app.get('/api/nodes', (req, res) => {
   const searched = fuzzySearch(items, search);
   const off = Math.max(parseInt(offset) || 0, 0);
   const lim = Math.min(Math.max(parseInt(limit) || 50, 1), 200);
-  // If there's no search query, present items ordered by numeric id (ascending)
   const hasSearch = typeof search === 'string' && search.trim();
   let ordered = searched;
   if (!hasSearch) {
@@ -340,6 +392,7 @@ app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
       extra: data?.extra || {},
     };
 
+    await ensureNodeImageFilename(node);
     store[type].items[id] = node;
     await saveStore();
     res.status(201).json(node);
@@ -357,19 +410,20 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     if (!existing) return res.status(404).json({ error: 'Not found' });
     const type = existing.type;
     const data = req.body || {};
+    const previousImagePath = existing.extra?.image || '';
     // Permission: user can only edit own nodes; reviewer/admin can edit all
     const isOwnerId = existing.meta?.createdById && existing.meta.createdById === req.user.id;
     const isOwnerName = existing.meta?.createdBy && (existing.meta.createdBy === (req.user.real_name || req.user.username));
     const isOwner = !!(isOwnerId || isOwnerName);
-  const canEditAll = req.user.role === 'reviewer' || req.user.role === 'admin';
-  const canStampReview = canEditAll && !isOwner && (data._review === true || req.query.review === '1');
+    const canEditAll = req.user.role === 'reviewer' || req.user.role === 'admin';
+    const canStampReview = canEditAll && !isOwner && (data._review === true || req.query.review === '1');
     if (!isOwner && !canEditAll) return res.status(403).json({ error: 'Forbidden' });
     existing.name = data.name ?? existing.name;
     existing.content = data.content ?? existing.content;
     existing.annotations = Array.isArray(data.annotations) ? data.annotations : existing.annotations;
-  existing.links = Array.isArray(data.links) ? data.links : existing.links;
+    existing.links = Array.isArray(data.links) ? data.links : existing.links;
     existing.fields = data.fields ?? existing.fields;
-    existing.extra = data.extra ?? existing.extra;
+    existing.extra = data.extra ?? existing.extra ?? {};
     const canOverrideCreatedAt = req.user.role === 'admin';
     const requestedCreatedAt = typeof data.meta?.createdAt === 'string' ? data.meta.createdAt.trim() : '';
     const normalizedCreatedAt = (canOverrideCreatedAt && requestedCreatedAt && /^\d{4}-\d{2}-\d{2}$/.test(requestedCreatedAt))
@@ -384,14 +438,19 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
       createdBy: existing.meta?.createdBy || formatUserDisplayName(req.user),
       createdAt: normalizedCreatedAt,
       // Reviewer/admin can optionally stamp review when requested
-  reviewedById: canStampReview ? req.user.id : existing.meta?.reviewedById || '',
-  reviewedByName: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedByName || '',
-  reviewedBy: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedBy || '',
-  reviewedAt: canStampReview ? new Date().toISOString().slice(0, 10) : existing.meta?.reviewedAt || '',
+      reviewedById: canStampReview ? req.user.id : existing.meta?.reviewedById || '',
+      reviewedByName: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedByName || '',
+      reviewedBy: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedBy || '',
+      reviewedAt: canStampReview ? new Date().toISOString().slice(0, 10) : existing.meta?.reviewedAt || '',
       updatedAt: new Date().toISOString().slice(0, 10),
     };
+    await ensureNodeImageFilename(existing);
     store[type].items[id] = existing;
     await saveStore();
+    const newImagePath = existing.extra?.image || '';
+    if (previousImagePath && previousImagePath !== newImagePath) {
+      await deleteNodeImageByPath(id, previousImagePath);
+    }
     res.json(existing);
   } catch (e) {
     console.error(e);
@@ -402,7 +461,19 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
 app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'Missing file' });
-    res.json({ ok: true, path: `/uploads/${req.file.filename}` });
+    let filename = req.file.filename;
+    let filePath = req.file.path || path.join(UPLOAD_DIR, filename);
+    const nodeId = sanitizeNodeId(req.body?.nodeId);
+    if (nodeId) {
+      const desiredName = `node_${nodeId}${safeExtname(req.file.originalname || filename)}`;
+      if (desiredName !== filename) {
+        const targetPath = path.join(UPLOAD_DIR, desiredName);
+        await fs.move(filePath, targetPath, { overwrite: true });
+        filename = desiredName;
+        filePath = targetPath;
+      }
+    }
+    res.json({ ok: true, path: `/uploads/${filename}` });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message || 'Upload failed' });
@@ -645,6 +716,7 @@ app.delete('/api/nodes/:id', requireAuth, requireReviewerOrAdmin, async (req, re
   if (!TYPES.includes(type)) return res.status(400).json({ error: 'Invalid id' });
   const existing = store[type].items[id];
   if (!existing) return res.status(404).json({ error: 'Not found' });
+  await deleteNodeImageByPath(id, existing.extra?.image);
   delete store[type].items[id];
   await saveStore();
   res.json({ ok: true });

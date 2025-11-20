@@ -30,9 +30,9 @@
     <script>
     (async function(){
       const me = await Poem.me(); if (me) { location.href = 'profile.html'; return; }
-  const u = document.getElementById('username'); const p = document.getElementById('password'); const btn = document.getElementById('loginBtn'); const err = document.getElementById('error');
-  const rememberEl = document.getElementById('rememberMe');
-  const STORAGE_KEY = 'poemRemember';
+      const u = document.getElementById('username'); const p = document.getElementById('password'); const btn = document.getElementById('loginBtn'); const err = document.getElementById('error');
+      const rememberEl = document.getElementById('rememberMe');
+      const STORAGE_KEY = 'poemRemember';
 
   const encode = (value)=>{
     try{

@@ -200,34 +200,6 @@
           });
         }
       }
-    },
-    attachInlinePlus(inputEl){
-      if(!inputEl) return;
-      // If there's already an inline-plus immediately following this input, don't add another
-      let sib = inputEl.nextSibling;
-      while(sib){
-        if(sib.nodeType === 1){
-          if(sib.classList && sib.classList.contains('inline-plus')) return;
-          break;
-        }
-        sib = sib.nextSibling;
-      }
-      const plus = document.createElement('span');
-      plus.className='inline-plus';
-      plus.textContent='＋';
-      plus.title='插入链接到已有节点';
-      plus.onclick = ()=>{
-        Poem.openLinkPicker((item)=>{
-          // Insert [[ID]] at caret
-          const start = inputEl.selectionStart ?? inputEl.value.length;
-          const end = inputEl.selectionEnd ?? inputEl.value.length;
-          const before = inputEl.value.slice(0,start);
-          const after = inputEl.value.slice(end);
-          inputEl.value = `${before}[[${item.id}]]${after}`;
-          inputEl.dispatchEvent(new Event('input'));
-        });
-      };
-      inputEl.insertAdjacentElement('afterend', plus);
     }
   };
 })();

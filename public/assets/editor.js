@@ -20,6 +20,9 @@
   const createdAt = document.getElementById('createdAt');
   const reviewedBy = document.getElementById('reviewedBy');
   const reviewedAt = document.getElementById('reviewedAt');
+  const expectedDurationInput = document.getElementById('metaExpectedDuration');
+  const reviewDurationInput = document.getElementById('metaReviewDuration');
+  const acceptExpectedBtn = document.getElementById('metaAcceptExpected');
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
 
   let state = { editable: true, node: null };
@@ -35,6 +38,20 @@
   let links = [];
   let linkSaveChain = Promise.resolve();
   const linkFieldRegistry = new Map();
+
+  if (acceptExpectedBtn) {
+    acceptExpectedBtn.addEventListener('click', ()=>{
+      if (acceptExpectedBtn.disabled) return;
+      if (!reviewDurationInput || reviewDurationInput.disabled) return;
+      const expectedVal = expectedDurationInput ? (expectedDurationInput.value || '') : '';
+      reviewDurationInput.value = expectedVal;
+      try {
+        reviewDurationInput.dispatchEvent(new Event('input', { bubbles: true }));
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  }
 
   function normalizeLink(raw){
     if(!raw) return null;
@@ -117,14 +134,6 @@
             if(typeof spec.renderDisplay === 'function') spec.renderDisplay();
             spec.displayEl.style.display = '';
             el.style.display = 'none';
-          }
-          let plus = spec.displayEl.nextElementSibling;
-          if(!plus || !(plus.classList && plus.classList.contains('inline-plus'))){
-            plus = spec.element.nextElementSibling;
-            if(plus && plus === spec.displayEl) plus = plus.nextElementSibling;
-          }
-          if(plus && plus.classList && plus.classList.contains('inline-plus')){
-            plus.style.display = editable ? '' : 'none';
           }
         }
         if(editable) el.classList.remove('link-readonly');
@@ -2284,6 +2293,7 @@
     //期望时长仅创建者可编辑
     const expectedEl = document.getElementById('metaExpectedDuration');
     if (expectedEl) expectedEl.disabled = !(editable && !!isOwner);
+    if (acceptExpectedBtn) acceptExpectedBtn.disabled = !allowReview;
     // review status radios (reviewer only)
   Array.from(document.querySelectorAll('input[name="metaReviewStatus"]')).forEach(r=>{ r.disabled = !allowReview; });
     // repair radios: when review status is 'rejected' the repair status should be editable
