@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>信息节点编辑</title>
+    <link rel="stylesheet" href="assets/app.css">
+    <link rel="stylesheet" href="assets/try-styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="id" id="nodeId"></div>
+      <div class="actions">
+        <button id="editBtn" class="btn">编辑</button>
+        <button id="saveBtn" class="btn primary">保存</button>
+  <button id="linkBtn" class="btn link-mode">链接（关闭）</button>
+        <button id="reviewBtn" class="btn" style="display:none">审核并保存</button>
+        <span class="divider" aria-hidden="true"></span>
+        <a id="backAllBtn" href="list.html?type=A" class="link">汇总列表</a>
+        <a id="backListBtn" href="#" class="link">类别列表</a>
+        <a href="./" class="link">首页</a>
+      </div>
+    </header>
+    <main class="container">
+      <div id="formContainer"></div>
+
+      <section class="common-meta">
+        <h2>通用信息</h2>
+          <div class="grid-3">
+            <div class="field">
+              <label>创建者</label>
+              <input id="createdBy" type="text" disabled />
+            </div>
+            <div class="field">
+              <label>创建日期</label>
+              <input id="createdAt" type="text" disabled />
+            </div>
+            <div class="field">
+              <label>期望时长</label>
+              <div style="display:flex;align-items:center;gap:8px"><input id="metaExpectedDuration" type="text" style="flex:1;" disabled><span style="white-space:nowrap;margin-left:auto">单位</span></div>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:8px">
+            <div class="field">
+              <label>审核者</label>
+              <input id="reviewedBy" type="text" disabled />
+            </div>
+            <div class="field">
+              <label>审核日期</label>
+              <input id="reviewedAt" type="text" disabled />
+            </div>
+            <div class="field">
+              <label>时长</label>
+              <div style="display:flex;align-items:center;gap:8px"><input id="metaReviewDuration" type="text" style="flex:1;" disabled><span style="white-space:nowrap;margin-left:auto">单位</span></div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top:8px">
+            <div class="field">
+              <label>审核状态</label>
+              <div id="metaReviewStatus">
+                <label class="status-tag status-pending"><input type="radio" name="metaReviewStatus" value="pending"> 未审核</label>
+                <label class="status-tag status-rejected"><input type="radio" name="metaReviewStatus" value="rejected"> 未通过</label>
+                <label class="status-tag status-approved"><input type="radio" name="metaReviewStatus" value="approved"> 通过</label>
+                <label class="status-tag status-archived"><input type="radio" name="metaReviewStatus" value="archived"> 归档</label>
+              </div>
+            </div>
+            <div class="field" id="metaRepairField" style="display:none">
+              <label>返修状态</label>
+              <div id="metaRepairStatus">
+                <label class="status-tag status-rejected"><input type="radio" name="metaRepairStatus" value="unfinished"> 未完成</label>
+                <label class="status-tag status-approved"><input type="radio" name="metaRepairStatus" value="finished"> 完成</label>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px">
+            <div class="field" style="width:100%">
+              <label>备注</label>
+              <textarea id="metaRemark" rows="1" style="width:100%;resize:none;overflow:hidden"></textarea>
+            </div>
+          </div>
+      </section>
+    </main>
+    <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
+    <script defer src="assets/common.js"></script>
+    <script defer src="assets/editor.js"></script>
+  </body>
+</html>

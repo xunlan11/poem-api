@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>完善资料</title>
+    <link rel="stylesheet" href="assets/app.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>完善资料</h1>
+      <a href="./" class="link">返回首页</a>
+    </header>
+    <main class="container">
+      <section class="section-card">
+        <p class="small">首次登录须填写姓名与学号，以便记录志愿时长。</p>
+        <div class="grid-2">
+          <div class="field"><label>姓名</label><input id="realName"></div>
+          <div class="field"><label>学号</label><input id="studentId"></div>
+        </div>
+        <div class="actions">
+          <button id="saveBtn" class="btn primary">保存资料</button>
+        </div>
+        <div id="error" class="small" style="color:var(--danger);"></div>
+      </section>
+    </main>
+
+    <script src="assets/common.js"></script>
+    <script>
+    (async function(){
+  const me = await Poem.me(); if (!me){ location.href = 'login.html'; return; }
+  const rn = document.getElementById('realName'); const sid = document.getElementById('studentId'); const btn = document.getElementById('saveBtn'); const err = document.getElementById('error');
+  // 支持按 Enter 保存资料（在两个输入框中按回车触发）
+  [rn, sid].forEach(el => el && el.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); }));
+      btn.onclick = async ()=>{
+        err.textContent='';
+        try {
+          const real_name = rn.value.trim(); const student_id = sid.value.trim();
+          if (!real_name || !student_id){ err.textContent='请填写真实姓名与学号'; return; }
+          await Poem.api('/api/auth/profile', { method:'POST', body: JSON.stringify({ real_name, student_id }) });
+          await Poem.me();
+          location.href = './';
+        } catch(e){ err.textContent='保存失败，请稍后重试'; }
+      };
+    })();
+    </script>
+  </body>
+</html>

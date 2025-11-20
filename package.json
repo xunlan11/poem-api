@@ -1,0 +1,27 @@
+{
+  "name": "poem-api",
+  "version": "1.0.0",
+  "description": "Poem library work platform: API + static UI",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0",
+    "fuse.js": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "pinyin-pro": "^3.27.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

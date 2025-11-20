@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="assets/app.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>用户管理</h1>
+      <a href="./" class="link">返回首页</a>
+    </header>
+    <main class="container">
+      <section class="section-card">
+        <div class="actions">
+          <input id="userSearch" class="search" placeholder="按实名或学号搜索">
+          <button id="userSearchBtn" class="btn">搜索</button>
+          <button id="refresh" class="btn">刷新</button>
+          <button id="create" class="btn">创建用户</button>
+        </div>
+        <table class="table">
+          <thead>
+            <tr><th>ID</th><th>用户名</th><th>角色</th><th>实名</th><th>学号</th><th>操作</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
+    <script src="assets/common.js"></script>
+    <script>
+    (async function(){
+      const me = await Poem.me();
+      if (!me) { location.href = 'login.html'; return; }
+      if (me.role !== 'admin') { Poem.toast('需要管理员权限'); location.href = './'; return; }
+
+      const tb = document.getElementById('tbody');
+      let users = []; // 存储用户列表
+      
+      const refresh = async ()=>{
+        users = await Poem.api('/api/users');
+        tb.innerHTML = '';
+        // 读取搜索关键字，并按实名或学号过滤（大小写不敏感）
+        const qEl = document.getElementById('userSearch');
+        const q = (qEl && qEl.value) ? String(qEl.value).trim().toLowerCase() : '';
+        const filtered = (q ? users.filter(u => {
+          const rn = (u.real_name || '').toLowerCase();
+          const sid = (u.student_id || '').toLowerCase();
+          // 实名允许部分匹配；学号要求完整匹配
+          return (rn && rn.includes(q)) || (sid && sid === q);
+        }) : users).slice();
+        // 按用户ID（例如 u_1, u_2）递增排序
+        filtered.sort((a, b)=>{
+          const pa = parseInt(String(a.id).split('_')[1] || '0', 10);
+          const pb = parseInt(String(b.id).split('_')[1] || '0', 10);
+          if (!isNaN(pa) && !isNaN(pb)) return pa - pb;
+          return String(a.id).localeCompare(String(b.id));
+        });
+        filtered.forEach(u=>{
+          const tr = document.createElement('tr');
+          
+          // 根据用户角色和ID生成不同的操作按钮
+          let actions = '';
+          
+          // 超级管理员(u_1)的特殊保护
+          if (u.id === 'u_1') {
+            actions = '<span class="text-muted">超级管理员（受保护）</span>';
+          } else {
+            // 角色切换按钮
+            if (u.role === 'user') {
+              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
+              actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+            } else if (u.role === 'reviewer') {
+              actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
+              actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+            } else if (u.role === 'admin') {
+              // 防止管理员降级自己
+              if (u.id !== me.id) {
+                actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
+                actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
+              } else {
+                actions += '<span class="text-muted">当前用户（不可降级）</span>';
+              }
+            }
+            
+            // 删除按钮（保护超级管理员与当前用户）
+            if (u.id !== 'u_1' && u.id !== me.id) {
+              actions += ` <button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
+            }
+          }
+          
+          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td><td>${u.role}</td><td>${u.real_name||''}</td><td>${u.student_id||''}</td><td>${actions}</td>`;
+          tb.appendChild(tr);
+        });
+      };
+  document.getElementById('refresh').onclick = refresh;
+  // 搜索按钮与输入回车绑定
+  document.getElementById('userSearchBtn').onclick = refresh;
+  const userSearchInput = document.getElementById('userSearch');
+  userSearchInput.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') { e.preventDefault(); refresh(); } });
+      document.getElementById('create').onclick = async ()=>{
+        const username = prompt('用户名'); if (!username) return;
+        const password = prompt('初始密码'); if (!password) return;
+        try { await Poem.api('/api/users', { method:'POST', body: JSON.stringify({ username, password }) }); await refresh(); Poem.toast('创建成功'); } catch(e){ Poem.toast('创建失败'); }
+      };
+      tb.addEventListener('click', async (e)=>{
+        const btn = e.target.closest('button'); if (!btn) return;
+        const id = btn.getAttribute('data-id'); const act = btn.getAttribute('data-act');
+        
+        // 确认操作
+        const user = users.find(u => u.id === id);
+        if (!user) return;
+        
+    let confirmMsg = '';
+    if (act === 'admin') confirmMsg = `确定要将用户 ${user.username} 设为管理员吗？`;
+    else if (act === 'reviewer') confirmMsg = `确定要将用户 ${user.username} 设为审核员吗？`;
+  else if (act === 'user') confirmMsg = `确定要将用户 ${user.username} 设为整理员吗？`;
+  else if (act === 'delete') confirmMsg = `确定要删除用户 ${user.username} 吗？此操作不可撤销。`;
+        
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        
+        try {
+          if (['user', 'reviewer', 'admin'].includes(act)) {
+            await Poem.api(`/api/users/${id}/role`, { method:'PUT', body: JSON.stringify({ role: act }) });
+          } else if (act === 'delete') {
+            await Poem.api(`/api/users/${id}`, { method: 'DELETE' });
+          }
+          await refresh();
+          Poem.toast('操作成功');
+        } catch(e){ 
+          console.error('操作失败:', e);
+          Poem.toast(e.message || '操作失败'); 
+        }
+      });
+      refresh();
+    })();
+    </script>
+  </body>
+</html>

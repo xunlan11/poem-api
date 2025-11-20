@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>信息节点列表</title>
+    <link rel="stylesheet" href="assets/app.css">
+  </head>
+  <body>
+    <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
+    <header class="topbar">
+      <h1 id="listTitle">列表</h1>
+      <a href="./" class="link">返回首页</a>
+    </header>
+    <main class="container">
+      <div class="list-controls">
+        <input id="listSearch" class="search" placeholder="搜索ID/名称/创建者">
+        <button id="listSearchBtn" class="btn">搜索</button>
+  <button id="createBtn" class="btn">新建</button>
+  <button id="filterBtn" class="btn">筛选</button>
+  <button id="exportListBtn" class="btn">导出列表</button>
+  <button id="exportDurationBtn" class="btn">导出时长</button>
+  <button id="archiveBtn" class="btn danger">归档</button>
+        <span id="listCount" class="list-count">共 0 条</span>
+      </div>
+      <div id="pagination" class="pagination-bar"></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th id="colNameHeader">名称</th>
+            <th>创建者</th>
+            <th>创建日期</th>
+            <th>审核者</th>
+            <th>时长</th>
+            <th>审核状态</th>
+            <th>返修状态</th>
+            <th class="actions-col">操作</th>
+          </tr>
+        </thead>
+        <tbody id="listBody"></tbody>
+      </table>
+    </main>
+
+    <script defer src="assets/common.js"></script>
+    <script defer src="assets/list.js"></script>
+  </body>
+</html>
