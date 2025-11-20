@@ -120,7 +120,7 @@ async function loadStore() {
     await fs.writeJson(DATA_FILE, defaultStore(), { spaces: 2 });
   }
   store = await fs.readJson(DATA_FILE);
-  TYPES.forEach(type=>{
+  TYPES.forEach(type => {
     if (!store[type]) store[type] = { lastId: 0, items: {} };
   });
   // Users
@@ -147,7 +147,7 @@ function pad5(n) {
   return String(n).padStart(5, '0');
 }
 
-function idNumber(id){
+function idNumber(id) {
   if (!id || id.length < 2) return 0;
   const num = parseInt(id.slice(1), 10);
   return isNaN(num) ? 0 : num;
@@ -194,7 +194,7 @@ function simplify(node) {
   const rawCreator = node.meta?.createdBy || node.meta?.createdByName || '';
   // Extract evaluation/review entries from node.extra.evaluation (various shapes)
   let reviewerEntry = '';
-  try{
+  try {
     const evals = node.extra && Array.isArray(node.extra.evaluation) ? node.extra.evaluation : [];
     const parts = evals.map(e => {
       if (!e) return '';
@@ -202,7 +202,7 @@ function simplify(node) {
       return String(e.content || e.内容 || e.review_comment || e.comment || e.备注 || '').trim();
     }).filter(Boolean);
     if (parts.length) reviewerEntry = parts.join(' / ');
-  }catch(e){}
+  } catch (e) { }
   const reviewStatusVal = node.extra?.reviewStatus || '';
   const repairStatusVal = node.extra?.repairStatus || '';
   const expectedDurationVal = node.extra?.expectedDuration || '';
@@ -254,7 +254,7 @@ function buildSearchTokens(text) {
         tokens.add(full.map(s => s[0]).join('').toLowerCase());
       }
     }
-  } catch(e) {}
+  } catch (e) { }
   return Array.from(tokens);
 }
 
@@ -340,7 +340,7 @@ app.get('/api/nodes', (req, res) => {
   let ordered = searched;
   if (!hasSearch) {
     if (type === 'A') {
-      ordered = searched.slice().sort((a, b)=>{
+      ordered = searched.slice().sort((a, b) => {
         const da = a?.meta?.createdAt ? Date.parse(a.meta.createdAt) : NaN;
         const db = b?.meta?.createdAt ? Date.parse(b.meta.createdAt) : NaN;
         const va = Number.isNaN(da) ? 0 : da;
@@ -349,7 +349,7 @@ app.get('/api/nodes', (req, res) => {
         return idNumber(b.id) - idNumber(a.id);
       });
     } else {
-      ordered = searched.slice().sort((a, b)=> idNumber(b.id) - idNumber(a.id));
+      ordered = searched.slice().sort((a, b) => idNumber(b.id) - idNumber(a.id));
     }
   }
   const page = ordered.slice(off, off + lim).map(simplify);
@@ -573,7 +573,7 @@ app.post('/api/auth/login', async (req, res) => {
   if (!u) {
     // First login -> auto register as normal user
     const now = new Date().toISOString();
-    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password,10), role: 'user', real_name:'', student_id:'', status:'active', created_at: now, updated_at: now, last_login_at: now, profile_completed:false };
+    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: now, profile_completed: false };
     users.push(u);
     await saveUsers();
   } else {
@@ -611,14 +611,14 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
 });
 // Admin: user management
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
-  res.json(users.map(u=>({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, status: u.status, created_at: u.created_at, updated_at: u.updated_at, last_login_at: u.last_login_at, profile_completed: !!u.profile_completed })));
+  res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, status: u.status, created_at: u.created_at, updated_at: u.updated_at, last_login_at: u.last_login_at, profile_completed: !!u.profile_completed })));
 });
 
-function nextUserId(){
+function nextUserId() {
   // 现在改为返回最小的未使用正整数序号（从1开始），以填补被删除用户留下的空位。
-  const used = new Set(users.map(u=>{
-    const n = parseInt(String(u.id).split('_')[1]||'0',10);
-    return isNaN(n)?0:n;
+  const used = new Set(users.map(u => {
+    const n = parseInt(String(u.id).split('_')[1] || '0', 10);
+    return isNaN(n) ? 0 : n;
   }));
   for (let i = 1; ; i++) {
     if (!used.has(i)) return `u_${i}`;
@@ -626,12 +626,12 @@ function nextUserId(){
 }
 
 app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
-  const { username, password, role='user' } = req.body || {};
+  const { username, password, role = 'user' } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing username or password' });
-  if (!['user','reviewer','admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
+  if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
   if (findUserByUsername(username)) return res.status(409).json({ error: 'Username exists' });
   const now = new Date().toISOString();
-  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password,10), role, real_name:'', student_id:'', status:'active', created_at: now, updated_at: now, last_login_at:'', profile_completed:false };
+  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: '', profile_completed: false };
   users.push(u);
   await saveUsers();
   res.status(201).json({ id: u.id, username: u.username, role: u.role });
@@ -641,18 +641,18 @@ app.put('/api/users/:id/role', requireAuth, requireAdmin, async (req, res) => {
   const u = findUserById(req.params.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
   const { role } = req.body || {};
-  if (!['user','reviewer','admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
-  
+  if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
+
   // 超级管理员保护：防止将第一个管理员账户降级
   if (u.id === 'u_1' && u.role === 'admin' && role !== 'admin') {
     return res.status(403).json({ error: 'Cannot modify super admin role' });
   }
-  
+
   // 防止管理员将自己的权限降级
   if (u.id === req.user.id && u.role === 'admin' && role !== 'admin') {
     return res.status(403).json({ error: 'Cannot downgrade your own admin role' });
   }
-  
+
   u.role = role; u.updated_at = new Date().toISOString();
   await saveUsers();
   res.json({ ok: true });
@@ -662,7 +662,7 @@ app.put('/api/users/:id/status', requireAuth, requireAdmin, async (req, res) => 
   const u = findUserById(req.params.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
   const { status } = req.body || {};
-  if (!['active','disabled'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
+  if (!['active', 'disabled'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
   // 超级管理员保护：防止禁用第一个管理员账户
   if (u.id === 'u_1') {
     return res.status(403).json({ error: 'Cannot disable super admin' });
@@ -746,4 +746,3 @@ app.post('/api/nodes/archive', requireAuth, requireAdmin, async (req, res) => {
     res.status(500).json({ error: 'Failed to archive nodes' });
   }
 });
-

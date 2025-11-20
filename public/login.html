@@ -1,85 +1,88 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登录</title>
-    <link rel="stylesheet" href="assets/app.css">
-  </head>
-  <body>
-    <header class="topbar">
-      <h1>登录</h1>
-      <a href="./" class="link">返回首页</a>
-    </header>
-    <main class="container">
-      <section class="section-card">
-        <p class="small text-muted">首次登录会自动注册。</p>
-        <div class="grid-2">
-          <div class="field"><label>用户名</label><input id="username"></div>
-          <div class="field"><label>密码</label><input id="password" type="password"></div>
-        </div>
-  <label class="small" style="display:flex;align-items:center;gap:6px;margin-top:8px"><input id="rememberMe" type="checkbox" style="width:auto"> 记住账号密码</label>
-        <div class="actions">
-          <button id="loginBtn" class="btn primary">登录</button>
-        </div>
-        <div id="error" class="error-text"></div>
-      </section>
-    </main>
 
-    <script src="assets/common.js"></script>
-    <script>
-    (async function(){
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <h1>登录</h1>
+    <a href="./" class="link">返回首页</a>
+  </header>
+  <main class="container">
+    <section class="section-card">
+      <p class="small text-muted">首次登录会自动注册。</p>
+      <div class="grid-2">
+        <div class="field"><label>用户名</label><input id="username"></div>
+        <div class="field"><label>密码</label><input id="password" type="password"></div>
+      </div>
+      <label class="small" style="display:flex;align-items:center;gap:6px;margin-top:8px"><input id="rememberMe"
+          type="checkbox" style="width:auto"> 记住账号密码</label>
+      <div class="actions">
+        <button id="loginBtn" class="btn primary">登录</button>
+      </div>
+      <div id="error" class="error-text"></div>
+    </section>
+  </main>
+
+  <script src="assets/common.js"></script>
+  <script>
+    (async function () {
       const me = await Poem.me(); if (me) { location.href = 'profile.html'; return; }
       const u = document.getElementById('username'); const p = document.getElementById('password'); const btn = document.getElementById('loginBtn'); const err = document.getElementById('error');
       const rememberEl = document.getElementById('rememberMe');
       const STORAGE_KEY = 'poemRemember';
 
-  const encode = (value)=>{
-    try{
-      return btoa(unescape(encodeURIComponent(value)));
-    }catch(e){ return ''; }
-  };
-  const decode = (value)=>{
-    try{
-      return decodeURIComponent(escape(atob(value)));
-    }catch(e){ return ''; }
-  };
+      const encode = (value) => {
+        try {
+          return btoa(unescape(encodeURIComponent(value)));
+        } catch (e) { return ''; }
+      };
+      const decode = (value) => {
+        try {
+          return decodeURIComponent(escape(atob(value)));
+        } catch (e) { return ''; }
+      };
 
-  let savedCred = null;
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    savedCred = raw ? JSON.parse(raw) : null;
-  }catch(e){ savedCred = null; }
+      let savedCred = null;
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        savedCred = raw ? JSON.parse(raw) : null;
+      } catch (e) { savedCred = null; }
 
-  if (savedCred && savedCred.username && savedCred.password){
-    u.value = savedCred.username;
-    const decodedPass = decode(savedCred.password);
-    if (decodedPass) p.value = decodedPass;
-    if (rememberEl) rememberEl.checked = true;
-  }
+      if (savedCred && savedCred.username && savedCred.password) {
+        u.value = savedCred.username;
+        const decodedPass = decode(savedCred.password);
+        if (decodedPass) p.value = decodedPass;
+        if (rememberEl) rememberEl.checked = true;
+      }
 
-  // 支持按 Enter 提交：当焦点在用户名或密码时按回车触发登录
-  [u, p].forEach(el => el && el.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); }));
-      btn.onclick = async ()=>{
-        err.textContent='';
+      // 支持按 Enter 提交：当焦点在用户名或密码时按回车触发登录
+      [u, p].forEach(el => el && el.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); }));
+      btn.onclick = async () => {
+        err.textContent = '';
         try {
           console.log('开始登录，用户名:', u.value.trim());
-          const loginResult = await Poem.api('/api/auth/login', { method:'POST', body: JSON.stringify({ username: u.value.trim(), password: p.value }) });
+          const loginResult = await Poem.api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: u.value.trim(), password: p.value }) });
           console.log('登录响应:', loginResult);
-          
+
           // 清除缓存的用户信息，强制重新获取
           window.__poem_me = undefined;
           const me2 = await Poem.me();
           console.log('获取用户信息:', me2);
 
-          if (rememberEl && rememberEl.checked){
-            try{
+          if (rememberEl && rememberEl.checked) {
+            try {
               localStorage.setItem(STORAGE_KEY, JSON.stringify({ username: u.value.trim(), password: encode(p.value), savedAt: Date.now() }));
-            }catch(e){ console.warn('记住账号失败:', e); }
+            } catch (e) { console.warn('记住账号失败:', e); }
           } else {
             localStorage.removeItem(STORAGE_KEY);
           }
-          
+
           // 管理员直接跳转到首页，普通用户检查资料完整性
           if (me2.role === 'admin') {
             location.href = './';
@@ -88,15 +91,16 @@
           } else {
             location.href = './';
           }
-        } catch(e){ 
+        } catch (e) {
           console.error('登录错误:', e);
-          err.textContent = '用户名已被注册或密码不正确'; 
+          err.textContent = '用户名已被注册或密码不正确';
           if (rememberEl && rememberEl.checked) {
-            try{ localStorage.removeItem(STORAGE_KEY); }catch(err2){}
+            try { localStorage.removeItem(STORAGE_KEY); } catch (err2) { }
           }
         }
       };
     })();
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

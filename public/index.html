@@ -1,95 +1,98 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>诗词库整理平台</title>
-    <link rel="stylesheet" href="assets/app.css">
-  </head>
-  <body>
-    <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
-    <header class="topbar">
-      <h1>诗词库整理平台</h1>
-      <div id="userBar" class="small"></div>
-    </header>
-    <main class="container">
-      <div id="adminEntry" class="section-card" style="display:none;">
-        <a href="admin.html" class="link">进入用户管理（管理员）</a>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>诗词库整理平台</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+
+<body>
+  <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
+  <header class="topbar">
+    <h1>诗词库整理平台</h1>
+    <div id="userBar" class="small"></div>
+  </header>
+  <main class="container">
+    <div id="adminEntry" class="section-card" style="display:none;">
+      <a href="admin.html" class="link">进入用户管理（管理员）</a>
+    </div>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">诗词（W）</div>
+        <div class="row-actions">
+          <input id="search-W" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-W" class="btn">搜索</button>
+          <button data-type="W" class="btn add">新建</button>
+          <button data-type="W" class="btn view">浏览</button>
+        </div>
       </div>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">诗词（W）</div>
-          <div class="row-actions">
-            <input id="search-W" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-W" class="btn">搜索</button>
-            <button data-type="W" class="btn add">新建</button>
-            <button data-type="W" class="btn view">浏览</button>
-          </div>
+      <div id="results-W" class="results"></div>
+    </section>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">文集（G）</div>
+        <div class="row-actions">
+          <input id="search-G" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-G" class="btn">搜索</button>
+          <button data-type="G" class="btn add">新建</button>
+          <button data-type="G" class="btn view">浏览</button>
         </div>
-        <div id="results-W" class="results"></div>
-      </section>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">文集（G）</div>
-          <div class="row-actions">
-            <input id="search-G" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-G" class="btn">搜索</button>
-            <button data-type="G" class="btn add">新建</button>
-            <button data-type="G" class="btn view">浏览</button>
-          </div>
+      </div>
+      <div id="results-G" class="results"></div>
+    </section>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">人物（C）</div>
+        <div class="row-actions">
+          <input id="search-C" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-C" class="btn">搜索</button>
+          <button data-type="C" class="btn add">新建</button>
+          <button data-type="C" class="btn view">浏览</button>
         </div>
-        <div id="results-G" class="results"></div>
-      </section>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">人物（C）</div>
-          <div class="row-actions">
-            <input id="search-C" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-C" class="btn">搜索</button>
-            <button data-type="C" class="btn add">新建</button>
-            <button data-type="C" class="btn view">浏览</button>
-          </div>
+      </div>
+      <div id="results-C" class="results"></div>
+    </section>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">典故（E）</div>
+        <div class="row-actions">
+          <input id="search-E" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-E" class="btn">搜索</button>
+          <button data-type="E" class="btn add">新建</button>
+          <button data-type="E" class="btn view">浏览</button>
         </div>
-        <div id="results-C" class="results"></div>
-      </section>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">典故（E）</div>
-          <div class="row-actions">
-            <input id="search-E" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-E" class="btn">搜索</button>
-            <button data-type="E" class="btn add">新建</button>
-            <button data-type="E" class="btn view">浏览</button>
-          </div>
+      </div>
+      <div id="results-E" class="results"></div>
+    </section>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">鸟兽草木（S）</div>
+        <div class="row-actions">
+          <input id="search-S" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-S" class="btn">搜索</button>
+          <button data-type="S" class="btn add">新建</button>
+          <button data-type="S" class="btn view">浏览</button>
         </div>
-        <div id="results-E" class="results"></div>
-      </section>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">鸟兽草木（S）</div>
-          <div class="row-actions">
-            <input id="search-S" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-S" class="btn">搜索</button>
-            <button data-type="S" class="btn add">新建</button>
-            <button data-type="S" class="btn view">浏览</button>
-          </div>
+      </div>
+      <div id="results-S" class="results"></div>
+    </section>
+    <section class="row">
+      <div class="row-head">
+        <div class="row-title">汇总</div>
+        <div class="row-actions">
+          <input id="search-A" class="search" placeholder="搜索ID/名称/创建者">
+          <button id="searchBtn-A" class="btn">搜索</button>
+          <button data-type="A" class="btn view">浏览</button>
         </div>
-        <div id="results-S" class="results"></div>
-      </section>
-      <section class="row">
-        <div class="row-head">
-          <div class="row-title">汇总</div>
-          <div class="row-actions">
-            <input id="search-A" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="searchBtn-A" class="btn">搜索</button>
-            <button data-type="A" class="btn view">浏览</button>
-          </div>
-        </div>
-        <div id="results-A" class="results"></div>
-      </section>
-    </main>
-    <script defer src="assets/common.js"></script>
-    <script defer src="assets/home.js"></script>
-  </body>
+      </div>
+      <div id="results-A" class="results"></div>
+    </section>
+  </main>
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/home.js"></script>
+</body>
+
 </html>

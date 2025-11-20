@@ -1,14 +1,14 @@
-(async function(){
+(async function () {
   const type = Poem.qs('type') || '';
   const title = document.getElementById('listTitle');
-  const TITLE_MAP = {W:'诗词（W）',G:'文集（G）',C:'人物（C）',E:'典故（E）',S:'鸟兽草木（S）', A: '汇总'};
+  const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', A: '汇总' };
   title.textContent = type ? (TITLE_MAP[type] || '列表') : '全部';
   // Set the name-column header to the appropriate label for the selected type
-  try{
+  try {
     const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', A: '名称' };
     const nameHeader = document.getElementById('colNameHeader');
     if (nameHeader) nameHeader.textContent = type && NAME_MAP[type] ? NAME_MAP[type] : '名称';
-  }catch(e){}
+  } catch (e) { }
   const searchInput = document.getElementById('listSearch');
   const tbody = document.getElementById('listBody');
   const createBtn = document.getElementById('createBtn');
@@ -23,13 +23,13 @@
   let loadPromise = null;
   let searchTimer = null;
   // Only allow create for the main 4 types — if createBtn exists (some layouts may remove it)
-  const CREATABLE = ['W','G','C','E','S'];
+  const CREATABLE = ['W', 'G', 'C', 'E', 'S'];
   if (createBtn) {
     createBtn.textContent = '新建';
     if (CREATABLE.includes(type)) {
       createBtn.style.display = '';
       createBtn.disabled = false;
-      createBtn.onclick = async ()=>{
+      createBtn.onclick = async () => {
         const ok = await Poem.requireProfile();
         if (!ok) return;
         const encodedType = encodeURIComponent(type || '');
@@ -53,7 +53,7 @@
   const archiveBtn = document.getElementById('archiveBtn');
   let dateFilter = { start: null, end: null };
   let typeFilter = '';
-  let reviewFilter = ''; 
+  let reviewFilter = '';
   let repairFilter = '';
   let loadXlsxPromise = null;
   let currentViewItems = [];
@@ -70,28 +70,28 @@
   reviewFilter = Poem.qs('rs') || '';
   repairFilter = reviewFilter === 'rejected' ? (Poem.qs('rr') || '') : '';
 
-  async function ensureXLSX(){
+  async function ensureXLSX() {
     if (typeof XLSX !== 'undefined') return;
     if (!loadXlsxPromise) {
-      loadXlsxPromise = new Promise((resolve, reject)=>{
+      loadXlsxPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
         script.async = true;
-        script.onload = ()=>resolve();
-        script.onerror = ()=>{ script.remove(); loadXlsxPromise = null; reject(new Error('无法加载导出组件')); };
+        script.onload = () => resolve();
+        script.onerror = () => { script.remove(); loadXlsxPromise = null; reject(new Error('无法加载导出组件')); };
         document.head.appendChild(script);
       });
     }
     await loadXlsxPromise;
   }
 
-  function updateCountDisplay(count){
+  function updateCountDisplay(count) {
     if (!countEl) return;
     const safe = typeof count === 'number' && !isNaN(count) ? count : (tbody ? tbody.querySelectorAll('tr').length : 0);
     countEl.textContent = `共 ${safe} 条`;
   }
 
-  function syncQueryParams(){
+  function syncQueryParams() {
     const url = new URL(window.location.href);
     const qValue = (searchInput?.value || '').trim();
     if (qValue) url.searchParams.set('q', qValue);
@@ -121,13 +121,13 @@
     history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
   }
 
-  function getEncodedReturnQuery(){
+  function getEncodedReturnQuery() {
     const search = window.location.search || '';
     const trimmed = search.startsWith('?') ? search.slice(1) : search;
     return trimmed ? encodeURIComponent(trimmed) : '';
   }
 
-  async function fetchItems(forceRefresh){
+  async function fetchItems(forceRefresh) {
     if (forceRefresh) {
       itemsLoaded = false;
       allItems = [];
@@ -136,7 +136,7 @@
     if (loadPromise) return loadPromise;
     const limit = 200;
     const base = type ? `type=${type}&` : '';
-    const pending = (async ()=>{
+    const pending = (async () => {
       const collected = [];
       let offset = 0;
       let total = Infinity;
@@ -157,21 +157,21 @@
       }
       return collected;
     })();
-    loadPromise = pending.then(items=>{
+    loadPromise = pending.then(items => {
       allItems = items;
       itemsLoaded = true;
       return allItems;
-    }).catch(err=>{
+    }).catch(err => {
       itemsLoaded = false;
       allItems = [];
       throw err;
-    }).finally(()=>{ loadPromise = null; });
+    }).finally(() => { loadPromise = null; });
     return loadPromise;
   }
 
-  function queueSearch(){
+  function queueSearch() {
     if (searchTimer) clearTimeout(searchTimer);
-    searchTimer = setTimeout(()=>{ search(); }, 200);
+    searchTimer = setTimeout(() => { search(); }, 200);
   }
 
   const REVIEW_STATUS_CLASS = {
@@ -185,18 +185,18 @@
     finished: 'status-approved'
   };
 
-  function escapeHtml(str){
+  function escapeHtml(str) {
     const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
   }
 
-  function idNumber(id){
+  function idNumber(id) {
     if (!id || typeof id !== 'string') return 0;
     const num = parseInt(id.slice(1), 10);
     return Number.isNaN(num) ? 0 : num;
   }
 
-  function compareSummaryItems(a, b){
+  function compareSummaryItems(a, b) {
     const da = a && a.createdAt ? Date.parse(a.createdAt) : NaN;
     const db = b && b.createdAt ? Date.parse(b.createdAt) : NaN;
     const va = Number.isNaN(da) ? 0 : da;
@@ -205,13 +205,13 @@
     return idNumber(b?.id || '') - idNumber(a?.id || '');
   }
 
-  function renderStatusTag(status, label, classMap){
+  function renderStatusTag(status, label, classMap) {
     if (!label) return '';
     const cls = classMap[status] || 'status-default';
     return `<span class="status-tag ${cls}">${escapeHtml(label)}</span>`;
   }
 
-  function goToPage(page){
+  function goToPage(page) {
     const totalPages = filteredItems.length ? Math.ceil(filteredItems.length / PAGE_SIZE) : 1;
     const parsed = parseInt(page, 10);
     const target = Math.max(1, Math.min(Number.isNaN(parsed) ? currentPage : parsed, totalPages));
@@ -220,7 +220,7 @@
     renderCurrentPage();
   }
 
-  function renderPagination(totalCount, totalPages){
+  function renderPagination(totalCount, totalPages) {
     if (!paginationEl) return;
     paginationEl.innerHTML = '';
     if (countEl) {
@@ -239,14 +239,14 @@
     prevBtn.type = 'button';
     prevBtn.textContent = '上一页';
     prevBtn.disabled = currentPage <= 1;
-    prevBtn.addEventListener('click', ()=>{ if (currentPage > 1) goToPage(currentPage - 1); });
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) goToPage(currentPage - 1); });
 
     const nextBtn = document.createElement('button');
     nextBtn.className = 'btn small';
     nextBtn.type = 'button';
     nextBtn.textContent = '下一页';
     nextBtn.disabled = currentPage >= totalPages;
-    nextBtn.addEventListener('click', ()=>{ if (currentPage < totalPages) goToPage(currentPage + 1); });
+    nextBtn.addEventListener('click', () => { if (currentPage < totalPages) goToPage(currentPage + 1); });
 
     const info = document.createElement('span');
     info.className = 'pagination-info';
@@ -263,14 +263,14 @@
     input.max = String(totalPages);
     input.value = String(currentPage);
     input.title = '输入页码后按回车';
-    input.addEventListener('keydown', (event)=>{
+    input.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
         const target = parseInt(input.value, 10);
         if (!Number.isNaN(target)) goToPage(target);
       }
     });
-    input.addEventListener('blur', ()=>{ input.value = String(currentPage); });
+    input.addEventListener('blur', () => { input.value = String(currentPage); });
     const suffix = document.createElement('span');
     suffix.textContent = '页';
     jumpWrapper.appendChild(jumpText);
@@ -283,7 +283,7 @@
     paginationEl.appendChild(jumpWrapper);
   }
 
-  function renderCurrentPage(){
+  function renderCurrentPage() {
     const rows = Array.isArray(filteredItems) ? filteredItems : [];
     const total = rows.length;
     const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
@@ -296,7 +296,7 @@
     const start = total ? (currentPage - 1) * PAGE_SIZE : 0;
     const pageItems = rows.slice(start, start + PAGE_SIZE);
     currentViewItems = rows.slice();
-    pageItems.forEach(item=>{
+    pageItems.forEach(item => {
       const reviewerDisplay = item.reviewer || '';
       const durationDisplay = item.duration || '';
       const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
@@ -318,14 +318,14 @@
         <td>${reviewStatusHtml}</td>
         <td>${repairStatusHtml}</td>
         <td class="actions-cell"><div class="row-actions"><button data-act="open" data-id="${item.id}" data-url="${editorHrefEsc}" class="btn small">打开</button>
-        <button data-act="delete" data-id="${item.id}" class="btn danger small" ${canDelete? '':'disabled'}>删除</button></div></td>
+        <button data-act="delete" data-id="${item.id}" class="btn danger small" ${canDelete ? '' : 'disabled'}>删除</button></div></td>
       `;
-      tr.querySelectorAll('button[data-act]').forEach(btn=>{
-        btn.addEventListener('click', async (e)=>{
+      tr.querySelectorAll('button[data-act]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
           const act = btn.dataset.act;
           const id = btn.dataset.id;
           if (act === 'open') {
-            const targetUrl = btn.dataset.url || ( ()=>{
+            const targetUrl = btn.dataset.url || (() => {
               const encoded = encodeURIComponent(id || '');
               const currentQuery = getEncodedReturnQuery();
               return currentQuery ? `editor.html?id=${encoded}&return=${currentQuery}` : `editor.html?id=${encoded}`;
@@ -341,16 +341,16 @@
               await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
               Poem.toast('删除成功');
               if (Array.isArray(allItems)) {
-                const pos = allItems.findIndex(entry=> String(entry?.id||'') === String(id));
-                if (pos > -1) allItems.splice(pos,1);
+                const pos = allItems.findIndex(entry => String(entry?.id || '') === String(id));
+                if (pos > -1) allItems.splice(pos, 1);
               }
-              filteredItems = filteredItems.filter(item=> String(item?.id||'') !== String(id));
-              currentViewItems = currentViewItems.filter(item=> String(item?.id||'') !== String(id));
+              filteredItems = filteredItems.filter(item => String(item?.id || '') !== String(id));
+              currentViewItems = currentViewItems.filter(item => String(item?.id || '') !== String(id));
               renderCurrentPage();
               return;
             } catch (err) {
               console.error(err);
-              Poem.toast('删除失败：' + (err && err.error? err.error : '服务器错误'));
+              Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
             }
           }
         });
@@ -409,7 +409,7 @@
     }
   }
 
-  function applyFilters(items){
+  function applyFilters(items) {
     if (!items || !items.length) return items;
     return items.filter(it => {
       if (typeFilter) {
@@ -433,17 +433,17 @@
     });
   }
 
-  function createModal(titleText){
-    const modal = document.createElement('div'); modal.className='modal';
-    const card = document.createElement('div'); card.className='modal-card';
+  function createModal(titleText) {
+    const modal = document.createElement('div'); modal.className = 'modal';
+    const card = document.createElement('div'); card.className = 'modal-card';
     card.innerHTML = `<div class="modal-header"><div>${titleText}</div><button class="btn" id="closeModal">关闭</button></div><div class="modal-body"></div>`;
     modal.appendChild(card); document.body.appendChild(modal);
-    const close = ()=> modal.remove();
+    const close = () => modal.remove();
     card.querySelector('#closeModal').onclick = close;
     return { modal, card, close };
   }
 
-  function showFilterModal(){
+  function showFilterModal() {
     const { modal, card, close } = createModal('筛选');
     const body = card.querySelector('.modal-body');
     body.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:column;min-width:260px">
@@ -494,16 +494,16 @@
     const startEl = body.querySelector('#fltStart');
     const endEl = body.querySelector('#fltEnd');
     const typeEl = body.querySelector('#fltType');
-  const statusEl = body.querySelector('#fltStatus');
-  const repairEl = body.querySelector('#fltRepair');
-  const repairLabel = body.querySelector('#repairFilterLabel');
+    const statusEl = body.querySelector('#fltStatus');
+    const repairEl = body.querySelector('#fltRepair');
+    const repairLabel = body.querySelector('#repairFilterLabel');
     startEl.value = dateFilter.start || '';
     endEl.value = dateFilter.end || '';
     const defaultTypeValue = typeFilter || ((type && type !== 'A') ? type : '');
     typeEl.value = defaultTypeValue;
     statusEl.value = reviewFilter || '';
     repairEl.value = repairFilter || '';
-    const syncRepairState = ()=>{
+    const syncRepairState = () => {
       const active = statusEl.value === 'rejected';
       repairEl.disabled = !active;
       repairLabel.style.opacity = active ? '1' : '0.6';
@@ -513,17 +513,17 @@
     };
     syncRepairState();
     statusEl.addEventListener('change', syncRepairState);
-    body.querySelector('#fltOk').onclick = ()=>{
+    body.querySelector('#fltOk').onclick = () => {
       dateFilter.start = startEl.value || null;
       dateFilter.end = endEl.value || null;
       typeFilter = typeEl.value || '';
       reviewFilter = statusEl.value || '';
-  repairFilter = reviewFilter === 'rejected' ? (repairEl.value || '') : '';
+      repairFilter = reviewFilter === 'rejected' ? (repairEl.value || '') : '';
       close();
       search();
       Poem.toast('筛选已应用');
     };
-    body.querySelector('#fltClear').onclick = ()=>{
+    body.querySelector('#fltClear').onclick = () => {
       startEl.value = '';
       endEl.value = '';
       typeEl.value = '';
@@ -538,10 +538,10 @@
       search();
       Poem.toast('筛选已清除');
     };
-    body.querySelector('#fltCancel').onclick = ()=>{ close(); };
+    body.querySelector('#fltCancel').onclick = () => { close(); };
   }
 
-  function showExportModal(){
+  function showExportModal() {
     const { modal, card, close } = createModal('导出：填写期数');
     const body = card.querySelector('.modal-body');
     body.innerHTML = `<div style="display:flex;gap:8px;flex-direction:column;align-items:flex-start">
@@ -549,31 +549,26 @@
       <div style="margin-top:8px"><button id="exportOk" class="btn primary">导出</button> <button id="exportCancel" class="btn">取消</button></div>
     </div>`;
     const sessionEl = body.querySelector('#exportSession');
-    body.querySelector('#exportOk').onclick = async ()=>{
+    body.querySelector('#exportOk').onclick = async () => {
       const session = (sessionEl.value || '1').toString();
       close();
       // perform export
-      try{
+      try {
         await ensureXLSX();
-        const { data } = await Poem.api(`/api/nodes?${type?`type=${type}&`:''}limit=200`);
-        let items = data || [];
-        if (type === 'A') {
-          items = (items || []).slice().sort((a,b)=>{ const da = a && a.createdAt ? new Date(a.createdAt) : 0; const db = b && b.createdAt ? new Date(b.createdAt) : 0; return db - da; });
-        }
-        items = applyFilters(items);
+        const items = Array.isArray(currentViewItems) ? currentViewItems : [];
         // aggregate by creator string
         const map = new Map();
-        items.forEach(it=>{
+        items.forEach(it => {
           const creator = it.creator || '';
           const key = creator;
-          const dur = parseFloat(String(it.duration||'').trim());
-          const num = isNaN(dur)? 0 : dur;
+          const dur = parseFloat(String(it.duration || '').trim());
+          const num = isNaN(dur) ? 0 : dur;
           if (!map.has(key)) map.set(key, { creator: creator, total: 0 });
           map.get(key).total += num;
         });
         // build rows: 学号, 服务时长（小时） (total/3), 活动地点(线上), 姓名, 时长（单位）(total)
         const outRows = [];
-        map.forEach(v=>{
+        map.forEach(v => {
           if (!v.creator || String(v.creator).trim() === '') return; // skip anonymous/no-creator entries
           // parse creator string like '姓名(学号)'
           const m = /^\s*(.*?)\s*(?:\((.*?)\))?\s*$/.exec(v.creator || '');
@@ -583,20 +578,20 @@
           const hours = +(total / 3).toFixed(2);
           outRows.push({ 学号: sid, '服务时长（小时）': hours, 活动地点: '线上', 姓名: name, '时长（单位）': total });
         });
-        const ws = XLSX.utils.json_to_sheet(outRows, { header: ['学号','服务时长（小时）','活动地点','姓名','时长（单位）'] });
+        const ws = XLSX.utils.json_to_sheet(outRows, { header: ['学号', '服务时长（小时）', '活动地点', '姓名', '时长（单位）'] });
         const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '时长统计');
         const fn = `诗词楹联学会+诗词库构建（第${session}期）+时长认定.xlsx`;
         XLSX.writeFile(wb, fn);
         Poem.toast('导出已完成');
-      }catch(e){ console.error(e); Poem.toast('导出失败'); }
+      } catch (e) { console.error(e); Poem.toast('导出失败'); }
     };
-    body.querySelector('#exportCancel').onclick = ()=>{ close(); };
+    body.querySelector('#exportCancel').onclick = () => { close(); };
   }
 
   if (filterBtn) filterBtn.addEventListener('click', showFilterModal);
 
-  async function handleExportList(){
-    try{
+  async function handleExportList() {
+    try {
       await ensureXLSX();
       const base = await fetchItems();
       let items = Array.isArray(base) ? base.slice() : [];
@@ -608,16 +603,16 @@
         } else {
           const ql = q.toLowerCase();
           items = items.filter(it => {
-            return (it.id||'').includes(q) ||
-              (it.name||'').toLowerCase().includes(ql) ||
-              (it.creator||'').toLowerCase().includes(ql) ||
-              (it.otherStatement||'').toLowerCase().includes(ql);
+            return (it.id || '').includes(q) ||
+              (it.name || '').toLowerCase().includes(ql) ||
+              (it.creator || '').toLowerCase().includes(ql) ||
+              (it.otherStatement || '').toLowerCase().includes(ql);
           });
         }
       }
       items = applyFilters(items);
-      const headers = ['ID','名称','创建者','创建日期','审核者','时长','审核状态','返修状态'];
-      const rows = items.map(item=>({
+      const headers = ['ID', '名称', '创建者', '创建日期', '审核者', '时长', '审核状态', '返修状态'];
+      const rows = items.map(item => ({
         ID: item.id || '',
         名称: item.name || '',
         创建者: item.creator || '',
@@ -630,16 +625,16 @@
       const sheet = XLSX.utils.json_to_sheet(rows, { header: headers });
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, sheet, '列表');
-      const filename = `诗词节点列表_${Poem.today ? Poem.today() : new Date().toISOString().slice(0,10)}.xlsx`;
+      const filename = `诗词节点列表_${Poem.today ? Poem.today() : new Date().toISOString().slice(0, 10)}.xlsx`;
       XLSX.writeFile(wb, filename);
       Poem.toast('列表已导出');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       Poem.toast('导出失败');
     }
   }
 
-  async function handleArchiveAction(){
+  async function handleArchiveAction() {
     if (!isAdmin || type !== 'A') {
       Poem.toast('仅管理员可用');
       return;
@@ -662,10 +657,10 @@
         Poem.toast('没有有效的节点可归档');
         return;
       }
-      await Poem.api('/api/nodes/archive', { method:'POST', body: JSON.stringify({ ids }) });
+      await Poem.api('/api/nodes/archive', { method: 'POST', body: JSON.stringify({ ids }) });
       Poem.toast('归档成功');
       await search({ forceRefresh: true, keepPage: true });
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       Poem.toast('归档失败');
     } finally {
@@ -673,12 +668,12 @@
     }
   }
 
-  function render(items){
+  function render(items) {
     filteredItems = Array.isArray(items) ? items.slice() : [];
     renderCurrentPage();
   }
 
-  async function search(options){
+  async function search(options) {
     const q = (searchInput.value || '').trim();
     try {
       const keepPage = !!(options && options.keepPage);
@@ -692,28 +687,20 @@
         } else {
           const ql = q.toLowerCase();
           items = items.filter(it => {
-            return (it.id||'').includes(q) ||
-              (it.name||'').toLowerCase().includes(ql) ||
-              (it.creator||'').toLowerCase().includes(ql) ||
-              (it.otherStatement||'').toLowerCase().includes(ql);
+            return (it.id || '').includes(q) ||
+              (it.name || '').toLowerCase().includes(ql) ||
+              (it.creator || '').toLowerCase().includes(ql) ||
+              (it.otherStatement || '').toLowerCase().includes(ql);
           });
         }
       }
       items = applyFilters(items);
       render(items);
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       Poem.toast('加载失败');
     }
   }
   searchInput.addEventListener('input', queueSearch);
-  searchInput.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter'){
-      if (searchTimer) clearTimeout(searchTimer);
-      search();
-    }
-  });
-  const searchBtn = document.getElementById('listSearchBtn');
-  if (searchBtn) searchBtn.addEventListener('click', ()=>{ search(); });
   search({ keepPage: true });
 })();
