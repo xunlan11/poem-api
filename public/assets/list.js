@@ -58,6 +58,20 @@
   let loadXlsxPromise = null;
   let currentViewItems = [];
 
+  // Preload fuzzy-search依赖，避免首次搜索长时间等待
+  try {
+    const preload = () => {
+      try {
+        if (Poem.ensureSearchDeps) Poem.ensureSearchDeps();
+      } catch (e) { }
+    };
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(preload);
+    } else {
+      setTimeout(preload, 1200);
+    }
+  } catch (e) { }
+
   const initialSearch = Poem.qs('q') || '';
   if (searchInput) searchInput.value = initialSearch;
   const initialStart = Poem.qs('ds');
@@ -196,7 +210,43 @@
     return Number.isNaN(num) ? 0 : num;
   }
 
+  async function applySearchQuery(items, query) {
+    if (!query) return items;
+    let list = Array.isArray(items) ? items.slice() : [];
+    try {
+      if (Poem.ensureSearchDeps) await Poem.ensureSearchDeps();
+    } catch (err) { console.warn('搜索依赖加载失败', err); }
+    if (window.Poem && typeof Poem.fuzzySearch === 'function') {
+      try {
+        list = Poem.fuzzySearch(list, query);
+        return list;
+      } catch (err) {
+        console.warn('模糊搜索失败，降级为简单匹配', err);
+      }
+    }
+    const ql = query.toLowerCase();
+    return list.filter(it => {
+      return (it.id || '').includes(query) ||
+        (it.name || '').toLowerCase().includes(ql) ||
+        (it.creator || '').toLowerCase().includes(ql) ||
+        (it.otherStatement || '').toLowerCase().includes(ql);
+    });
+  }
+
   function compareSummaryItems(a, b) {
+    // 优先级：当前用户创建或审核的未通过条目排在前面
+    const getPriority = (item) => {
+      if (!item || !me) return 0;
+      const isCreator = item.creator === me.student_id;
+      const isReviewer = item.reviewer === me.student_id;
+      const isUnfinished = item.repairStatus === 'unfinished';
+      if ((isCreator || isReviewer) && isUnfinished) return 1;
+      return 0;
+    };
+    const pa = getPriority(a);
+    const pb = getPriority(b);
+    if (pa !== pb) return pb - pa; // 优先级高的在前
+    // 然后按原逻辑：创建时间降序，ID降序
     const da = a && a.createdAt ? Date.parse(a.createdAt) : NaN;
     const db = b && b.createdAt ? Date.parse(b.createdAt) : NaN;
     const va = Number.isNaN(da) ? 0 : da;
@@ -597,19 +647,7 @@
       let items = Array.isArray(base) ? base.slice() : [];
       const q = (searchInput.value || '').trim();
       if (type === 'A') items.sort(compareSummaryItems);
-      if (q) {
-        if (window.Poem && typeof Poem.fuzzySearch === 'function') {
-          items = Poem.fuzzySearch(items, q);
-        } else {
-          const ql = q.toLowerCase();
-          items = items.filter(it => {
-            return (it.id || '').includes(q) ||
-              (it.name || '').toLowerCase().includes(ql) ||
-              (it.creator || '').toLowerCase().includes(ql) ||
-              (it.otherStatement || '').toLowerCase().includes(ql);
-          });
-        }
-      }
+      if (q) items = await applySearchQuery(items, q);
       items = applyFilters(items);
       const headers = ['ID', '名称', '创建者', '创建日期', '审核者', '时长', '审核状态', '返修状态'];
       const rows = items.map(item => ({
@@ -681,19 +719,7 @@
       const base = await fetchItems(options && options.forceRefresh);
       let items = Array.isArray(base) ? base.slice() : [];
       if (type === 'A') items.sort(compareSummaryItems);
-      if (q) {
-        if (window.Poem && typeof Poem.fuzzySearch === 'function') {
-          items = Poem.fuzzySearch(items, q);
-        } else {
-          const ql = q.toLowerCase();
-          items = items.filter(it => {
-            return (it.id || '').includes(q) ||
-              (it.name || '').toLowerCase().includes(ql) ||
-              (it.creator || '').toLowerCase().includes(ql) ||
-              (it.otherStatement || '').toLowerCase().includes(ql);
-          });
-        }
-      }
+      if (q) items = await applySearchQuery(items, q);
       items = applyFilters(items);
       render(items);
     } catch (err) {

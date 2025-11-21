@@ -22,7 +22,7 @@
     "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
     "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-11-20T12:28:11.169Z",
+    "last_login_at": "2025-11-21T11:00:24.974Z",
     "profile_completed": true
   },
   {
@@ -35,7 +35,7 @@
     "status": "active",
     "created_at": "2025-11-05T13:43:39.468Z",
     "updated_at": "2025-11-05T13:46:33.827Z",
-    "last_login_at": "2025-11-17T10:47:37.033Z",
+    "last_login_at": "2025-11-21T10:06:30.204Z",
     "profile_completed": true
   },
   {
@@ -178,7 +178,7 @@
     "status": "active",
     "created_at": "2025-11-07T13:04:15.889Z",
     "updated_at": "2025-11-07T13:04:39.960Z",
-    "last_login_at": "2025-11-20T14:02:39.251Z",
+    "last_login_at": "2025-11-20T16:16:47.254Z",
     "profile_completed": true
   },
   {
@@ -269,7 +269,7 @@
     "status": "active",
     "created_at": "2025-11-08T09:24:15.188Z",
     "updated_at": "2025-11-08T09:24:34.681Z",
-    "last_login_at": "2025-11-17T12:48:42.430Z",
+    "last_login_at": "2025-11-21T10:58:37.379Z",
     "profile_completed": true
   },
   {
@@ -451,7 +451,7 @@
     "status": "active",
     "created_at": "2025-11-11T05:53:48.559Z",
     "updated_at": "2025-11-11T05:53:59.246Z",
-    "last_login_at": "2025-11-20T14:13:27.826Z",
+    "last_login_at": "2025-11-21T01:16:35.366Z",
     "profile_completed": true
   },
   {
@@ -464,7 +464,7 @@
     "status": "active",
     "created_at": "2025-11-11T08:38:52.467Z",
     "updated_at": "2025-11-11T08:39:09.075Z",
-    "last_login_at": "2025-11-20T12:42:21.859Z",
+    "last_login_at": "2025-11-21T10:59:25.805Z",
     "profile_completed": true
   },
   {
@@ -647,6 +647,32 @@
     "created_at": "2025-11-20T06:07:50.705Z",
     "updated_at": "2025-11-20T06:08:04.966Z",
     "last_login_at": "2025-11-20T06:07:50.705Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_51",
+    "username": "六价铁",
+    "password_hash": "$2a$10$FGKV4xmPJwbLdjmE99fk2ulsD2BbQ/zREvVQJpv1O7pK6kVPJnok6",
+    "role": "user",
+    "real_name": "蒋汶彤",
+    "student_id": "2510664",
+    "status": "active",
+    "created_at": "2025-11-21T00:45:47.640Z",
+    "updated_at": "2025-11-21T00:45:53.373Z",
+    "last_login_at": "2025-11-21T07:20:30.833Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_52",
+    "username": "吴悠然",
+    "password_hash": "$2a$10$XczvJ6opa6rLUQWLcEvTDubfMXkftjoJAfh6V1zwxtSRDhDXtP9Kq",
+    "role": "user",
+    "real_name": "吴悠然",
+    "student_id": "2511238",
+    "status": "active",
+    "created_at": "2025-11-21T06:20:44.909Z",
+    "updated_at": "2025-11-21T06:21:24.280Z",
+    "last_login_at": "2025-11-21T06:20:44.909Z",
     "profile_completed": true
   }
 ]

@@ -1,5 +1,43 @@
 (function () {
   const TYPES = ['W', 'G', 'C', 'E', 'S'];
+  const SEARCH_SCRIPTS = {
+    fuse: 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0',
+    pinyin: 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js'
+  };
+  const loadedScripts = new Map();
+
+  function loadScriptOnce(src) {
+    if (!src) return Promise.resolve();
+    if (loadedScripts.has(src)) return loadedScripts.get(src);
+    const promise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = (err) => {
+        loadedScripts.delete(src);
+        reject(err || new Error(`Failed to load script: ${src}`));
+      };
+      document.head.appendChild(script);
+    });
+    loadedScripts.set(src, promise);
+    return promise;
+  }
+
+  async function ensureSearchDeps() {
+    const tasks = [];
+    if (typeof window !== 'undefined') {
+      if (!window.Fuse) tasks.push(loadScriptOnce(SEARCH_SCRIPTS.fuse));
+      if (!window.PinyinPro) tasks.push(loadScriptOnce(SEARCH_SCRIPTS.pinyin));
+    }
+    if (tasks.length) {
+      try {
+        await Promise.all(tasks);
+      } catch (err) {
+        console.error('加载搜索依赖失败', err);
+      }
+    }
+  }
   function buildSearchTokens(text) {
     if (!text) return [];
     const str = String(text);
@@ -115,6 +153,7 @@
     },
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
     fuzzySearch: createFuzzySearch(),
+    ensureSearchDeps,
     // Link picker overlay
     openLinkPicker(onPick, options) {
       const opts = options || {};
