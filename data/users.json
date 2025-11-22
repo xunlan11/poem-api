@@ -22,7 +22,7 @@
     "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
     "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-11-21T11:00:24.974Z",
+    "last_login_at": "2025-11-22T04:39:11.989Z",
     "profile_completed": true
   },
   {
@@ -48,7 +48,7 @@
     "status": "active",
     "created_at": "2025-11-05T13:44:26.177Z",
     "updated_at": "2025-11-05T13:45:01.368Z",
-    "last_login_at": "2025-11-20T05:44:05.964Z",
+    "last_login_at": "2025-11-21T16:18:05.768Z",
     "profile_completed": true
   },
   {
@@ -74,7 +74,7 @@
     "status": "active",
     "created_at": "2025-11-05T14:35:04.556Z",
     "updated_at": "2025-11-05T14:36:32.649Z",
-    "last_login_at": "2025-11-20T14:44:43.800Z",
+    "last_login_at": "2025-11-21T12:33:11.386Z",
     "profile_completed": true
   },
   {
@@ -113,7 +113,7 @@
     "status": "active",
     "created_at": "2025-11-07T10:18:26.335Z",
     "updated_at": "2025-11-07T10:18:37.502Z",
-    "last_login_at": "2025-11-16T02:48:13.923Z",
+    "last_login_at": "2025-11-22T01:47:38.186Z",
     "profile_completed": true
   },
   {
@@ -165,7 +165,7 @@
     "status": "active",
     "created_at": "2025-11-07T11:49:16.674Z",
     "updated_at": "2025-11-07T11:49:55.193Z",
-    "last_login_at": "2025-11-18T09:20:27.516Z",
+    "last_login_at": "2025-11-21T14:53:56.557Z",
     "profile_completed": true
   },
   {
@@ -178,7 +178,7 @@
     "status": "active",
     "created_at": "2025-11-07T13:04:15.889Z",
     "updated_at": "2025-11-07T13:04:39.960Z",
-    "last_login_at": "2025-11-20T16:16:47.254Z",
+    "last_login_at": "2025-11-22T04:35:48.186Z",
     "profile_completed": true
   },
   {
@@ -204,7 +204,7 @@
     "status": "active",
     "created_at": "2025-11-08T02:25:11.762Z",
     "updated_at": "2025-11-08T02:25:26.056Z",
-    "last_login_at": "2025-11-14T05:27:39.216Z",
+    "last_login_at": "2025-11-22T00:04:41.233Z",
     "profile_completed": true
   },
   {
@@ -464,7 +464,7 @@
     "status": "active",
     "created_at": "2025-11-11T08:38:52.467Z",
     "updated_at": "2025-11-11T08:39:09.075Z",
-    "last_login_at": "2025-11-21T10:59:25.805Z",
+    "last_login_at": "2025-11-21T12:08:32.364Z",
     "profile_completed": true
   },
   {
@@ -477,7 +477,7 @@
     "status": "active",
     "created_at": "2025-11-11T10:32:21.619Z",
     "updated_at": "2025-11-11T10:32:31.529Z",
-    "last_login_at": "2025-11-20T14:02:23.886Z",
+    "last_login_at": "2025-11-21T23:30:37.253Z",
     "profile_completed": true
   },
   {
@@ -672,7 +672,33 @@
     "status": "active",
     "created_at": "2025-11-21T06:20:44.909Z",
     "updated_at": "2025-11-21T06:21:24.280Z",
-    "last_login_at": "2025-11-21T06:20:44.909Z",
+    "last_login_at": "2025-11-21T12:39:02.547Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_53",
+    "username": "hezhaoxiong",
+    "password_hash": "$2a$10$kEhD3xCL.Mtn8Szko4cKoeR/zalKgDzZjkvQytPIq4pxCenDHfV0m",
+    "role": "user",
+    "real_name": "贺昭雄",
+    "student_id": "2411779",
+    "status": "active",
+    "created_at": "2025-11-22T03:03:38.241Z",
+    "updated_at": "2025-11-22T03:03:57.596Z",
+    "last_login_at": "2025-11-22T04:31:06.536Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_54",
+    "username": "高伟",
+    "password_hash": "$2a$10$XaTb0o8NXzOlPGyECKdIJefvbwNk54idqaJRcK2LT.XWivqxEpudi",
+    "role": "user",
+    "real_name": "高伟",
+    "student_id": "2410064",
+    "status": "active",
+    "created_at": "2025-11-22T03:22:12.048Z",
+    "updated_at": "2025-11-22T03:22:26.242Z",
+    "last_login_at": "2025-11-22T03:22:12.048Z",
     "profile_completed": true
   }
 ]

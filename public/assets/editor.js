@@ -750,7 +750,7 @@
 
   function escapeHtml(s) { return String(s || '').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  // Autosize a textarea to fit its content (height grows as content increases)
+  // 自动调整textarea的大小以适应其内容（高度随内容增加而增长）
   function autosizeTextarea(el) {
     if (!el) return;
     try {
@@ -961,10 +961,10 @@
     delete container.__inlineSingleFocus;
   }
 
-  // Pair renderer: supports arbitrary property names as keys and separate placeholder texts
-  // key1/key2: property names in array objects to read/write
-  // ph1/ph2: placeholder text for inputs (optional, default to key names)
-  // opts can set wrapperClass, inputClass1, inputClass2
+  // 对渲染器：支持任意属性名称作为键和单独的占位符文本
+  // key1/key2: 数组对象中要读写的属性名称
+  // ph1/ph2: 输入的占位符文本（可选，默认为键名称）
+  // opts 可以设置 wrapperClass, inputClass1, inputClass2
   function renderInlinePairs(container, arr, key1, key2, ph1, ph2, opts) {
     opts = opts || {};
     const wrapperClass = opts.wrapperClass || 'ordered-item';
@@ -1751,13 +1751,13 @@
     return { collect, refresh: refreshFromNode };
   }
   function renderAnthology(node) {
-    // Use the simple field layout (same style as 诗词) — no section cards
+    // 使用简单的字段布局（与诗词相同的样式）— 无部分卡片
     const name = node ? node.fields?.title || node.fields?.name || '' : '';
     const author = node ? node.fields?.author || '' : '';
     const worksText = toMultilineText(node?.fields?.works);
     const overview = node ? node.extra?.overview || '' : '';
     const background = node ? node.extra?.background || '' : '';
-    // evaluation is an array of {source, content}
+    // evaluation 是 {source, content} 的数组
     let evaluation = node ? node.extra?.evaluation || [] : [];
     if (isNew && (!Array.isArray(evaluation) || evaluation.length === 0)) evaluation = [{ source: '', content: '' }];
 
@@ -1816,7 +1816,7 @@
 
 
   function renderPerson(node) {
-    // Simplified, form-based renderer to match renderPoem / renderAnthology style
+    // 简化的、基于表单的渲染器，以匹配renderPoem / renderAnthology风格
     const common = node ? node.fields?.common || '' : '';
     const name = node ? node.fields?.name || node.fields?.title || '' : '';
     const period = node ? node.fields?.period || '' : '';
@@ -1827,11 +1827,11 @@
     const posthumous = node ? node.fields?.posthumous || '' : '';
     const aliases = node ? node.fields?.aliases || '' : '';
     const school = node ? node.fields?.school || '' : '';
-    // joint may be legacy string or array of pair-objects; normalize to array
+    // joint 可能是遗留字符串或对对象的数组；标准化为数组
     let joint = node ? (Array.isArray(node.fields?.joint) ? node.fields.joint : (node.fields?.joint ? [{ 合称: node.fields.joint, '其他人物': '' }] : [])) : [];
     const repWorksText = toMultilineText(node?.fields?.repWorks);
     const anthosText = toMultilineText(node?.fields?.anthos);
-    // relations/chrono/evaluation/relatedE are pair-list structures; use let so we can modify them
+    // relations/chrono/evaluation/relatedE 是对列表结构；使用let以便修改它们
     let relations = node ? node.fields?.relations || [] : [];
     let chrono = node ? node.fields?.chrono || [] : [];
     const achievements = node ? node.extra?.achievements || '' : '';
@@ -1906,7 +1906,7 @@
       });
     } catch (e) { }
 
-    // Use generic renderers for simple lists and pairs
+    // 为简单列表和对使用通用渲染器
     const renderRelations = () => renderInlinePairs(relationsEl, relations, '人物', '关系', '人物', '关系', {
       linkFieldPrefix: 'fields.relations',
       onChange: (arr) => { },
@@ -1970,7 +1970,7 @@
     const otherStatement = node ? (node.fields?.otherStatement || (Array.isArray(node.fields?.otherStatements) ? node.fields.otherStatements[0] : '')) : '';
     const explanation = node ? node.extra?.explanation || node.extra?.explain || '' : '';
     const origin = node ? node.extra?.origin || '' : '';
-    // persons/examples used by renderers; make mutable (allow empty arrays)
+    // 渲染器使用的persons/examples；使其可变（允许空数组）
     const personsText = toMultilineText(node?.fields?.persons);
     let examples = node ? node.fields?.examples || [] : [];
     if (isNew) {

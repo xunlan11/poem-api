@@ -51,6 +51,7 @@
       if (me.role !== 'admin') { Poem.toast('需要管理员权限'); location.href = './'; return; }
 
       const tb = document.getElementById('tbody');
+      const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
       let users = []; // 存储用户列表
 
       const refresh = async () => {
@@ -80,7 +81,7 @@
 
           // 超级管理员(u_1)的特殊保护
           if (u.id === 'u_1') {
-            actions = '<span class="text-muted">超级管理员（受保护）</span>';
+            actions = '<span class="text-muted">超级管理员</span>';
           } else {
             // 角色切换按钮
             if (u.role === 'user') {
@@ -95,7 +96,7 @@
                 actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
                 actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
               } else {
-                actions += '<span class="text-muted">当前用户（不可降级）</span>';
+                actions += '<span class="text-muted">当前用户</span>';
               }
             }
 
@@ -105,7 +106,8 @@
             }
           }
 
-          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td><td>${u.role}</td><td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
+          const roleLabel = ROLE_LABELS[u.role] || u.role || '';
+          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td><td>${roleLabel}</td><td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
           tb.appendChild(tr);
         });
       };
