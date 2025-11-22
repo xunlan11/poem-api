@@ -102,7 +102,7 @@
       const creator = item.creator || '—';
       const createdAt = item.createdAt || '—';
       const reviewer = item.reviewer || '';
-      const duration = item.duration || '';
+      const duration = item.reviewDuration ?? '';
       const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || formatStatusLabel(item), REVIEW_STATUS_CLASS);
       const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
       return `<tr>

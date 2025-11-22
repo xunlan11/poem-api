@@ -298,7 +298,7 @@
     currentViewItems = rows.slice();
     pageItems.forEach(item => {
       const reviewerDisplay = item.reviewer || '';
-      const durationDisplay = item.duration || '';
+      const durationDisplay = item.reviewDuration ?? '';
       const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
       const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
       const typeCls = item.type ? `type-${item.type}` : '';
@@ -561,7 +561,7 @@
         items.forEach(it => {
           const creator = it.creator || '';
           const key = creator;
-          const dur = parseFloat(String(it.duration || '').trim());
+          const dur = parseFloat(String(it.reviewDuration ?? '').trim());
           const num = isNaN(dur) ? 0 : dur;
           if (!map.has(key)) map.set(key, { creator: creator, total: 0 });
           map.get(key).total += num;
@@ -618,7 +618,7 @@
         创建者: item.creator || '',
         创建日期: item.createdAt || '',
         审核者: item.reviewer || '',
-        时长: item.duration || '',
+        时长: item.reviewDuration ?? '',
         审核状态: item.reviewStatusLabel || item.reviewStatus || '',
         返修状态: item.reviewStatus === 'rejected' ? (item.repairStatusLabel || item.repairStatus || '') : ''
       }));

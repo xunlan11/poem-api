@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { pinyin } = require('pinyin-pro');
 const multer = require('multer');
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
@@ -30,7 +29,6 @@ fs.ensureDirSync(UPLOAD_DIR);
 function sanitizeNodeId(rawId) {
   if (!rawId) return '';
   const cleaned = String(rawId).trim().toUpperCase();
-  // Keep alphanumeric characters only to avoid filesystem issues
   const safe = cleaned.replace(/[^A-Z0-9]/g, '');
   return safe;
 }
@@ -123,7 +121,6 @@ async function loadStore() {
   TYPES.forEach(type => {
     if (!store[type]) store[type] = { lastId: 0, items: {} };
   });
-  // Users
   if (!(await fs.pathExists(USER_FILE))) {
     const now = new Date().toISOString();
     const admin = {
@@ -153,13 +150,12 @@ function idNumber(id) {
   return isNaN(num) ? 0 : num;
 }
 
+// 新id序号为当前类型的最小未使用正整数
 function nextId(type) {
-  // Return the smallest unused positive integer suffix for the given type (fills gaps).
   if (!TYPES.includes(type)) throw new Error('Invalid type');
   const used = new Set(Object.keys(store[type].items || {}).map(k => idNumber(k)));
   let i = 1;
   while (used.has(i)) i++;
-  // keep lastId at least as large as the allocated one
   store[type].lastId = Math.max(store[type].lastId || 0, i);
   return `${type}${pad5(i)}`;
 }
@@ -170,7 +166,6 @@ function findById(id) {
   if (TYPES.includes(type)) {
     return store[type].items[id] || null;
   }
-  // Fallback search across all types
   for (const t of TYPES) {
     if (store[t].items[id]) return store[t].items[id];
   }
@@ -178,7 +173,6 @@ function findById(id) {
 }
 
 function simplify(node) {
-  // Use type-aware name extraction so list views can show semantic fields:
   const fields = node.fields || {};
   let displayName = '';
   if (node.type === 'C') {
@@ -192,13 +186,11 @@ function simplify(node) {
   }
   const rawReviewer = node.meta?.reviewedBy || node.meta?.reviewedByName || '';
   const rawCreator = node.meta?.createdBy || node.meta?.createdByName || '';
-  // Extract evaluation/review entries from node.extra.evaluation (various shapes)
   let reviewerEntry = '';
   try {
     const evals = node.extra && Array.isArray(node.extra.evaluation) ? node.extra.evaluation : [];
     const parts = evals.map(e => {
       if (!e) return '';
-      // support multiple possible keys across node types/locales
       return String(e.content || e.内容 || e.review_comment || e.comment || e.备注 || '').trim();
     }).filter(Boolean);
     if (parts.length) reviewerEntry = parts.join(' / ');
@@ -218,7 +210,6 @@ function simplify(node) {
     creator: rawCreator || '',
     createdAt: node.meta?.createdAt || '',
     reviewer: rawReviewer || '',
-    duration: reviewDurationVal,
     reviewDuration: reviewDurationVal,
     expectedDuration: expectedDurationVal,
     reviewStatus: reviewStatusVal,
@@ -313,12 +304,10 @@ function fuzzySearch(items, q) {
   return fuse.search(q).map(r => r.item);
 }
 
-// Health
 app.get('/health', (req, res) => {
   res.type('text/plain').send('healthy');
 });
 
-// Stats
 app.get('/api/stats', (req, res) => {
   const stats = { total: 0, by_type: {} };
   for (const t of TYPES) {
@@ -329,7 +318,6 @@ app.get('/api/stats', (req, res) => {
   res.json(stats);
 });
 
-// List nodes
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
   const items = allItems(type);
@@ -356,14 +344,12 @@ app.get('/api/nodes', (req, res) => {
   res.json({ data: page, pagination: { total: searched.length, limit: lim, offset: off } });
 });
 
-// Get node by ID
 app.get('/api/node/:id', (req, res) => {
   const node = findById(req.params.id);
   if (!node) return res.status(404).json({ error: 'Not found' });
   res.json(node);
 });
 
-// Create node
 app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
   try {
     const { type, data } = req.body || {};
@@ -402,7 +388,6 @@ app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
   }
 });
 
-// Update node
 app.put('/api/node/:id', requireAuth, async (req, res) => {
   try {
     const id = req.params.id;
@@ -411,7 +396,7 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     const type = existing.type;
     const data = req.body || {};
     const previousImagePath = existing.extra?.image || '';
-    // Permission: user can only edit own nodes; reviewer/admin can edit all
+    // 权限：整理员只能编辑自己创建的条目，审核员或管理员可以编辑所有条目
     const isOwnerId = existing.meta?.createdById && existing.meta.createdById === req.user.id;
     const isOwnerName = existing.meta?.createdBy && (existing.meta.createdBy === (req.user.real_name || req.user.username));
     const isOwner = !!(isOwnerId || isOwnerName);
@@ -432,12 +417,10 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
 
     existing.meta = {
       ...existing.meta,
-      // Never allow client to override creator info
       createdById: existing.meta?.createdById || req.user.id,
       createdByName: existing.meta?.createdByName || formatUserDisplayName(req.user),
       createdBy: existing.meta?.createdBy || formatUserDisplayName(req.user),
       createdAt: normalizedCreatedAt,
-      // Reviewer/admin can optionally stamp review when requested
       reviewedById: canStampReview ? req.user.id : existing.meta?.reviewedById || '',
       reviewedByName: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedByName || '',
       reviewedBy: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedBy || '',
@@ -528,7 +511,7 @@ function authFromCookie(req, res, next) {
       req.user = { id: user.id, username: user.username, role: user.role, real_name: user.real_name, student_id: user.student_id, profile_completed: !!user.profile_completed };
     }
   } catch (e) {
-    // ignore
+    // 忽略错误
   }
   next();
 }
@@ -540,8 +523,7 @@ function requireAuth(req, res, next) {
 
 function requireProfile(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  // 管理员账号跳过真实姓名和学号要求
-  if (req.user.role === 'admin') return next();
+  if (req.user.role === 'admin') return next();  // 管理员账号跳过真实姓名和学号要求
   if (!req.user.real_name || !req.user.student_id) return res.status(400).json({ error: 'Profile incomplete' });
   next();
 }
@@ -556,7 +538,7 @@ function requireReviewerOrAdmin(req, res, next) {
   return res.status(403).json({ error: 'Forbidden' });
 }
 
-// 格式化用户显示名称：真实姓名(学号) 或 用户名
+// 用户名显示：姓名(学号)
 function formatUserDisplayName(user) {
   if (user.real_name && user.student_id) {
     return `${user.real_name}(${user.student_id})`;
@@ -571,7 +553,7 @@ app.post('/api/auth/login', async (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Missing credentials' });
   let u = findUserByUsername(username);
   if (!u) {
-    // First login -> auto register as normal user
+    // 首次登录 -> 自动注册为普通用户
     const now = new Date().toISOString();
     u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: now, profile_completed: false };
     users.push(u);

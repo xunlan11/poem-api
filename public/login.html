@@ -66,14 +66,11 @@
       btn.onclick = async () => {
         err.textContent = '';
         try {
-          console.log('开始登录，用户名:', u.value.trim());
           const loginResult = await Poem.api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: u.value.trim(), password: p.value }) });
-          console.log('登录响应:', loginResult);
 
           // 清除缓存的用户信息，强制重新获取
           window.__poem_me = undefined;
           const me2 = await Poem.me();
-          console.log('获取用户信息:', me2);
 
           if (rememberEl && rememberEl.checked) {
             try {

@@ -98,7 +98,6 @@ body {
 }
 
 .row-actions {
-	/* 首页卡片中的操作区域：不占据左侧剩余空间，改为靠右对齐 */
 	display: flex;
 	gap: 8px;
 	align-items: center;
