@@ -2047,7 +2047,7 @@
         </div>
         <div class="image-note muted">备注：支持 PNG/JPG/WebP/GIF，最大 5MB</div>
         <div id="natureImageBlock" class="image-upload-block">
-          <div id="natureImagePreview" class="image-preview">${imagePath ? `<img src="${escapeHtml(toImageSrc(imagePath))}" alt="图片预览">` : '<div class="muted">暂无图片</div>'}</div>
+          <div id="natureImagePreview" class="image-preview">${imagePath ? `<img data-src="${escapeHtml(toImageSrc(imagePath))}" alt="图片预览" loading="lazy">` : '<div class="muted">暂无图片</div>'}</div>
           <input id="natureImageInput" type="file" accept="image/*" style="display:none">
         </div>
       </div>
@@ -2087,6 +2087,25 @@
       examples.push({ 出处: '', 内容: '' });
       renderExamplesWrapper();
     });
+
+    // 延迟加载图片：仅在预览节点可见时设置 img.src
+    try {
+      const previewImg = imagePreview && imagePreview.querySelector('img[data-src]');
+      if (previewImg) {
+        const setSrc = () => {
+          if (!previewImg.getAttribute('src')) previewImg.setAttribute('src', previewImg.getAttribute('data-src'));
+        };
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => { if (en.isIntersecting) { setSrc(); io.disconnect(); } });
+          });
+          io.observe(previewImg);
+        } else {
+          // 回退：如果不支持 IntersectionObserver，稍后设定 src
+          window.requestAnimationFrame(setSrc);
+        }
+      }
+    } catch (e) { }
 
     function updateImagePreview() {
       if (!imagePreview) return;
