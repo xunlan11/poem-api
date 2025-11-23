@@ -116,7 +116,8 @@ body {
 	flex-shrink: 0;
 }
 
-.btn {
+.btn,
+.anno-editor .btn {
 	background: #eef2ff;
 	border: 1px solid var(--border);
 	color: var(--fg);
@@ -625,7 +626,8 @@ body {
 	align-self: center;
 }
 
-.btn.small {
+.btn.small,
+.anno-editor .btn.small {
 	padding: 4px 8px;
 	font-size: 12px;
 }

@@ -9,7 +9,7 @@
     "status": "active",
     "created_at": "2025-10-29T05:34:39.115Z",
     "updated_at": "2025-11-02T10:46:39.435Z",
-    "last_login_at": "2025-11-23T06:11:05.228Z",
+    "last_login_at": "2025-11-23T13:49:08.986Z",
     "profile_completed": false
   },
   {
@@ -22,7 +22,7 @@
     "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
     "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-11-23T06:15:14.435Z",
+    "last_login_at": "2025-11-23T13:50:41.103Z",
     "profile_completed": true
   },
   {
@@ -165,7 +165,7 @@
     "status": "active",
     "created_at": "2025-11-07T11:49:16.674Z",
     "updated_at": "2025-11-07T11:49:55.193Z",
-    "last_login_at": "2025-11-23T01:57:50.701Z",
+    "last_login_at": "2025-11-23T07:34:48.619Z",
     "profile_completed": true
   },
   {
@@ -477,7 +477,7 @@
     "status": "active",
     "created_at": "2025-11-11T10:32:21.619Z",
     "updated_at": "2025-11-11T10:32:31.529Z",
-    "last_login_at": "2025-11-23T03:40:40.318Z",
+    "last_login_at": "2025-11-23T13:46:02.277Z",
     "profile_completed": true
   },
   {
@@ -712,6 +712,19 @@
     "created_at": "2025-11-22T07:10:00.264Z",
     "updated_at": "2025-11-22T07:10:09.802Z",
     "last_login_at": "2025-11-22T07:10:00.264Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_56",
+    "username": "rocx",
+    "password_hash": "$2a$10$aeCgODKxdMgx3wm5aplC2OREQUSRiwabSQq9YbvBuSTw5zweLM0He",
+    "role": "user",
+    "real_name": "张若瑜",
+    "student_id": "2510679",
+    "status": "active",
+    "created_at": "2025-11-23T12:56:10.687Z",
+    "updated_at": "2025-11-23T12:56:37.184Z",
+    "last_login_at": "2025-11-23T12:56:10.687Z",
     "profile_completed": true
   }
 ]

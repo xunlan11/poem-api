@@ -1678,7 +1678,16 @@
       const leftTop = document.createElement('div'); leftTop.style.padding = '6px'; leftTop.style.border = '1px solid #f0f0f0'; leftTop.style.overflow = 'auto'; leftTop.style.maxHeight = '6em'; leftTop.textContent = annotation.text || '';
       const rightTop = document.createElement('div'); rightTop.style.gridColumn = '2 / 3'; rightTop.innerHTML = `<textarea class="anno-input" rows="1" style="width:100%;resize:none;overflow:hidden">${escapeHtml(annotation.note || '')}</textarea>`;
       const btnCell = document.createElement('div'); btnCell.style.display = 'flex'; btnCell.style.flexDirection = 'row'; btnCell.style.gap = '8px'; btnCell.style.alignItems = 'center';
-      const keep = document.createElement('button'); keep.textContent = '保留'; keep.style.padding = '6px 10px'; const del = document.createElement('button'); del.textContent = '删除'; del.style.padding = '6px 10px'; btnCell.appendChild(keep); btnCell.appendChild(del);
+      const keep = document.createElement('button');
+      keep.type = 'button';
+      keep.className = 'btn small';
+      keep.textContent = '保留';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'btn small';
+      del.textContent = '删除';
+      btnCell.appendChild(keep);
+      btnCell.appendChild(del);
       const spacer = document.createElement('div'); spacer.style.gridColumn = '1 / 3'; editor.appendChild(leftTop); editor.appendChild(rightTop); editor.appendChild(btnCell); editor.appendChild(spacer);
       annoArea.prepend(editor);
       const noteInputEl = editor.querySelector('.anno-input');
