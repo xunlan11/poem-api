@@ -798,6 +798,30 @@ body {
 	flex-shrink: 0;
 }
 
+/* 角色标签样式：为三种身份填充不同背景色 */
+.role-badge {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.role-user {
+  background: #bfdbfe; /* 浅蓝 */
+  color: #1e3a8a;     /* 深蓝文字 */
+}
+
+.role-reviewer {
+  background: #fde68a; /* 浅黄 */
+  color: #92400e;      /* 深黄文字 */
+}
+
+.role-admin {
+  background: #fecaca; /* 浅红 */
+  color: #991b1b;      /* 深红文字 */
+}
+
 .relation-grid.pair-grid .relation-inline .pair-label,
 .relation-grid.pair-grid .relation-inline .pair-value {
 	flex: 1 1 auto;

@@ -9,7 +9,7 @@
     "status": "active",
     "created_at": "2025-10-29T05:34:39.115Z",
     "updated_at": "2025-11-02T10:46:39.435Z",
-    "last_login_at": "2025-11-18T03:20:24.583Z",
+    "last_login_at": "2025-11-23T04:09:20.089Z",
     "profile_completed": false
   },
   {
@@ -22,7 +22,7 @@
     "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
     "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-11-22T05:57:42.144Z",
+    "last_login_at": "2025-11-23T04:28:28.848Z",
     "profile_completed": true
   },
   {
@@ -48,7 +48,7 @@
     "status": "active",
     "created_at": "2025-11-05T13:44:26.177Z",
     "updated_at": "2025-11-05T13:45:01.368Z",
-    "last_login_at": "2025-11-21T16:18:05.768Z",
+    "last_login_at": "2025-11-22T15:14:58.174Z",
     "profile_completed": true
   },
   {
@@ -113,7 +113,7 @@
     "status": "active",
     "created_at": "2025-11-07T10:18:26.335Z",
     "updated_at": "2025-11-07T10:18:37.502Z",
-    "last_login_at": "2025-11-22T01:47:38.186Z",
+    "last_login_at": "2025-11-23T02:32:53.977Z",
     "profile_completed": true
   },
   {
@@ -152,7 +152,7 @@
     "status": "active",
     "created_at": "2025-11-07T11:46:11.680Z",
     "updated_at": "2025-11-11T04:24:28.082Z",
-    "last_login_at": "2025-11-18T12:17:08.464Z",
+    "last_login_at": "2025-11-23T02:43:13.907Z",
     "profile_completed": true
   },
   {
@@ -165,7 +165,7 @@
     "status": "active",
     "created_at": "2025-11-07T11:49:16.674Z",
     "updated_at": "2025-11-07T11:49:55.193Z",
-    "last_login_at": "2025-11-21T14:53:56.557Z",
+    "last_login_at": "2025-11-23T01:57:50.701Z",
     "profile_completed": true
   },
   {
@@ -178,7 +178,7 @@
     "status": "active",
     "created_at": "2025-11-07T13:04:15.889Z",
     "updated_at": "2025-11-07T13:04:39.960Z",
-    "last_login_at": "2025-11-22T04:35:48.186Z",
+    "last_login_at": "2025-11-22T10:51:28.079Z",
     "profile_completed": true
   },
   {
@@ -204,7 +204,7 @@
     "status": "active",
     "created_at": "2025-11-08T02:25:11.762Z",
     "updated_at": "2025-11-08T02:25:26.056Z",
-    "last_login_at": "2025-11-22T00:04:41.233Z",
+    "last_login_at": "2025-11-22T14:48:43.847Z",
     "profile_completed": true
   },
   {
@@ -269,7 +269,7 @@
     "status": "active",
     "created_at": "2025-11-08T09:24:15.188Z",
     "updated_at": "2025-11-08T09:24:34.681Z",
-    "last_login_at": "2025-11-21T10:58:37.379Z",
+    "last_login_at": "2025-11-23T01:05:13.099Z",
     "profile_completed": true
   },
   {
@@ -334,7 +334,7 @@
     "status": "active",
     "created_at": "2025-11-11T00:37:10.948Z",
     "updated_at": "2025-11-11T00:37:42.907Z",
-    "last_login_at": "2025-11-14T15:18:08.983Z",
+    "last_login_at": "2025-11-22T17:19:23.539Z",
     "profile_completed": true
   },
   {
@@ -464,7 +464,7 @@
     "status": "active",
     "created_at": "2025-11-11T08:38:52.467Z",
     "updated_at": "2025-11-11T08:39:09.075Z",
-    "last_login_at": "2025-11-21T12:08:32.364Z",
+    "last_login_at": "2025-11-22T11:30:27.719Z",
     "profile_completed": true
   },
   {
@@ -477,7 +477,7 @@
     "status": "active",
     "created_at": "2025-11-11T10:32:21.619Z",
     "updated_at": "2025-11-11T10:32:31.529Z",
-    "last_login_at": "2025-11-21T23:30:37.253Z",
+    "last_login_at": "2025-11-23T03:40:40.318Z",
     "profile_completed": true
   },
   {
@@ -672,7 +672,7 @@
     "status": "active",
     "created_at": "2025-11-21T06:20:44.909Z",
     "updated_at": "2025-11-21T06:21:24.280Z",
-    "last_login_at": "2025-11-21T12:39:02.547Z",
+    "last_login_at": "2025-11-22T21:18:11.248Z",
     "profile_completed": true
   },
   {
@@ -698,7 +698,20 @@
     "status": "active",
     "created_at": "2025-11-22T03:22:12.048Z",
     "updated_at": "2025-11-22T03:22:26.242Z",
-    "last_login_at": "2025-11-22T03:22:12.048Z",
+    "last_login_at": "2025-11-22T07:01:33.869Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_55",
+    "username": "2212870",
+    "password_hash": "$2a$10$7JilVm/pkWkkh8DMDewnBeOoLRJJMDK1VbOO7Dy7fm4Rllze4grxu",
+    "role": "user",
+    "real_name": "况志强",
+    "student_id": "2212870",
+    "status": "active",
+    "created_at": "2025-11-22T07:10:00.264Z",
+    "updated_at": "2025-11-22T07:10:09.802Z",
+    "last_login_at": "2025-11-22T07:10:00.264Z",
     "profile_completed": true
   }
 ]

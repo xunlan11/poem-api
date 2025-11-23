@@ -52,6 +52,7 @@
 
       const tb = document.getElementById('tbody');
       const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
+      const ROLE_CLASSES = { user: 'role-user', reviewer: 'role-reviewer', admin: 'role-admin' };
       let users = []; // 存储用户列表
 
       const refresh = async () => {
@@ -107,7 +108,9 @@
           }
 
           const roleLabel = ROLE_LABELS[u.role] || u.role || '';
-          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td><td>${roleLabel}</td><td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
+          const roleClass = ROLE_CLASSES[u.role] || '';
+          const roleHtml = `<td><span class="role-badge ${roleClass}">${roleLabel}</span></td>`;
+          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
           tb.appendChild(tr);
         });
       };

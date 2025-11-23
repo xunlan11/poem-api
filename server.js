@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs-extra');
 const morgan = require('morgan');
+const compression = require('compression');
 const Fuse = require('fuse.js');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
@@ -16,6 +17,7 @@ const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'lax' };
 
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('combined'));
+app.use(compression());
 app.use(cookieParser());
 app.use(authFromCookie);
 
