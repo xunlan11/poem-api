@@ -1,9 +1,4 @@
 (function () {
-  // Gate access: require login, and for new node require profile
-  (async function () {
-    const ok = await Poem.requireLogin(); if (!ok) return;
-    if (Poem.qs('new') === '1') { const ok2 = await Poem.requireProfile(); if (!ok2) return; }
-  })();
   const TYPES = Poem.TYPES;
   const id = Poem.qs('id');
   let isNew = Poem.qs('new') === '1';
@@ -2344,7 +2339,20 @@
     if (isNew && !TYPES.includes(type)) { Poem.toast('缺少类型参数'); return; }
 
     // Get current user info for auto-filling
-    const me = await Poem.me();
+    let me = await Poem.me();
+    if (isNew) {
+      const ensureProfile = async () => {
+        const ok = await Poem.requireProfile();
+        if (!ok) return false;
+        me = await Poem.me();
+        return !!me;
+      };
+      const needsProfile = !me || (me.role !== 'admin' && (!me.real_name || !me.student_id));
+      if (needsProfile) {
+        const ok = await ensureProfile();
+        if (!ok) return;
+      }
+    }
     isReviewerOrAdmin = !!(me && (me.role === 'reviewer' || me.role === 'admin'));
     isAdmin = me?.role === 'admin';
 

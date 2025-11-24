@@ -178,7 +178,8 @@
     pending: 'status-pending',
     rejected: 'status-rejected',
     approved: 'status-approved',
-    archived: 'status-archived'
+    archived: 'status-archived',
+    final: 'status-final'
   };
   const REPAIR_STATUS_CLASS = {
     unfinished: 'status-rejected',

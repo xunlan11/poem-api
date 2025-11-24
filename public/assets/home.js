@@ -11,7 +11,8 @@
     pending: 'status-pending',
     rejected: 'status-rejected',
     approved: 'status-approved',
-    archived: 'status-archived'
+    archived: 'status-archived',
+    final: 'status-final'
   };
   const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
   const REPAIR_STATUS_CLASS = {

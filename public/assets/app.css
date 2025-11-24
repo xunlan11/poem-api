@@ -454,6 +454,12 @@ body {
 	color: #b45309;
 }
 
+.status-final {
+  background: #f3e8ff;
+  border-color: #d8b4fe;
+  color: #6b21a8;
+}
+
 .status-default {
 	background: #e2e8f0;
 	border-color: #cbd5f5;
