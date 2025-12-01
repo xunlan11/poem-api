@@ -17,11 +17,9 @@
   const PAGE_SIZE = 15;
   const initialPageParam = parseInt(Poem.qs('page'), 10);
   let currentPage = Number.isNaN(initialPageParam) || initialPageParam < 1 ? 1 : initialPageParam;
-  let filteredItems = [];
-  let allItems = [];
-  let itemsLoaded = false;
-  let loadPromise = null;
   let searchTimer = null;
+  let totalCount = 0;
+  let currentItems = [];
   // Only allow create for the main 4 types — if createBtn exists (some layouts may remove it)
   const CREATABLE = ['W', 'G', 'C', 'E', 'S'];
   if (createBtn) {
@@ -56,7 +54,7 @@
   let reviewFilter = '';
   let repairFilter = '';
   let loadXlsxPromise = null;
-  let currentViewItems = [];
+  const EXPORT_LIMIT = 200;
 
   const initialSearch = Poem.qs('q') || '';
   if (searchInput) searchInput.value = initialSearch;
@@ -127,46 +125,53 @@
     return trimmed ? encodeURIComponent(trimmed) : '';
   }
 
-  async function fetchItems(forceRefresh) {
-    if (forceRefresh) {
-      itemsLoaded = false;
-      allItems = [];
+  function buildBaseQueryParams() {
+    const params = new URLSearchParams();
+    if (type) params.set('type', type);
+    const q = (searchInput?.value || '').trim();
+    if (q) params.set('search', q);
+    if (dateFilter.start) params.set('ds', dateFilter.start);
+    if (dateFilter.end) params.set('de', dateFilter.end);
+    if (typeFilter) params.set('ft', typeFilter);
+    if (reviewFilter) params.set('rs', reviewFilter);
+    if (reviewFilter === 'rejected' && repairFilter) params.set('rr', repairFilter);
+    return params;
+  }
+
+  function buildPageQuery(page, pageSize) {
+    const params = buildBaseQueryParams();
+    const limit = pageSize || PAGE_SIZE;
+    const offset = Math.max(0, (Math.max(1, page) - 1) * limit);
+    params.set('limit', String(limit));
+    params.set('offset', String(offset));
+    return params;
+  }
+
+  async function fetchPage(page) {
+    const params = buildPageQuery(page, PAGE_SIZE);
+    const query = params.toString();
+    return Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
+  }
+
+  async function fetchAllMatching(limitPerRequest = EXPORT_LIMIT) {
+    const params = buildBaseQueryParams();
+    const limit = Math.min(Math.max(limitPerRequest || EXPORT_LIMIT, 1), 200);
+    let offset = 0;
+    const collected = [];
+    while (true) {
+      params.set('limit', String(limit));
+      params.set('offset', String(offset));
+      const query = params.toString();
+      const { data, pagination } = await Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
+      const chunk = Array.isArray(data) ? data : [];
+      collected.push(...chunk);
+      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : null;
+      if (!pagination || !chunk.length) break;
+      if (Number.isInteger(total) && offset + chunk.length >= total) break;
+      if (chunk.length < limit) break;
+      offset += limit;
     }
-    if (itemsLoaded) return allItems;
-    if (loadPromise) return loadPromise;
-    const limit = 200;
-    const base = type ? `type=${type}&` : '';
-    const pending = (async () => {
-      const collected = [];
-      let offset = 0;
-      let total = Infinity;
-      while (offset < total) {
-        const { data, pagination } = await Poem.api(`/api/nodes?${base}limit=${limit}&offset=${offset}`);
-        const chunk = Array.isArray(data) ? data : [];
-        collected.push(...chunk);
-        const received = chunk.length;
-        if (pagination && typeof pagination.total !== 'undefined') {
-          const parsedTotal = parseInt(pagination.total, 10);
-          if (!Number.isNaN(parsedTotal)) total = parsedTotal;
-        } else if (received < limit) {
-          total = offset + received;
-        }
-        offset += limit;
-        if (!pagination && received < limit) break;
-        if (received < limit) break;
-      }
-      return collected;
-    })();
-    loadPromise = pending.then(items => {
-      allItems = items;
-      itemsLoaded = true;
-      return allItems;
-    }).catch(err => {
-      itemsLoaded = false;
-      allItems = [];
-      throw err;
-    }).finally(() => { loadPromise = null; });
-    return loadPromise;
+    return collected;
   }
 
   function queueSearch() {
@@ -197,15 +202,6 @@
     return Number.isNaN(num) ? 0 : num;
   }
 
-  function compareSummaryItems(a, b) {
-    const da = a && a.createdAt ? Date.parse(a.createdAt) : NaN;
-    const db = b && b.createdAt ? Date.parse(b.createdAt) : NaN;
-    const va = Number.isNaN(da) ? 0 : da;
-    const vb = Number.isNaN(db) ? 0 : db;
-    if (vb !== va) return vb - va;
-    return idNumber(b?.id || '') - idNumber(a?.id || '');
-  }
-
   function renderStatusTag(status, label, classMap) {
     if (!label) return '';
     const cls = classMap[status] || 'status-default';
@@ -213,12 +209,11 @@
   }
 
   function goToPage(page) {
-    const totalPages = filteredItems.length ? Math.ceil(filteredItems.length / PAGE_SIZE) : 1;
+    const totalPages = totalCount ? Math.ceil(totalCount / PAGE_SIZE) : 1;
     const parsed = parseInt(page, 10);
     const target = Math.max(1, Math.min(Number.isNaN(parsed) ? currentPage : parsed, totalPages));
     if (target === currentPage) return;
-    currentPage = target;
-    renderCurrentPage();
+    search({ keepPage: true, page: target }).catch(err => { console.error(err); });
   }
 
   function renderPagination(totalCount, totalPages) {
@@ -285,18 +280,16 @@
   }
 
   function renderCurrentPage() {
-    const rows = Array.isArray(filteredItems) ? filteredItems : [];
-    const total = rows.length;
-    const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
+    const rows = Array.isArray(currentItems) ? currentItems : [];
+    const total = Math.max(0, parseInt(totalCount, 10) || 0);
+    const totalPages = total ? Math.max(1, Math.ceil(total / PAGE_SIZE)) : 1;
     if (currentPage < 1) currentPage = 1;
     if (currentPage > totalPages) currentPage = totalPages;
     if (!tbody) return;
     tbody.innerHTML = '';
     syncQueryParams();
     const currentQueryEncoded = getEncodedReturnQuery();
-    const start = total ? (currentPage - 1) * PAGE_SIZE : 0;
-    const pageItems = rows.slice(start, start + PAGE_SIZE);
-    currentViewItems = rows.slice();
+    const pageItems = rows;
     pageItems.forEach(item => {
       const reviewerDisplay = item.reviewer || '';
       const durationDisplay = item.reviewDuration ?? '';
@@ -341,13 +334,7 @@
             try {
               await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
               Poem.toast('删除成功');
-              if (Array.isArray(allItems)) {
-                const pos = allItems.findIndex(entry => String(entry?.id || '') === String(id));
-                if (pos > -1) allItems.splice(pos, 1);
-              }
-              filteredItems = filteredItems.filter(item => String(item?.id || '') !== String(id));
-              currentViewItems = currentViewItems.filter(item => String(item?.id || '') !== String(id));
-              renderCurrentPage();
+              await search({ keepPage: true });
               return;
             } catch (err) {
               console.error(err);
@@ -408,30 +395,6 @@
         archiveBtn.addEventListener('click', handleArchiveAction);
       }
     }
-  }
-
-  function applyFilters(items) {
-    if (!items || !items.length) return items;
-    return items.filter(it => {
-      if (typeFilter) {
-        if ((it.type || '') !== typeFilter) return false;
-      }
-      // date filter
-      if (dateFilter.start) {
-        const created = it.createdAt ? Date.parse(it.createdAt) : NaN;
-        const s = Date.parse(dateFilter.start);
-        const e = dateFilter.end ? (Date.parse(dateFilter.end) + 86400000 - 1) : (Date.parse(dateFilter.start) + 86400000 - 1);
-        if (isNaN(created) || created < s || created > e) return false;
-      }
-      // review status filter
-      if (reviewFilter) {
-        if ((it.reviewStatus || '') !== reviewFilter) return false;
-        if (reviewFilter === 'rejected' && repairFilter) {
-          if ((it.repairStatus || '') !== repairFilter) return false;
-        }
-      }
-      return true;
-    });
   }
 
   function createModal(titleText) {
@@ -556,7 +519,11 @@
       // perform export
       try {
         await ensureXLSX();
-        const items = Array.isArray(currentViewItems) ? currentViewItems : [];
+        const items = await fetchAllMatching();
+        if (!items.length) {
+          Poem.toast('没有可导出的记录');
+          return;
+        }
         // aggregate by creator string
         const map = new Map();
         items.forEach(it => {
@@ -594,24 +561,11 @@
   async function handleExportList() {
     try {
       await ensureXLSX();
-      const base = await fetchItems();
-      let items = Array.isArray(base) ? base.slice() : [];
-      const q = (searchInput.value || '').trim();
-      if (type === 'A') items.sort(compareSummaryItems);
-      if (q) {
-        if (window.Poem && typeof Poem.fuzzySearch === 'function') {
-          items = Poem.fuzzySearch(items, q);
-        } else {
-          const ql = q.toLowerCase();
-          items = items.filter(it => {
-            return (it.id || '').includes(q) ||
-              (it.name || '').toLowerCase().includes(ql) ||
-              (it.creator || '').toLowerCase().includes(ql) ||
-              (it.otherStatement || '').toLowerCase().includes(ql);
-          });
-        }
+      const items = await fetchAllMatching();
+      if (!items.length) {
+        Poem.toast('没有可导出的数据');
+        return;
       }
-      items = applyFilters(items);
       const headers = ['ID', '名称', '创建者', '创建日期', '审核者', '时长', '审核状态', '返修状态'];
       const rows = items.map(item => ({
         ID: item.id || '',
@@ -640,7 +594,7 @@
       Poem.toast('仅管理员可用');
       return;
     }
-    const items = Array.isArray(currentViewItems) ? currentViewItems : [];
+    const items = await fetchAllMatching();
     if (!items.length) {
       alert('当前筛选没有可归档的记录。');
       return;
@@ -660,7 +614,7 @@
       }
       await Poem.api('/api/nodes/archive', { method: 'POST', body: JSON.stringify({ ids }) });
       Poem.toast('归档成功');
-      await search({ forceRefresh: true, keepPage: true });
+      await search({ keepPage: true });
     } catch (err) {
       console.error(err);
       Poem.toast('归档失败');
@@ -669,34 +623,23 @@
     }
   }
 
-  function render(items) {
-    filteredItems = Array.isArray(items) ? items.slice() : [];
-    renderCurrentPage();
-  }
-
   async function search(options) {
-    const q = (searchInput.value || '').trim();
     try {
       const keepPage = !!(options && options.keepPage);
-      if (!keepPage) currentPage = 1;
-      const base = await fetchItems(options && options.forceRefresh);
-      let items = Array.isArray(base) ? base.slice() : [];
-      if (type === 'A') items.sort(compareSummaryItems);
-      if (q) {
-        if (window.Poem && typeof Poem.fuzzySearch === 'function') {
-          items = Poem.fuzzySearch(items, q);
-        } else {
-          const ql = q.toLowerCase();
-          items = items.filter(it => {
-            return (it.id || '').includes(q) ||
-              (it.name || '').toLowerCase().includes(ql) ||
-              (it.creator || '').toLowerCase().includes(ql) ||
-              (it.otherStatement || '').toLowerCase().includes(ql);
-          });
-        }
+      const requestedPage = options && Number(options.page);
+      let targetPage = keepPage ? (Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : currentPage || 1) : 1;
+      if (!keepPage) targetPage = 1;
+      const { data, pagination } = await fetchPage(targetPage);
+      const rows = Array.isArray(data) ? data : [];
+      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : rows.length;
+      currentItems = rows;
+      totalCount = Number.isNaN(total) ? rows.length : total;
+      currentPage = targetPage;
+      if (!rows.length && totalCount > 0 && targetPage > 1 && !options?.__retry) {
+        await search({ keepPage: true, page: targetPage - 1, __retry: true });
+        return;
       }
-      items = applyFilters(items);
-      render(items);
+      renderCurrentPage();
     } catch (err) {
       console.error(err);
       Poem.toast('加载失败');

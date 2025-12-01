@@ -26,6 +26,33 @@ const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 
 fs.ensureDirSync(UPLOAD_DIR);
 
+const versionClients = new Set();
+let currentVersion = null;
+
+function cleanupVersionClient(entry) {
+  if (!entry) return;
+  try { entry.res.end(); } catch (err) { }
+  clearInterval(entry.heartbeat);
+  versionClients.delete(entry);
+}
+
+function broadcastVersion(version) {
+  if (!versionClients.size || !version) return;
+  const payload = `event: version\ndata: ${JSON.stringify({ version })}\n\n`;
+  for (const entry of Array.from(versionClients)) {
+    try {
+      entry.res.write(payload);
+    } catch (err) {
+      cleanupVersionClient(entry);
+    }
+  }
+}
+
+function setAndBroadcastVersion(nextVersion) {
+  currentVersion = nextVersion;
+  broadcastVersion(currentVersion);
+}
+
 function sanitizeNodeId(rawId) {
   if (!rawId) return '';
   const cleaned = String(rawId).trim().toUpperCase();
@@ -320,8 +347,49 @@ app.get('/api/stats', (req, res) => {
 
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
-  const items = allItems(type);
-  const searched = fuzzySearch(items, search);
+  const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
+  const reviewStatus = String(req.query.reviewStatus || req.query.rs || '').trim().toLowerCase();
+  const repairStatus = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
+  const startRaw = String(req.query.startDate || req.query.start || req.query.ds || '').trim();
+  const endRaw = String(req.query.endDate || req.query.end || req.query.de || '').trim();
+
+  const parseDate = (value) => {
+    if (!value) return null;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+    const ts = Date.parse(value);
+    return Number.isNaN(ts) ? null : ts;
+  };
+  const startTs = parseDate(startRaw);
+  const endTs = parseDate(endRaw);
+  const endInclusive = typeof endTs === 'number' ? endTs + 86400000 - 1 : null;
+
+  const baseItems = allItems(type);
+  let filtered = baseItems;
+  if (filterType && TYPES.includes(filterType)) {
+    filtered = filtered.filter(item => item?.type === filterType);
+  }
+  if (startTs || endInclusive) {
+    filtered = filtered.filter(item => {
+      const createdValue = item?.meta?.createdAt || '';
+      const createdTs = Date.parse(createdValue);
+      if (Number.isNaN(createdTs)) return false;
+      if (startTs && createdTs < startTs) return false;
+      if (endInclusive && createdTs > endInclusive) return false;
+      return true;
+    });
+  }
+  const allowedStatuses = new Set(['pending', 'rejected', 'approved', 'archived', 'final']);
+  const normalizedReview = allowedStatuses.has(reviewStatus) ? reviewStatus : '';
+  if (normalizedReview) {
+    filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') === normalizedReview);
+  }
+  const allowedRepair = new Set(['unfinished', 'finished']);
+  const normalizedRepair = normalizedReview === 'rejected' && allowedRepair.has(repairStatus) ? repairStatus : '';
+  if (normalizedRepair) {
+    filtered = filtered.filter(item => (item?.extra?.repairStatus || '') === normalizedRepair);
+  }
+
+  const searched = fuzzySearch(filtered, search);
   const off = Math.max(parseInt(offset) || 0, 0);
   const lim = Math.min(Math.max(parseInt(limit) || 50, 1), 200);
   const hasSearch = typeof search === 'string' && search.trim();
@@ -341,7 +409,7 @@ app.get('/api/nodes', (req, res) => {
     }
   }
   const page = ordered.slice(off, off + lim).map(simplify);
-  res.json({ data: page, pagination: { total: searched.length, limit: lim, offset: off } });
+  res.json({ data: page, pagination: { total: ordered.length, limit: lim, offset: off } });
 });
 
 app.get('/api/node/:id', (req, res) => {
@@ -469,6 +537,40 @@ app.get('/api/search', (req, res) => {
   const items = allItems(type);
   const results = fuzzySearch(items, q).map(simplify).slice(0, 50);
   res.json({ query: q || '', results });
+});
+
+app.get('/api/version', (req, res) => {
+  res.json({ version: currentVersion });
+});
+
+app.get('/api/version/stream', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders?.();
+  if (currentVersion) {
+    res.write(`event: version\ndata: ${JSON.stringify({ version: currentVersion })}\n\n`);
+  }
+  const entry = {
+    res,
+    heartbeat: setInterval(() => {
+      try { res.write(':ping\n\n'); } catch (err) { cleanupVersionClient(entry); }
+    }, 30000)
+  };
+  versionClients.add(entry);
+  req.on('close', () => cleanupVersionClient(entry));
+});
+
+app.post('/api/version/broadcast', requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const requested = typeof req.body?.version === 'string' ? req.body.version.trim() : '';
+    if (!requested) return res.status(400).json({ error: 'Missing version' });
+    setAndBroadcastVersion(requested);
+    res.json({ ok: true, version: currentVersion });
+  } catch (err) {
+    console.error('Failed to broadcast version', err);
+    res.status(500).json({ error: 'Failed to broadcast version' });
+  }
 });
 
 // Static UI

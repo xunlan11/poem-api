@@ -812,7 +812,8 @@ body {
 	padding: 4px 10px;
 	border-radius: 999px;
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 400;
+	font-family: inherit;
 }
 
 .role-user {
@@ -828,6 +829,60 @@ body {
 .role-admin {
   background: #fecaca; /* 浅红 */
   color: #991b1b;      /* 深红文字 */
+}
+
+.update-banner {
+	position: fixed;
+	bottom: 24px;
+	right: 24px;
+	background: #0f172a;
+	color: #f1f5f9;
+	padding: 12px 18px;
+	border-radius: 999px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+	opacity: 0;
+	transform: translateY(10px);
+	transition: opacity 0.25s ease, transform 0.25s ease;
+	z-index: 9999;
+}
+
+.update-banner--visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.update-banner__text {
+	font-size: 14px;
+}
+
+.update-banner__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.update-banner__refresh {
+	background: #22c55e;
+	border-color: #16a34a;
+	color: #052e16;
+}
+
+.update-banner__dismiss {
+	background: transparent;
+	border: none;
+	color: inherit;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0 4px;
+}
+
+.update-banner--loading .update-banner__refresh {
+	opacity: 0.6;
+	pointer-events: none;
 }
 
 .relation-grid.pair-grid .relation-inline .pair-label,

@@ -17,7 +17,9 @@
     <section class="section-card">
       <div class="actions">
         <input id="userSearch" class="search" placeholder="按实名或完整学号搜索">
+        <span id="userCount" class="list-count">共 0 人</span>
       </div>
+      <div id="userPagination" class="pagination-bar"></div>
       <table class="table user-table">
         <colgroup>
           <col class="col-id">
@@ -51,82 +53,195 @@
       if (me.role !== 'admin') { Poem.toast('需要管理员权限'); location.href = './'; return; }
 
       const tb = document.getElementById('tbody');
+      const searchInput = document.getElementById('userSearch');
+      const paginationEl = document.getElementById('userPagination');
+      const countEl = document.getElementById('userCount');
+      const PAGE_SIZE = 15;
       const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
       const ROLE_CLASSES = { user: 'role-user', reviewer: 'role-reviewer', admin: 'role-admin' };
-      let users = []; // 存储用户列表
+      let allUsers = [];
+      let filteredUsers = [];
+      let currentPage = 1;
 
-      const refresh = async () => {
-        users = await Poem.api('/api/users');
-        tb.innerHTML = '';
-        // 读取搜索关键字，并按实名或学号过滤（大小写不敏感）
-        const qEl = document.getElementById('userSearch');
-        const q = (qEl && qEl.value) ? String(qEl.value).trim().toLowerCase() : '';
-        const filtered = (q ? users.filter(u => {
-          const rn = (u.real_name || '').toLowerCase();
-          const sid = (u.student_id || '').toLowerCase();
-          // 实名允许部分匹配；学号要求完整匹配
-          return (rn && rn.includes(q)) || (sid && sid === q);
-        }) : users).slice();
-        // 按用户ID（例如 u_1, u_2）递增排序
-        filtered.sort((a, b) => {
+      function sortUsers(list) {
+        return list.sort((a, b) => {
           const pa = parseInt(String(a.id).split('_')[1] || '0', 10);
           const pb = parseInt(String(b.id).split('_')[1] || '0', 10);
           if (!isNaN(pa) && !isNaN(pb)) return pa - pb;
           return String(a.id).localeCompare(String(b.id));
         });
-        filtered.forEach(u => {
-          const tr = document.createElement('tr');
+      }
 
-          // 根据用户角色和ID生成不同的操作按钮
-          let actions = '';
+      function filterUsers() {
+        const q = (searchInput && searchInput.value ? searchInput.value : '').trim().toLowerCase();
+        const base = allUsers.slice();
+        if (!q) return sortUsers(base);
+        return sortUsers(base.filter(u => {
+          const rn = (u.real_name || '').toLowerCase();
+          const sid = (u.student_id || '').toLowerCase();
+          return (rn && rn.includes(q)) || (sid && sid === q);
+        }));
+      }
 
-          // 超级管理员(u_1)的特殊保护
-          if (u.id === 'u_1') {
-            actions = '<span class="text-muted">超级管理员</span>';
-          } else {
-            // 角色切换按钮
-            if (u.role === 'user') {
-              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
-              actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
-            } else if (u.role === 'reviewer') {
+      function updateCountDisplay(total) {
+        if (!countEl) return;
+        const safeTotal = typeof total === 'number' && !isNaN(total) ? total : 0;
+        countEl.textContent = `共 ${safeTotal} 人`;
+      }
+
+      function renderRow(u) {
+        const tr = document.createElement('tr');
+        let actions = '';
+        if (u.id === 'u_1') {
+          actions = '<span class="text-muted">超级管理员</span>';
+        } else {
+          if (u.role === 'user') {
+            actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+          } else if (u.role === 'reviewer') {
+            actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+          } else if (u.role === 'admin') {
+            if (u.id !== me.id) {
               actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
-              actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
-            } else if (u.role === 'admin') {
-              // 防止管理员降级自己
-              if (u.id !== me.id) {
-                actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
-                actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
-              } else {
-                actions += '<span class="text-muted">当前用户</span>';
-              }
-            }
-
-            // 删除按钮（保护超级管理员与当前用户）
-            if (u.id !== 'u_1' && u.id !== me.id) {
-              actions += ` <button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
+              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
+            } else {
+              actions += '<span class="text-muted">当前用户</span>';
             }
           }
+          if (u.id !== 'u_1' && u.id !== me.id) {
+            actions += ` <button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
+          }
+        }
+        const roleLabel = ROLE_LABELS[u.role] || u.role || '';
+        const roleClass = ROLE_CLASSES[u.role] || '';
+        const roleHtml = `<td><span class="role-badge ${roleClass}">${roleLabel}</span></td>`;
+        tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
+        return tr;
+      }
 
-          const roleLabel = ROLE_LABELS[u.role] || u.role || '';
-          const roleClass = ROLE_CLASSES[u.role] || '';
-          const roleHtml = `<td><span class="role-badge ${roleClass}">${roleLabel}</span></td>`;
-          tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
-          tb.appendChild(tr);
+      function renderPagination(totalCount, totalPages) {
+        if (!paginationEl) return;
+        paginationEl.innerHTML = '';
+        if (countEl) {
+          countEl.classList.add('pagination-count');
+          paginationEl.appendChild(countEl);
+        }
+        if (!totalCount) {
+          const empty = document.createElement('span');
+          empty.className = 'pagination-info';
+          empty.textContent = '暂无用户';
+          paginationEl.appendChild(empty);
+          return;
+        }
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'btn small';
+        prevBtn.type = 'button';
+        prevBtn.textContent = '上一页';
+        prevBtn.disabled = currentPage <= 1;
+        prevBtn.addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage -= 1;
+            renderCurrentPage();
+          }
         });
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn small';
+        nextBtn.type = 'button';
+        nextBtn.textContent = '下一页';
+        nextBtn.disabled = currentPage >= totalPages;
+        nextBtn.addEventListener('click', () => {
+          if (currentPage < totalPages) {
+            currentPage += 1;
+            renderCurrentPage();
+          }
+        });
+
+        const info = document.createElement('span');
+        info.className = 'pagination-info';
+        info.textContent = `第 ${currentPage} / ${totalPages} 页`;
+
+        const jumpWrapper = document.createElement('div');
+        jumpWrapper.className = 'pagination-jump';
+        const jumpText = document.createElement('span');
+        jumpText.textContent = '跳至';
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'pagination-input';
+        input.min = '1';
+        input.max = String(totalPages);
+        input.value = String(currentPage);
+        input.title = '输入页码后按回车';
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            const target = parseInt(input.value, 10);
+            if (!isNaN(target)) {
+              goToPage(target);
+            }
+          }
+        });
+        input.addEventListener('blur', () => { input.value = String(currentPage); });
+        const suffix = document.createElement('span');
+        suffix.textContent = '页';
+        jumpWrapper.appendChild(jumpText);
+        jumpWrapper.appendChild(input);
+        jumpWrapper.appendChild(suffix);
+
+        paginationEl.appendChild(prevBtn);
+        paginationEl.appendChild(info);
+        paginationEl.appendChild(nextBtn);
+        paginationEl.appendChild(jumpWrapper);
+      }
+
+      function goToPage(page) {
+        const totalPages = filteredUsers.length ? Math.ceil(filteredUsers.length / PAGE_SIZE) : 1;
+        const parsed = parseInt(page, 10);
+        const target = Math.max(1, Math.min(Number.isNaN(parsed) ? currentPage : parsed, totalPages));
+        if (target === currentPage) return;
+        currentPage = target;
+        renderCurrentPage();
+      }
+
+      function renderCurrentPage(options = {}) {
+        const { resetPage = false } = options;
+        filteredUsers = filterUsers();
+        const total = filteredUsers.length;
+        const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
+        if (resetPage) currentPage = 1;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        const start = total ? (currentPage - 1) * PAGE_SIZE : 0;
+        const pageItems = filteredUsers.slice(start, start + PAGE_SIZE);
+        tb.innerHTML = '';
+        pageItems.forEach(u => { tb.appendChild(renderRow(u)); });
+        updateCountDisplay(total);
+        renderPagination(total, totalPages);
+      }
+
+      const refreshUsers = async ({ resetPage = false } = {}) => {
+        allUsers = await Poem.api('/api/users');
+        renderCurrentPage({ resetPage });
       };
-      const userSearchInput = document.getElementById('userSearch');
+
       let searchTimer = null;
-      userSearchInput.addEventListener('input', () => {
+      searchInput.addEventListener('input', () => {
         if (searchTimer) clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => { refresh(); }, 250);
+        searchTimer = setTimeout(() => { renderCurrentPage({ resetPage: true }); }, 250);
       });
-      userSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); refresh(); } });
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          renderCurrentPage({ resetPage: true });
+        }
+      });
       tb.addEventListener('click', async (e) => {
         const btn = e.target.closest('button'); if (!btn) return;
         const id = btn.getAttribute('data-id'); const act = btn.getAttribute('data-act');
 
         // 确认操作
-        const user = users.find(u => u.id === id);
+        const user = allUsers.find(u => u.id === id);
         if (!user) return;
 
         let confirmMsg = '';
@@ -143,14 +258,14 @@
           } else if (act === 'delete') {
             await Poem.api(`/api/users/${id}`, { method: 'DELETE' });
           }
-          await refresh();
+          await refreshUsers();
           Poem.toast('操作成功');
         } catch (e) {
           console.error('操作失败:', e);
           Poem.toast(e.message || '操作失败');
         }
       });
-      refresh();
+      refreshUsers({ resetPage: true });
     })();
   </script>
 </body>

@@ -5,10 +5,49 @@
     pinyin: 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js'
   };
   const loadedScripts = new Map();
+  const globalScriptCache = typeof window !== 'undefined' ? (window.__poemScriptCache = window.__poemScriptCache || {}) : {};
+  const ME_CACHE_KEY = 'poem_me_cache_v1';
+  const ME_CACHE_TTL = 5 * 60 * 1000; // 5 分钟高速缓存
+  let mePromise = null;
+
+  function readMeCache() {
+    try {
+      const raw = sessionStorage.getItem(ME_CACHE_KEY);
+      if (!raw) return undefined;
+      const payload = JSON.parse(raw);
+      if (!payload || typeof payload !== 'object') return undefined;
+      if (payload.expires && Date.now() > payload.expires) {
+        sessionStorage.removeItem(ME_CACHE_KEY);
+        return undefined;
+      }
+      return Object.prototype.hasOwnProperty.call(payload, 'data') ? payload.data : undefined;
+    } catch (err) {
+      return undefined;
+    }
+  }
+
+  function writeMeCache(value) {
+    if (!value || typeof value !== 'object') {
+      try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
+      return;
+    }
+    try {
+      sessionStorage.setItem(ME_CACHE_KEY, JSON.stringify({ data: value, expires: Date.now() + ME_CACHE_TTL }));
+    } catch (err) { }
+  }
+
+  function clearMeCache() {
+    try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
+    if (typeof window !== 'undefined') {
+      delete window.__poem_me;
+    }
+  }
 
   function loadScriptOnce(src) {
     if (!src) return Promise.resolve();
     if (loadedScripts.has(src)) return loadedScripts.get(src);
+    if (globalScriptCache[src] === 'loaded') return Promise.resolve();
+    if (globalScriptCache[src] && typeof globalScriptCache[src].then === 'function') return globalScriptCache[src];
     const promise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
@@ -16,11 +55,14 @@
       script.onload = () => resolve();
       script.onerror = (err) => {
         loadedScripts.delete(src);
+        delete globalScriptCache[src];
         reject(err || new Error(`Failed to load script: ${src}`));
       };
       document.head.appendChild(script);
     });
     loadedScripts.set(src, promise);
+    globalScriptCache[src] = promise;
+    promise.then(() => { globalScriptCache[src] = 'loaded'; }).catch(() => {});
     return promise;
   }
 
@@ -132,11 +174,37 @@
       return ct.includes('application/json') ? res.json() : res.text();
     },
     // Auth helpers
-    async me() {
-      // 如果缓存为 undefined 则首次加载；如果为 null（未登录）则允许重新拉取，避免登录后仍返回旧的 null
-      if (window.__poem_me !== undefined && window.__poem_me !== null) return window.__poem_me;
-      try { window.__poem_me = await Poem.api('/api/auth/me'); } catch (e) { window.__poem_me = null; }
-      return window.__poem_me;
+    async me(options) {
+      const forceRefresh = !!(options && options.force);
+      if (forceRefresh) {
+        clearMeCache();
+        window.__poem_me = undefined;
+      }
+      if (!forceRefresh && window.__poem_me !== undefined && window.__poem_me !== null) {
+        return window.__poem_me;
+      }
+      if (!forceRefresh && window.__poem_me === undefined) {
+        const cached = readMeCache();
+        if (cached !== undefined) {
+          window.__poem_me = cached;
+          return cached;
+        }
+        if (mePromise) return mePromise;
+      }
+      mePromise = Poem.api('/api/auth/me').then(data => {
+        window.__poem_me = data;
+        if (data) {
+          writeMeCache(data);
+        } else {
+          try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
+        }
+        return data;
+      }).catch(() => {
+        window.__poem_me = null;
+        try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
+        return null;
+      }).finally(() => { mePromise = null; });
+      return mePromise;
     },
     async requireLogin() {
       const me = await Poem.me();
@@ -154,6 +222,8 @@
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
     fuzzySearch: createFuzzySearch(),
     ensureSearchDeps,
+    reloadNow() { window.location.reload(); },
+    clearMeCache,
     // Link picker overlay
     openLinkPicker(onPick, options) {
       const opts = options || {};
@@ -241,4 +311,90 @@
       }
     }
   };
+
+  function createUpdateBanner() {
+    let banner = document.querySelector('.update-banner');
+    if (banner) return banner;
+    banner = document.createElement('div');
+    banner.className = 'update-banner';
+    banner.innerHTML = `
+      <span class="update-banner__text">检测到新版本，点击刷新以获取最新内容</span>
+      <div class="update-banner__actions">
+        <button type="button" class="btn update-banner__refresh">立即刷新</button>
+        <button type="button" class="update-banner__dismiss" aria-label="关闭">×</button>
+      </div>
+    `;
+    document.body.appendChild(banner);
+    const refreshBtn = banner.querySelector('.update-banner__refresh');
+    const dismissBtn = banner.querySelector('.update-banner__dismiss');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        banner.classList.add('update-banner--loading');
+        setTimeout(() => window.location.reload(), 150);
+      });
+    }
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', () => banner.remove());
+    }
+    return banner;
+  }
+
+  function initVersionWatcher() {
+    if (!window.EventSource) return;
+    const streamUrl = `${Poem.base()}/api/version/stream`;
+    let knownVersion = null;
+    let source = null;
+    let reconnectTimer = null;
+
+    const handleVersion = (nextVersion) => {
+      if (!nextVersion) return;
+      if (!knownVersion) {
+        knownVersion = nextVersion;
+        return;
+      }
+      if (nextVersion !== knownVersion) {
+        knownVersion = nextVersion;
+        const banner = createUpdateBanner();
+        banner.classList.add('update-banner--visible');
+      }
+    };
+
+    const connect = () => {
+      if (source) {
+        source.close();
+        source = null;
+      }
+      try {
+        source = new EventSource(streamUrl);
+        source.onmessage = (event) => {
+          try {
+            const payload = JSON.parse(event.data || '{}');
+            handleVersion(payload.version);
+          } catch (err) { }
+        };
+        source.onerror = () => {
+          source.close();
+          if (reconnectTimer) clearTimeout(reconnectTimer);
+          reconnectTimer = setTimeout(connect, 5000);
+        };
+      } catch (err) {
+        if (reconnectTimer) clearTimeout(reconnectTimer);
+        reconnectTimer = setTimeout(connect, 5000);
+      }
+    };
+
+    connect();
+  }
+
+  function startVersionWatcherOnce() {
+    if (window.__poemVersionWatcherStarted) return;
+    window.__poemVersionWatcherStarted = true;
+    initVersionWatcher();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startVersionWatcherOnce, { once: true });
+  } else {
+    startVersionWatcherOnce();
+  }
 })();

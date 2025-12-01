@@ -33,6 +33,28 @@
   let links = [];
   let linkSaveChain = Promise.resolve();
   const linkFieldRegistry = new Map();
+  let saveInFlight = false;
+  let currentSavePromise = null;
+  const MAX_VISIBLE_ANNOTATIONS = 5;
+  let showAllAnnotations = false;
+
+  function ensureSaveButtonLabel() {
+    if (saveBtn && !saveBtn.dataset.originalLabel) {
+      saveBtn.dataset.originalLabel = saveBtn.textContent || '保存';
+    }
+  }
+
+  function refreshActionButtons() {
+    ensureSaveButtonLabel();
+    if (saveBtn) {
+      const label = saveBtn.dataset.originalLabel || '保存';
+      saveBtn.textContent = saveInFlight ? '保存中…' : label;
+      saveBtn.disabled = !state.editable || saveInFlight;
+    }
+    if (editBtn) {
+      editBtn.disabled = state.editable || saveInFlight;
+    }
+  }
 
   if (acceptExpectedBtn) {
     acceptExpectedBtn.addEventListener('click', () => {
@@ -732,8 +754,6 @@
     }
     try { linkFieldRegistry.forEach(spec => setFieldEditableState(spec, state.editable)); } catch (e) { }
     applyOrderedItemLayout();
-    editBtn.disabled = on; // 编辑仅在只读时可按
-    saveBtn.disabled = !on; // 保存仅在编辑时可按
     if (linkBtn) {
       linkBtn.disabled = state.editable;
       if (state.editable) setLinkBrushActive(false);
@@ -741,6 +761,7 @@
     // After toggling editable, apply meta-specific permission rules (if defined)
     try { if (typeof applyMetaPermissions === 'function') applyMetaPermissions(); } catch (e) { }
     try { editableWatchers.forEach(fn => { try { fn(state.editable); } catch (e) { } }); } catch (e) { }
+    refreshActionButtons();
   }
 
   function escapeHtml(s) { return String(s || '').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
@@ -1229,29 +1250,60 @@
     if (form) formSelect.value = form; renderFormOpts();
 
     function computeDepths(list) {
-      return list.map((a, i) => {
-        let depth = 0; for (let j = 0; j < list.length; j++) { if (j === i) continue; if (!(list[j].end <= a.start || list[j].start >= a.end)) depth++; }
-        return depth;
+      if (!Array.isArray(list) || list.length === 0) return [];
+      const events = [];
+      list.forEach((entry, idx) => {
+        const start = typeof entry.start === 'number' ? entry.start : 0;
+        const end = typeof entry.end === 'number' ? entry.end : start;
+        events.push({ pos: start, type: 'start', idx });
+        events.push({ pos: Math.max(end, start), type: 'end', idx });
       });
+      events.sort((a, b) => {
+        if (a.pos === b.pos) {
+          if (a.type === b.type) return 0;
+          return a.type === 'end' ? -1 : 1;
+        }
+        return a.pos - b.pos;
+      });
+      const depths = new Array(list.length).fill(0);
+      let active = 0;
+      events.forEach(event => {
+        if (event.type === 'start') {
+          depths[event.idx] = active;
+          active += 1;
+        } else {
+          active = Math.max(0, active - 1);
+        }
+      });
+      return depths;
     }
 
     function renderAnnotations() {
       const depths = computeDepths(annotations);
-      const annotated = annotations.map((a, idx) => ({ a, idx, depth: depths[idx] || 0 }));
+      const annotated = annotations.map((a, i) => ({ a, idx: i, depth: depths[i] || 0 }));
       annotated.forEach(item => ensureAnnotationKey(item.a));
       annotated.sort((x, y) => { const sx = (x.a.start | 0), sy = (y.a.start | 0); if (sx !== sy) return sx - sy; const ex = (x.a.end | 0), ey = (y.a.end | 0); return ex - ey; });
+      const total = annotated.length;
+      const shouldCollapse = !state.editable && total > MAX_VISIBLE_ANNOTATIONS;
+      if (!shouldCollapse && showAllAnnotations) showAllAnnotations = false;
+      const renderList = shouldCollapse && !showAllAnnotations ? annotated.slice(0, MAX_VISIBLE_ANNOTATIONS) : annotated;
       annoArea.textContent = '';
+      if (!state.editable) {
+        annoArea.style.display = 'none';
+        return;
+      }
+      annoArea.style.display = '';
       annoArea.appendChild(document.createTextNode('注释：'));
       const list = document.createElement('div');
       list.className = 'anno-list';
       annoArea.appendChild(list);
-      if (annotated.length === 0) {
+      if (renderList.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'muted';
         empty.textContent = '暂无注释';
         list.appendChild(empty);
       }
-      annotated.forEach((item, dispIdx) => {
+      renderList.forEach((item, dispIdx) => {
         const { a, idx, depth } = item;
         const depthClass = depth >= 2 ? 'annotation depth-3' : (depth >= 1 ? 'annotation depth-2' : 'annotation depth-1');
         const row = document.createElement('div');
@@ -1365,6 +1417,29 @@
           noteDisplay.textContent = a.note || '';
         }
       });
+      if (shouldCollapse) {
+        const overflowWrap = document.createElement('div');
+        overflowWrap.className = 'anno-overflow';
+        overflowWrap.style.display = 'flex';
+        overflowWrap.style.alignItems = 'center';
+        overflowWrap.style.gap = '8px';
+        overflowWrap.style.marginTop = '8px';
+        const hiddenCount = Math.max(0, total - MAX_VISIBLE_ANNOTATIONS);
+        const info = document.createElement('span');
+        info.className = 'muted';
+        info.textContent = showAllAnnotations ? `共 ${total} 条注释` : `已隐藏 ${hiddenCount} 条注释`;
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'btn small';
+        toggleBtn.textContent = showAllAnnotations ? '收起部分注释' : '展开全部';
+        toggleBtn.addEventListener('click', () => {
+          showAllAnnotations = !showAllAnnotations;
+          renderAnnotations();
+        });
+        overflowWrap.appendChild(info);
+        overflowWrap.appendChild(toggleBtn);
+        list.appendChild(overflowWrap);
+      }
       const renderDiv = formContainer.querySelector('#f-body-render'); if (renderDiv) renderAnnotatedBody();
     }
     renderAnnotations();
@@ -1658,10 +1733,16 @@
     if (unlockBtn) unlockBtn.disabled = true;
 
     registerEditableWatcher(editable => {
-      if (editable) {
-        unlockBody();
-      } else {
+      if (!editable) {
         lockBody();
+        return;
+      }
+      const hasPersistedId = !!(state.node && state.node.id);
+      if (hasPersistedId) {
+        // Existing poems default to locked view until the user explicitly unlocks
+        lockBody();
+      } else {
+        unlockBody();
       }
     });
 
@@ -1973,6 +2054,7 @@
     const statement = node ? node.fields?.statement || '' : '';
     const otherStatement = node ? (node.fields?.otherStatement || (Array.isArray(node.fields?.otherStatements) ? node.fields.otherStatements[0] : '')) : '';
     const explanation = node ? node.extra?.explanation || node.extra?.explain || '' : '';
+    const usage = node ? node.extra?.usage || '' : '';
     const origin = node ? node.extra?.origin || '' : '';
     // 渲染器使用的persons/examples；使其可变（允许空数组）
     const personsText = toMultilineText(node?.fields?.persons);
@@ -1987,6 +2069,7 @@
         <div class="field"><label>其他表述</label><input id="f-other-statement" type="text" data-link-field="fields.otherStatement" value="${escapeHtml(otherStatement)}"></div>
       </div> 
       <div class="field"><label>解释</label><textarea id="f-explanation" rows="1" data-link-field="extra.explanation" style="width:100%;resize:none;overflow:hidden">${escapeHtml(explanation)}</textarea></div>
+      <div class="field"><label>用法</label><textarea id="f-usage" rows="1" data-link-field="extra.usage" style="width:100%;resize:none;overflow:hidden">${escapeHtml(usage)}</textarea></div>
       <div class="field"><label>出处</label><textarea id="f-origin" rows="1" data-link-field="extra.origin" style="width:100%;resize:none;overflow:hidden">${escapeHtml(origin)}</textarea></div>
       <div class="field"><label>涉及人物</label><textarea id="f-persons" rows="1" data-link-field="fields.persons" style="width:100%;resize:none;overflow:hidden">${escapeHtml(personsText)}</textarea></div>
       <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="ordered-list"></div></div>
@@ -1994,6 +2077,7 @@
 
     initializeLinkFields(formContainer);
 
+    const usageInput = formContainer.querySelector('#f-usage');
     const personsInput = formContainer.querySelector('#f-persons');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
@@ -2001,6 +2085,7 @@
     renderExamplesWrapper();
     // autosize explanation and origin textareas for allusion
     try { const exTa = formContainer.querySelector('#f-explanation'); if (exTa) { autosizeTextarea(exTa); try { if (exTa.__autosizeHandler) exTa.removeEventListener('input', exTa.__autosizeHandler); } catch (e) { } exTa.__autosizeHandler = () => autosizeTextarea(exTa); exTa.addEventListener('input', exTa.__autosizeHandler); } } catch (e) { }
+    try { if (usageInput) { autosizeTextarea(usageInput); try { if (usageInput.__autosizeHandler) usageInput.removeEventListener('input', usageInput.__autosizeHandler); } catch (e) { } usageInput.__autosizeHandler = () => autosizeTextarea(usageInput); usageInput.addEventListener('input', usageInput.__autosizeHandler); } } catch (e) { }
     try { const oriTa = formContainer.querySelector('#f-origin'); if (oriTa) { autosizeTextarea(oriTa); try { if (oriTa.__autosizeHandler) oriTa.removeEventListener('input', oriTa.__autosizeHandler); } catch (e) { } oriTa.__autosizeHandler = () => autosizeTextarea(oriTa); oriTa.addEventListener('input', oriTa.__autosizeHandler); } } catch (e) { }
     try { if (personsInput) { autosizeTextarea(personsInput); try { if (personsInput.__autosizeHandler) personsInput.removeEventListener('input', personsInput.__autosizeHandler); } catch (e) { } personsInput.__autosizeHandler = () => autosizeTextarea(personsInput); personsInput.addEventListener('input', personsInput.__autosizeHandler); } } catch (e) { }
     addExBtn && addExBtn.addEventListener('click', () => { examples.push({ 出处: '', 内容: '' }); renderExamplesWrapper(); });
@@ -2009,7 +2094,11 @@
     function collect() {
       const personsList = splitMultilineText(personsInput?.value);
       const fields = { statement: (formContainer.querySelector('#f-statement') || {}).value || '', otherStatement: (formContainer.querySelector('#f-other-statement') || {}).value || '', persons: personsList, examples: Array.from(examplesEl.querySelectorAll('.ordered-item')).map(div => { const i = div.querySelectorAll('input'); return { 出处: i[0].value, 内容: i[1].value }; }) };
-      const extra = { explanation: (formContainer.querySelector('#f-explanation') || {}).value || '', origin: (formContainer.querySelector('#f-origin') || {}).value || '' };
+      const extra = {
+        explanation: (formContainer.querySelector('#f-explanation') || {}).value || '',
+        usage: (formContainer.querySelector('#f-usage') || {}).value || '',
+        origin: (formContainer.querySelector('#f-origin') || {}).value || ''
+      };
       return { fields, extra };
     }
     return { collect };
@@ -2381,6 +2470,7 @@
       syncLinksToState();
       // new node => current user is effectively the owner for permission checks
       isOwner = true;
+      showAllAnnotations = false;
       if (linkBtn) linkBtn.style.display = 'inline-block';
       setEditable(true);
     }
@@ -2391,6 +2481,7 @@
       links = state.node.links.map(normalizeLink).filter(Boolean);
       syncLinksToState();
       nodeIdEl.textContent = node.id;
+      showAllAnnotations = false;
       // Only owner or reviewer/admin can edit
       isOwner = (node.meta?.createdById && node.meta.createdById === me?.id) || (node.meta?.createdBy && (node.meta.createdBy === (me?.real_name || me?.username)));
       const canEditAll = me && (me.role === 'reviewer' || me.role === 'admin');
@@ -2467,73 +2558,86 @@
     // (previously setEditable(false) was called before rendering which left inputs enabled)
     setEditable(isNew ? true : false);
 
-    async function saveNode(opts) {
+    function saveNode(opts) {
       const options = opts || {};
       const silent = !!options.silent;
       const skipToast = !!options.skipToast;
-      const collected = renderer?.collect?.() || {};
-      // collect common/meta inputs into node.extra, then merge into payload.extra
-      try { commonMetaToNode(state.node); } catch (e) { }
-      const derivedName = [
-        collected.fields?.title,
-        collected.fields?.name,
-        collected.fields?.statement,
-        collected.fields?.common,
-        collected.fields?.otherStatement
-      ].find(v => typeof v === 'string' && v.trim());
-      const payloadName = derivedName ? derivedName.trim() : (state.node.name || '').trim();
-      const payload = {
-        name: payloadName,
-        content: collected.content,
-        annotations: collected.annotations,
-        links: Array.isArray(state.node.links) ? state.node.links : [],
-        fields: collected.fields,
-        extra: Object.assign({}, state.node.extra || {}, collected.extra || {}),
-      };
-      const metaPayload = {};
-      if (state.node?.meta?.createdAt) {
-        metaPayload.createdAt = state.node.meta.createdAt;
+      if (saveInFlight) {
+        if (!silent && !skipToast) Poem.toast('正在保存，请稍候…');
+        return currentSavePromise || Promise.resolve(false);
       }
-      if (Object.keys(metaPayload).length) payload.meta = metaPayload;
-      try {
-        if (isNew) {
-          const created = await Poem.api('/api/node', { method: 'POST', body: JSON.stringify({ type, data: payload }) });
-          state.node = created;
-          state.node.name = payloadName;
-          nodeIdEl.textContent = created.id; setEditable(false);
-          const previousDraftKey = draftKey;
-          isNew = false;
-          draftKey = `poem_draft_${created.id}`;
-          if (!silent && !skipToast) Poem.toast('已保存');
-          try { renderer?.refresh?.(state.node); } catch (e) { }
-          const returnSuffix = returnQuery ? `&return=${encodeURIComponent(returnQuery)}` : '';
-          history.replaceState(null, '', `editor.html?id=${created.id}${returnSuffix}`);
-          try {
-            if (window.Poem && typeof Poem.clearDraft === 'function') {
-              if (previousDraftKey && previousDraftKey !== draftKey) Poem.clearDraft(previousDraftKey);
-              Poem.clearDraft(draftKey);
-            }
-          } catch (e) { }
-        } else {
-          const wantsReview = !isOwner && isReviewerOrAdmin && !!(state.node.meta?.reviewedBy || state.node.meta?.reviewedAt);
-          if (wantsReview) payload._review = true;
-          const apiPath = `/api/node/${state.node.id}${wantsReview ? '?review=1' : ''}`;
-          const updated = await Poem.api(apiPath, { method: 'PUT', body: JSON.stringify(payload) });
-          state.node = updated;
-          state.node.name = payloadName;
-          setEditable(false);
-          if (!silent && !skipToast) Poem.toast(wantsReview ? '已审核并保存' : '已保存');
-          try { renderer?.refresh?.(state.node); } catch (e) { }
-          // refresh meta fields shown on the form
-          try { setCommonMeta(state.node); } catch (e) { }
-          try { if (window.Poem && typeof Poem.clearDraft === 'function') Poem.clearDraft(draftKey); } catch (e) { }
+      saveInFlight = true;
+      refreshActionButtons();
+      currentSavePromise = (async () => {
+        try {
+          const collected = renderer?.collect?.() || {};
+          // collect common/meta inputs into node.extra, then merge into payload.extra
+          try { commonMetaToNode(state.node); } catch (e) { }
+          const derivedName = [
+            collected.fields?.title,
+            collected.fields?.name,
+            collected.fields?.statement,
+            collected.fields?.common,
+            collected.fields?.otherStatement
+          ].find(v => typeof v === 'string' && v.trim());
+          const payloadName = derivedName ? derivedName.trim() : (state.node.name || '').trim();
+          const payload = {
+            name: payloadName,
+            content: collected.content,
+            annotations: collected.annotations,
+            links: Array.isArray(state.node.links) ? state.node.links : [],
+            fields: collected.fields,
+            extra: Object.assign({}, state.node.extra || {}, collected.extra || {}),
+          };
+          const metaPayload = {};
+          if (state.node?.meta?.createdAt) {
+            metaPayload.createdAt = state.node.meta.createdAt;
+          }
+          if (Object.keys(metaPayload).length) payload.meta = metaPayload;
+          if (isNew) {
+            const created = await Poem.api('/api/node', { method: 'POST', body: JSON.stringify({ type, data: payload }) });
+            state.node = created;
+            state.node.name = payloadName;
+            nodeIdEl.textContent = created.id; setEditable(false);
+            const previousDraftKey = draftKey;
+            isNew = false;
+            draftKey = `poem_draft_${created.id}`;
+            if (!silent && !skipToast) Poem.toast('已保存');
+            try { renderer?.refresh?.(state.node); } catch (e) { }
+            const returnSuffix = returnQuery ? `&return=${encodeURIComponent(returnQuery)}` : '';
+            history.replaceState(null, '', `editor.html?id=${created.id}${returnSuffix}`);
+            try {
+              if (window.Poem && typeof Poem.clearDraft === 'function') {
+                if (previousDraftKey && previousDraftKey !== draftKey) Poem.clearDraft(previousDraftKey);
+                Poem.clearDraft(draftKey);
+              }
+            } catch (e) { }
+          } else {
+            const wantsReview = !isOwner && isReviewerOrAdmin && !!(state.node.meta?.reviewedBy || state.node.meta?.reviewedAt);
+            if (wantsReview) payload._review = true;
+            const apiPath = `/api/node/${state.node.id}${wantsReview ? '?review=1' : ''}`;
+            const updated = await Poem.api(apiPath, { method: 'PUT', body: JSON.stringify(payload) });
+            state.node = updated;
+            state.node.name = payloadName;
+            setEditable(false);
+            if (!silent && !skipToast) Poem.toast(wantsReview ? '已审核并保存' : '已保存');
+            try { renderer?.refresh?.(state.node); } catch (e) { }
+            // refresh meta fields shown on the form
+            try { setCommonMeta(state.node); } catch (e) { }
+            try { if (window.Poem && typeof Poem.clearDraft === 'function') Poem.clearDraft(draftKey); } catch (e) { }
+          }
+          return true;
+        } catch (err) {
+          console.error(err);
+          Poem.toast('保存失败，请稍后重试');
+          return false;
+        } finally {
+          saveInFlight = false;
+          refreshActionButtons();
+          currentSavePromise = null;
         }
-        return true;
-      } catch (err) {
-        console.error(err);
-        Poem.toast('保存失败，请稍后重试');
-        return false;
-      }
+      })();
+      return currentSavePromise;
     }
 
     requestImmediateSave = async function (options) {
