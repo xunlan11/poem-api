@@ -544,8 +544,8 @@ body {
 }
 
 .ordered-item .pair-label {
-	width: 20ch;
-	flex: 0 0 auto;
+	width: 10ch;
+	flex: 0 0 10ch;
 	max-width: 100%;
 }
 
@@ -554,13 +554,28 @@ body {
 	min-width: 120px;
 }
 
+.ordered-item .pair-order-controls {
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+	flex: 0 0 auto;
+	align-items: center;
+}
+
+.ordered-item .pair-remove-controls {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 0 0 auto;
+}
+
 .poem-readonly .ordered-item {
 	flex-wrap: nowrap;
 }
 
 .poem-readonly .ordered-item .pair-label {
-	width: 20ch;
-	flex: 0 0 auto;
+	width: 10ch;
+	flex: 0 0 10ch;
 }
 
 .poem-readonly .ordered-item .pair-value {
@@ -576,6 +591,17 @@ body {
 
 .ordered-item input {
 	flex: 1;
+}
+
+.ordered-item .pair-label {
+	flex: 0 0 10ch;
+	width: 10ch;
+	max-width: 10ch;
+}
+
+.ordered-item .pair-value {
+	flex: 1 1 auto;
+	width: auto;
 }
 
 .hl {
@@ -794,7 +820,7 @@ body {
 .relation-grid.pair-grid .relation-inline {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 6px;
 	padding: 2px 0;
 	min-width: 0;
 	width: 100%;
@@ -885,16 +911,48 @@ body {
 	pointer-events: none;
 }
 
-.relation-grid.pair-grid .relation-inline .pair-label,
+
+.relation-grid.pair-grid .relation-inline .pair-label {
+	flex: 0 0 16ch;
+	width: 16ch;
+	max-width: 16ch;
+	min-width: 16ch;
+}
+
+.relation-grid.pair-grid .relation-inline .pair-label input,
+.relation-grid.pair-grid .relation-inline .pair-label .link-field-display {
+	flex: 1 1 auto;
+	width: 100%;
+	min-width: 0;
+}
+
 .relation-grid.pair-grid .relation-inline .pair-value {
 	flex: 1 1 auto;
+	flex-shrink: 1;
+	min-width: 0;
+	display: flex;
+}
+
+.relation-grid.pair-grid .relation-inline .pair-value>* {
+	flex: 1 1 auto;
+	flex-shrink: 1;
+	min-width: 0;
+	width: 100%;
+}
+
+.relation-grid.pair-grid .relation-inline .pair-value input,
+.relation-grid.pair-grid .relation-inline .pair-value .link-field-display {
+	flex: 1 1 auto;
+	width: 100%;
 	min-width: 0;
 }
 
 .relation-grid.pair-grid .relation-inline .link-field-display {
 	flex: 1 1 auto;
+	flex-shrink: 1;
 	width: auto;
 	max-width: none;
+	min-width: 0;
 }
 
 .relation-grid.pair-grid .relation-inline .btn {
@@ -1042,7 +1100,7 @@ body {
 	display: flex;
 	gap: 6px;
 	margin-bottom: 6px;
-	align-items: center
+	align-items: flex-start
 }
 
 .note-item input[type="text"],
@@ -1056,6 +1114,22 @@ body {
 	padding: 8px;
 	border: 1px solid #ddd;
 	border-radius: 6px
+}
+
+.note-item .c-source {
+	flex: 0 0 20ch;
+	width: 20ch;
+	min-width: 20ch;
+	max-width: 20ch;
+}
+
+.note-item .c-content {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.poem-readonly .note-item .c-source {
+	flex: 0 0 20ch;
 }
 
 .self-check-field {

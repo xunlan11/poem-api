@@ -1,0 +1,77 @@
+(function (root) {
+  if (!root) return;
+  const registry = root.PoemRenderers = root.PoemRenderers || {};
+
+  registry.G = registry.renderAnthology = function renderAnthology(ctx) {
+    const context = ctx || {};
+    const formContainer = context.formContainer;
+    if (!formContainer) return null;
+    const node = context.node || null;
+    const escapeHtml = context.escapeHtml || (s => String(s || ''));
+    const initializeLinkFields = context.initializeLinkFields || (() => { });
+    const autosizeTextarea = context.autosizeTextarea || (() => { });
+    const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
+    const renderInlinePairs = context.renderInlinePairs || (() => { });
+    const isNew = !!context.isNew;
+
+    const name = node ? node.fields?.title || node.fields?.name || '' : '';
+    const author = node ? node.fields?.author || '' : '';
+    const worksText = Array.isArray(node?.fields?.works) ? node.fields.works.join('、') : (node?.fields?.works || '');
+    const overview = node ? node.extra?.overview || '' : '';
+    const background = node ? node.extra?.background || '' : '';
+    let evaluation = node ? node.extra?.evaluation || [] : [];
+    if (isNew && (!Array.isArray(evaluation) || evaluation.length === 0)) evaluation = [{ source: '', content: '' }];
+
+    formContainer.innerHTML = `
+        <div class="grid-2">
+          <div class="field"><label>文集</label><input id="f-name" type="text" data-link-field="fields.title" value="${escapeHtml(name)}"></div>
+          <div class="field"><label>作者</label><input id="f-author" type="text" data-link-field="fields.author" value="${escapeHtml(author)}"></div>
+        </div>
+        <div class="field"><label>概述</label><textarea id="f-overview" rows="1" data-link-field="extra.overview" style="width:100%;resize:none;overflow:hidden">${escapeHtml(overview)}</textarea></div>
+        <div class="field"><label>包含作品</label><input id="f-works" type="text" data-link-field="fields.works" value="${escapeHtml(worksText)}"></div>
+        <div class="field"><label>创作背景</label><textarea id="f-background" rows="1" data-link-field="extra.background" style="width:100%;resize:none;overflow:hidden">${escapeHtml(background)}</textarea></div>
+        <div class="field"><label>评价 <button id="addEval" class="btn small add-row">添加</button></label>
+          <div id="evalList" class="note-list"></div>
+        </div>
+      `;
+
+    initializeLinkFields(formContainer);
+
+    const overviewEl = formContainer.querySelector('#f-overview');
+    const worksInput = formContainer.querySelector('#f-works');
+    const evalList = formContainer.querySelector('#evalList');
+    const addEvalBtn = formContainer.querySelector('#addEval');
+
+    const evalRenderOpts = { wrapperClass: 'ordered-item note-item', inputClass1: 'c-source', inputClass2: 'c-content', linkFieldPrefix: 'extra.evaluation', onChange: (arr) => { }, paragraphCheck2: true };
+    const renderEvalsWrapper = () => {
+      renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);
+    };
+    renderEvalsWrapper();
+    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); try { if (typeof addLinkButtons === 'function') addLinkButtons(); } catch (e) { } });
+
+    try {
+      const autoResize = (el) => {
+        if (!el) return;
+        autosizeTextarea(el);
+        try { if (el.__autosizeHandler) el.removeEventListener('input', el.__autosizeHandler); } catch (err) { }
+        el.__autosizeHandler = () => autosizeTextarea(el);
+        el.addEventListener('input', el.__autosizeHandler);
+      };
+      autoResize(overviewEl);
+      autoResize(formContainer.querySelector('#f-background'));
+    } catch (err) { }
+
+    function collect() {
+      const worksRaw = (worksInput?.value || '').replace(/[，,；;、]/g, '\n');
+      const worksList = splitMultilineText(worksRaw);
+      const fields = { title: (formContainer.querySelector('#f-name') || {}).value || '', author: (formContainer.querySelector('#f-author') || {}).value || '', works: worksList };
+      const extra = {
+        overview: (overviewEl || {}).value || '',
+        background: (formContainer.querySelector('#f-background') || {}).value || '',
+        evaluation: Array.from(evalList.querySelectorAll('.note-item')).map(div => { const s = div.querySelector('.c-source'); const c = div.querySelector('.c-content'); return { source: s ? s.value : '', content: c ? c.value : '' }; })
+      };
+      return { fields, extra };
+    }
+    return { collect };
+  };
+})(typeof window !== 'undefined' ? window : this);
