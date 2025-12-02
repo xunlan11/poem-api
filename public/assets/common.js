@@ -62,7 +62,7 @@
     });
     loadedScripts.set(src, promise);
     globalScriptCache[src] = promise;
-    promise.then(() => { globalScriptCache[src] = 'loaded'; }).catch(() => {});
+    promise.then(() => { globalScriptCache[src] = 'loaded'; }).catch(() => { });
     return promise;
   }
 
@@ -168,7 +168,8 @@
     },
     async api(path, opts) {
       const url = `${Poem.base()}${path}`;
-      const res = await fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
+      const defaults = { headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+      const res = await fetch(url, { ...defaults, ...opts });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = res.headers.get('content-type') || '';
       return ct.includes('application/json') ? res.json() : res.text();
@@ -247,7 +248,6 @@
               <option value="S">鸟兽草木（S）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
-            <button id="lpGo" class="btn">搜索</button>
             ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn" style="margin-left:auto;background:#14532d;border-color:#14532d;color:#ecfdf5;">标记为空置</button>` : ''}
           </div>
           ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:13px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
@@ -258,10 +258,12 @@
       document.body.appendChild(modal);
       const close = () => modal.remove();
       card.querySelector('#closeModal').onclick = close;
-      async function run() {
+      const PAGE_LIMIT = 5;
+      async function run(page = 0) {
         const type = card.querySelector('#lpType').value;
         const q = card.querySelector('#lpSearch').value;
-        const { data } = await Poem.api(`/api/nodes?${type ? `type=${type}&` : ''}${q ? `search=${encodeURIComponent(q)}` : ''}`);
+        const off = Math.max(0, parseInt(page, 10) || 0) * PAGE_LIMIT;
+        const { data, pagination } = await Poem.api(`/api/nodes?${type ? `type=${type}&` : ''}${q ? `search=${encodeURIComponent(q)}&` : ''}limit=${PAGE_LIMIT}&offset=${off}`);
         const list = document.createElement('div');
         data.forEach(item => {
           const div = document.createElement('div');
@@ -278,23 +280,45 @@
         const container = card.querySelector('#lpResults');
         container.innerHTML = '';
         container.appendChild(list);
+
+        // pagination
+        const total = (pagination && typeof pagination.total === 'number') ? pagination.total : (Array.isArray(data) ? data.length : 0);
+        const currentOffset = (pagination && typeof pagination.offset === 'number') ? pagination.offset : off;
+        const limit = (pagination && typeof pagination.limit === 'number') ? pagination.limit : PAGE_LIMIT;
+        const currentPage = Math.floor(currentOffset / limit);
+        const totalPages = Math.max(1, Math.ceil(total / limit));
+        if (totalPages > 1) {
+          const pager = document.createElement('div');
+          pager.style.display = 'flex';
+          pager.style.gap = '8px';
+          pager.style.alignItems = 'center';
+          pager.style.marginTop = '8px';
+          const prev = document.createElement('button'); prev.className = 'btn'; prev.textContent = '上一页'; prev.disabled = currentPage <= 0;
+          const info = document.createElement('span'); info.className = 'small'; info.textContent = `第 ${currentPage + 1} / ${totalPages} 页`;
+          const next = document.createElement('button'); next.className = 'btn'; next.textContent = '下一页'; next.disabled = currentPage >= totalPages - 1;
+          prev.addEventListener('click', () => { if (!prev.disabled) run(currentPage - 1); });
+          next.addEventListener('click', () => { if (!next.disabled) run(currentPage + 1); });
+          pager.appendChild(prev); pager.appendChild(info); pager.appendChild(next);
+          container.appendChild(pager);
+        }
       }
-      card.querySelector('#lpGo').onclick = run;
       const searchInput = card.querySelector('#lpSearch');
       const typeSelect = card.querySelector('#lpType');
       if (typeSelect && current && current.targetType) {
         typeSelect.value = current.targetType;
       }
+      // Debounced auto-search on input; changing type triggers immediate search.
       if (searchInput) {
-        searchInput.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            run();
-          }
-        });
+        let debounceTimer = null;
+        const scheduleRun = (page = 0) => {
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => run(page), 200);
+        };
+        searchInput.addEventListener('input', () => scheduleRun(0));
+        typeSelect.addEventListener('change', () => run(0));
         if (current && (current.targetId || current.targetName)) {
           searchInput.value = current.targetId || current.targetName || '';
-          setTimeout(run, 0);
+          setTimeout(() => run(0), 0);
         }
       }
       if (!current) {

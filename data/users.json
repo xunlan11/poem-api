@@ -9,7 +9,7 @@
     "status": "active",
     "created_at": "2025-10-29T05:34:39.115Z",
     "updated_at": "2025-11-02T10:46:39.435Z",
-    "last_login_at": "2025-12-01T02:39:55.515Z",
+    "last_login_at": "2025-12-02T12:34:32.046Z",
     "profile_completed": false
   },
   {
@@ -22,7 +22,7 @@
     "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
     "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-12-02T06:30:07.715Z",
+    "last_login_at": "2025-12-02T12:56:47.291Z",
     "profile_completed": true
   },
   {
@@ -35,7 +35,7 @@
     "status": "active",
     "created_at": "2025-11-05T13:43:39.468Z",
     "updated_at": "2025-11-05T13:46:33.827Z",
-    "last_login_at": "2025-11-26T13:53:18.256Z",
+    "last_login_at": "2025-12-02T10:48:08.309Z",
     "profile_completed": true
   },
   {
@@ -48,7 +48,7 @@
     "status": "active",
     "created_at": "2025-11-05T13:44:26.177Z",
     "updated_at": "2025-11-05T13:45:01.368Z",
-    "last_login_at": "2025-12-01T08:56:15.387Z",
+    "last_login_at": "2025-12-02T12:07:52.929Z",
     "profile_completed": true
   },
   {
@@ -152,7 +152,7 @@
     "status": "active",
     "created_at": "2025-11-07T11:46:11.680Z",
     "updated_at": "2025-11-11T04:24:28.082Z",
-    "last_login_at": "2025-12-01T08:30:51.339Z",
+    "last_login_at": "2025-12-02T10:44:24.282Z",
     "profile_completed": true
   },
   {
@@ -178,7 +178,7 @@
     "status": "active",
     "created_at": "2025-11-07T13:04:15.889Z",
     "updated_at": "2025-11-07T13:04:39.960Z",
-    "last_login_at": "2025-12-01T14:05:08.663Z",
+    "last_login_at": "2025-12-02T11:16:22.517Z",
     "profile_completed": true
   },
   {
@@ -269,7 +269,7 @@
     "status": "active",
     "created_at": "2025-11-08T09:24:15.188Z",
     "updated_at": "2025-11-08T09:24:34.681Z",
-    "last_login_at": "2025-12-02T03:31:02.312Z",
+    "last_login_at": "2025-12-02T10:54:55.080Z",
     "profile_completed": true
   },
   {
@@ -477,7 +477,7 @@
     "status": "active",
     "created_at": "2025-11-11T10:32:21.619Z",
     "updated_at": "2025-11-11T10:32:31.529Z",
-    "last_login_at": "2025-12-02T02:14:55.424Z",
+    "last_login_at": "2025-12-02T10:07:47.565Z",
     "profile_completed": true
   },
   {
@@ -711,7 +711,7 @@
     "status": "active",
     "created_at": "2025-11-22T07:10:00.264Z",
     "updated_at": "2025-11-22T07:10:09.802Z",
-    "last_login_at": "2025-11-30T08:42:18.552Z",
+    "last_login_at": "2025-12-02T12:19:27.635Z",
     "profile_completed": true
   },
   {
@@ -790,6 +790,19 @@
     "created_at": "2025-11-30T12:37:31.238Z",
     "updated_at": "2025-11-30T12:38:01.800Z",
     "last_login_at": "2025-11-30T12:37:31.238Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_62",
+    "username": "gaokaiwei",
+    "password_hash": "$2a$10$x6Ti3UZAnRTrhbsJwOVdmOalTlRZ0doV0gg2Q.oq.HBLt9tzedPm2",
+    "role": "user",
+    "real_name": "高铠炜",
+    "student_id": "2120250671",
+    "status": "active",
+    "created_at": "2025-12-02T09:04:33.898Z",
+    "updated_at": "2025-12-02T09:04:58.936Z",
+    "last_login_at": "2025-12-02T09:04:33.898Z",
     "profile_completed": true
   }
 ]

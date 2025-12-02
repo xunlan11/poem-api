@@ -34,7 +34,6 @@
     const renderContainerId = options.renderContainerId || 'f-body-render';
 
     let annotations = [];
-    let showAllAnnotations = false;
 
     function sanitizeAnnotations(list) {
       if (!Array.isArray(list)) return [];
@@ -117,14 +116,11 @@
         return ex - ey;
       });
       const total = annotated.length;
-      const shouldCollapse = !state.editable && total > MAX_VISIBLE;
-      if (!shouldCollapse && showAllAnnotations) showAllAnnotations = false;
-      const renderList = shouldCollapse && !showAllAnnotations ? annotated.slice(0, MAX_VISIBLE) : annotated;
+      // Always render the full list of annotations (no collapsing)
+      const renderList = annotated;
       annoArea.textContent = '';
-      if (!state.editable) {
-        annoArea.style.display = 'none';
-        return;
-      }
+      // Always show annotation area; in read-only mode annotations are displayed but
+      // editing controls remain disabled.
       annoArea.style.display = '';
       annoArea.appendChild(documentRef.createTextNode('注释：'));
       const list = documentRef.createElement('div');
@@ -248,29 +244,7 @@
         }
       });
 
-      if (shouldCollapse) {
-        const overflowWrap = documentRef.createElement('div');
-        overflowWrap.className = 'anno-overflow';
-        overflowWrap.style.display = 'flex';
-        overflowWrap.style.alignItems = 'center';
-        overflowWrap.style.gap = '8px';
-        overflowWrap.style.marginTop = '8px';
-        const hiddenCount = Math.max(0, total - MAX_VISIBLE);
-        const info = documentRef.createElement('span');
-        info.className = 'muted';
-        info.textContent = showAllAnnotations ? `共 ${total} 条注释` : `已隐藏 ${hiddenCount} 条注释`;
-        const toggleBtn = documentRef.createElement('button');
-        toggleBtn.type = 'button';
-        toggleBtn.className = 'btn small';
-        toggleBtn.textContent = showAllAnnotations ? '收起部分注释' : '展开全部';
-        toggleBtn.addEventListener('click', () => {
-          showAllAnnotations = !showAllAnnotations;
-          renderAnnotations();
-        });
-        overflowWrap.appendChild(info);
-        overflowWrap.appendChild(toggleBtn);
-        list.appendChild(overflowWrap);
-      }
+      // No collapsing UI — all annotations are shown
       const renderDiv = formContainer ? formContainer.querySelector(`#${renderContainerId}`) : null;
       if (renderDiv) renderAnnotatedBody();
     }
@@ -415,6 +389,10 @@
         renderDiv.__selectionHandler = true;
         renderDiv.addEventListener('mouseup', handleAnnotatedSelection);
       }
+      if (!renderDiv.__contextMenuHandler) {
+        renderDiv.__contextMenuHandler = true;
+        renderDiv.addEventListener('contextmenu', annotatedBodyContextMenuHandler);
+      }
     }
 
     function annotatedBodyClickHandler(event) {
@@ -440,6 +418,37 @@
       if (Number.isNaN(pos)) return;
       const idx = annotations.findIndex(a => a.start <= pos && pos < a.end);
       if (idx >= 0) showAnnotationEditor(annotations[idx], idx);
+    }
+
+    function annotatedBodyContextMenuHandler(event) {
+      const renderDiv = event.currentTarget;
+      const span = event.target.closest('span[data-pos]');
+      if (!span || !renderDiv.contains(span)) return;
+      // Follow link.js behavior: only allow context-delete when NOT editable
+      if (state.editable) return;
+      const sig = span.getAttribute('data-anno') || '';
+      if (!sig) return;
+      const indices = sig.split(',').map(s => parseInt(s, 10)).filter(n => !Number.isNaN(n) && n >= 0);
+      if (!indices.length) return;
+      // Prefer the first overlapping annotation for deletion
+      const targetIdx = indices[0];
+      const target = annotations[targetIdx];
+      if (!target) return;
+      event.preventDefault();
+      const label = target.text || target.note || '';
+      if (root.confirm && root.confirm(`移除注释：${label || '(无内容)'}？`)) {
+        const fieldKey = getAnnotationFieldKey(target);
+        const spec = fieldKey ? getFieldSpec(fieldKey) : null;
+        annotations.splice(targetIdx, 1);
+        if (fieldKey) {
+          if (spec) cleanupLinkFieldSpec(spec);
+          if (Array.isArray(links) && typeof replaceLinks === 'function') {
+            const filtered = links.filter(link => (link.field || 'content') !== fieldKey);
+            replaceLinks(filtered);
+          }
+        }
+        renderAnnotations();
+      }
     }
 
     function handleAnnotatedSelection() {

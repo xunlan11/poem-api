@@ -14,6 +14,7 @@
     const SELF_CHECK_MESSAGE_CLASS = 'self-check-message';
     const SELF_CHECK_SPACE_SNIPPET_LIMIT = 12;
     const SELF_CHECK_SPACE_CONTEXT = 8;
+    const SELF_CHECK_EMPTY_LINE_SNIPPET_LIMIT = 8;
     const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
     const CN_ELLIPSIS = '……';
     const TRAILING_ENCLOSURE_REGEX = /[)\]\}>'"\u201d\u2019\u3009\u300b\u300d\u300f\uff09\uff3d\uff3f\uff60\u3011\u3015\u3017\u3019\uff5d]/;
@@ -211,6 +212,54 @@
       return '<span class="self-check-space-char" data-space-type="space">&nbsp;</span>';
     }
 
+    function removeEmptyLines(el) {
+      if (!el || typeof el.value !== 'string') return 0;
+      const value = el.value;
+      if (!value) return 0;
+      const lines = value.split(/\r?\n/);
+      const hasContentLine = lines.some(line => line.trim().length > 0);
+      if (!hasContentLine) return 0;
+      let removed = 0;
+      const kept = [];
+      const snippets = [];
+      const findPrevContent = (idx) => {
+        for (let i = idx - 1; i >= 0; i -= 1) {
+          if (lines[i] && lines[i].trim()) return lines[i];
+        }
+        return '';
+      };
+      const findNextContent = (idx) => {
+        for (let i = idx + 1; i < lines.length; i += 1) {
+          if (lines[i] && lines[i].trim()) return lines[i];
+        }
+        return '';
+      };
+      lines.forEach((line, idx) => {
+        if (line.trim() === '') {
+          removed += 1;
+          if (snippets.length < SELF_CHECK_EMPTY_LINE_SNIPPET_LIMIT) {
+            const before = findPrevContent(idx).slice(-SELF_CHECK_SPACE_CONTEXT);
+            const after = findNextContent(idx).slice(0, SELF_CHECK_SPACE_CONTEXT);
+            const snippet = `${escapeHtml(before)}<span class="self-check-space-char" data-space-type="blank-line">[空行]</span>${escapeHtml(after)}`;
+            snippets.push(`<div class="self-check-inline-snippet" title="第${idx + 1}行">${snippet}</div>`);
+          }
+        } else {
+          kept.push(line);
+        }
+      });
+      if (!removed) return 0;
+      const normalized = kept.join('\n');
+      if (normalized !== value) {
+        el.value = normalized;
+        try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
+      }
+      const moreHint = removed > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${removed} 处</div>` : '';
+      const detail = `<div class="self-check-detail-block self-check-auto-block"><div class="self-check-auto-detail">${snippets.join('')}${moreHint}</div></div>`;
+      queueSelfCheckMessage(el, 'auto', { category: '空行', count: removed, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return removed;
+    }
+
     function highlightInputSpaces(el) {
       if (!el || typeof el.value !== 'string') return 0;
       const value = el.value;
@@ -404,6 +453,28 @@
       return result;
     }
 
+    function hasBookTitlePair(text) {
+      if (!text) return false;
+      const openIdx = text.indexOf('《');
+      if (openIdx === -1) return false;
+      const closeIdx = text.indexOf('》', openIdx + 1);
+      return closeIdx !== -1;
+    }
+
+    function ensureBookTitleBrackets(el, labelOverride) {
+      if (!el || typeof el.value !== 'string') return 0;
+      const value = el.value.trim();
+      if (!value) return 0;
+      if (hasBookTitlePair(value)) return 0;
+      const label = labelOverride || getFieldLabel(el) || '';
+      const labelText = label ? `“${label}”` : '该字段';
+      const excerpt = value.length > 80 ? `${value.slice(0, 80)}…` : value;
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-booktitle"><div class="self-check-inline-note">请使用《》标识作品。</div></div>`;
+      queueSelfCheckMessage(el, 'manual', { category: '书名号', count: 1, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return 1;
+    }
+
     function hasValidParagraphEnding(text) {
       if (!text) return false;
       if (text.endsWith(CN_ELLIPSIS)) return true;
@@ -464,13 +535,16 @@
       ];
       const fields = Array.from(documentRef.querySelectorAll(selectors.join(', '))).filter(el => !isInCommonMeta(el));
       let spaceIssues = 0;
+      let emptyLineIssues = 0;
       let punctuationIssues = 0;
       let englishIssues = 0;
       let pairIssues = 0;
       let illegalSymbolIssues = 0;
+      let bookTitleIssues = 0;
       fields.forEach(el => {
         if (!el || el.classList.contains('skip-self-check')) return;
         if (!el || typeof el.value !== 'string') return;
+        emptyLineIssues += removeEmptyLines(el);
         spaceIssues += highlightInputSpaces(el);
         if (isTextLikeField(el)) {
           englishIssues += replaceEnglishPunctuation(el);
@@ -482,8 +556,19 @@
           punctuationIssues += checkTextareaParagraphEnds(el);
         }
       });
+
+      const bookTitleTargets = [
+        documentRef?.getElementById?.('f-source'),
+        documentRef?.getElementById?.('f-works'),
+        documentRef?.getElementById?.('f-repWorks'),
+        documentRef?.getElementById?.('f-anthos'),
+      ];
+      bookTitleTargets.forEach(el => {
+        if (!el) return;
+        bookTitleIssues += ensureBookTitleBrackets(el);
+      });
       renderQueuedSelfCheckMessages();
-      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues;
+      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues;
       if (Poem && typeof Poem.toast === 'function') {
         Poem.toast(hasIssues ? '请及时修改' : '未发现问题');
       }

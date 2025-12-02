@@ -194,8 +194,14 @@
         const logout = document.getElementById('logout');
         if (logout) {
           logout.onclick = async () => {
-            await Poem.api('/api/auth/logout', { method: 'POST' });
-            window.__poem_me = undefined;
+            try {
+              await Poem.api('/api/auth/logout', { method: 'POST' });
+            } catch (err) {
+              console.warn('Logout request failed:', err);
+            }
+            // Clear cached client-side user and force reload regardless of request outcome.
+            try { window.__poem_me = undefined; } catch (e) { }
+            try { sessionStorage.removeItem('poem_me_cache_v1'); } catch (e) { }
             location.reload();
           };
         }

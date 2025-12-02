@@ -546,6 +546,29 @@
         }
       };
       if (reviewedByEl) {
+
+        try {
+          if (acceptExpectedBtn && expectedDurationInput && reviewDurationInput) {
+            const handleAcceptExpected = () => {
+              if (!state.editable) return;
+              if (acceptExpectedBtn.disabled) return;
+              if (!expectedDurationInput.value || !expectedDurationInput.value.trim()) {
+                try { Poem.toast('期望时长为空'); } catch (err) { }
+                return;
+              }
+              if (reviewDurationInput.disabled) {
+                try { Poem.toast('当前无法填写时长'); } catch (err) { }
+                return;
+              }
+              const nextValue = expectedDurationInput.value.trim();
+              if (reviewDurationInput.value !== nextValue) {
+                reviewDurationInput.value = nextValue;
+                try { reviewDurationInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
+              }
+            };
+            acceptExpectedBtn.addEventListener('click', handleAcceptExpected);
+          }
+        } catch (e) { }
         reviewedByEl.addEventListener('click', () => {
           if (reviewedByEl.disabled) return;
           fillReviewerAndTime();
