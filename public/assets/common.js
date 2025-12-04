@@ -1,5 +1,9 @@
 (function () {
-  const TYPES = ['W', 'G', 'C', 'E', 'S'];
+  const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
+  const LV_SUB_TYPES = [
+    { key: 'yunbu', label: '韵部（L）', description: '整理韵部、韵书对照' },
+    { key: 'ciqupu', label: '词曲谱（L）', description: '整理词曲谱、变体与例词' },
+  ];
   const SEARCH_SCRIPTS = {
     fuse: 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0',
     pinyin: 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js'
@@ -158,6 +162,7 @@
 
   window.Poem = {
     TYPES,
+    LV_SUB_TYPES,
     qs(name) { const p = new URLSearchParams(location.search); return p.get(name); },
     today() { return new Date().toISOString().slice(0, 10); },
     base() {
@@ -246,6 +251,7 @@
               <option value="C">人物（C）</option>
               <option value="E">典故（E）</option>
               <option value="S">鸟兽草木（S）</option>
+              <option value="L">格律（L）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
             ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn" style="margin-left:auto;background:#14532d;border-color:#14532d;color:#ecfdf5;">标记为空置</button>` : ''}
@@ -333,6 +339,123 @@
           });
         }
       }
+    },
+    openLvSubtypePicker(options) {
+      const opts = options || {};
+      const subs = Array.isArray(LV_SUB_TYPES) && LV_SUB_TYPES.length ? LV_SUB_TYPES : [];
+      if (!subs.length) return () => { };
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      const card = document.createElement('div');
+      card.className = 'modal-card';
+      card.innerHTML = `
+        <div class="modal-header"><div>选择格律子类</div><button class="btn" id="closeLvPicker">关闭</button></div>
+        <div class="modal-body lv-subtype-picker"></div>
+      `;
+      modal.appendChild(card);
+      document.body.appendChild(modal);
+      const close = () => modal.remove();
+      card.querySelector('#closeLvPicker').onclick = close;
+      const body = card.querySelector('.modal-body');
+      subs.forEach(sub => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn lv-subtype-btn';
+        btn.textContent = sub.label;
+        btn.title = sub.description || '';
+        btn.addEventListener('click', () => {
+          close();
+          try { if (typeof opts.onSelect === 'function') opts.onSelect(sub.key, sub); } catch (e) { }
+        });
+        body.appendChild(btn);
+      });
+      return close;
+    },
+    openTypePicker(options) {
+      const opts = options || {};
+      const baseEntries = [
+        { type: 'W', label: '诗词（W）' },
+        { type: 'G', label: '文集（G）' },
+        { type: 'C', label: '人物（C）' },
+        { type: 'E', label: '典故（E）' },
+        { type: 'S', label: '鸟兽草木（S）' },
+      ];
+      const entryMap = baseEntries.reduce((acc, entry) => {
+        acc[entry.type] = entry;
+        return acc;
+      }, {});
+      const lvSubs = Array.isArray(LV_SUB_TYPES) ? LV_SUB_TYPES : [];
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      const card = document.createElement('div');
+      card.className = 'modal-card';
+      card.innerHTML = `
+        <div class="modal-header"><div>选择要创建的类别</div><button class="btn" id="closeTypePicker">关闭</button></div>
+        <div class="modal-body type-picker-grid"></div>
+      `;
+      modal.appendChild(card);
+      document.body.appendChild(modal);
+      const close = () => modal.remove();
+      card.querySelector('#closeTypePicker').onclick = close;
+      const grid = card.querySelector('.modal-body');
+
+      const buildButton = (entry) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn type-picker-btn';
+        btn.textContent = entry.label;
+        if (entry.type) btn.dataset.type = entry.type;
+        if (entry.description) btn.title = entry.description;
+        if (entry.sub) btn.classList.add('type-picker-btn--sub');
+        btn.addEventListener('click', () => {
+          close();
+          try { if (typeof opts.onSelect === 'function') opts.onSelect({ type: entry.type, sub: entry.sub || null, entry }); } catch (e) { }
+        });
+        return btn;
+      };
+
+      const addCellWithEntry = (entry) => {
+        if (!entry) return;
+        const cell = document.createElement('div');
+        cell.className = 'type-picker-cell';
+        cell.appendChild(buildButton(entry));
+        grid.appendChild(cell);
+      };
+
+      const addLvCell = () => {
+        const cell = document.createElement('div');
+        cell.className = 'type-picker-cell type-picker-cell--lv';
+        if (lvSubs.length) {
+          const subWrapper = document.createElement('div');
+          subWrapper.className = 'type-picker-lv-buttons';
+          lvSubs.forEach(sub => {
+            const subBtn = buildButton({ type: 'L', sub: sub.key, label: sub.label, description: sub.description || '' });
+            subWrapper.appendChild(subBtn);
+          });
+          cell.appendChild(subWrapper);
+        } else {
+          cell.appendChild(buildButton({ type: 'L', label: '格律（L）' }));
+        }
+        grid.appendChild(cell);
+      };
+
+      const ROWS = [
+        ['W', 'G'],
+        ['C', 'E'],
+        ['S', 'L_GROUP']
+      ];
+
+      ROWS.forEach(row => {
+        row.forEach(token => {
+          if (token === 'L_GROUP') {
+            addLvCell();
+          } else {
+            addCellWithEntry(entryMap[token]);
+          }
+        });
+      });
+
+      return close;
     }
   };
 

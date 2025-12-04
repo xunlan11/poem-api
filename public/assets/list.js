@@ -1,11 +1,11 @@
 (async function () {
   const type = Poem.qs('type') || '';
   const title = document.getElementById('listTitle');
-  const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', A: '汇总' };
+  const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', L: '格律（L）', A: '汇总' };
   title.textContent = type ? (TITLE_MAP[type] || '列表') : '全部';
   // Set the name-column header to the appropriate label for the selected type
   try {
-    const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', A: '名称' };
+    const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律', A: '名称' };
     const nameHeader = document.getElementById('colNameHeader');
     if (nameHeader) nameHeader.textContent = type && NAME_MAP[type] ? NAME_MAP[type] : '名称';
   } catch (e) { }
@@ -20,24 +20,53 @@
   let searchTimer = null;
   let totalCount = 0;
   let currentItems = [];
-  // Only allow create for the main 4 types — if createBtn exists (some layouts may remove it)
-  const CREATABLE = ['W', 'G', 'C', 'E', 'S'];
+  // Create button behavior (supports aggregated list "A" and subtype selection for 格律)
+  const CREATABLE = ['W', 'G', 'C', 'E', 'S', 'L'];
+  const isAggregatedList = !type || type === 'A';
   if (createBtn) {
     createBtn.textContent = '新建';
-    if (CREATABLE.includes(type)) {
+    const shouldShowCreate = isAggregatedList || CREATABLE.includes(type);
+    if (!shouldShowCreate) {
+      createBtn.style.display = 'none';
+      createBtn.onclick = null;
+    } else {
       createBtn.style.display = '';
       createBtn.disabled = false;
       createBtn.onclick = async () => {
         const ok = await Poem.requireProfile();
         if (!ok) return;
-        const encodedType = encodeURIComponent(type || '');
         const backQuery = getEncodedReturnQuery();
-        const link = backQuery ? `editor.html?type=${encodedType}&new=1&return=${backQuery}` : `editor.html?type=${encodedType}&new=1`;
-        location.href = link;
+        const redirectToEditor = (targetType, subKey) => {
+          if (!targetType) return;
+          const encodedType = encodeURIComponent(targetType);
+          const subParam = subKey ? `&sub=${encodeURIComponent(subKey)}` : '';
+          const link = backQuery
+            ? `editor.html?type=${encodedType}&new=1${subParam}&return=${backQuery}`
+            : `editor.html?type=${encodedType}&new=1${subParam}`;
+          location.href = link;
+        };
+        if (isAggregatedList) {
+          if (typeof Poem.openTypePicker === 'function') {
+            Poem.openTypePicker({
+              onSelect(choice) {
+                redirectToEditor(choice?.type, choice?.sub || '');
+              }
+            });
+          } else {
+            redirectToEditor('W');
+          }
+          return;
+        }
+        if (type === 'L' && typeof Poem.openLvSubtypePicker === 'function') {
+          Poem.openLvSubtypePicker({
+            onSelect(subKey) {
+              redirectToEditor('L', subKey);
+            }
+          });
+          return;
+        }
+        redirectToEditor(type);
       };
-    } else {
-      createBtn.style.display = 'none';
-      createBtn.onclick = null;
     }
   }
 
@@ -419,6 +448,7 @@
           <option value="C">人物（C）</option>
           <option value="E">典故（E）</option>
           <option value="S">鸟兽草木（S）</option>
+          <option value="L">格律（L）</option>
         </select>
       </label>
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">创建日期
@@ -436,6 +466,7 @@
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">审核状态
         <select id="fltStatus">
           <option value="">全部</option>
+          <option value="unarchived">未归档</option>
           <option value="pending">未审核</option>
           <option value="rejected">未通过</option>
           <option value="approved">通过</option>

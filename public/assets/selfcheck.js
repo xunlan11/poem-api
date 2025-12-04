@@ -56,6 +56,7 @@
     }, {});
     let selfCheckQueue = [];
     const TEXT_INPUT_TYPES = new Set(['', 'text', 'search', 'url', 'tel', 'email']);
+    const PARAGRAPH_CHECK_SKIP = new Set(['fields.commonChars', 'fields.rareChars']);
 
     function isInCommonMeta(el) {
       if (!el || typeof el.closest !== 'function') return false;
@@ -518,6 +519,51 @@
       return issues.length;
     }
 
+    function isCiqupuForm() {
+      return !!documentRef?.querySelector?.('.variant-card textarea[data-field="sample"]');
+    }
+
+    function countRenderableChars(text) {
+      if (!text) return 0;
+      let count = 0;
+      for (let i = 0; i < text.length; i += 1) {
+        const ch = text[i];
+        if (ch === '\n' || ch === '\r') continue;
+        count += 1;
+      }
+      return count;
+    }
+
+    function runCiqupuLengthCheck() {
+      if (!isCiqupuForm()) return 0;
+      const cards = Array.from(documentRef.querySelectorAll('.variant-card'));
+      if (!cards.length) return 0;
+      let issues = 0;
+      cards.forEach((card, index) => {
+        const sampleField = card.querySelector('textarea[data-field="sample"]');
+        const pingzeField = card.querySelector('textarea[data-field="pingze"]');
+        if (!sampleField || !pingzeField) return;
+        const sampleChars = countRenderableChars(sampleField.value || '');
+        const pingzeChars = countRenderableChars(pingzeField.value || '');
+        if (sampleChars === pingzeChars) return;
+        const variantLabel = card.querySelector('.variant-card__head strong')?.textContent?.trim() || `变体${index}`;
+        const labelHtml = escapeHtml(variantLabel);
+        const detail = `
+          <div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-length">
+            <div class="self-check-inline-note">${labelHtml}：例词 ${sampleChars} 字，平仄 ${pingzeChars} 字。</div>
+          </div>
+        `;
+        queueSelfCheckMessage(pingzeField, 'manual', {
+          category: '字数',
+          count: Math.abs(sampleChars - pingzeChars) || 1,
+          detail
+        });
+        pingzeField.classList.add(SELF_CHECK_FIELD_CLASS);
+        issues += 1;
+      });
+      return issues;
+    }
+
     function runSelfCheck() {
       clearSelfCheckIndicators();
       const selectors = [
@@ -541,6 +587,7 @@
       let pairIssues = 0;
       let illegalSymbolIssues = 0;
       let bookTitleIssues = 0;
+      let ciqupuLengthIssues = 0;
       fields.forEach(el => {
         if (!el || el.classList.contains('skip-self-check')) return;
         if (!el || typeof el.value !== 'string') return;
@@ -552,7 +599,9 @@
           pairIssues += checkPairedSymbols(el);
         }
         const needsParagraphCheck = (el.tagName === 'TEXTAREA' && isAutosizeTextarea(el)) || (el.dataset && el.dataset.checkParagraph === 'true');
-        if (needsParagraphCheck) {
+        const linkFieldName = el.dataset && el.dataset.linkField ? el.dataset.linkField : '';
+        const skipParagraphCheck = linkFieldName && PARAGRAPH_CHECK_SKIP.has(linkFieldName);
+        if (needsParagraphCheck && !skipParagraphCheck) {
           punctuationIssues += checkTextareaParagraphEnds(el);
         }
       });
@@ -567,8 +616,9 @@
         if (!el) return;
         bookTitleIssues += ensureBookTitleBrackets(el);
       });
+      ciqupuLengthIssues += runCiqupuLengthCheck();
       renderQueuedSelfCheckMessages();
-      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues;
+      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues;
       if (Poem && typeof Poem.toast === 'function') {
         Poem.toast(hasIssues ? '请及时修改' : '未发现问题');
       }

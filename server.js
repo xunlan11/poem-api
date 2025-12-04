@@ -126,14 +126,15 @@ const upload = multer({
   }
 });
 
-const TYPES = ['W', 'G', 'C', 'E', 'S'];
+const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
 
 const defaultStore = () => ({
   W: { lastId: 0, items: {} },
   G: { lastId: 0, items: {} },
   C: { lastId: 0, items: {} },
   E: { lastId: 0, items: {} },
-  S: { lastId: 0, items: {} }
+  S: { lastId: 0, items: {} },
+  L: { lastId: 0, items: {} }
 });
 
 let store = defaultStore();
@@ -152,7 +153,7 @@ async function loadStore() {
     const now = new Date().toISOString();
     const admin = {
       id: 'u_1', username: 'admin', password_hash: bcrypt.hashSync('admin123', 10), role: 'admin',
-      real_name: '管理员', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: '', profile_completed: false
+      real_name: '管理员', student_id: '', created_at: now, updated_at: now, profile_completed: false
     };
     await fs.writeJson(USER_FILE, [admin], { spaces: 2 });
   }
@@ -208,6 +209,15 @@ function simplify(node) {
     displayName = fields.statement || node.name || node.title || (node.explanation?.slice(0, 16) || '');
   } else if (node.type === 'S') {
     displayName = fields.commonName || fields.statement || node.name || node.title || node.extra?.introduction || (node.explanation?.slice(0, 16) || '');
+  } else if (node.type === 'L') {
+    const subKey = fields.sub || node.fields?.sub || node.extra?.sub;
+    if (subKey === 'yunbu') {
+      displayName = fields.title || fields.rhymeGroup || node.name || node.title || '';
+    } else if (subKey === 'ciqupu') {
+      displayName = fields.title || node.name || node.title || '';
+    } else {
+      displayName = node.name || fields.title || node.title || '';
+    }
   } else {
     displayName = node.name || node.title || node.person?.name || node.explanation?.slice(0, 16) || '';
   }
@@ -287,6 +297,7 @@ function fuzzySearch(items, q) {
     { name: 'fields.statement', weight: 0.8 },
     { name: 'fields.otherStatement', weight: 0.8 },
     { name: 'fields.otherStatements', weight: 0.8 },
+    { name: 'fields.otherNames', weight: 0.7 },
     { name: 'fields.scientificName', weight: 0.6 },
     { name: 'extra.explanation', weight: 0.6 },
     { name: 'extra.introduction', weight: 0.6 },
@@ -378,9 +389,12 @@ app.get('/api/nodes', (req, res) => {
       return true;
     });
   }
+  const filterUnarchived = reviewStatus === 'unarchived';
   const allowedStatuses = new Set(['pending', 'rejected', 'approved', 'archived', 'final']);
   const normalizedReview = allowedStatuses.has(reviewStatus) ? reviewStatus : '';
-  if (normalizedReview) {
+  if (filterUnarchived) {
+    filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') !== 'archived');
+  } else if (normalizedReview) {
     filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') === normalizedReview);
   }
   const allowedRepair = new Set(['unfinished', 'finished']);
@@ -609,7 +623,7 @@ function authFromCookie(req, res, next) {
   try {
     const payload = jwt.verify(token, JWT_SECRET);
     const user = findUserById(payload.uid);
-    if (user && user.status !== 'disabled') {
+    if (user) {
       req.user = { id: user.id, username: user.username, role: user.role, real_name: user.real_name, student_id: user.student_id, profile_completed: !!user.profile_completed };
     }
   } catch (e) {
@@ -657,13 +671,12 @@ app.post('/api/auth/login', async (req, res) => {
   if (!u) {
     // 首次登录 -> 自动注册为普通用户
     const now = new Date().toISOString();
-    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: now, profile_completed: false };
+    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', created_at: now, updated_at: now, profile_completed: false };
     users.push(u);
     await saveUsers();
   } else {
     const ok = bcrypt.compareSync(password, u.password_hash);
     if (!ok) return res.status(401).json({ error: 'Invalid username or password' });
-    u.last_login_at = new Date().toISOString();
     await saveUsers();
   }
   const token = issueToken(u);
@@ -695,7 +708,7 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
 });
 // Admin: user management
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
-  res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, status: u.status, created_at: u.created_at, updated_at: u.updated_at, last_login_at: u.last_login_at, profile_completed: !!u.profile_completed })));
+  res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, updated_at: u.updated_at, profile_completed: !!u.profile_completed })));
 });
 
 function nextUserId() {
@@ -715,49 +728,10 @@ app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
   if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
   if (findUserByUsername(username)) return res.status(409).json({ error: 'Username exists' });
   const now = new Date().toISOString();
-  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', status: 'active', created_at: now, updated_at: now, last_login_at: '', profile_completed: false };
+  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', created_at: now, updated_at: now, profile_completed: false };
   users.push(u);
   await saveUsers();
   res.status(201).json({ id: u.id, username: u.username, role: u.role });
-});
-
-app.put('/api/users/:id/role', requireAuth, requireAdmin, async (req, res) => {
-  const u = findUserById(req.params.id);
-  if (!u) return res.status(404).json({ error: 'User not found' });
-  const { role } = req.body || {};
-  if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
-
-  // 超级管理员保护：防止将第一个管理员账户降级
-  if (u.id === 'u_1' && u.role === 'admin' && role !== 'admin') {
-    return res.status(403).json({ error: 'Cannot modify super admin role' });
-  }
-
-  // 防止管理员将自己的权限降级
-  if (u.id === req.user.id && u.role === 'admin' && role !== 'admin') {
-    return res.status(403).json({ error: 'Cannot downgrade your own admin role' });
-  }
-
-  u.role = role; u.updated_at = new Date().toISOString();
-  await saveUsers();
-  res.json({ ok: true });
-});
-
-app.put('/api/users/:id/status', requireAuth, requireAdmin, async (req, res) => {
-  const u = findUserById(req.params.id);
-  if (!u) return res.status(404).json({ error: 'User not found' });
-  const { status } = req.body || {};
-  if (!['active', 'disabled'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
-  // 超级管理员保护：防止禁用第一个管理员账户
-  if (u.id === 'u_1') {
-    return res.status(403).json({ error: 'Cannot disable super admin' });
-  }
-  // 防止管理员禁用自己
-  if (u.id === req.user.id) {
-    return res.status(403).json({ error: 'Cannot disable yourself' });
-  }
-  u.status = status; u.updated_at = new Date().toISOString();
-  await saveUsers();
-  res.json({ ok: true });
 });
 
 // Admin: delete user

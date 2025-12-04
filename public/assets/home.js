@@ -1,5 +1,5 @@
 (function () {
-  const TYPE_LABELS = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木' };
+  const TYPE_LABELS = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律' };
   const PENDING_PAGE_SIZE = 8;
   const pendingSection = document.getElementById('myPendingSection');
   const pendingBody = document.getElementById('myPendingBody');
@@ -37,13 +37,45 @@
 
     // addBtn may not exist for some types (e.g. 汇总)，so only attach when present
     if (addBtn) {
-      addBtn.onclick = async () => { const ok = await Poem.requireProfile(); if (ok) location.href = `editor.html?type=${type}&new=1`; };
+      addBtn.onclick = async () => {
+        const ok = await Poem.requireProfile();
+        if (!ok) return;
+        const redirectToEditor = (targetType, subKey) => {
+          if (!targetType) return;
+          const encodedType = encodeURIComponent(targetType);
+          const subParam = subKey ? `&sub=${encodeURIComponent(subKey)}` : '';
+          location.href = `editor.html?type=${encodedType}&new=1${subParam}`;
+        };
+        if (type === 'A') {
+          if (typeof Poem.openTypePicker === 'function') {
+            Poem.openTypePicker({
+              onSelect(choice) {
+                redirectToEditor(choice?.type, choice?.sub || '');
+              }
+            });
+          } else {
+            redirectToEditor('W');
+          }
+          return;
+        }
+        const encodedType = encodeURIComponent(type);
+        if (type === 'L' && typeof Poem.openLvSubtypePicker === 'function') {
+          Poem.openLvSubtypePicker({
+            onSelect(subKey) {
+              const subParam = subKey ? `&sub=${encodeURIComponent(subKey)}` : '';
+              location.href = `editor.html?type=${encodedType}&new=1${subParam}`;
+            }
+          });
+          return;
+        }
+        location.href = `editor.html?type=${encodedType}&new=1`;
+      };
     }
     if (viewBtn) viewBtn.onclick = () => { location.href = `list.html?type=${type}`; };
   }
 
   // include 'A' for 汇总 (no 新建 button)
-  ['W', 'G', 'C', 'E', 'S', 'A'].forEach(bindRow);
+  ['W', 'G', 'C', 'E', 'S', 'L', 'A'].forEach(bindRow);
 
   async function fetchAllNodes() {
     const limit = 200;
