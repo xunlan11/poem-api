@@ -27,7 +27,7 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>表述</label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
+        <div class="field"><label>表述 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
         <div class="field"><label>其他表述</label><input id="f-other-statement" type="text" data-link-field="fields.otherStatement" value="${escapeHtml(otherStatement)}"></div>
       </div> 
       <div class="field"><label>解释</label><textarea id="f-explanation" rows="1" data-link-field="extra.explanation" style="width:100%;resize:none;overflow:hidden">${escapeHtml(explanation)}</textarea></div>
@@ -38,6 +38,16 @@
     `;
 
     initializeLinkFields(formContainer);
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const stmtVal = (formContainer.querySelector('#f-statement').value || '').trim();
+        const otherVal = (formContainer.querySelector('#f-other-statement').value || '').trim();
+        const q = [stmtVal, otherVal].filter(Boolean).join(' ');
+        context.checkDuplicate(q, 'E');
+      });
+    }
 
     const usageInput = formContainer.querySelector('#f-usage');
     const personsInput = formContainer.querySelector('#f-persons');

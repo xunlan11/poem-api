@@ -77,7 +77,7 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>词曲谱</label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(title)}"></div>
+        <div class="field"><label>词曲谱 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(title)}"></div>
         <div class="field"><label>其他名称</label><input id="lv-other" type="text" data-link-field="fields.otherNames" value="${escapeHtml(otherNames)}"></div>
       </div>
       <div class="grid-2">
@@ -99,6 +99,16 @@
     const variantListEl = formContainer.querySelector('#lv-variant-list');
     const variantCountEl = formContainer.querySelector('#lv-variant-count');
     const addVariantBtn = formContainer.querySelector('#lv-add-variant');
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const titleVal = (formContainer.querySelector('#lv-title').value || '').trim();
+        const otherVal = (formContainer.querySelector('#lv-other').value || '').trim();
+        const q = [titleVal, otherVal].filter(Boolean).join(' ');
+        context.checkDuplicate(q, 'L');
+      });
+    }
 
     const ensureStateLengths = () => {
       if (lockStates.length > variants.length) {

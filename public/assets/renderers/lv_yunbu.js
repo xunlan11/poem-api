@@ -21,7 +21,7 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>韵部</label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(rhymeName)}"></div>
+        <div class="field"><label>韵部 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(rhymeName)}"></div>
         <div class="field">
           <label>韵书</label>
           <div class="radio-row" id="lv-book">
@@ -44,6 +44,14 @@
     ['#lv-common', '#lv-rare'].forEach(bindAutosize);
 
     initializeLinkFields(formContainer);
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const titleVal = (formContainer.querySelector('#lv-title').value || '').trim();
+        context.checkDuplicate(titleVal, 'L');
+      });
+    }
 
     function collect() {
       const bookInput = formContainer.querySelector('input[name="lvBook"]:checked');

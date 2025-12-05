@@ -304,9 +304,82 @@
         delWrap.appendChild(delBtn);
         wrapper.appendChild(delWrap);
       }
+
       container.appendChild(wrapper);
     });
     initializeLinkFields(container);
+  }
+
+  function showDuplicateModal(results, query) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    const card = document.createElement('div');
+    card.className = 'modal-card';
+    
+    let listHtml = '';
+    if (results.length === 0) {
+      listHtml = '<div style="padding:16px;text-align:center;color:#666">未发现重复项</div>';
+    } else {
+      listHtml = '<div class="list-group">';
+      results.forEach(item => {
+        const isExternal = !!item.isExternal;
+        const leftText = `${item.id} | ${escapeHtml(item.name || item.title)}`;
+        const rightParts = [];
+        if (item.creator) rightParts.push(item.creator);
+        if (item.createdAt) rightParts.push(item.createdAt.slice(0, 10));
+        const rightText = rightParts.join(' | ');
+
+        if (isExternal) {
+          listHtml += `
+            <div class="result-item" style="background:#fff7ed;border-color:#ffedd5;margin-bottom:6px;padding:6px 8px;border:1px solid #ffedd5;border-radius:6px;">
+              <div style="font-weight:500;color:#c2410c">${leftText}</div>
+              <div style="font-size:13px;color:#9a3412">该条目存在于构建总表中</div>
+            </div>
+          `;
+        } else {
+          listHtml += `
+            <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
+              <div style="font-weight:500">${leftText}</div>
+              <div style="font-size:13px;color:#64748b">${escapeHtml(rightText)}</div>
+            </a>
+          `;
+        }
+      });
+      listHtml += '</div>';
+    }
+
+    card.innerHTML = `
+      <div class="modal-header">
+        <div>查重结果: "${escapeHtml(query)}"</div>
+        <button class="btn" id="closeDupModal">关闭</button>
+      </div>
+      <div class="modal-body" style="max-height:60vh;overflow-y:auto">
+        ${listHtml}
+      </div>
+    `;
+    
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+    
+    const close = () => modal.remove();
+    card.querySelector('#closeDupModal').onclick = close;
+    modal.onclick = (e) => { if (e.target === modal) close(); };
+  }
+
+  async function checkDuplicate(query, type) {
+    if (!query || !query.trim()) {
+      Poem.toast('请先输入内容');
+      return;
+    }
+    try {
+      const res = await Poem.api(`/api/search?type=${type}&q=${encodeURIComponent(query)}`);
+      const currentId = state.node ? state.node.id : null;
+      const filtered = (res.results || []).filter(r => r.id !== currentId);
+      showDuplicateModal(filtered, query);
+    } catch (err) {
+      console.error(err);
+      Poem.toast('查重失败');
+    }
   }
 
   function getRendererFactory(typeCode) {
@@ -354,6 +427,7 @@
       Poem,
       syncLinksToState,
       isLinkBrushActive,
+      checkDuplicate,
     };
   }
   function commonMetaToNode(node) {
@@ -604,9 +678,14 @@
     } catch (e) { }
 
     let renderer;
-    const t = isNew ? type : state.node.type;
-    const backListTarget = returnQuery ? `list.html?${returnQuery}` : `list.html${t ? `?type=${t}` : ''}`;
-    const backAllTarget = (returnQuery && /(^|&)type=A(&|$)/.test(returnQuery)) ? `list.html?${returnQuery}` : 'list.html?type=A';
+    const t = isNew ? type : (state.node ? state.node.type : '');
+
+    const returnTypeMatch = returnQuery.match(/(?:^|&)type=([^&]*)/);
+    const returnType = returnTypeMatch ? returnTypeMatch[1] : '';
+    const effectiveReturnType = returnType || 'A';
+
+    const backAllTarget = (effectiveReturnType === 'A' && returnQuery) ? `list.html?${returnQuery}` : 'list.html?type=A';
+    const backListTarget = (effectiveReturnType === t && returnQuery) ? `list.html?${returnQuery}` : (t ? `list.html?type=${t}` : 'list.html');
     const rendererFactory = getRendererFactory(t);
     if (rendererFactory) {
       renderer = rendererFactory(buildRendererContext(state.node, t));

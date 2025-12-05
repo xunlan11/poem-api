@@ -30,7 +30,7 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>通用名</label><input id="f-common-name" type="text" data-link-field="fields.commonName" value="${escapeHtml(commonName)}"></div>
+        <div class="field"><label>通用名 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-common-name" type="text" data-link-field="fields.commonName" value="${escapeHtml(commonName)}"></div>
         <div class="field"><label>表述</label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
       </div>
       <div class="grid-3">
@@ -58,6 +58,16 @@
     `;
 
     initializeLinkFields(formContainer);
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const commonVal = (formContainer.querySelector('#f-common-name').value || '').trim();
+        const sciVal = (formContainer.querySelector('#f-scientific-name').value || '').trim();
+        const q = [commonVal, sciVal].filter(Boolean).join(' ');
+        context.checkDuplicate(q, 'S');
+      });
+    }
 
     const introInput = formContainer.querySelector('#f-introduction');
     const sameImageryInput = formContainer.querySelector('#f-same-imagery');

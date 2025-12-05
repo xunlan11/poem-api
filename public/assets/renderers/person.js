@@ -42,28 +42,28 @@
     }
 
     formContainer.innerHTML = `
-      <div class="grid-2">
-        <div class="field"><label>通用名</label><input id="f-common" type="text" data-link-field="fields.common" value="${escapeHtml(common)}"></div>
+      <div class="grid-3">
+        <div class="field"><label>通用名 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-common" type="text" data-link-field="fields.common" value="${escapeHtml(common)}"></div>
         <div class="field"><label>姓（氏）名</label><input id="f-name" type="text" data-link-field="fields.name" value="${escapeHtml(name)}"></div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>时期</label><input id="f-period" type="text" data-link-field="fields.period" value="${escapeHtml(period)}"></div>
         <div class="field"><label>籍贯</label><input id="f-hometown" type="text" data-link-field="fields.hometown" value="${escapeHtml(hometown)}"></div>
       </div>
-      <div class="field"><label>生卒</label><input id="f-life" type="text" data-link-field="fields.life" value="${escapeHtml(life)}"></div>
-      <div class="grid-3">
+      <div class="grid-1-2">
+        <div class="field"><label>时期</label><input id="f-period" type="text" data-link-field="fields.period" value="${escapeHtml(period)}"></div>
+        <div class="field"><label>生卒</label><input id="f-life" type="text" data-link-field="fields.life" value="${escapeHtml(life)}"></div>
+      </div>
+      <div class="grid-4">
         <div class="field"><label>字</label><input id="f-courtesy" type="text" data-link-field="fields.courtesy" value="${escapeHtml(courtesy)}"></div>
         <div class="field"><label>号</label><input id="f-pseudonym" type="text" data-link-field="fields.pseudonym" value="${escapeHtml(pseudonym)}"></div>
         <div class="field"><label>谥号</label><input id="f-posthumous" type="text" data-link-field="fields.posthumous" value="${escapeHtml(posthumous)}"></div>
+        <div class="field"><label>别称</label><input id="f-aliases" type="text" data-link-field="fields.aliases" value="${escapeHtml(aliases)}"></div>
       </div>  
-      <div class="field"><label>别称</label><input id="f-aliases" type="text" data-link-field="fields.aliases" value="${escapeHtml(aliases)}"></div>
       <div class="field"><label>合称 <button id="addJoint" class="btn small add-row">添加</button></label><div id="jointList" class="ordered-list"></div></div>
+      <div class="field"><label>人际关系 <button id="addRel" class="btn small add-row">添加</button></label><div id="relations" class="ordered-list"></div></div>
       <div class="grid-3">
         <div class="field"><label>流派</label><input id="f-school" type="text" data-link-field="fields.school" value="${escapeHtml(school)}"></div>
         <div class="field"><label>代表作</label><input id="f-repWorks" type="text" data-link-field="fields.repWorks" value="${escapeHtml(repWorksText)}"></div>
         <div class="field"><label>文集</label><input id="f-anthos" type="text" data-link-field="fields.anthos" value="${escapeHtml(anthosText)}"></div>
       </div>  
-      <div class="field"><label>人际关系 <button id="addRel" class="btn small add-row">添加</button></label><div id="relations" class="ordered-list"></div></div>
       <div class="field"><label>大事年表 <button id="addChrono" class="btn small add-row">添加</button></label><div id="chrono" class="note-list"></div></div>
       <div class="field"><label>成就与影响</label><textarea id="f-achievements" rows="1" data-link-field="extra.achievements" style="width:100%;resize:none;overflow:hidden">${escapeHtml(achievements)}</textarea></div>
       <div class="field"><label>评价 <button id="addEval" class="btn small add-row">添加</button></label><div id="evalList" class="note-list"></div></div>
@@ -71,6 +71,16 @@
     `;
 
     initializeLinkFields(formContainer);
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const commonVal = (formContainer.querySelector('#f-common').value || '').trim();
+        const nameVal = (formContainer.querySelector('#f-name').value || '').trim();
+        const q = [commonVal, nameVal].filter(Boolean).join(' ');
+        context.checkDuplicate(q, 'C');
+      });
+    }
 
     const repWorksInput = formContainer.querySelector('#f-repWorks');
     const anthosInput = formContainer.querySelector('#f-anthos');

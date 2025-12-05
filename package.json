@@ -5,8 +5,7 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
-    "broadcast": "node scripts/broadcast.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "MIT",
@@ -20,7 +19,8 @@
     "morgan": "^1.10.0",
     "multer": "^2.0.2",
     "node-fetch": "^2.7.0",
-    "pinyin-pro": "^3.27.0"
+    "pinyin-pro": "^3.27.0",
+    "xlsx": "^0.18.5"
   },
   "engines": {
     "node": ">=16"

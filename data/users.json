@@ -806,17 +806,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_63",
-    "username": "王国弓箭手",
-    "password_hash": "$2a$10$lLlhY5GGgstjKS/pJv2KceBb8KHtHWgMENt1j5OBEfK153Zqj/vXe",
-    "role": "user",
-    "real_name": "李艺恒",
-    "student_id": "2511360",
-    "created_at": "2025-12-04T06:38:33.269Z",
-    "updated_at": "2025-12-04T06:43:22.923Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_64",
     "username": "李艺恒",
     "password_hash": "$2a$10$pBIvIiYUhEgcEmkRFlAQaubLmVL4zrIMpdf/VwhARqPZD/.cCaAe.",

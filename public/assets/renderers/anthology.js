@@ -24,7 +24,7 @@
 
     formContainer.innerHTML = `
         <div class="grid-2">
-          <div class="field"><label>文集</label><input id="f-name" type="text" data-link-field="fields.title" value="${escapeHtml(name)}"></div>
+          <div class="field"><label>文集 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-name" type="text" data-link-field="fields.title" value="${escapeHtml(name)}"></div>
           <div class="field"><label>作者</label><input id="f-author" type="text" data-link-field="fields.author" value="${escapeHtml(author)}"></div>
         </div>
         <div class="field"><label>概述</label><textarea id="f-overview" rows="1" data-link-field="extra.overview" style="width:100%;resize:none;overflow:hidden">${escapeHtml(overview)}</textarea></div>
@@ -36,6 +36,14 @@
       `;
 
     initializeLinkFields(formContainer);
+
+    const checkDupBtn = formContainer.querySelector('.check-dup-btn');
+    if (checkDupBtn && context.checkDuplicate) {
+      checkDupBtn.addEventListener('click', () => {
+        const nameVal = (formContainer.querySelector('#f-name').value || '').trim();
+        context.checkDuplicate(nameVal, 'G');
+      });
+    }
 
     const overviewEl = formContainer.querySelector('#f-overview');
     const worksInput = formContainer.querySelector('#f-works');

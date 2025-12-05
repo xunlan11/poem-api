@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { pinyin } = require('pinyin-pro');
 const multer = require('multer');
+const XLSX = require('xlsx');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
@@ -25,33 +26,6 @@ const USER_FILE = path.join(DATA_DIR, 'users.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 
 fs.ensureDirSync(UPLOAD_DIR);
-
-const versionClients = new Set();
-let currentVersion = null;
-
-function cleanupVersionClient(entry) {
-  if (!entry) return;
-  try { entry.res.end(); } catch (err) { }
-  clearInterval(entry.heartbeat);
-  versionClients.delete(entry);
-}
-
-function broadcastVersion(version) {
-  if (!versionClients.size || !version) return;
-  const payload = `event: version\ndata: ${JSON.stringify({ version })}\n\n`;
-  for (const entry of Array.from(versionClients)) {
-    try {
-      entry.res.write(payload);
-    } catch (err) {
-      cleanupVersionClient(entry);
-    }
-  }
-}
-
-function setAndBroadcastVersion(nextVersion) {
-  currentVersion = nextVersion;
-  broadcastVersion(currentVersion);
-}
 
 function sanitizeNodeId(rawId) {
   if (!rawId) return '';
@@ -139,8 +113,30 @@ const defaultStore = () => ({
 
 let store = defaultStore();
 let users = [];
+let externalItems = [];
+
+async function loadExternalList() {
+  try {
+    const filePath = path.join(__dirname, '构建总表.xlsx');
+    if (await fs.pathExists(filePath)) {
+      const workbook = XLSX.readFile(filePath);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      // Assume first column is the name. Filter out empty rows/cells.
+      externalItems = rows.map(row => {
+        const val = row && row[0];
+        return val ? String(val).trim() : '';
+      }).filter(Boolean);
+      console.log(`Loaded ${externalItems.length} items from external list.`);
+    }
+  } catch (err) {
+    console.error('Failed to load external list', err);
+  }
+}
 
 async function loadStore() {
+  await loadExternalList();
   await fs.ensureDir(DATA_DIR);
   if (!(await fs.pathExists(DATA_FILE))) {
     await fs.writeJson(DATA_FILE, defaultStore(), { spaces: 2 });
@@ -409,18 +405,14 @@ app.get('/api/nodes', (req, res) => {
   const hasSearch = typeof search === 'string' && search.trim();
   let ordered = searched;
   if (!hasSearch) {
-    if (type === 'A') {
-      ordered = searched.slice().sort((a, b) => {
-        const da = a?.meta?.createdAt ? Date.parse(a.meta.createdAt) : NaN;
-        const db = b?.meta?.createdAt ? Date.parse(b.meta.createdAt) : NaN;
-        const va = Number.isNaN(da) ? 0 : da;
-        const vb = Number.isNaN(db) ? 0 : db;
-        if (vb !== va) return vb - va;
-        return idNumber(b.id) - idNumber(a.id);
-      });
-    } else {
-      ordered = searched.slice().sort((a, b) => idNumber(b.id) - idNumber(a.id));
-    }
+    ordered = searched.slice().sort((a, b) => {
+      const da = a?.meta?.createdAt ? Date.parse(a.meta.createdAt) : NaN;
+      const db = b?.meta?.createdAt ? Date.parse(b.meta.createdAt) : NaN;
+      const va = Number.isNaN(da) ? 0 : da;
+      const vb = Number.isNaN(db) ? 0 : db;
+      if (vb !== va) return vb - va;
+      return idNumber(b.id) - idNumber(a.id);
+    });
   }
   const page = ordered.slice(off, off + lim).map(simplify);
   res.json({ data: page, pagination: { total: ordered.length, limit: lim, offset: off } });
@@ -550,41 +542,26 @@ app.get('/api/search', (req, res) => {
   const { q, type } = req.query;
   const items = allItems(type);
   const results = fuzzySearch(items, q).map(simplify).slice(0, 50);
+
+  // Check external list if query is present
+  if (q && q.trim()) {
+    const query = q.trim().toLowerCase();
+    // Simple inclusion check or exact match? User said "check duplicate", so exact or close match.
+    // Let's do a simple filter for now.
+    const externalMatches = externalItems.filter(item => item.toLowerCase().includes(query));
+    // Limit external matches
+    const limitedExternal = externalMatches.slice(0, 10).map(name => ({
+      id: '总表',
+      type: 'EXTERNAL',
+      name: name,
+      creator: '系统导入',
+      createdAt: '',
+      isExternal: true
+    }));
+    results.push(...limitedExternal);
+  }
+
   res.json({ query: q || '', results });
-});
-
-app.get('/api/version', (req, res) => {
-  res.json({ version: currentVersion });
-});
-
-app.get('/api/version/stream', (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.flushHeaders?.();
-  if (currentVersion) {
-    res.write(`event: version\ndata: ${JSON.stringify({ version: currentVersion })}\n\n`);
-  }
-  const entry = {
-    res,
-    heartbeat: setInterval(() => {
-      try { res.write(':ping\n\n'); } catch (err) { cleanupVersionClient(entry); }
-    }, 30000)
-  };
-  versionClients.add(entry);
-  req.on('close', () => cleanupVersionClient(entry));
-});
-
-app.post('/api/version/broadcast', requireAuth, requireAdmin, async (req, res) => {
-  try {
-    const requested = typeof req.body?.version === 'string' ? req.body.version.trim() : '';
-    if (!requested) return res.status(400).json({ error: 'Missing version' });
-    setAndBroadcastVersion(requested);
-    res.json({ ok: true, version: currentVersion });
-  } catch (err) {
-    console.error('Failed to broadcast version', err);
-    res.status(500).json({ error: 'Failed to broadcast version' });
-  }
 });
 
 // Static UI
