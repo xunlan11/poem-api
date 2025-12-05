@@ -43,7 +43,9 @@
 
     formContainer.innerHTML = `
       <div class="grid-3">
-        <div class="field"><label>通用名 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-common" type="text" data-link-field="fields.common" value="${escapeHtml(common)}"></div>
+        <div class="field"><label>通用名</label>
+          <div class="field-row"><input id="f-common" type="text" data-link-field="fields.common" value="${escapeHtml(common)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
+        </div>
         <div class="field"><label>姓（氏）名</label><input id="f-name" type="text" data-link-field="fields.name" value="${escapeHtml(name)}"></div>
         <div class="field"><label>籍贯</label><input id="f-hometown" type="text" data-link-field="fields.hometown" value="${escapeHtml(hometown)}"></div>
       </div>

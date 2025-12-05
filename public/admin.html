@@ -11,6 +11,7 @@
 <body>
   <header class="topbar">
     <h1>用户管理</h1>
+    <div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
     <a href="./" class="link">返回首页</a>
   </header>
   <main class="container">
@@ -245,10 +246,10 @@
         if (!user) return;
 
         let confirmMsg = '';
-        if (act === 'admin') confirmMsg = `确定要将用户 ${user.username} 设为管理员吗？`;
-        else if (act === 'reviewer') confirmMsg = `确定要将用户 ${user.username} 设为审核员吗？`;
-        else if (act === 'user') confirmMsg = `确定要将用户 ${user.username} 设为整理员吗？`;
-        else if (act === 'delete') confirmMsg = `确定要删除用户 ${user.username} 吗？此操作不可撤销。`;
+        if (act === 'admin') confirmMsg = `将用户 ${user.username} 设为管理员？`;
+        else if (act === 'reviewer') confirmMsg = `将用户 ${user.username} 设为审核员？`;
+        else if (act === 'user') confirmMsg = `将用户 ${user.username} 设为整理员？`;
+        else if (act === 'delete') confirmMsg = `删除用户 ${user.username} ？`;
 
         if (confirmMsg && !confirm(confirmMsg)) return;
 

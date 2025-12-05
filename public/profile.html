@@ -12,6 +12,7 @@
   <header class="topbar">
     <h1>完善资料</h1>
     <a href="./" class="link">返回首页</a>
+      <div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
   </header>
   <main class="container">
     <section class="section-card">
@@ -40,7 +41,7 @@
           const real_name = rn.value.trim(); const student_id = sid.value.trim();
           if (!real_name || !student_id) { err.textContent = '请填写真实姓名与学号'; return; }
           await Poem.api('/api/auth/profile', { method: 'POST', body: JSON.stringify({ real_name, student_id }) });
-          await Poem.me();
+          await Poem.me({ force: true });
           location.href = './';
         } catch (e) { err.textContent = '保存失败，请稍后重试'; }
       };

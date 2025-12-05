@@ -27,7 +27,9 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>表述 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
+        <div class="field"><label>表述</label>
+          <div class="field-row"><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
+        </div>
         <div class="field"><label>其他表述</label><input id="f-other-statement" type="text" data-link-field="fields.otherStatement" value="${escapeHtml(otherStatement)}"></div>
       </div> 
       <div class="field"><label>解释</label><textarea id="f-explanation" rows="1" data-link-field="extra.explanation" style="width:100%;resize:none;overflow:hidden">${escapeHtml(explanation)}</textarea></div>

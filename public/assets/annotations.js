@@ -32,6 +32,7 @@
     const links = options.linking && Array.isArray(options.linking.links) ? options.linking.links : [];
     const MAX_VISIBLE = (typeof options.maxVisible === 'number' && options.maxVisible > 0) ? options.maxVisible : 5;
     const renderContainerId = options.renderContainerId || 'f-body-render';
+    let annotationFieldMap = new Map();
 
     let annotations = [];
 
@@ -104,6 +105,7 @@
 
     function renderAnnotations() {
       if (!annoArea) return;
+      annotationFieldMap = new Map();
       const depths = computeDepths(annotations);
       const annotated = annotations.map((a, i) => ({ a, idx: i, depth: depths[i] || 0 }));
       annotated.forEach(item => ensureAnnotationKey(item.a));
@@ -216,6 +218,8 @@
           hidden.dataset.linkField = fieldKey;
           hidden.dataset.checkParagraph = 'true';
           row.appendChild(hidden);
+
+          annotationFieldMap.set(fieldKey, { hidden, noteDisplay });
 
           registerLinkField(fieldKey, hidden, {
             skipDisplay: true,
@@ -424,8 +428,9 @@
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
       if (!span || !renderDiv.contains(span)) return;
-      // Follow link.js behavior: only allow context-delete when NOT editable
-      if (state.editable) return;
+      // Allow context-delete when either not editable, or editable but body is locked/read-only.
+      // Block only when in editable mode and body is currently unlocked for editing.
+      if (state.editable && textarea && !textarea.readOnly) return;
       const sig = span.getAttribute('data-anno') || '';
       if (!sig) return;
       const indices = sig.split(',').map(s => parseInt(s, 10)).filter(n => !Number.isNaN(n) && n >= 0);
@@ -436,7 +441,7 @@
       if (!target) return;
       event.preventDefault();
       const label = target.text || target.note || '';
-      if (root.confirm && root.confirm(`移除注释：${label || '(无内容)'}？`)) {
+      if (root.confirm && root.confirm(`移除注释 ${label} ？`)) {
         const fieldKey = getAnnotationFieldKey(target);
         const spec = fieldKey ? getFieldSpec(fieldKey) : null;
         annotations.splice(targetIdx, 1);
@@ -610,7 +615,6 @@
     function unlockBody() {
       if (!textarea) return;
       if (isLinkBrushActive()) {
-        if (Poem && typeof Poem.toast === 'function') Poem.toast('链接模式下正文保持锁定，请先关闭链接模式');
         return;
       }
       textarea.readOnly = false;
@@ -648,6 +652,23 @@
       }
       renderAnnotations();
     });
+
+    // After self-check auto-fixes hidden annotation note fields, sync the changes into
+    // the annotations array and update visible displays while keeping issue messages.
+    if (documentRef && typeof documentRef.addEventListener === 'function') {
+      documentRef.addEventListener('poem:selfcheck:after', () => {
+        annotations.forEach((anno) => {
+          const key = getAnnotationFieldKey(anno);
+          const refs = key ? annotationFieldMap.get(key) : null;
+          if (!refs || !refs.hidden) return;
+          const nextVal = typeof refs.hidden.value === 'string' ? refs.hidden.value : '';
+          if (nextVal !== anno.note) {
+            anno.note = nextVal;
+            if (refs.noteDisplay) refs.noteDisplay.textContent = nextVal;
+          }
+        });
+      });
+    }
 
     if (textarea) {
       textarea.addEventListener('input', handleTextareaInput);

@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "move-logo": "node scripts/move-logo.js"
   },
   "author": "",
   "license": "MIT",

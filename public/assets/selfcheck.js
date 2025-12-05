@@ -16,6 +16,11 @@
     const SELF_CHECK_SPACE_CONTEXT = 8;
     const SELF_CHECK_EMPTY_LINE_SNIPPET_LIMIT = 8;
     const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
+    const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；'];
+    const EXTRA_PARAGRAPH_ENDING_FIELDS = {
+      ids: new Set(['f-body', 'f-translation']),
+      linkFields: new Set(['content', 'extra.translation'])
+    };
     const CN_ELLIPSIS = '……';
     const TRAILING_ENCLOSURE_REGEX = /[)\]\}>'"\u201d\u2019\u3009\u300b\u300d\u300f\uff09\uff3d\uff3f\uff60\u3011\u3015\u3017\u3019\uff5d]/;
     const PAIRED_SYMBOLS = [
@@ -476,11 +481,27 @@
       return 1;
     }
 
-    function hasValidParagraphEnding(text) {
+    function getExtraParagraphEndings(el) {
+      if (!el) return null;
+      const id = el.id || '';
+      const linkField = (el.dataset && el.dataset.linkField) || '';
+      if (EXTRA_PARAGRAPH_ENDING_FIELDS.ids.has(id) || EXTRA_PARAGRAPH_ENDING_FIELDS.linkFields.has(linkField)) {
+        return POEM_EXTRA_PARAGRAPH_ENDINGS;
+      }
+      return null;
+    }
+
+    function hasValidParagraphEnding(text, extraEndings) {
       if (!text) return false;
       if (text.endsWith(CN_ELLIPSIS)) return true;
+      const endings = VALID_PARAGRAPH_ENDINGS.slice();
+      if (Array.isArray(extraEndings) && extraEndings.length) {
+        extraEndings.forEach(ch => {
+          if (!endings.includes(ch)) endings.push(ch);
+        });
+      }
       const lastChar = text[text.length - 1];
-      return VALID_PARAGRAPH_ENDINGS.includes(lastChar);
+      return endings.includes(lastChar);
     }
 
     function collectParagraphs(value) {
@@ -507,7 +528,8 @@
         if (!content) return;
         const stripped = stripTrailingClosers(content);
         if (!stripped) return;
-        if (!hasValidParagraphEnding(stripped)) {
+        const extraEndings = getExtraParagraphEndings(el);
+        if (!hasValidParagraphEnding(stripped, extraEndings)) {
           issues.push({ paragraph: idx + 1 });
         }
       });
@@ -618,6 +640,10 @@
       });
       ciqupuLengthIssues += runCiqupuLengthCheck();
       renderQueuedSelfCheckMessages();
+      // Notify other modules (e.g., annotations) to sync state after auto-fix
+      try {
+        documentRef?.dispatchEvent?.(new CustomEvent('poem:selfcheck:after', { bubbles: false }));
+      } catch (e) { }
       const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues;
       if (Poem && typeof Poem.toast === 'function') {
         Poem.toast(hasIssues ? '请及时修改' : '未发现问题');

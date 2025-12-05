@@ -30,7 +30,9 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>通用名 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="f-common-name" type="text" data-link-field="fields.commonName" value="${escapeHtml(commonName)}"></div>
+        <div class="field"><label>通用名</label>
+          <div class="field-row"><input id="f-common-name" type="text" data-link-field="fields.commonName" value="${escapeHtml(commonName)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
+        </div>
         <div class="field"><label>表述</label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
       </div>
       <div class="grid-3">
@@ -141,7 +143,6 @@
       const allowUpload = !!state.editable;
       if (uploadBtn) {
         uploadBtn.disabled = !allowUpload;
-        uploadBtn.title = allowUpload ? '' : '当前处于只读模式';
       }
       if (clearBtn) clearBtn.disabled = !state.editable || !imagePath;
     }
@@ -170,7 +171,7 @@
       const file = fileInput.files && fileInput.files[0];
       if (!file) return;
       if (file.size > 5 * 1024 * 1024) {
-        Poem.toast?.('图片大小需小于 5MB');
+        Poem.toast?.('图片需小于5MB');
         fileInput.value = '';
         return;
       }
@@ -179,7 +180,6 @@
 
     async function uploadImageFile(file) {
       if (!state.editable) {
-        Poem.toast?.('当前为只读模式，无法上传');
         return;
       }
       if (uploadBtn) {
@@ -208,7 +208,6 @@
         }
         updateImagePreview();
         ensureEditableStates();
-        Poem.toast?.('图片已上传，记得保存');
       } catch (err) {
         console.error(err);
         Poem.toast?.(err.message || '上传失败');

@@ -21,7 +21,9 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>韵部 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(rhymeName)}"></div>
+        <div class="field"><label>韵部</label>
+          <div class="field-row"><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(rhymeName)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
+        </div>
         <div class="field">
           <label>韵书</label>
           <div class="radio-row" id="lv-book">

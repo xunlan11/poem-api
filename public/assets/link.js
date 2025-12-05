@@ -523,7 +523,6 @@
       if (!state.node || !state.node.id) return;
       linkSaveChain = linkSaveChain.then(async () => {
         if (typeof requestImmediateSave !== 'function') {
-          if (Poem && typeof Poem.toast === 'function') Poem.toast('链接已更新，稍后请手动保存');
           return;
         }
         try {

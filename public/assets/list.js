@@ -358,7 +358,7 @@
           }
           if (act === 'delete') {
             if (!canDelete) { Poem.toast('权限不足'); return; }
-            const ok = confirm(`确定删除 ${id} 吗？此操作不可恢复。`);
+            const ok = confirm(`删除 ${id} ？`);
             if (!ok) return;
             try {
               await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
@@ -635,7 +635,7 @@
       alert('仅可归档审核状态为“通过”的节点，请调整筛选条件后再试。');
       return;
     }
-    if (!confirm(`确定将当前 ${items.length} 条记录归档吗？`)) return;
+    if (!confirm(`归档当前 ${items.length} 条记录？`)) return;
     if (archiveBtn) archiveBtn.disabled = true;
     try {
       const ids = items.map(item => item.id).filter(Boolean);

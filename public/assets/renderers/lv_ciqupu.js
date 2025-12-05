@@ -77,7 +77,9 @@
 
     formContainer.innerHTML = `
       <div class="grid-2">
-        <div class="field"><label>词曲谱 <button type="button" class="btn small check-dup-btn">查重</button></label><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(title)}"></div>
+        <div class="field"><label>词曲谱</label>
+          <div class="field-row"><input id="lv-title" type="text" data-link-field="fields.title" value="${escapeHtml(title)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
+        </div>
         <div class="field"><label>其他名称</label><input id="lv-other" type="text" data-link-field="fields.otherNames" value="${escapeHtml(otherNames)}"></div>
       </div>
       <div class="grid-2">

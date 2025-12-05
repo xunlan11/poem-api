@@ -21,6 +21,16 @@
   const acceptExpectedBtn = document.getElementById('metaAcceptExpected');
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
 
+  // Cached current user info for autofill
+  let currentUser = null;
+
+  function formatReviewerDisplay(user) {
+    if (!user) return '';
+    if (user.real_name && user.student_id) return `${user.real_name} (${user.student_id})`;
+    if (user.real_name) return user.real_name;
+    return user.username || '';
+  }
+
   let state = { editable: true, node: null };
   // whether current user has reviewer or admin permissions
   let isReviewerOrAdmin = false;
@@ -49,14 +59,13 @@
   if (selfCheckBtn) {
     selfCheckBtn.addEventListener('click', () => {
       if (!state.editable) {
-        try { Poem.toast('当前为只读模式，请先点击“编辑”'); } catch (e) { }
         return;
       }
       try {
         runSelfCheck();
       } catch (err) {
         console.error(err);
-        try { Poem.toast('自检执行失败，请稍后再试'); } catch (e) { }
+        try { Poem.toast('自检失败'); } catch (e) { }
       }
     });
   }
@@ -441,10 +450,15 @@
     const reviewDurationEl = document.getElementById('metaReviewDuration');
     const reviewStatusInputs = Array.from(document.querySelectorAll('input[name="metaReviewStatus"]'));
     const canEditReview = !isOwner && isReviewerOrAdmin;
+    const reviewerDisplay = formatReviewerDisplay(currentUser);
     if (canEditReview) {
-      node.meta.reviewedBy = reviewedBy.value || node.meta.reviewedBy || '';
-      node.meta.reviewedAt = reviewedAt.value || node.meta.reviewedAt || '';
-      node.extra.reviewDuration = (reviewDurationEl || {}).value || node.extra.reviewDuration || '';
+      node.meta.reviewedBy = reviewedBy.value || node.meta.reviewedBy || reviewerDisplay || '';
+      node.meta.reviewedAt = reviewedAt.value || node.meta.reviewedAt || Poem.today();
+      // keep form inputs in sync after autofill
+      if (reviewedBy && !reviewedBy.value) reviewedBy.value = node.meta.reviewedBy;
+      if (reviewedAt && !reviewedAt.value) reviewedAt.value = node.meta.reviewedAt;
+      const reviewDurationVal = ((reviewDurationEl || {}).value || '').trim();
+      node.extra.reviewDuration = reviewDurationVal;
       const rs = reviewStatusInputs.find(i => i.checked);
       node.extra.reviewStatus = rs ? rs.value : (node.extra.reviewStatus || 'pending');
     } else {
@@ -456,7 +470,8 @@
       reviewStatusInputs.forEach(r => { r.checked = (r.value === (node.extra.reviewStatus || 'pending')); });
     }
     // Extra fields
-    node.extra.expectedDuration = (expectedEl || {}).value || node.extra.expectedDuration || '';
+    const expectedVal = ((expectedEl || {}).value || '').trim();
+    node.extra.expectedDuration = expectedVal;
     const rp = Array.from(document.querySelectorAll('input[name="metaRepairStatus"]')).find(i => i.checked);
     node.extra.repairStatus = rp ? rp.value : (node.extra.repairStatus || 'unfinished');
     const remarkInput = document.getElementById('metaRemark');
@@ -543,6 +558,7 @@
 
     // Get current user info for auto-filling
     let me = await Poem.me();
+    currentUser = me;
     if (isNew) {
       const ensureProfile = async () => {
         const ok = await Poem.requireProfile();
@@ -631,7 +647,6 @@
                 return;
               }
               if (reviewDurationInput.disabled) {
-                try { Poem.toast('当前无法填写时长'); } catch (err) { }
                 return;
               }
               const nextValue = expectedDurationInput.value.trim();
@@ -656,26 +671,7 @@
       }
     } catch (e) { }
 
-    // Draft autosave key
-    let draftKey = isNew ? `poem_draft_new_${type}` : `poem_draft_${state.node.id || id}`;
-    // If a draft exists for this node/type, offer to restore
-    try {
-      const draft = (window.Poem && typeof Poem.loadDraft === 'function') ? Poem.loadDraft(draftKey) : null;
-      if (draft) {
-        try {
-          if (confirm('检测到本地自动保存的草稿，是否恢复？（取消则保留当前内容）')) {
-            // merge draft into state.node before rendering
-            state.node.fields = { ...(state.node.fields || {}), ...(draft.fields || {}) };
-            if (draft.content !== undefined) state.node.content = draft.content;
-            if (Array.isArray(draft.annotations)) state.node.annotations = draft.annotations;
-            if (Array.isArray(draft.links)) state.node.links = draft.links;
-            state.node.extra = { ...(state.node.extra || {}), ...(draft.extra || {}) };
-            const draftLinks = Array.isArray(state.node.links) ? state.node.links.map(normalizeLink).filter(Boolean) : [];
-            replaceLinks(draftLinks);
-          }
-        } catch (e) { }
-      }
-    } catch (e) { }
+    // Draft support removed
 
     let renderer;
     const t = isNew ? type : (state.node ? state.node.type : '');
@@ -702,7 +698,7 @@
       const silent = !!options.silent;
       const skipToast = !!options.skipToast;
       if (saveInFlight) {
-        if (!silent && !skipToast) Poem.toast('正在保存，请稍候…');
+        if (!silent && !skipToast) Poem.toast('保存中，请稍候');
         return currentSavePromise || Promise.resolve(false);
       }
       saveInFlight = true;
@@ -710,8 +706,21 @@
       currentSavePromise = (async () => {
         try {
           const collected = renderer?.collect?.() || {};
-          // collect common/meta inputs into node.extra, then merge into payload.extra
+          const prevMeta = { ...(state.node.meta || {}) };
+          const prevExtra = { ...(state.node.extra || {}) };
           try { commonMetaToNode(state.node); } catch (e) { }
+          const hasPrevReviewer = !!(prevMeta.reviewedBy || prevMeta.reviewedAt);
+          const reviewerChanged = (state.node.meta?.reviewedBy || '') !== (prevMeta.reviewedBy || '')
+            || (state.node.meta?.reviewedAt || '') !== (prevMeta.reviewedAt || '');
+          const intendsOverwriteReview = isReviewerOrAdmin && !isOwner && (reviewerChanged || !hasPrevReviewer);
+          if (isReviewerOrAdmin && !isOwner) {
+            const reviewStatus = (state.node.extra && state.node.extra.reviewStatus) || 'pending';
+            const reviewDurationVal = ((state.node.extra && state.node.extra.reviewDuration) || '').trim();
+            if (reviewStatus !== 'pending' && !reviewDurationVal) {
+              Poem.toast('请填写时长');
+              return false;
+            }
+          }
           const derivedName = [
             collected.fields?.title,
             collected.fields?.name,
@@ -732,43 +741,44 @@
           if (state.node?.meta?.createdAt) {
             metaPayload.createdAt = state.node.meta.createdAt;
           }
+          if (intendsOverwriteReview && state.node?.meta?.reviewedBy) metaPayload.reviewedBy = state.node.meta.reviewedBy;
+          if (intendsOverwriteReview && state.node?.meta?.reviewedAt) metaPayload.reviewedAt = state.node.meta.reviewedAt;
           if (Object.keys(metaPayload).length) payload.meta = metaPayload;
+          if (intendsOverwriteReview) payload._overwriteReview = true;
           if (isNew) {
             const created = await Poem.api('/api/node', { method: 'POST', body: JSON.stringify({ type, data: payload }) });
             state.node = created;
             state.node.name = payloadName;
             nodeIdEl.textContent = created.id; setEditable(false);
-            const previousDraftKey = draftKey;
             isNew = false;
-            draftKey = `poem_draft_${created.id}`;
             if (!silent && !skipToast) Poem.toast('已保存');
             try { renderer?.refresh?.(state.node); } catch (e) { }
             const returnSuffix = returnQuery ? `&return=${encodeURIComponent(returnQuery)}` : '';
             history.replaceState(null, '', `editor.html?id=${created.id}${returnSuffix}`);
-            try {
-              if (window.Poem && typeof Poem.clearDraft === 'function') {
-                if (previousDraftKey && previousDraftKey !== draftKey) Poem.clearDraft(previousDraftKey);
-                Poem.clearDraft(draftKey);
-              }
-            } catch (e) { }
+            // Draft clearing removed (draft feature not implemented)
           } else {
-            const wantsReview = !isOwner && isReviewerOrAdmin && !!(state.node.meta?.reviewedBy || state.node.meta?.reviewedAt);
-            if (wantsReview) payload._review = true;
-            const apiPath = `/api/node/${state.node.id}${wantsReview ? '?review=1' : ''}`;
+            const apiPath = `/api/node/${state.node.id}`;
             const updated = await Poem.api(apiPath, { method: 'PUT', body: JSON.stringify(payload) });
             state.node = updated;
+            if (isReviewerOrAdmin && !isOwner) {
+              const reviewerDisplay = formatReviewerDisplay(currentUser);
+              const today = Poem.today();
+              state.node.meta = state.node.meta || {};
+              if (!state.node.meta.reviewedBy) state.node.meta.reviewedBy = reviewerDisplay;
+              if (!state.node.meta.reviewedAt) state.node.meta.reviewedAt = today;
+            }
             state.node.name = payloadName;
             setEditable(false);
-            if (!silent && !skipToast) Poem.toast(wantsReview ? '已审核并保存' : '已保存');
+            if (!silent && !skipToast) Poem.toast('已保存');
             try { renderer?.refresh?.(state.node); } catch (e) { }
             // refresh meta fields shown on the form
             try { setCommonMeta(state.node); } catch (e) { }
-            try { if (window.Poem && typeof Poem.clearDraft === 'function') Poem.clearDraft(draftKey); } catch (e) { }
+            // Draft clearing removed (draft feature not implemented)
           }
           return true;
         } catch (err) {
           console.error(err);
-          Poem.toast('保存失败，请稍后重试');
+          Poem.toast('保存失败');
           return false;
         } finally {
           saveInFlight = false;
@@ -820,21 +830,7 @@
     const homeLink = document.querySelector('.topbar .actions a[href="./"]');
     attachConfirmNavigation(homeLink, './');
 
-    // Autosave: debounce input changes inside formContainer
-    try {
-      if (window.Poem && typeof Poem.saveDraft === 'function' && renderer && formContainer) {
-        let autosaveTimer = null;
-        const doSave = () => {
-          try {
-            const collected = renderer?.collect?.() || {};
-            Poem.saveDraft(draftKey, collected);
-          } catch (e) { }
-        };
-        formContainer.addEventListener('input', () => { clearTimeout(autosaveTimer); autosaveTimer = setTimeout(doSave, 800); });
-        formContainer.addEventListener('change', () => { clearTimeout(autosaveTimer); autosaveTimer = setTimeout(doSave, 500); });
-        window.addEventListener('beforeunload', doSave);
-      }
-    } catch (e) { }
+    // Draft autosave removed (draft feature not implemented)
   }
 
   init();

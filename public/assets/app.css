@@ -44,6 +44,24 @@ body {
 	margin: 0;
 }
 
+/* Center logo in topbar: absolute center to avoid layout shifting */
+.topbar { position: relative; }
+.topbar-center {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none; /* allow clicks through unless image should be clickable */
+}
+.topbar-logo {
+	height: 36px;
+	width: auto;
+	display: block;
+	pointer-events: auto; /* allow clicking image */
+}
+
 .container {
 	padding: 16px;
 	max-width: 1080px;
@@ -742,6 +760,58 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
+}
+
+/* Horizontal row inside a field to hold main input and trailing controls like a button */
+.field-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.field-row input,
+.field-row textarea,
+.field-row select {
+	flex: 1 1 auto;
+	min-width: 0; /* allow shrinking inside grid */
+}
+.field-row .link-field-display {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: block; /* make sure full width */
+}
+.field-row .check-dup-btn {
+	flex: 0 0 auto;
+}
+
+/* Positioning for check duplicate button: keep it out of normal flow so it won't change
+   label height and will not disturb input vertical alignment. Also make label have
+   stable minimum height so inputs align across columns. */
+.field > label {
+	display: block;
+	min-height: 28px;
+	line-height: 28px;
+}
+
+.poem-readonly .field > label { padding-right: 0; }
+.poem-readonly .check-dup-btn { display: none !important; }
+
+/* In read-only mode, link-field-display should occupy the full row width when button is hidden */
+.poem-readonly .field-row .link-field-display {
+	display: block;
+	width: 100%;
+}
+
+/* Ensure in readonly mode the entire field-row is used by the display element; also
+   display as flex inside to align single-line content consistently */
+.poem-readonly .field-row {
+	display: flex;
+	align-items: center;
+}
+.poem-readonly .field-row .link-field-display {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	box-sizing: border-box;
 }
 
 .field input,

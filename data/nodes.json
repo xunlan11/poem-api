@@ -1,6 +1,6 @@
 {
   "W": {
-    "lastId": 626,
+    "lastId": 629,
     "items": {
       "W00002": {
         "id": "W00002",
@@ -2169,11 +2169,11 @@
           "createdByName": "王伟铭(2510545)",
           "createdBy": "王伟铭(2510545)",
           "createdAt": "2025-11-08",
-          "reviewedById": "u_30",
-          "reviewedByName": "杨谦(2120250642)",
-          "reviewedBy": "杨谦(2120250642)",
-          "reviewedAt": "2025-11-15",
-          "updatedAt": "2025-11-15"
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "五月鲥鱼已至燕，荔枝卢橘未能先。\n赐鲜遍及中珰第，荐熟谁开寝庙筵。\n白日风尘驰驿骑，炎天冰雪护江船。\n银鳞细骨堪怜汝，玉筯金盘敢望传。",
         "annotations": [
@@ -2181,7 +2181,7 @@
             "start": 21,
             "end": 23,
             "text": "中珰",
-            "note": "珰， dāng。指宦官。",
+            "note": "珰dāng，指宦官。",
             "linkKey": "anno-21-23-mhq8d8b60"
           },
           {
@@ -2195,14 +2195,14 @@
             "start": 2,
             "end": 3,
             "text": "鲥",
-            "note": "鲥， shí。",
+            "note": "shí。",
             "linkKey": "anno-2-3-mhugrg5m0"
           },
           {
             "start": 60,
             "end": 61,
             "text": "筯",
-            "note": "筯，zhù。同\"箸\"，筷子。",
+            "note": "zhù，同“箸”，筷子。",
             "linkKey": "anno-60-61-mhuguclf1"
           }
         ],
@@ -2210,7 +2210,7 @@
         "fields": {
           "title": "鲥鱼",
           "author": "何景明",
-          "origin": "大复集",
+          "origin": "《大复集》",
           "form": "近体",
           "sub": "七律",
           "sub2": "",
@@ -2221,13 +2221,13 @@
           "reviewStatus": "archived",
           "expectedDuration": "1.5",
           "repairStatus": "finished",
-          "remark": "尾联“箸”按通行本当为“筯”，似“珰”等较生僻字需在注释处加注音",
+          "remark": "",
           "translation": "五月的鲥鱼已经运送到了京城燕地，连荔枝和卢橘（金橘）都没能抢在它前面。赏赐时鲜遍及了宦官们的府邸，但用新熟的祭品供奉祖先时，又有谁去主持宗庙的祭筵呢？为了运送它，白天里驿马在风尘中奔驰，炎热的天气里要用冰雪护着江中的船只。你这银鳞细骨的鲥鱼确实令人爱怜，但我这等小臣，哪里敢奢望能用玉筷金盘得到皇帝的赏赐呢？",
           "background": "此诗是明代“前七子”之一何景明的代表作。诗人借进贡鲥鱼这一事件，辛辣地讽刺了明武宗时期宦官专权、朝政腐败的现象，揭露了统治者贪图口腹之欲、劳民伤财而不顾礼法与民生的现实。",
           "evaluation": [
             {
-              "source": "《明诗别裁集》",
-              "content": "清人沈德潜评：“（此诗）用意深远，讽刺辛辣。通过对比‘赐及中珰’与‘谁开寝庙’，直指时弊，末联（银鳞细骨堪怜汝，玉箸金盘敢望传）以反语作结，沉痛之至，见风骨之峻。”"
+              "source": "沈德潜《明诗别裁集》",
+              "content": "（此诗）用意深远，讽刺辛辣。通过对比“赐及中珰”与“谁开寝庙”，直指时弊，末联（银鳞细骨堪怜汝，玉箸金盘敢望传）以反语作结，沉痛之至，见风骨之峻。"
             }
           ]
         }
@@ -2455,7 +2455,7 @@
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
           "reviewedAt": "2025-11-10",
-          "updatedAt": "2025-11-10"
+          "updatedAt": "2025-12-05"
         },
         "content": "我觉秋兴逸，谁云秋兴悲。\n山将落日去，水与晴空宜。\n鲁酒白玉壶，送行驻金羁。\n歇鞍憩古木，解带挂横枝。\n歌鼓川上亭，曲度神飙吹。\n云归碧海夕，雁没青天时。\n相失各万里，茫然空尔思。",
         "annotations": [
@@ -2520,7 +2520,7 @@
           "rhyme": ""
         },
         "extra": {
-          "reviewDuration": "1.5",
+          "reviewDuration": "2",
           "reviewStatus": "archived",
           "expectedDuration": "1",
           "repairStatus": "unfinished",
@@ -2548,7 +2548,7 @@
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
           "reviewedAt": "2025-11-10",
-          "updatedAt": "2025-11-10"
+          "updatedAt": "2025-12-05"
         },
         "content": "嬴氏乱天纪，贤者避其世。\n黄绮之商山，伊人亦云逝。\n往迹浸复湮，来径遂芜废。\n相命肆农耕，日入从所憩。\n桑竹垂余荫，菽稷随时艺；\n春蚕收长丝，秋熟靡王税。\n荒路暧交通，鸡犬互鸣吠。\n俎豆犹古法，衣裳无新制。\n童孺纵行歌，班白欢游诣。\n草荣识节和，木衰知风厉。\n虽无纪历志，四时自成岁。\n怡然有余乐，于何劳智慧？\n奇踪隐五百，一朝敞神界。\n淳薄既异源，旋复还幽蔽。\n借问游方士，焉测尘嚣外。\n愿言蹑清风，高举寻吾契。",
         "annotations": [
@@ -2812,7 +2812,7 @@
           "evaluation": [
             {
               "source": "《陶渊明集评议》",
-              "content": "“文则妙绝，诗则非渊明之至者。”"
+              "content": "文则妙绝，诗则非渊明之至者。"
             }
           ]
         }
@@ -18644,73 +18644,73 @@
           "createdByName": "彭钧(2510045)",
           "createdBy": "彭钧(2510045)",
           "createdAt": "2025-11-16",
-          "reviewedById": "u_4",
-          "reviewedByName": "陈思润(2510572)",
-          "reviewedBy": "陈思润(2510572)",
-          "reviewedAt": "2025-11-26",
-          "updatedAt": "2025-11-26"
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
-        "content": "斜光照墟落 ，穷巷牛羊归。\n野老念牧童， 倚杖候荆扉。\n雉雊麦苗秀，蚕眠桑叶稀。\n田夫荷锄至， 相见语依依。\n即此羡闲逸， 怅然吟式微。",
+        "content": "斜光照墟落，穷巷牛羊归。\n野老念牧童，倚杖候荆扉。\n雉雊麦苗秀，蚕眠桑叶稀。\n田夫荷锄至，相见语依依。\n即此羡闲逸，怅然吟式微。",
         "annotations": [
           {
             "start": 3,
             "end": 5,
             "text": "墟落",
-            "note": "村庄",
+            "note": "村庄。",
             "linkKey": "anno-3-5-mi1re7z50"
           },
           {
-            "start": 7,
-            "end": 9,
+            "start": 6,
+            "end": 8,
             "text": "穷巷",
-            "note": "深巷",
+            "note": "深巷。",
             "linkKey": "anno-7-9-mi1rejet1"
           },
           {
-            "start": 14,
-            "end": 16,
+            "start": 13,
+            "end": 15,
             "text": "野老",
-            "note": "村野老人",
+            "note": "村野老人。",
             "linkKey": "anno-14-16-mi1retdg2"
           },
           {
-            "start": 21,
-            "end": 23,
+            "start": 19,
+            "end": 21,
             "text": "倚杖",
-            "note": "靠着拐杖",
+            "note": "靠着拐杖。",
             "linkKey": "anno-21-23-mi1rf6573"
           },
           {
-            "start": 24,
-            "end": 26,
+            "start": 22,
+            "end": 24,
             "text": "荆扉",
-            "note": "柴门",
+            "note": "柴门。",
             "linkKey": "anno-24-26-mi1rg3r24"
           },
           {
-            "start": 28,
-            "end": 30,
+            "start": 26,
+            "end": 28,
             "text": "雉雊",
-            "note": "野鸡鸣叫。《诗经·小雅·小弁》：“雉之朝雊，尚求其雌。”",
+            "note": "野鸡鸣叫。《诗经·小雅·小弁》：雉之朝雊，尚求其雌。",
             "linkKey": "anno-28-30-mi1rh1cr5"
           },
           {
-            "start": 34,
-            "end": 36,
+            "start": 32,
+            "end": 34,
             "text": "蚕眠",
             "note": "蚕蜕皮时，不食不动，像睡眠一样。",
             "linkKey": "anno-34-36-mi1rj2tx6"
           },
           {
-            "start": 43,
-            "end": 44,
+            "start": 41,
+            "end": 42,
             "text": "荷",
-            "note": "肩负",
+            "note": "肩负。",
             "linkKey": "anno-43-44-mi1rkx407"
           },
           {
-            "start": 65,
-            "end": 67,
+            "start": 61,
+            "end": 63,
             "text": "式微",
             "note": "《诗经》篇名，其中有“式微，式微，胡不归”之句，表归隐之意。",
             "linkKey": "anno-65-67-mi1rlsnp8"
@@ -18727,7 +18727,7 @@
           "rhyme": ""
         },
         "extra": {
-          "reviewDuration": "",
+          "reviewDuration": "1.5",
           "reviewStatus": "archived",
           "expectedDuration": "1",
           "repairStatus": "finished",
@@ -18741,7 +18741,7 @@
             },
             {
               "source": "《唐诗镜》",
-              "content": "景色依然"
+              "content": "景色依然。"
             },
             {
               "source": "《汇编唐诗十集》",
@@ -18753,11 +18753,11 @@
             },
             {
               "source": "《唐诗归》",
-              "content": "厚风"
+              "content": "厚风。"
             },
             {
               "source": "《唐诗评选》",
-              "content": "通篇用\"即此\"二字括收。前八句皆情语，非景语，属词命篇，总与建安以上合辙。"
+              "content": "通篇用“即此”二字括收。前八句皆情语，非景语，属词命篇，总与建安以上合辙。"
             },
             {
               "source": "《古唐诗合解》",
@@ -18765,7 +18765,7 @@
             },
             {
               "source": "《网师园唐诗笺》",
-              "content": "田家情事如绘"
+              "content": "田家情事如绘。"
             },
             {
               "source": "《唐贤清雅集》",
@@ -18773,7 +18773,7 @@
             },
             {
               "source": "《唐贤三昧集笺注》",
-              "content": "此瓣香陶柴桑"
+              "content": "此瓣香陶柴桑。"
             }
           ]
         }
@@ -50971,7 +50971,7 @@
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
           "reviewedAt": "2025-11-26",
-          "updatedAt": "2025-11-26"
+          "updatedAt": "2025-12-05"
         },
         "content": "药条药甲润青青，色过棕亭入草亭。\n苗满空山惭取誉，根居隙地怯成形。",
         "annotations": [
@@ -51021,7 +51021,7 @@
           "repairStatus": "unfinished",
           "remark": "",
           "translation": "药草的枝叶长得郁郁青青，青青的颜色越过棕亭漫入草亭。\n“苗满空山”的美誉我愧不敢当，只怕它们的根在干裂的土中成不了形。",
-          "background": "这组诗当作于唐代宗广德二年（764）春。唐肃宗宝应元年（762），成都尹严武入朝，蜀中发生动乱，杜甫一度避往梓州（治今四川三台）。次年安史之乱平定，再过一年，严武回到成都再次镇蜀。杜甫得知这位故人的消息，也跟着回到成都草堂。这时杜甫的心情特别舒畅，面对一派生机勃勃的景象，情不自禁，欣然命笔，写下了这一组即景小诗。明末王嗣奭《杜臆》说这组诗“盖作于卜居草堂之后，拟客居此以终老，而自叙情事如此”。",
+          "background": "这组诗当作于唐代宗广德二年（764年）春。唐肃宗宝应元年（762年），成都尹严武入朝，蜀中发生动乱，杜甫一度避往梓州（治今四川三台）。次年安史之乱平定，再过一年，严武回到成都再次镇蜀。杜甫得知这位故人的消息，也跟着回到成都草堂。这时杜甫的心情特别舒畅，面对一派生机勃勃的景象，情不自禁，欣然命笔，写下了这一组即景小诗。明末王嗣奭《杜臆》说这组诗“盖作于卜居草堂之后，拟客居此以终老，而自叙情事如此”。",
           "evaluation": [
             {
               "source": "王嗣奭《杜臆》",
@@ -58988,11 +58988,11 @@
           "createdByName": "王浩宇(2411736)",
           "createdBy": "王浩宇(2411736)",
           "createdAt": "2025-11-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-11-29"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "忆对中秋丹桂丛，花在杯中，月在杯中。今宵楼上一尊同，云湿纱栊，雨湿纱栊。\n浑欲乘风问化工，路也难通，信也难通。满堂唯有烛花红，杯且从容，歌且从容。",
         "annotations": [
@@ -59023,10 +59023,10 @@
         },
         "extra": {
           "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewStatus": "rejected",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
-          "remark": "",
+          "remark": "注释过少。",
           "translation": "回忆起那个晴朗的中秋，我置身在芳香的丹桂丛。花影映照在酒杯中，月波荡漾在酒杯中。今晚同样在楼上举杯待月光，可是乌云浸湿了纱窗，雨水打湿了纱窗。\n我直想乘风上天去质问天公，可是这天路没法打通，想送个信吧信也难通。满堂只有蜡烛高烧光闪闪，照耀得酒宴上红彤彤。让我们慢慢把酒喝几盅，让我们慢慢把曲唱到终。",
           "background": "该词作于宋孝宗淳熙九年（1182）到宋光宗绍熙三年（1192）辛弃疾闲居带湖期间，具体年份已不可考。 辛弃疾自投南宋以来，从未获得朝廷信任重用，相反屡遭权奸弹劾，一贬再贬，直至削职闲居，无法实现自己的救国理想。辛弃疾借此中秋无月之时，将自己那种欲“问化工”、“路也难通。信也难通”的怨恨，那种报国无门、济世无望、壮志难酬的悲愤全都倾注于问“月”之中，通过该词表达出来。 ",
           "evaluation": [
@@ -59284,7 +59284,7 @@
           "reviewedByName": "",
           "reviewedBy": "",
           "reviewedAt": "",
-          "updatedAt": "2025-12-01"
+          "updatedAt": "2025-12-05"
         },
         "content": "独立苍茫醉不归。日暮天寒，归去来兮。探梅踏雪几何时。今我来思，杨柳依依。\n白石冈头曲岸西。一片闲愁，芳草萋萋。多情山鸟不须啼。桃李无言，下自成蹊。",
         "annotations": [
@@ -59351,7 +59351,7 @@
             },
             {
               "source": "杨慎《升庵诗话》卷十二（明）",
-              "content": "‘桃李无言’，用《史记》原语，暗赞叶相功在社稷而不自矜；稼轩颂而不谀，故但借史语一点，便觉高古。"
+              "content": "稼轩颂而不谀，故但借史语，便觉高古。"
             },
             {
               "source": "胡应麟《诗薮·杂编》卷五（明）",
@@ -65983,7 +65983,7 @@
           "reviewedByName": "王也姝(2513815)",
           "reviewedBy": "王也姝(2513815)",
           "reviewedAt": "2025-12-04",
-          "updatedAt": "2025-12-04"
+          "updatedAt": "2025-12-05"
         },
         "content": "清晨入古寺，初日照高林。\n曲径通幽处，禅房花木深。\n山光悦鸟性，潭影空人心。\n万籁此都寂，但余钟磬音。",
         "annotations": [
@@ -66012,7 +66012,7 @@
             "start": 13,
             "end": 15,
             "text": "曲径",
-            "note": "一作“竹径”，又一作“一径”。",
+            "note": "一作“竹径”，一作“一径”。",
             "linkKey": "anno-13-15-mimck9b43"
           },
           {
@@ -66040,7 +66040,7 @@
             "start": 45,
             "end": 47,
             "text": "但余",
-            "note": "只留下。一作“惟余”，又作“唯闻”。",
+            "note": "只留下。一作“惟余”，一作“唯闻”。",
             "linkKey": "anno-45-47-mimcl6cf7"
           },
           {
@@ -66062,7 +66062,7 @@
           "rhyme": "十二侵"
         },
         "extra": {
-          "reviewDuration": "",
+          "reviewDuration": "1.5",
           "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
@@ -66112,7 +66112,7 @@
             },
             {
               "source": "吴煊、胡棠《唐贤三昧集笺注》",
-              "content": "欧阳公极赏此作，自以生平未能为。此即“唐无文章，惟《盘谷序》”之意"
+              "content": "欧阳公极赏此作，自以生平未能为。此即“唐无文章，惟《盘谷序》”之意。"
             },
             {
               "source": "卢麰、王溥《闻鹤轩初盛唐近体读本》",
@@ -66353,11 +66353,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-11-30",
-          "reviewedById": "u_3",
-          "reviewedByName": "张欣阳(2413707)",
-          "reviewedBy": "张欣阳(2413707)",
-          "reviewedAt": "2025-12-03",
-          "updatedAt": "2025-12-03"
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "半亩方塘一鉴开，天光云影共徘徊。\n问渠那得清如许？为有源头活水来。",
         "annotations": [
@@ -66458,11 +66458,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-11-30",
-          "reviewedById": "u_3",
-          "reviewedByName": "张欣阳(2413707)",
-          "reviewedBy": "张欣阳(2413707)",
-          "reviewedAt": "2025-12-03",
-          "updatedAt": "2025-12-03"
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "昨夜江边春水生，艨艟巨舰一毛轻。\n向来枉费推移力，此日中流自在行。",
         "annotations": [
@@ -66470,7 +66470,7 @@
             "start": 8,
             "end": 10,
             "text": "艨艟",
-            "note": "méng chōng 一作“蒙冲”。原为古代攻击性很强的战舰名，这里指大船。",
+            "note": "méng chōng，一作“蒙冲”。原为古代攻击性很强的战舰名，这里指大船。",
             "linkKey": "anno-8-10-mimdhajk0"
           },
           {
@@ -66519,7 +66519,7 @@
           "repairStatus": "unfinished",
           "remark": "",
           "translation": "昨天夜里江边涨起了阵阵春潮，巨大的舰船轻盈得如同一片羽毛。\n向来行驶要白费很多推拉力气，今天却能在江水中央自在地顺漂。",
-          "background": "这组诗作于何时何地，缘何而作，一直令人费解，学人言之不详，颇多歧见。有人认为这首诗写于鹅湖之会后一年，即南宋淳熙三年（1176）春，朱熹如婺源省墓而游学三清山，在三清山的三清宫游憩时触景顿悟，有感而发作此诗。另有人根据朱熹写给许顺之的书信《答许顺之》（四部丛刊初编缩本《朱公文文集》卷三十九）推断这两首诗作于南宋乾道二年（1166），是年朱熹居闽北崇安五夫里。",
+          "background": "这组诗作于何时何地，缘何而作，一直令人费解，学人言之不详，颇多歧见。有人认为这首诗写于鹅湖之会后一年，即南宋淳熙三年（1176年）春，朱熹如婺源省墓而游学三清山，在三清山的三清宫游憩时触景顿悟，有感而发作此诗。另有人根据朱熹写给许顺之的书信《答许顺之》（四部丛刊初编缩本《朱公文文集》卷三十九）推断这两首诗作于南宋乾道二年（1166年），是年朱熹居闽北崇安五夫里。",
           "evaluation": [
             {
               "source": "罗大经《鹤林玉露》",
@@ -66879,11 +66879,11 @@
           "createdByName": "贺昭雄(2411779)",
           "createdBy": "贺昭雄(2411779)",
           "createdAt": "2025-12-01",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-01"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "残阳西入崦，茅屋访孤僧。\n落叶人何在，寒云路几层。\n独敲初夜磬，闲倚一枝藤。\n世界微尘里，吾宁爱与憎。",
         "annotations": [
@@ -66927,8 +66927,8 @@
           "rhyme": "下平声十蒸韵"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
           "remark": "",
@@ -68507,11 +68507,11 @@
           "createdByName": "彭钧(2510045)",
           "createdBy": "彭钧(2510045)",
           "createdAt": "2025-12-02",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-03"
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "孤城上与白云齐，万古荒凉楚水西。\n官舍已空秋草没，女墙犹在夜乌啼。\n平沙渺渺迷人远，落日亭亭向客低。\n飞鸟不知陵谷变，朝来暮去弋阳溪。",
         "annotations": [
@@ -68943,7 +68943,7 @@
           "reviewedByName": "申允(2511017)",
           "reviewedBy": "申允(2511017)",
           "reviewedAt": "2025-12-03",
-          "updatedAt": "2025-12-03"
+          "updatedAt": "2025-12-05"
         },
         "content": "峨眉山月半轮秋，影入平羌江水流。\n夜发清溪向三峡，思君不见下渝州。",
         "annotations": [
@@ -69022,7 +69022,7 @@
           "rhyme": "十一尤"
         },
         "extra": {
-          "reviewDuration": "",
+          "reviewDuration": "1",
           "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
@@ -71127,7 +71127,7 @@
           "reviewedByName": "申允(2511017)",
           "reviewedBy": "申允(2511017)",
           "reviewedAt": "2025-12-03",
-          "updatedAt": "2025-12-03"
+          "updatedAt": "2025-12-05"
         },
         "content": "粗缯大布裹生涯，腹有诗书气自华。\n厌伴老儒烹瓠叶，强随举子踏槐花。\n囊空不办寻春马，眼乱行看择婿车。\n得意犹堪夸世俗，诏黄新湿字如鸦。",
         "annotations": [
@@ -71135,7 +71135,7 @@
             "start": 0,
             "end": 2,
             "text": "粗缯",
-            "note": "缯（zēng） 粗制的丝织品。",
+            "note": "缯zēng，粗制的丝织品。",
             "linkKey": "anno-0-2-miq6vqto0"
           },
           {
@@ -71184,7 +71184,7 @@
             "start": 22,
             "end": 24,
             "text": "瓠叶",
-            "note": "瓠（hù） 瓠的叶子，可作菜用。据载，东汉刘昆有学生五百多人，每年春秋两度祭祀，常常准备好各种礼仪并用木瓠的叶子作祭祀品。瓠，葫芦、冬瓜等的总名。",
+            "note": "瓠hù，瓠的叶子，可作菜用。据载，东汉刘昆有学生五百多人，每年春秋两度祭祀，常常准备好各种礼仪并用木瓠的叶子作祭祀品。瓠，葫芦、冬瓜等的总名。",
             "linkKey": "anno-22-24-miq6xa3k7"
           },
           {
@@ -71212,7 +71212,7 @@
             "start": 34,
             "end": 38,
             "text": "囊空不办",
-            "note": "语出《南史‧虞玩之传》：玩之为少府，犹蹑屐造席。高帝取屐亲视之，讹黑斜锐，瓒断以芒接之。问曰：“卿此屐已几载？”玩之曰：“初释褐拜征北行佐买之，著已三十年，贫士竟不办易。” 囊空，口袋里空空的，比喻没有钱。",
+            "note": "语出《南史‧虞玩之传》：玩之为少府，犹蹑屐造席。高帝取屐亲视之，讹黑斜锐，瓒断以芒接之。问曰：“卿此屐已几载？”玩之曰：“初释褐拜征北行佐买之，著已三十年，贫士竟不办易。”囊空，口袋里空空的，比喻没有钱。",
             "linkKey": "anno-34-38-miq6ywgbb"
           },
           {
@@ -71262,7 +71262,7 @@
           "rhyme": "六麻"
         },
         "extra": {
-          "reviewDuration": "",
+          "reviewDuration": "1.5",
           "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
@@ -71279,15 +71279,15 @@
               "content": "（首联二句）飘然而来，有昂头天外之概。"
             },
             {
-              "source": "陆游 《老学庵笔记》",
+              "source": "陆游《老学庵笔记》",
               "content": "“粗缯大布”二语，道尽寒士本色，后之贫儒读此当涕下。"
             },
             {
-              "source": "元好问 《论诗绝句》",
+              "source": "元好问《论诗绝句》",
               "content": "东坡此作最得风人遗意，不刻意讽喻而讽喻自见。"
             },
             {
-              "source": "纪昀 《四库全书总目提要》",
+              "source": "纪昀《四库全书总目提要》",
               "content": "“腹有诗书气自华”七字，可作千秋读书人座右铭。"
             }
           ]
@@ -71716,11 +71716,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-12-04",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-04"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "九曲黄河万里沙，浪淘风簸自天涯。\n如今直上银河去，同到牵牛织女家。",
         "annotations": [
@@ -71743,8 +71743,8 @@
           "rhyme": "六麻"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -71760,7 +71760,7 @@
               "content": "唐汝询曰：妇人临水望夫，而以浪之淘沙起兴；言日斜而不至，则不如飞燕之有情也。"
             },
             {
-              "source": "李攀龙、叶羲昂《唐诗直解》",
+              "source": "李攀龙、叶羲昂《增补唐诗直解》",
               "content": "触景含情，幽恨难写，人情只在口头。"
             },
             {
@@ -71779,11 +71779,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-12-04",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-04"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "洛水桥边春日斜，碧流清浅见琼砂。\n无端陌上狂风疾，惊起鸳鸯出浪花。",
         "annotations": [
@@ -71820,8 +71820,8 @@
           "rhyme": "六麻"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -71841,7 +71841,7 @@
               "content": "唐汝询曰：妇人临水望夫，而以浪之淘沙起兴；言日斜而不至，则不如飞燕之有情也。"
             },
             {
-              "source": "李攀龙、叶羲昂《唐诗直解》",
+              "source": "李攀龙、叶羲昂《增补唐诗直解》",
               "content": "触景含情，幽恨难写，人情只在口头。"
             }
           ]
@@ -71856,11 +71856,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-12-04",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-04"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "汴水东流虎眼文，清淮晓色鸭头春。\n君看渡口淘沙处，渡却人间多少人。",
         "annotations": [
@@ -71897,8 +71897,8 @@
           "rhyme": "十一真"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -71914,7 +71914,7 @@
               "content": "唐汝询曰：妇人临水望夫，而以浪之淘沙起兴；言日斜而不至，则不如飞燕之有情也。"
             },
             {
-              "source": "李攀龙、叶羲昂《唐诗直解》",
+              "source": "李攀龙、叶羲昂《增补唐诗直解》",
               "content": "触景含情，幽恨难写，人情只在口头。"
             },
             {
@@ -72290,11 +72290,11 @@
           "createdByName": "席宁远(2411154)",
           "createdBy": "席宁远(2411154)",
           "createdAt": "2025-12-04",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2025-12-04"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
         },
         "content": "流水淘沙不暂停，前波未灭后波生。\n令人忽忆潇湘渚，回唱迎神三两声。",
         "annotations": [
@@ -72324,8 +72324,8 @@
           "rhyme": "八庚"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -72341,7 +72341,7 @@
               "content": "唐汝询曰：妇人临水望夫，而以浪之淘沙起兴；言日斜而不至，则不如飞燕之有情也。"
             },
             {
-              "source": "李攀龙、叶羲昂《唐诗直解》",
+              "source": "李攀龙、叶羲昂《增补唐诗直解》",
               "content": "日斜而不至，则不如飞燕之有情也。 明代李攀龙、叶羲昂《唐诗直解》："
             },
             {
@@ -73143,17 +73143,165 @@
           "rhyme": "八庚部"
         },
         "extra": {
-          "reviewDuration": "1.5",
+          "reviewDuration": "1",
           "reviewStatus": "approved",
           "expectedDuration": "1",
           "repairStatus": "unfinished",
           "remark": "",
           "translation": "昨夜宝刀在匣中幽幽鸣，燕赵的悲歌最能表达壮士心中不平。\n易水缓缓流淌，天青草绿，可惜到哪里再去找荆轲那样的壮士来为他送行呢？",
-          "background": "公元1640年（明思宗崇祯十三年），诗人母丧服满，这时，建州女真族统治者已改国号“清”，对明王朝虎视眈眈；国内义军风起云涌，威逼京城。陈子龙由家乡松江华亭（今上海市松江县）赴京途中过易水的时候，有感于荆轲的慷慨悲歌，于是援笔写下了这首诗。",
+          "background": "崇祯十三年（公元1640年），诗人母丧服满，这时，建州女真族统治者已改国号“清”，对明王朝虎视眈眈；国内义军风起云涌，威逼京城。陈子龙由家乡松江华亭（今上海市松江县）赴京途中过易水的时候，有感于荆轲的慷慨悲歌，于是援笔写下了这首诗。",
           "evaluation": [
             {
               "source": "钱振民《历代绝句精华鉴赏辞典》",
-              "content": "“借古伤今，是这首诗的显著特色。诗人信手拈来为人熟知的古人古事，抒写胸中的感慨和对师长的思念，大大增强了诗的感染力，全诗笼罩着一层浓重的感伤色彩。”"
+              "content": "借古伤今，是这首诗的显著特色。诗人信手拈来为人熟知的古人古事，抒写胸中的感慨和对师长的思念，大大增强了诗的感染力，全诗笼罩着一层浓重的感伤色彩。"
+            }
+          ]
+        }
+      },
+      "W00473": {
+        "id": "W00473",
+        "type": "W",
+        "name": "水龙吟·过南剑双溪楼",
+        "meta": {
+          "createdById": "u_23",
+          "createdByName": "王浩宇(2411736)",
+          "createdBy": "王浩宇(2411736)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "举头西北浮云，倚天万里须长剑。人言此地，夜深长见，斗牛光焰。我觉山高，潭空水冷，月明星淡。待燃犀下看，凭栏却怕，风雷怒，鱼龙惨。\n峡束苍江对起，过危楼，欲飞还敛。元龙老矣！不妨高卧，冰壶凉簟。千古兴亡，百年悲笑，一时登览。问何人又卸，片帆沙岸，系斜阳缆？",
+        "annotations": [
+          {
+            "start": 46,
+            "end": 48,
+            "text": "燃犀",
+            "note": "“燃犀”的典故源自东晋时期，温峤到马鞍山牛渚矶，这里水深无法测量，世代相传说水下有很多怪物，温峤就点起犀角来照江水。一会儿，只见水中动物，纷纷向犀火扑来。这些动物奇形怪状，有的乘着马车，穿着红衣。这天夜里，温峤梦见有人对他说：“我们和你阴阳各路，你为什么要来照我们呢？”意思很是恨温峤。相传犀角燃之可照妖。俗谓能明察事物，洞察奸邪叫“燃犀”或“犀照”。",
+            "linkKey": "anno-46-48-misf91zo0"
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": "束",
+            "note": "夹峙",
+            "linkKey": "anno-66-67-misf9bdi1"
+          },
+          {
+            "start": 94,
+            "end": 95,
+            "text": "簟",
+            "note": "席",
+            "linkKey": "anno-94-95-misf9ju32"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "水龙吟·过南剑双溪楼",
+          "author": "辛弃疾",
+          "origin": "《稼轩长短句》",
+          "form": "词",
+          "sub": "水龙吟",
+          "sub2": "",
+          "rhyme": "交叉用韵"
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "2.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "translation": "抬头观看西北方向的浮云，驾驭万里长空需要长剑，人们说这个地方，深夜的时候，常常能看见斗牛星宿之间的光芒。我觉得山高，水潭的水冰冷，月亮明亮星光惨淡，待点燃犀牛角下到水中看看，刚靠近栏杆处却害怕，风雷震怒，鱼龙凶残。\n两边高山约束着东溪和西溪冲过来激起很高的浪花，过高楼，想飞去但还是收敛作罢，我有心像陈登那样但是身体精神都已老了，不妨高卧家园，凉爽的酒，凉爽的席子，一时登上双溪楼就想到了千古兴亡的事情，想到我自己的一生不过百年的悲欢离合，嬉笑怒骂。是什么人又一次卸下了张开的白帆，在斜阳夕照中抛锚系缆？",
+          "background": "　辛弃疾在绍熙五年（1194）前曾任福建安抚使。从这首词的内容及所流露的思想感情看，可能是受到主和派馋害诬陷而落职时的作品，但作于在福建任职时期。作者途经南剑州，登览历史上有名的双溪楼，有感而作此词。",
+          "evaluation": [
+            {
+              "source": "周济《宋四家词选》",
+              "content": "欲抉浮云，必须长剑，长剑不可得出，安得不恨鱼龙"
+            },
+            {
+              "source": "陈廷焯《云韶集》卷五",
+              "content": "词直气盛，宝光焰焰，笔阵横扫千军"
+            },
+            {
+              "source": "陈廷焯《词则·放歌集》卷一",
+              "content": "雄奇兀奡，真令江山生色"
+            },
+            {
+              "source": "陈廷焯《云韶集》",
+              "content": "雄奇之景，非此雄奇之笔，不能写得如此精神"
+            },
+            {
+              "source": "俞陛云《唐五代两宋词选释》",
+              "content": "笔锋犀利，如干将出匣，寒光逼人"
+            },
+            {
+              "source": "梁启超《饮冰室评词》",
+              "content": "稼轩此阕，横绝六合，扫空万古，自有苍生以来所无"
+            }
+          ]
+        }
+      },
+      "W00627": {
+        "id": "W00627",
+        "type": "W",
+        "name": "玉楼春·风前欲劝春光住",
+        "meta": {
+          "createdById": "u_23",
+          "createdByName": "王浩宇(2411736)",
+          "createdBy": "王浩宇(2411736)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "u_2",
+          "reviewedByName": "张恒硕(2212266)",
+          "reviewedBy": "张恒硕(2212266)",
+          "reviewedAt": "2025-12-05",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "风前欲劝春光住。春在城南芳草路。未随流落水边花，且作飘零泥上絮。\n镜中已觉星星误。人不负春春自负。梦回人远许多愁，只在梨花风雨处。",
+        "annotations": [
+          {
+            "start": 37,
+            "end": 39,
+            "text": "星星",
+            "note": "头发花白。",
+            "linkKey": "anno-37-39-misfhbxr0"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "玉楼春·风前欲劝春光住",
+          "author": "辛弃疾",
+          "origin": "《稼轩长短句》",
+          "form": "词",
+          "sub": "玉楼春",
+          "sub2": "",
+          "rhyme": "四遇"
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "2",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "translation": "迎着风儿，想要劝春光停住脚步。春光却停留在了城南的青草路上。它不愿同岸边的落花一样随流水而去，暂且就成为在泥土上飘舞的飞絮。\n看着镜中头发花白的自己，惋惜逝去的时光。人没有辜负春天，是春天自己辜负了自己啊！从梦中醒来才感觉远离了许多忧愁，只是牵挂着风雨中的梨花是否安然。",
+          "background": "庆元二年（1196年），辛弃疾由于上饶带湖寓所毁于火，遂徙居位于铅山东北境的期思渡别墅。那里有一汩清泉，其形如瓢，词人因名之为“瓢泉”。此词即作于词人迁居瓢泉新居当年的秋冬之际。",
+          "evaluation": [
+            {
+              "source": "瞿佑《归田诗话》卷中",
+              "content": "通篇无一直笔，却无一字不直；“梦回人远”四字，似已撇开，却紧接“只在梨花风雨”，依旧收回，遂觉千回百折。"
+            },
+            {
+              "source": "都穆《南濠诗话》",
+              "content": "镜中星星与梨花风雨，一白一红，一实一虚，相映成趣；愁绪遂于彩色中见，亦于空际中闻。"
+            },
+            {
+              "source": "杨慎《升庵诗话》卷十二",
+              "content": "稼轩以劝字留住春，以负字埋怨春；一劝一负，皆从热肠中发出，遂觉纸上如有唏嘘声。"
+            },
+            {
+              "source": "胡应麟《诗薮·杂编》卷五",
+              "content": "小令中具大篇结构：首二句留春，中四句惜春，末两句叹老；层层脱卸，而一愁字总摄，所以为短章之长。"
             }
           ]
         }
@@ -73161,7 +73309,7 @@
     }
   },
   "G": {
-    "lastId": 34,
+    "lastId": 38,
     "items": {
       "G00001": {
         "id": "G00001",
@@ -74645,6 +74793,177 @@
             }
           ]
         }
+      },
+      "G00035": {
+        "id": "G00035",
+        "type": "G",
+        "name": "诗经",
+        "meta": {
+          "createdById": "u_6",
+          "createdByName": "梁晗韫(2512331)",
+          "createdBy": "梁晗韫(2512331)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "诗经",
+          "author": "佚名",
+          "works": [
+            "《关雎》",
+            "《蒹葭》等"
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "overview": "中国第一部诗歌总集，共305篇，分风、雅、颂三部分，收录西周初年至春秋中叶的诗歌作品，另有6篇为笙诗，即只有标题，没有内容，称为笙诗六篇。",
+          "background": "由周代采诗官收集民间诗歌，春秋时期经孔子整理成书，作为儒家经典之一。",
+          "evaluation": [
+            {
+              "source": "孔子《论语·为政》",
+              "content": "诗三百，一言以蔽之，曰思无邪。"
+            },
+            {
+              "source": "朱熹《诗集传》",
+              "content": "感人深而风动远。"
+            }
+          ]
+        }
+      },
+      "G00036": {
+        "id": "G00036",
+        "type": "G",
+        "name": "河岳英灵集",
+        "meta": {
+          "createdById": "u_6",
+          "createdByName": "梁晗韫(2512331)",
+          "createdBy": "梁晗韫(2512331)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "河岳英灵集",
+          "author": "唐 · 殷璠",
+          "works": [
+            "《山居秋暝》",
+            "《将进酒》等。"
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "overview": "唐诗选集，共2卷，选录开元、天宝年间24位诗人的234首诗，包括王维、李白、孟浩然等作品。",
+          "background": "编于唐玄宗时期，旨在标榜“兴象”诗风，反映盛唐诗歌成就。",
+          "evaluation": [
+            {
+              "source": "《四库全书总目》",
+              "content": "鉴裁精审，去取严谨。"
+            }
+          ]
+        }
+      },
+      "G00037": {
+        "id": "G00037",
+        "type": "G",
+        "name": "中兴间气集",
+        "meta": {
+          "createdById": "u_6",
+          "createdByName": "梁晗韫(2512331)",
+          "createdBy": "梁晗韫(2512331)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "中兴间气集",
+          "author": "唐 · 高仲武",
+          "works": [
+            "《别郑礒》等。"
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "overview": "唐诗选集，共2卷，选录肃宗、代宗时期26位诗人的130余首诗，如钱起、郎士元等，体现“中兴”诗风。",
+          "background": "编于中唐，旨在展示安史之乱后诗歌的复兴。",
+          "evaluation": [
+            {
+              "source": "《四库全书总目》",
+              "content": "议论颇公，去取亦慎。"
+            }
+          ]
+        }
+      },
+      "G00038": {
+        "id": "G00038",
+        "type": "G",
+        "name": "才调集",
+        "meta": {
+          "createdById": "u_6",
+          "createdByName": "梁晗韫(2512331)",
+          "createdBy": "梁晗韫(2512331)",
+          "createdAt": "2025-12-05",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2025-12-05"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "才调集",
+          "author": "五代 · 韦縠",
+          "works": [
+            "《渭城曲》",
+            "《古意》等。"
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "overview": "唐诗选集，共10卷，选录初唐至五代180余位诗人的1000余首诗，题材多聚焦闺怨，亦涉猎宦游、边塞与咏史等。",
+          "background": "编于后蜀，受晚唐诗风影响，注重艺术性。",
+          "evaluation": [
+            {
+              "source": "清代冯舒、冯班《二冯评点才调集》",
+              "content": "惟韦縠《才调集》才情横溢,声调宦畅,不入于风雅颂者不收,不合于赋比兴者不取。"
+            }
+          ]
+        }
       }
     }
   },
@@ -75833,7 +76152,7 @@
         "links": [],
         "fields": {
           "common": "关汉卿",
-          "name": "",
+          "name": "关汉卿",
           "period": "元代",
           "life": "不详，约1200-1300。",
           "hometown": "解州",
@@ -75878,12 +76197,12 @@
               "事件": "关汉卿出生于金末，出身医户家庭。"
             },
             {
-              "纪年": "年份不详",
-              "事件": "蒙古灭金后，关汉卿迁居元大都，投身戏剧创作与演出活动。"
+              "纪年": "蒙古灭金后",
+              "事件": "关汉卿迁居元大都，投身戏剧创作与演出活动。"
             },
             {
-              "纪年": "年份不详",
-              "事件": "南宋灭亡后，北方文人南迁成风，关汉卿亦南下游历扬州、杭州等地，继续从事戏剧活动。"
+              "纪年": "南宋灭亡后",
+              "事件": "北方文人南迁成风，关汉卿亦南下游历扬州、杭州等地，继续从事戏剧活动。"
             }
           ],
           "relatedE": [
@@ -92195,7 +92514,7 @@
     }
   },
   "S": {
-    "lastId": 21,
+    "lastId": 22,
     "items": {
       "S00001": {
         "id": "S00001",

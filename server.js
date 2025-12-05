@@ -475,7 +475,9 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     const isOwnerName = existing.meta?.createdBy && (existing.meta.createdBy === (req.user.real_name || req.user.username));
     const isOwner = !!(isOwnerId || isOwnerName);
     const canEditAll = req.user.role === 'reviewer' || req.user.role === 'admin';
-    const canStampReview = canEditAll && !isOwner && (data._review === true || req.query.review === '1');
+    const wantsOverwriteReview = data._overwriteReview === true;
+    const hasExistingReview = !!(existing.meta?.reviewedBy || existing.meta?.reviewedAt);
+    const canStampReview = canEditAll && !isOwner && (!hasExistingReview || wantsOverwriteReview);
     if (!isOwner && !canEditAll) return res.status(403).json({ error: 'Forbidden' });
     existing.name = data.name ?? existing.name;
     existing.content = data.content ?? existing.content;
@@ -491,9 +493,10 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
 
     existing.meta = {
       ...existing.meta,
-      createdById: existing.meta?.createdById || req.user.id,
-      createdByName: existing.meta?.createdByName || formatUserDisplayName(req.user),
-      createdBy: existing.meta?.createdBy || formatUserDisplayName(req.user),
+      // Do not backfill creator to current reviewer; keep existing creator info as-is
+      createdById: existing.meta?.createdById || '',
+      createdByName: existing.meta?.createdByName || '',
+      createdBy: existing.meta?.createdBy || '',
       createdAt: normalizedCreatedAt,
       reviewedById: canStampReview ? req.user.id : existing.meta?.reviewedById || '',
       reviewedByName: canStampReview ? formatUserDisplayName(req.user) : existing.meta?.reviewedByName || '',
@@ -565,6 +568,21 @@ app.get('/api/search', (req, res) => {
 });
 
 // Static UI
+// Ensure logo is served from assets path (fall back to script/logo or root logo.png if not present in public/assets)
+app.get('/assets/logo.png', async (req, res) => {
+  try {
+    const candidates = [
+      path.join(__dirname, 'public', 'assets', 'logo.png'),
+      path.join(__dirname, 'scripts', 'logo.png'),
+      path.join(__dirname, 'logo.png')
+    ];
+    for (const assetPath of candidates) {
+      if (await fs.pathExists(assetPath)) return res.sendFile(assetPath);
+    }
+    return res.status(404).end();
+  } catch (e) { console.error('logo serve failed', e); return res.status(500).end(); }
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Fallback to index for root
