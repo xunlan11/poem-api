@@ -2,7 +2,6 @@
   const root = global;
   if (!root) return;
   root.PoemEditor = root.PoemEditor || {};
-
   root.PoemEditor.initLinking = function initLinking(options = {}) {
     const documentRef = options.document || root.document;
     const windowRef = options.window || root;
@@ -10,7 +9,6 @@
     const formContainer = options.formContainer || documentRef?.getElementById?.('formContainer') || null;
     const linkBtn = options.linkBtn || documentRef?.getElementById?.('linkBtn') || null;
     const state = options.state || { editable: true, node: null };
-
     const links = Array.isArray(options.initialLinks) ? options.initialLinks.slice() : [];
     const linkFieldRegistry = new Map();
     const linkBrushHandlers = [];
@@ -538,7 +536,7 @@
     function startLinkFlow(fieldKey, start, end, sample) {
       const spec = getFieldSpec(fieldKey);
       if (!spec) {
-        if (Poem && typeof Poem.toast === 'function') Poem.toast('当前字段暂不支持链接');
+        if (Poem && typeof Poem.toast === 'function') Poem.toast('当前字段不支持链接');
         return;
       }
       const text = getFieldValue(fieldKey) || '';
@@ -550,11 +548,11 @@
       }
       const snippet = sample || text.slice(s, e);
       if (!snippet.trim()) {
-        if (Poem && typeof Poem.toast === 'function') Poem.toast('选中的文本为空');
+        if (Poem && typeof Poem.toast === 'function') Poem.toast('选中文本为空');
         return;
       }
       if (!state.node || !state.node.id) {
-        if (Poem && typeof Poem.toast === 'function') Poem.toast('请先保存该节点后再添加链接');
+        if (Poem && typeof Poem.toast === 'function') Poem.toast('请先保存再添加链接');
         return;
       }
       const picker = Poem && typeof Poem.openLinkPicker === 'function' ? Poem.openLinkPicker : null;
@@ -593,7 +591,7 @@
       const current = links[index];
       if (!current) return;
       if (!state.node || !state.node.id) {
-        if (Poem && typeof Poem.toast === 'function') Poem.toast('请先保存该节点后再修改链接');
+        if (Poem && typeof Poem.toast === 'function') Poem.toast('请先保存再修改链接');
         return;
       }
       const picker = Poem && typeof Poem.openLinkPicker === 'function' ? Poem.openLinkPicker : null;
@@ -689,7 +687,7 @@
         linkBrushHandlers.forEach(fn => { try { fn(linkBrushActive); } catch (e) { } });
       } catch (e) { }
       if (Poem && typeof Poem.toast === 'function') {
-        Poem.toast(linkBrushActive ? '链接模式已开启：请选择文本后选择目标节点' : '链接模式已关闭');
+        Poem.toast(linkBrushActive ? '链接模式已开启' : '链接模式已关闭');
       }
     }
 
@@ -721,16 +719,13 @@
         setLinkBrushActive(!linkBrushActive);
       });
     }
-
     documentRef.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && linkBrushActive) {
         event.stopPropagation();
         setLinkBrushActive(false);
       }
     }, true);
-
     ensureLinkDelegation();
-
     return {
       links,
       normalizeLink,

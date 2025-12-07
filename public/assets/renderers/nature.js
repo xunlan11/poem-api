@@ -1,7 +1,6 @@
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-
   registry.S = registry.renderNatureEntry = function renderNatureEntry(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -14,7 +13,6 @@
     const state = context.state || {};
     const Poem = context.Poem || root.Poem || {};
     const windowRef = context.window || root;
-
     const commonName = node ? node.fields?.commonName || '' : '';
     const statement = node ? node.fields?.statement || '' : '';
     const scientificName = node ? node.fields?.scientificName || '' : '';
@@ -27,7 +25,6 @@
     const sameImagery = node ? (node.extra?.sameImagery || '') : '';
     let examples = node ? node.fields?.examples || [] : [];
     if (!Array.isArray(examples) || examples.length === 0) examples = [{ 出处: '', 内容: '' }];
-
     formContainer.innerHTML = `
       <div class="grid-2">
         <div class="field"><label>通用名</label>
@@ -58,9 +55,7 @@
       </div>
       <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
     `;
-
     initializeLinkFields(formContainer);
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -70,7 +65,6 @@
         context.checkDuplicate(q, 'S');
       });
     }
-
     const introInput = formContainer.querySelector('#f-introduction');
     const sameImageryInput = formContainer.querySelector('#f-same-imagery');
     const imageBlock = formContainer.querySelector('#natureImageBlock');
@@ -147,7 +141,6 @@
       if (clearBtn) clearBtn.disabled = !state.editable || !imagePath;
     }
     ensureEditableStates();
-
     uploadBtn && uploadBtn.addEventListener('click', () => {
       if (!state.editable) return;
       if (fileInput) {
@@ -155,7 +148,6 @@
         fileInput.click();
       }
     });
-
     clearBtn && clearBtn.addEventListener('click', () => {
       if (!state.editable) return;
       imagePath = '';
@@ -166,7 +158,6 @@
       updateImagePreview();
       ensureEditableStates();
     });
-
     fileInput && fileInput.addEventListener('change', () => {
       const file = fileInput.files && fileInput.files[0];
       if (!file) return;

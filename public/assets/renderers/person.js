@@ -1,7 +1,6 @@
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-
   registry.C = registry.renderPerson = function renderPerson(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -13,7 +12,6 @@
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
     const autosizeTextarea = context.autosizeTextarea || (() => { });
     const isNew = !!context.isNew;
-
     const common = node ? node.fields?.common || '' : '';
     const name = node ? node.fields?.name || node.fields?.title || '' : '';
     const period = node ? node.fields?.period || '' : '';
@@ -32,7 +30,6 @@
     const achievements = node ? node.extra?.achievements || '' : '';
     let evaluation = node ? node.extra?.evaluation || [] : [];
     let relatedE = node ? node.fields?.relatedE || [] : [];
-
     if (isNew) {
       if (!Array.isArray(joint) || joint.length === 0) joint = [{ 合称: '', '其他人物': '' }];
       if (!Array.isArray(relations) || relations.length === 0) relations = [{ 人物: '', 关系: '' }];
@@ -40,7 +37,6 @@
       if (!Array.isArray(evaluation) || evaluation.length === 0) evaluation = [{ 出处: '', 内容: '' }];
       if (!Array.isArray(relatedE) || relatedE.length === 0) relatedE = [{ 典故名: '', 内容: '' }];
     }
-
     formContainer.innerHTML = `
       <div class="grid-3">
         <div class="field"><label>通用名</label>
@@ -71,9 +67,7 @@
       <div class="field"><label>评价 <button id="addEval" class="btn small add-row">添加</button></label><div id="evalList" class="note-list"></div></div>
       <div class="field"><label>相关典故 <button id="addE" class="btn small add-row">添加</button></label><div id="relatedE" class="note-list"></div></div>
     `;
-
     initializeLinkFields(formContainer);
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -83,7 +77,6 @@
         context.checkDuplicate(q, 'C');
       });
     }
-
     const repWorksInput = formContainer.querySelector('#f-repWorks');
     const anthosInput = formContainer.querySelector('#f-anthos');
     const relationsEl = formContainer.querySelector('#relations');
@@ -96,7 +89,6 @@
     const addJointBtn = formContainer.querySelector('#addJoint');
     const addEvalBtn = formContainer.querySelector('#addEval');
     const addEBtn = formContainer.querySelector('#addE');
-
     try {
       const target = formContainer.querySelector('#f-achievements');
       if (target) {
@@ -106,7 +98,6 @@
         target.addEventListener('input', target.__autosizeHandler);
       }
     } catch (err) { }
-
     const renderRelations = () => renderInlinePairs(relationsEl, relations, '人物', '关系', '人物', '关系', {
       linkFieldPrefix: 'fields.relations',
       onChange: (arr) => { },
@@ -148,13 +139,11 @@
       inputClass2: 'c-content',
       paragraphCheck2: true,
     });
-
     renderRelations();
     renderChrono();
     renderJoint();
     renderEvalList();
     renderRelated();
-
     addRelBtn && addRelBtn.addEventListener('click', () => { relations.push({ 人物: '', 关系: '' }); renderRelations(); });
     addChronoBtn && addChronoBtn.addEventListener('click', () => { chrono.push({ 纪年: '', 事件: '' }); renderChrono(); });
     addJointBtn && addJointBtn.addEventListener('click', () => { joint.push({ 合称: '', 其他人物: '' }); renderJoint(); });
@@ -187,7 +176,6 @@
       const extra = { achievements: (formContainer.querySelector('#f-achievements') || {}).value || '', evaluation: Array.from(evalList.querySelectorAll('.ordered-item')).map(div => { const i = div.querySelectorAll('input'); return { 出处: i[0].value, 内容: i[1].value }; }) };
       return { fields, extra };
     }
-
     return { collect };
   };
 })(typeof window !== 'undefined' ? window : this);

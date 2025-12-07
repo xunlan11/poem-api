@@ -1,7 +1,6 @@
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-
   registry.G = registry.renderAnthology = function renderAnthology(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -13,7 +12,6 @@
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
     const renderInlinePairs = context.renderInlinePairs || (() => { });
     const isNew = !!context.isNew;
-
     const name = node ? node.fields?.title || node.fields?.name || '' : '';
     const author = node ? node.fields?.author || '' : '';
     const worksText = Array.isArray(node?.fields?.works) ? node.fields.works.join('、') : (node?.fields?.works || '');
@@ -21,7 +19,6 @@
     const background = node ? node.extra?.background || '' : '';
     let evaluation = node ? node.extra?.evaluation || [] : [];
     if (isNew && (!Array.isArray(evaluation) || evaluation.length === 0)) evaluation = [{ source: '', content: '' }];
-
     formContainer.innerHTML = `
         <div class="grid-2">
           <div class="field"><label>文集</label>
@@ -36,9 +33,7 @@
           <div id="evalList" class="note-list"></div>
         </div>
       `;
-
     initializeLinkFields(formContainer);
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -46,19 +41,16 @@
         context.checkDuplicate(nameVal, 'G');
       });
     }
-
     const overviewEl = formContainer.querySelector('#f-overview');
     const worksInput = formContainer.querySelector('#f-works');
     const evalList = formContainer.querySelector('#evalList');
     const addEvalBtn = formContainer.querySelector('#addEval');
-
     const evalRenderOpts = { wrapperClass: 'ordered-item note-item', inputClass1: 'c-source', inputClass2: 'c-content', linkFieldPrefix: 'extra.evaluation', onChange: (arr) => { }, paragraphCheck2: true };
     const renderEvalsWrapper = () => {
       renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);
     };
     renderEvalsWrapper();
     addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); try { if (typeof addLinkButtons === 'function') addLinkButtons(); } catch (e) { } });
-
     try {
       const autoResize = (el) => {
         if (!el) return;

@@ -37,7 +37,6 @@
       const u = document.getElementById('username'); const p = document.getElementById('password'); const btn = document.getElementById('loginBtn'); const err = document.getElementById('error');
       const rememberEl = document.getElementById('rememberMe');
       const STORAGE_KEY = 'poemRemember';
-
       const encode = (value) => {
         try {
           return btoa(unescape(encodeURIComponent(value)));
@@ -48,31 +47,24 @@
           return decodeURIComponent(escape(atob(value)));
         } catch (e) { return ''; }
       };
-
       let savedCred = null;
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         savedCred = raw ? JSON.parse(raw) : null;
       } catch (e) { savedCred = null; }
-
       if (savedCred && savedCred.username && savedCred.password) {
         u.value = savedCred.username;
         const decodedPass = decode(savedCred.password);
         if (decodedPass) p.value = decodedPass;
         if (rememberEl) rememberEl.checked = true;
       }
-
-      // 支持按 Enter 提交：当焦点在用户名或密码时按回车触发登录
       [u, p].forEach(el => el && el.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); }));
       btn.onclick = async () => {
         err.textContent = '';
         try {
           const loginResult = await Poem.api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: u.value.trim(), password: p.value }) });
-
-          // 清除缓存的用户信息，强制重新获取
           window.__poem_me = undefined;
           const me2 = await Poem.me();
-
           if (rememberEl && rememberEl.checked) {
             try {
               localStorage.setItem(STORAGE_KEY, JSON.stringify({ username: u.value.trim(), password: encode(p.value), savedAt: Date.now() }));
@@ -80,8 +72,6 @@
           } else {
             localStorage.removeItem(STORAGE_KEY);
           }
-
-          // 管理员直接跳转到首页，普通用户检查资料完整性
           if (me2.role === 'admin') {
             location.href = './';
           } else if (!me2 || !me2.real_name || !me2.student_id) {

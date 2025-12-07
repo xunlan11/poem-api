@@ -33,7 +33,6 @@
     (async function () {
       const me = await Poem.me(); if (!me) { location.href = 'login.html'; return; }
       const rn = document.getElementById('realName'); const sid = document.getElementById('studentId'); const btn = document.getElementById('saveBtn'); const err = document.getElementById('error');
-      // 支持按 Enter 保存资料（在两个输入框中按回车触发）
       [rn, sid].forEach(el => el && el.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); }));
       btn.onclick = async () => {
         err.textContent = '';

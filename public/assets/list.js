@@ -3,7 +3,7 @@
   const title = document.getElementById('listTitle');
   const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', L: '格律（L）', A: '汇总' };
   title.textContent = type ? (TITLE_MAP[type] || '列表') : '全部';
-  // Set the name-column header to the appropriate label for the selected type
+  // 名称列标题
   try {
     const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律', A: '名称' };
     const nameHeader = document.getElementById('colNameHeader');
@@ -20,7 +20,7 @@
   let searchTimer = null;
   let totalCount = 0;
   let currentItems = [];
-  // Create button behavior (supports aggregated list "A" and subtype selection for 格律)
+  // 创建
   const CREATABLE = ['W', 'G', 'C', 'E', 'S', 'L'];
   const isAggregatedList = !type || type === 'A';
   if (createBtn) {
@@ -69,11 +69,9 @@
       };
     }
   }
-
   const me = await Poem.me();
   const canDelete = me && (me.role === 'reviewer' || me.role === 'admin');
-
-  // filter state and controls
+  // 筛选
   const filterBtn = document.getElementById('filterBtn');
   const exportDurationBtn = document.getElementById('exportDurationBtn');
   const exportListBtn = document.getElementById('exportListBtn');
@@ -84,7 +82,6 @@
   let repairFilter = '';
   let loadXlsxPromise = null;
   const EXPORT_LIMIT = 200;
-
   const initialSearch = Poem.qs('q') || '';
   if (searchInput) searchInput.value = initialSearch;
   const initialStart = Poem.qs('ds');
@@ -96,7 +93,6 @@
   typeFilter = Poem.qs('ft') || '';
   reviewFilter = Poem.qs('rs') || '';
   repairFilter = reviewFilter === 'rejected' ? (Poem.qs('rr') || '') : '';
-
   async function ensureXLSX() {
     if (typeof XLSX !== 'undefined') return;
     if (!loadXlsxPromise) {
@@ -123,16 +119,12 @@
     const qValue = (searchInput?.value || '').trim();
     if (qValue) url.searchParams.set('q', qValue);
     else url.searchParams.delete('q');
-
     if (dateFilter.start) url.searchParams.set('ds', dateFilter.start);
     else url.searchParams.delete('ds');
-
     if (dateFilter.end) url.searchParams.set('de', dateFilter.end);
     else url.searchParams.delete('de');
-
     if (typeFilter) url.searchParams.set('ft', typeFilter);
     else url.searchParams.delete('ft');
-
     if (reviewFilter) {
       url.searchParams.set('rs', reviewFilter);
       if (reviewFilter === 'rejected' && repairFilter) url.searchParams.set('rr', repairFilter);
@@ -141,10 +133,8 @@
       url.searchParams.delete('rs');
       url.searchParams.delete('rr');
     }
-
     if (currentPage > 1) url.searchParams.set('page', String(currentPage));
     else url.searchParams.delete('page');
-
     history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
   }
 
@@ -265,18 +255,15 @@
     prevBtn.textContent = '上一页';
     prevBtn.disabled = currentPage <= 1;
     prevBtn.addEventListener('click', () => { if (currentPage > 1) goToPage(currentPage - 1); });
-
     const nextBtn = document.createElement('button');
     nextBtn.className = 'btn small';
     nextBtn.type = 'button';
     nextBtn.textContent = '下一页';
     nextBtn.disabled = currentPage >= totalPages;
     nextBtn.addEventListener('click', () => { if (currentPage < totalPages) goToPage(currentPage + 1); });
-
     const info = document.createElement('span');
     info.className = 'pagination-info';
     info.textContent = `第 ${currentPage} / ${totalPages} 页`;
-
     const jumpWrapper = document.createElement('div');
     jumpWrapper.className = 'pagination-jump';
     const jumpText = document.createElement('span');
@@ -287,7 +274,7 @@
     input.min = '1';
     input.max = String(totalPages);
     input.value = String(currentPage);
-    input.title = '输入页码后按回车';
+    input.title = '按回车跳转';
     input.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
@@ -301,7 +288,6 @@
     jumpWrapper.appendChild(jumpText);
     jumpWrapper.appendChild(input);
     jumpWrapper.appendChild(suffix);
-
     paginationEl.appendChild(prevBtn);
     paginationEl.appendChild(info);
     paginationEl.appendChild(nextBtn);
@@ -378,7 +364,7 @@
     renderPagination(total, totalPages);
   }
 
-  // Show export button only on 汇总 (type==='A'). When visible, only reviewer/admin can trigger it.
+  // 导出（汇总，审核者/管理员）
   const hasExportPermission = me && (me.role === 'reviewer' || me.role === 'admin');
   const isAdmin = me && me.role === 'admin';
   if (exportDurationBtn) {
@@ -395,7 +381,6 @@
       }
     }
   }
-
   if (exportListBtn) {
     if (type !== 'A') {
       exportListBtn.style.display = 'none';
@@ -410,7 +395,6 @@
       }
     }
   }
-
   if (archiveBtn) {
     if (type !== 'A') {
       archiveBtn.style.display = 'none';
@@ -547,7 +531,6 @@
     body.querySelector('#exportOk').onclick = async () => {
       const session = (sessionEl.value || '1').toString();
       close();
-      // perform export
       try {
         await ensureXLSX();
         const items = await fetchAllMatching();
@@ -555,7 +538,7 @@
           Poem.toast('没有可导出的记录');
           return;
         }
-        // aggregate by creator string
+        // 按创建者聚合
         const map = new Map();
         items.forEach(it => {
           const creator = it.creator || '';
@@ -565,11 +548,10 @@
           if (!map.has(key)) map.set(key, { creator: creator, total: 0 });
           map.get(key).total += num;
         });
-        // build rows: 学号, 服务时长（小时） (total/3), 活动地点(线上), 姓名, 时长（单位）(total)
+        // 构建行：学号, 服务时长（total/3小时）, 活动地点(线上), 姓名, 时长（total单位）
         const outRows = [];
         map.forEach(v => {
-          if (!v.creator || String(v.creator).trim() === '') return; // skip anonymous/no-creator entries
-          // parse creator string like '姓名(学号)'
+          if (!v.creator || String(v.creator).trim() === '') return; // 跳过匿名条目
           const m = /^\s*(.*?)\s*(?:\((.*?)\))?\s*$/.exec(v.creator || '');
           const name = m && m[1] ? m[1] : '';
           const sid = m && m[2] ? m[2] : '';
@@ -627,12 +609,12 @@
     }
     const items = await fetchAllMatching();
     if (!items.length) {
-      alert('当前筛选没有可归档的记录。');
+      alert('当前筛选没有可归档节点。');
       return;
     }
     const hasNonApproved = items.some(item => (item.reviewStatus || '') !== 'approved');
     if (hasNonApproved) {
-      alert('仅可归档审核状态为“通过”的节点，请调整筛选条件后再试。');
+      alert('仅可归档通过节点，请调整筛选条件。');
       return;
     }
     if (!confirm(`归档当前 ${items.length} 条记录？`)) return;
@@ -640,7 +622,7 @@
     try {
       const ids = items.map(item => item.id).filter(Boolean);
       if (!ids.length) {
-        Poem.toast('没有有效的节点可归档');
+        Poem.toast('没有可归档节点');
         return;
       }
       await Poem.api('/api/nodes/archive', { method: 'POST', body: JSON.stringify({ ids }) });

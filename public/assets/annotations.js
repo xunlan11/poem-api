@@ -2,7 +2,6 @@
   const root = global;
   if (!root) return;
   root.PoemEditor = root.PoemEditor || {};
-
   root.PoemEditor.initAnnotations = function initAnnotations(options = {}) {
     const documentRef = options.document || root.document;
     const windowRef = options.window || root;
@@ -33,7 +32,6 @@
     const MAX_VISIBLE = (typeof options.maxVisible === 'number' && options.maxVisible > 0) ? options.maxVisible : 5;
     const renderContainerId = options.renderContainerId || 'f-body-render';
     let annotationFieldMap = new Map();
-
     let annotations = [];
 
     function sanitizeAnnotations(list) {
@@ -118,11 +116,8 @@
         return ex - ey;
       });
       const total = annotated.length;
-      // Always render the full list of annotations (no collapsing)
       const renderList = annotated;
       annoArea.textContent = '';
-      // Always show annotation area; in read-only mode annotations are displayed but
-      // editing controls remain disabled.
       annoArea.style.display = '';
       annoArea.appendChild(documentRef.createTextNode('注释：'));
       const list = documentRef.createElement('div');
@@ -141,7 +136,6 @@
         row.dataset.idx = String(idx);
         row.className = `anno-row ${depthClass}`;
         if (a.note) row.title = a.note;
-
         const delBtn = documentRef.createElement('button');
         delBtn.type = 'button';
         delBtn.className = 'btn small del-anno';
@@ -163,7 +157,6 @@
           }
           renderAnnotations();
         });
-
         const editBtn = documentRef.createElement('button');
         editBtn.type = 'button';
         editBtn.className = 'btn small edit-anno';
@@ -174,42 +167,34 @@
           const current = annotations[idx];
           if (current) showAnnotationEditor(current, idx);
         });
-
         const indexSpan = documentRef.createElement('span');
         indexSpan.className = 'anno-index';
         indexSpan.textContent = `${dispIdx + 1}.`;
-
         const actionsWrap = documentRef.createElement('div');
         actionsWrap.className = 'anno-actions';
         actionsWrap.appendChild(editBtn);
         actionsWrap.appendChild(delBtn);
-
         const textSpan = documentRef.createElement('span');
         textSpan.className = 'anno-text';
         textSpan.textContent = a.text || '';
         const noteDisplay = documentRef.createElement('div');
         noteDisplay.className = 'anno-note-display';
         noteDisplay.textContent = a.note || '';
-
         const mainWrap = documentRef.createElement('div');
         mainWrap.className = 'anno-main';
         mainWrap.appendChild(indexSpan);
         mainWrap.appendChild(textSpan);
-
         const arrowEl = documentRef.createElement('span');
         arrowEl.className = 'anno-arrow';
         arrowEl.textContent = '→';
-
         const noteWrap = documentRef.createElement('div');
         noteWrap.className = 'anno-note';
         noteWrap.appendChild(noteDisplay);
-
         row.appendChild(actionsWrap);
         row.appendChild(mainWrap);
         row.appendChild(arrowEl);
         row.appendChild(noteWrap);
         list.appendChild(row);
-
         const fieldKey = getAnnotationFieldKey(a);
         if (fieldKey && registerLinkField && documentRef) {
           const hidden = documentRef.createElement('textarea');
@@ -218,9 +203,7 @@
           hidden.dataset.linkField = fieldKey;
           hidden.dataset.checkParagraph = 'true';
           row.appendChild(hidden);
-
           annotationFieldMap.set(fieldKey, { hidden, noteDisplay });
-
           registerLinkField(fieldKey, hidden, {
             skipDisplay: true,
             skipSelectionListener: true,
@@ -238,7 +221,6 @@
               noteDisplay.style.display = '';
             }
           });
-
           const spec = getFieldSpec(fieldKey);
           if (spec) {
             spec.displayEl = noteDisplay;
@@ -247,8 +229,6 @@
           }
         }
       });
-
-      // No collapsing UI — all annotations are shown
       const renderDiv = formContainer ? formContainer.querySelector(`#${renderContainerId}`) : null;
       if (renderDiv) renderAnnotatedBody();
     }
@@ -428,14 +408,11 @@
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
       if (!span || !renderDiv.contains(span)) return;
-      // Allow context-delete when either not editable, or editable but body is locked/read-only.
-      // Block only when in editable mode and body is currently unlocked for editing.
       if (state.editable && textarea && !textarea.readOnly) return;
       const sig = span.getAttribute('data-anno') || '';
       if (!sig) return;
       const indices = sig.split(',').map(s => parseInt(s, 10)).filter(n => !Number.isNaN(n) && n >= 0);
       if (!indices.length) return;
-      // Prefer the first overlapping annotation for deletion
       const targetIdx = indices[0];
       const target = annotations[targetIdx];
       if (!target) return;
@@ -653,8 +630,7 @@
       renderAnnotations();
     });
 
-    // After self-check auto-fixes hidden annotation note fields, sync the changes into
-    // the annotations array and update visible displays while keeping issue messages.
+    // 注释列表同步自检自动修复内容
     if (documentRef && typeof documentRef.addEventListener === 'function') {
       documentRef.addEventListener('poem:selfcheck:after', () => {
         annotations.forEach((anno) => {
@@ -669,11 +645,9 @@
         });
       });
     }
-
     if (textarea) {
       textarea.addEventListener('input', handleTextareaInput);
     }
-
     if (textarea && typeof registerLinkField === 'function') {
       const existingContentSpec = typeof getFieldSpec === 'function' ? getFieldSpec('content') : null;
       if (existingContentSpec) {
@@ -691,7 +665,6 @@
         }
       });
     }
-
     if (formContainer) {
       ['f-body', 'f-translation', 'f-background'].forEach(id => {
         const ta = formContainer.querySelector(`#${id}`);

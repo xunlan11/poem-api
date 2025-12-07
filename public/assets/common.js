@@ -1,8 +1,8 @@
 (function () {
   const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
   const LV_SUB_TYPES = [
-    { key: 'yunbu', label: '韵部（L）', description: '整理韵部、韵书对照' },
-    { key: 'ciqupu', label: '词曲谱（L）', description: '整理词曲谱、变体与例词' },
+    { key: 'yunbu', label: '韵部（L）' },
+    { key: 'ciqupu', label: '词曲谱（L）' },
   ];
   const SEARCH_SCRIPTS = {
     fuse: 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0',
@@ -11,7 +11,7 @@
   const loadedScripts = new Map();
   const globalScriptCache = typeof window !== 'undefined' ? (window.__poemScriptCache = window.__poemScriptCache || {}) : {};
   const ME_CACHE_KEY = 'poem_me_cache_v1';
-  const ME_CACHE_TTL = 5 * 60 * 1000; // 5 分钟高速缓存
+  const ME_CACHE_TTL = 5 * 60 * 1000; 
   let mePromise = null;
 
   function readMeCache() {
@@ -166,9 +166,7 @@
     qs(name) { const p = new URLSearchParams(location.search); return p.get(name); },
     today() { return new Date().toISOString().slice(0, 10); },
     base() {
-      // Detect if served under /poem/ reverse proxy
       const p = location.pathname;
-      // If path starts with /poem/, prefix API calls with /poem
       return p.startsWith('/poem') ? '/poem' : '';
     },
     async api(path, opts) {
@@ -179,7 +177,6 @@
       const ct = res.headers.get('content-type') || '';
       return ct.includes('application/json') ? res.json() : res.text();
     },
-    // Auth helpers
     async me(options) {
       const forceRefresh = !!(options && options.force);
       if (forceRefresh) {
@@ -220,7 +217,6 @@
     async requireProfile() {
       const me = await Poem.me();
       if (!me) { location.href = 'login.html'; return false; }
-      // 管理员跳过资料完整性检查
       if (me.role === 'admin') return true;
       if (!me.real_name || !me.student_id) { location.href = 'profile.html'; return false; }
       return true;
@@ -230,7 +226,6 @@
     ensureSearchDeps,
     reloadNow() { window.location.reload(); },
     clearMeCache,
-    // Link picker overlay
     openLinkPicker(onPick, options) {
       const opts = options || {};
       const allowPlaceholder = opts.allowPlaceholder !== false;
@@ -286,8 +281,6 @@
         const container = card.querySelector('#lpResults');
         container.innerHTML = '';
         container.appendChild(list);
-
-        // pagination
         const total = (pagination && typeof pagination.total === 'number') ? pagination.total : (Array.isArray(data) ? data.length : 0);
         const currentOffset = (pagination && typeof pagination.offset === 'number') ? pagination.offset : off;
         const limit = (pagination && typeof pagination.limit === 'number') ? pagination.limit : PAGE_LIMIT;
@@ -313,7 +306,7 @@
       if (typeSelect && current && current.targetType) {
         typeSelect.value = current.targetType;
       }
-      // Debounced auto-search on input; changing type triggers immediate search.
+      // 防抖自动搜索
       if (searchInput) {
         let debounceTimer = null;
         const scheduleRun = (page = 0) => {
@@ -398,7 +391,6 @@
       const close = () => modal.remove();
       card.querySelector('#closeTypePicker').onclick = close;
       const grid = card.querySelector('.modal-body');
-
       const buildButton = (entry) => {
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -413,7 +405,6 @@
         });
         return btn;
       };
-
       const addCellWithEntry = (entry) => {
         if (!entry) return;
         const cell = document.createElement('div');
@@ -421,7 +412,6 @@
         cell.appendChild(buildButton(entry));
         grid.appendChild(cell);
       };
-
       const addLvCell = () => {
         const cell = document.createElement('div');
         cell.className = 'type-picker-cell type-picker-cell--lv';
@@ -438,13 +428,11 @@
         }
         grid.appendChild(cell);
       };
-
       const ROWS = [
         ['W', 'G'],
         ['C', 'E'],
         ['S', 'L_GROUP']
       ];
-
       ROWS.forEach(row => {
         row.forEach(token => {
           if (token === 'L_GROUP') {
@@ -454,7 +442,6 @@
           }
         });
       });
-
       return close;
     }
   };

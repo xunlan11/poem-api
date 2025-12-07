@@ -2,14 +2,12 @@
   if (!global) return;
   const root = global;
   root.PoemEditor = root.PoemEditor || {};
-
   root.PoemEditor.initSelfCheck = function initSelfCheck(options = {}) {
     const documentRef = options.document || root.document;
     const windowRef = options.window || root;
     const Poem = options.Poem || root.Poem;
     const formContainer = options.formContainer || documentRef?.getElementById?.('formContainer') || null;
     const escapeHtml = options.escapeHtml || ((s) => String(s || '').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])));
-
     const SELF_CHECK_FIELD_CLASS = 'self-check-field';
     const SELF_CHECK_MESSAGE_CLASS = 'self-check-message';
     const SELF_CHECK_SPACE_SNIPPET_LIMIT = 12;
@@ -27,6 +25,7 @@
       { open: '“', close: '”', label: '“”' },
       { open: '‘', close: '’', label: '‘’' },
       { open: '《', close: '》', label: '《》' },
+      { open: '〈', close: '〉', label: '〈〉' },
       { open: '（', close: '）', label: '（）' },
     ];
     const ENGLISH_PUNCTUATION_MAP = {
@@ -50,8 +49,6 @@
       { char: '】', label: '' },
       { char: '〔', label: '〔' },
       { char: '〕', label: '〕' },
-      { char: '〈', label: '〈' },
-      { char: '〉', label: '〉' },
       { char: '{', label: '{' },
       { char: '}', label: '}' }
     ];
@@ -218,6 +215,167 @@
       return '<span class="self-check-space-char" data-space-type="space">&nbsp;</span>';
     }
 
+    function isSpaceChar(ch) {
+      return ch === ' ' || ch === '\t' || ch === '\u00a0' || ch === '\u3000';
+    }
+
+    const PINYIN_FINALS = new Set([
+      'a', 'ai', 'an', 'ang', 'ao',
+      'e', 'ei', 'en', 'eng', 'er',
+      'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'in', 'ing', 'iong', 'iu',
+      'o', 'ong', 'ou',
+      'u', 'ua', 'uai', 'uan', 'uang', 'ui', 'un', 'uo',
+      'v', 've', 'van', 'vn', 'ue',
+      'ng', 'm',
+      'uei', 'iou', 'uen'
+    ]);
+
+    const PINYIN_TONE_MAP = {
+      'ā': 'a', 'á': 'a', 'ǎ': 'a', 'à': 'a', 'Ā': 'a', 'Á': 'a', 'Ǎ': 'a', 'À': 'a',
+      'ē': 'e', 'é': 'e', 'ě': 'e', 'è': 'e', 'Ē': 'e', 'É': 'e', 'Ě': 'e', 'È': 'e',
+      'ī': 'i', 'í': 'i', 'ǐ': 'i', 'ì': 'i', 'Ī': 'i', 'Í': 'i', 'Ǐ': 'i', 'Ì': 'i',
+      'ō': 'o', 'ó': 'o', 'ǒ': 'o', 'ò': 'o', 'Ō': 'o', 'Ó': 'o', 'Ǒ': 'o', 'Ò': 'o',
+      'ū': 'u', 'ú': 'u', 'ǔ': 'u', 'ù': 'u', 'Ū': 'u', 'Ú': 'u', 'Ǔ': 'u', 'Ù': 'u',
+      'ǖ': 'v', 'ǘ': 'v', 'ǚ': 'v', 'ǜ': 'v', 'Ǖ': 'v', 'Ǘ': 'v', 'Ǚ': 'v', 'Ǜ': 'v', 'ü': 'v', 'Ü': 'v',
+      'ê': 'e', 'Ê': 'e', 'ń': 'n', 'ň': 'n', 'ǹ': 'n'
+    };
+
+    function normalizePinyinToken(token) {
+      if (!token) return '';
+      let normalized = '';
+      for (let i = 0; i < token.length; i += 1) {
+        const ch = token[i];
+        if (i === token.length - 1 && /[1-5]/.test(ch)) continue;
+        const mapped = PINYIN_TONE_MAP[ch];
+        if (mapped) {
+          normalized += mapped;
+          continue;
+        }
+        if (/[A-Za-z]/.test(ch)) {
+          normalized += ch.toLowerCase();
+        } else if (ch === '\'' || ch === '’' || ch === '-') {
+          normalized += '\'';
+        }
+      }
+      return normalized;
+    }
+
+    function looksLikePinyinSyllable(syllable) {
+      if (!syllable || syllable.length > 8) return false;
+      const match = syllable.match(/^(zh|ch|sh|[bpmfdtnlgkhjqxrzcsyw]?)([a-z]+)$/);
+      if (!match) return false;
+      const final = match[2];
+      if (!/[aeiouv]/.test(final)) return false;
+      return PINYIN_FINALS.has(final);
+    }
+
+    function looksLikePinyinWord(token) {
+      const normalized = normalizePinyinToken(token);
+      if (!normalized) return false;
+      if (!/^[a-z']+$/.test(normalized)) return false;
+      if (!/[aeiouv]/.test(normalized)) return false;
+      const parts = normalized.split('\'').filter(Boolean);
+      if (!parts.length) return false;
+      return parts.every(part => looksLikePinyinSyllable(part));
+    }
+
+    function isPinyinTokenChar(ch) {
+      return /[A-Za-z\u00c0-\u024f\u1e00-\u1eff'’\-1-5]/.test(ch);
+    }
+
+    function getPinyinTokenBefore(value, index) {
+      let i = index - 1;
+      while (i >= 0 && isSpaceChar(value[i])) i -= 1;
+      let end = i;
+      while (i >= 0 && isPinyinTokenChar(value[i])) i -= 1;
+      return value.slice(i + 1, end + 1);
+    }
+
+    function getPinyinTokenAfter(value, index) {
+      let i = index;
+      while (i < value.length && isSpaceChar(value[i])) i += 1;
+      const start = i;
+      while (i < value.length && isPinyinTokenChar(value[i])) i += 1;
+      return value.slice(start, i);
+    }
+
+    function shouldPreserveSpaceRun(value, start, end) {
+      const prevToken = getPinyinTokenBefore(value, start);
+      const nextToken = getPinyinTokenAfter(value, end);
+      if (!prevToken || !nextToken) return false;
+      return looksLikePinyinWord(prevToken) && looksLikePinyinWord(nextToken);
+    }
+
+    function normalizeAlternatingPairs(el) {
+      if (!isTextLikeField(el)) return 0;
+      const original = typeof el.value === 'string' ? el.value : '';
+      if (!original) return 0;
+      const PAIR_PLANS = [
+        { label: '引号', openOuter: '“', closeOuter: '”', openInner: '‘', closeInner: '’' },
+        { label: '书名号', openOuter: '《', closeOuter: '》', openInner: '〈', closeInner: '〉' }
+      ];
+      let current = original;
+      const changes = [];
+      const normalizeOnce = (text, plan) => {
+        const stack = [];
+        let changed = false;
+        let result = '';
+        for (let i = 0; i < text.length; i += 1) {
+          const ch = text[i];
+          const isOpen = ch === plan.openOuter || ch === plan.openInner;
+          const isClose = ch === plan.closeOuter || ch === plan.closeInner;
+          if (!isOpen && !isClose) {
+            result += ch;
+            continue;
+          }
+          if (isOpen) {
+            const depth = stack.length;
+            const expectedType = depth % 2 === 0 ? 'outer' : 'inner';
+            const expectedChar = expectedType === 'outer' ? plan.openOuter : plan.openInner;
+            if (ch !== expectedChar) {
+              changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
+              changed = true;
+            }
+            stack.push(expectedType);
+            result += expectedChar;
+            continue;
+          }
+          let expectedType;
+          if (stack.length) {
+            expectedType = stack.pop();
+          } else {
+            expectedType = 'outer';
+          }
+          const expectedChar = expectedType === 'outer' ? plan.closeOuter : plan.closeInner;
+          if (ch !== expectedChar) {
+            changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
+            changed = true;
+          }
+          result += expectedChar;
+        }
+        return { text: result, changed };
+      };
+      PAIR_PLANS.forEach(plan => {
+        const res = normalizeOnce(current, plan);
+        if (res.changed) current = res.text;
+      });
+      if (!changes.length) return 0;
+      el.value = current;
+      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
+      const snippetLimit = SELF_CHECK_SPACE_SNIPPET_LIMIT;
+      const snippets = changes.slice(0, snippetLimit).map(change => {
+        const { before, after } = getCharContext(original, change.index, 8);
+        const snippet = `${escapeHtml(before)}<span class="self-check-inline-change" data-original="${escapeHtml(change.from)}" title="原字符：${escapeHtml(change.from)}">${escapeHtml(change.to)}</span>${escapeHtml(after)}`;
+        const title = `${change.label}层级自动调整`;
+        return `<div class="self-check-inline-snippet" title="${escapeHtml(title)}">${snippet}</div>`;
+      });
+      const moreHint = changes.length > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${changes.length} 处</div>` : '';
+      const detail = `<div class="self-check-detail-block self-check-auto-block"><div class="self-check-auto-detail">${snippets.join('')}${moreHint}</div></div>`;
+      queueSelfCheckMessage(el, 'auto', { category: '成对符号', count: changes.length, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return changes.length;
+    }
+
     function removeEmptyLines(el) {
       if (!el || typeof el.value !== 'string') return 0;
       const value = el.value;
@@ -270,36 +428,52 @@
       if (!el || typeof el.value !== 'string') return 0;
       const value = el.value;
       if (!value) return 0;
-      let count = 0;
+      const issues = [];
       const sanitizedParts = [];
-      const snippets = [];
-      for (let i = 0; i < value.length; i += 1) {
+      let i = 0;
+      while (i < value.length) {
         const ch = value[i];
-        const isSpace = ch === ' ' || ch === '\t' || ch === '\u00a0' || ch === '\u3000';
-        if (!isSpace && ch !== '\r') {
+        if (ch === '\r') {
+          i += 1;
+          continue;
+        }
+        if (!isSpaceChar(ch)) {
           sanitizedParts.push(ch);
+          i += 1;
+          continue;
         }
-        if (isSpace) {
-          count += 1;
-          if (snippets.length < SELF_CHECK_SPACE_SNIPPET_LIMIT) {
-            const { before, after } = getCharContext(value, i, SELF_CHECK_SPACE_CONTEXT);
-            const snippet = `${escapeHtml(before)}${renderSpaceSpan(ch)}${escapeHtml(after)}`;
-            snippets.push(`<div class="self-check-inline-snippet">${snippet}</div>`);
-          }
+        let end = i + 1;
+        while (end < value.length && isSpaceChar(value[end])) end += 1;
+        const preserve = shouldPreserveSpaceRun(value, i, end);
+        if (preserve) {
+          sanitizedParts.push(value.slice(i, end));
+        } else {
+          issues.push({ start: i, end });
         }
+        i = end;
       }
-      if (!count) return 0;
+      if (!issues.length) return 0;
       const sanitizedValue = sanitizedParts.join('');
       if (sanitizedValue !== value) {
         el.value = sanitizedValue;
         try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
       }
+      const snippets = [];
+      const maxSnippets = SELF_CHECK_SPACE_SNIPPET_LIMIT;
+      issues.slice(0, maxSnippets).forEach(issue => {
+        const before = value.slice(Math.max(0, issue.start - SELF_CHECK_SPACE_CONTEXT), issue.start);
+        const after = value.slice(issue.end, Math.min(value.length, issue.end + SELF_CHECK_SPACE_CONTEXT));
+        const runLength = issue.end - issue.start;
+        const marker = runLength > 1 ? `${renderSpaceSpan(value[issue.start])}<span class="self-check-space-repeat">x${runLength}</span>` : renderSpaceSpan(value[issue.start]);
+        const snippet = `${escapeHtml(before)}${marker}${escapeHtml(after)}`;
+        snippets.push(`<div class="self-check-inline-snippet">${snippet}</div>`);
+      });
       const snippetList = snippets.join('');
-      const moreHint = count > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${count} 处</div>` : '';
+      const moreHint = issues.length > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${issues.length} 处</div>` : '';
       const detail = `<div class="self-check-detail-block self-check-auto-block"><div class="self-check-auto-detail">${snippetList}${moreHint}</div></div>`;
-      queueSelfCheckMessage(el, 'auto', { category: '空格', count, detail });
+      queueSelfCheckMessage(el, 'auto', { category: '空格', count: issues.length, detail });
       el.classList.add(SELF_CHECK_FIELD_CLASS);
-      return count;
+      return issues.length;
     }
 
     function isTextLikeField(el) {
@@ -604,6 +778,7 @@
       const fields = Array.from(documentRef.querySelectorAll(selectors.join(', '))).filter(el => !isInCommonMeta(el));
       let spaceIssues = 0;
       let emptyLineIssues = 0;
+      let pairLevelIssues = 0;
       let punctuationIssues = 0;
       let englishIssues = 0;
       let pairIssues = 0;
@@ -617,6 +792,7 @@
         spaceIssues += highlightInputSpaces(el);
         if (isTextLikeField(el)) {
           englishIssues += replaceEnglishPunctuation(el);
+          pairLevelIssues += normalizeAlternatingPairs(el);
           illegalSymbolIssues += flagIllegalSymbols(el);
           pairIssues += checkPairedSymbols(el);
         }
@@ -640,11 +816,10 @@
       });
       ciqupuLengthIssues += runCiqupuLengthCheck();
       renderQueuedSelfCheckMessages();
-      // Notify other modules (e.g., annotations) to sync state after auto-fix
       try {
         documentRef?.dispatchEvent?.(new CustomEvent('poem:selfcheck:after', { bubbles: false }));
       } catch (e) { }
-      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues;
+      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairLevelIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues;
       if (Poem && typeof Poem.toast === 'function') {
         Poem.toast(hasIssues ? '请及时修改' : '未发现问题');
       }

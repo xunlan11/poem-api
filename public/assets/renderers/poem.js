@@ -1,7 +1,6 @@
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-
   registry.W = registry.renderPoem = function renderPoem(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -31,7 +30,6 @@
     const documentRef = context.document || root.document;
     const windowRef = context.window || root;
     const PoemRef = context.Poem || root.Poem;
-
     const name = node ? (node.fields?.title || node.fields?.name || '') : '';
     const author = node ? node.fields?.author || '' : '';
     const source = node ? node.fields?.origin || '' : '';
@@ -43,7 +41,6 @@
     const translation = node ? node.extra?.translation || '' : '';
     const background = node ? node.extra?.background || '' : '';
     const comments = node ? node.extra?.evaluation || [] : [];
-
     formContainer.innerHTML = `
       <div class="grid-3">
         <div class="field"><label>作品</label>
@@ -77,9 +74,7 @@
         <div id="comment-list" class="note-list"></div>
       </div>
     `;
-
     initializeLinkFields(formContainer);
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -87,7 +82,6 @@
         context.checkDuplicate(nameVal, 'W');
       });
     }
-
     const sel = formContainer.querySelector('#f-form'); if (form) sel.value = form;
     const cl = formContainer.querySelector('#comment-list');
     const commentArr = (comments && comments.length) ? comments : [{ source: '', content: '' }];
@@ -107,12 +101,10 @@
         renderInlinePairs(cl, commentArr, 'source', 'content', '出处', '内容', commentRenderOpts);
       });
     }
-
     const lockBtn = formContainer.querySelector('#lock-body');
     const unlockBtn = formContainer.querySelector('#unlock-body');
     const textarea = formContainer.querySelector('#f-body');
     const annoArea = formContainer.querySelector('#annotation-area');
-
     const annotationModule = typeof annotationsFactory === 'function'
       ? annotationsFactory({
         document: documentRef,
@@ -146,15 +138,12 @@
         }
       })
       : null;
-
     const initialAnnotations = Array.isArray(node?.annotations) ? node.annotations : [];
     if (annotationModule && typeof annotationModule.setAnnotations === 'function') {
       annotationModule.setAnnotations(initialAnnotations);
     }
-
     const initialLinks = Array.isArray(node?.links) ? node.links.map(normalizeLink).filter(Boolean) : [];
     replaceLinks(initialLinks);
-
     const formSelect = formContainer.querySelector('#f-form');
     const formOpts = formContainer.querySelector('#form-opts');
     function renderFormOpts() {
@@ -237,7 +226,6 @@
         },
       };
     }
-
     return { collect, refresh: refreshFromNode };
   };
 })(typeof window !== 'undefined' ? window : this);

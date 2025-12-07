@@ -43,7 +43,6 @@
     const escapeHtml = context.escapeHtml || (s => String(s || ''));
     const autosizeTextarea = context.autosizeTextarea || (() => { });
     const initializeLinkFields = context.initializeLinkFields || (() => { });
-
     const title = node.fields?.title || '';
     const otherNames = node.fields?.otherNames || '';
     const mode = node.fields?.mode || 'single';
@@ -74,7 +73,6 @@
     let variants = normalizeVariants(node.fields?.variants);
     let lockStates = variants.map(v => !!v.locked);
     let pingzeModeStates = variants.map(() => DEFAULT_MARK_MODE);
-
     formContainer.innerHTML = `
       <div class="grid-2">
         <div class="field"><label>词曲谱</label>
@@ -97,11 +95,9 @@
         <div id="lv-variant-list" class="variant-list"></div>
       </div>
     `;
-
     const variantListEl = formContainer.querySelector('#lv-variant-list');
     const variantCountEl = formContainer.querySelector('#lv-variant-count');
     const addVariantBtn = formContainer.querySelector('#lv-add-variant');
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -111,7 +107,6 @@
         context.checkDuplicate(q, 'L');
       });
     }
-
     const ensureStateLengths = () => {
       if (lockStates.length > variants.length) {
         lockStates.length = variants.length;
@@ -126,14 +121,12 @@
         pingzeModeStates.push(DEFAULT_MARK_MODE);
       }
     };
-
     const ensureVariantMarks = (variant, text) => {
       if (!variant) return [];
       const normalized = normalizePingzeMarksForText(text, variant.pingzeMarks);
       variant.pingzeMarks = normalized;
       return normalized;
     };
-
     const getModeLabel = (mode) => MARK_MODE_LABELS[mode] || MARK_MODE_LABELS[DEFAULT_MARK_MODE];
 
     function renderLockedText(text, target, options) {
@@ -250,12 +243,10 @@
           });
           removeBtn.style.display = editable ? '' : 'none';
         }
-
         const assignLinkField = (el, fieldName) => {
           if (!el || !fieldName) return;
           el.dataset.linkField = `fields.variants[${index}].${fieldName}`;
         };
-
         wrapper.querySelectorAll('input[data-field], textarea[data-field]').forEach(input => {
           const field = input.dataset.field;
           if (!field) return;
@@ -268,7 +259,6 @@
             }
           });
         });
-
         const sampleTextarea = wrapper.querySelector('textarea[data-field="sample"]');
         const pingzeTextarea = wrapper.querySelector('textarea[data-field="pingze"]');
         const sampleInputWrapper = wrapper.querySelector('.sample-input-wrapper');
@@ -281,14 +271,12 @@
         const pingzeMarkButtons = Array.from(wrapper.querySelectorAll('.pingze-mark-buttons .btn'));
         const pingzeMarkStatus = wrapper.querySelector('.pingze-mark-status');
         const pingzeMarkToolbar = wrapper.querySelector('.pingze-mark-toolbar');
-
         if (lockControls) {
           lockControls.style.display = editable ? '' : 'none';
         }
         if (pingzeMarkToolbar) {
           pingzeMarkToolbar.style.display = editable ? '' : 'none';
         }
-
         const highlightMatches = (charIdx) => {
           const apply = (view) => {
             if (!view) return;
@@ -299,7 +287,6 @@
           apply(sampleLockView);
           apply(pingzeLockView);
         };
-
         const attachHover = (view) => {
           if (!view) return;
           view.addEventListener('mouseover', (event) => {
@@ -309,12 +296,9 @@
           });
           view.addEventListener('mouseout', () => highlightMatches(null));
         };
-
         attachHover(sampleLockView);
         attachHover(pingzeLockView);
-
         const getCurrentMode = () => pingzeModeStates[index] || DEFAULT_MARK_MODE;
-
         const updateMarkControls = () => {
           const locked = !!lockStates[index];
           pingzeMarkButtons.forEach(btn => {
@@ -323,7 +307,6 @@
             btn.classList.toggle('active', locked && getCurrentMode() === btnMode);
           });
         };
-
         pingzeMarkButtons.forEach(btn => {
           btn.addEventListener('click', () => {
             if (!editable || !lockStates[index]) return;
@@ -332,7 +315,6 @@
             updateMarkControls();
           });
         });
-
         const resolveCharSpan = (node) => {
           if (!node) return null;
           if (node.nodeType === 1 && node.classList && node.classList.contains('locked-char')) {
@@ -343,7 +325,6 @@
           }
           return null;
         };
-
         const applyMarksToRange = (from, to) => {
           const marks = ensureVariantMarks(variants[index], pingzeTextarea?.value || '');
           const mode = getCurrentMode();
@@ -354,8 +335,6 @@
           renderLockedText(pingzeTextarea?.value || '', pingzeLockView, { marks, classMap: MARK_CLASS_MAP });
           highlightMatches(null);
         };
-
-        // Apply the selected mark mode to highlighted characters in the locked view.
         const handlePingzeSelection = () => {
           if (!editable || !lockStates[index]) return;
           if (!pingzeLockView) return;
@@ -375,11 +354,9 @@
           applyMarksToRange(from, to);
           if (selection.removeAllRanges) selection.removeAllRanges();
         };
-
         if (pingzeLockView) {
           pingzeLockView.addEventListener('mouseup', handlePingzeSelection);
         }
-
         const applyLockState = () => {
           const locked = !!lockStates[index] || !editable;
           const setDisplay = (el, show) => {
@@ -390,7 +367,6 @@
           setDisplay(pingzeInputWrapper, !locked);
           setDisplay(sampleLockView, locked);
           setDisplay(pingzeLockView, locked);
-
           if (locked) {
             renderLockedText(sampleTextarea?.value || '', sampleLockView);
             const marks = ensureVariantMarks(variants[index], pingzeTextarea?.value || '');
@@ -402,7 +378,6 @@
           if (unlockBtn) unlockBtn.disabled = !editable || !locked;
           updateMarkControls();
         };
-
         if (lockBtn) {
           lockBtn.addEventListener('click', () => {
             if (!editable || lockStates[index]) return;
@@ -417,13 +392,10 @@
             applyLockState();
           });
         }
-
         applyLockState();
       });
-
       initializeLinkFields(variantListEl);
     }
-
     renderVariants();
 
     function syncAddButton() {
@@ -460,14 +432,11 @@
       syncAddButton();
       renderVariants();
     });
-
     initializeLinkFields(formContainer);
 
     function collect() {
       const modeInput = formContainer.querySelector('input[name="lvMode"]:checked');
-      // Force all to locked state locally
       if (lockStates) lockStates.fill(true);
-
       const collectedVariants = Array.from(variantListEl.querySelectorAll('.variant-card')).map((card, idx) => {
         const fetchVal = (sel) => {
           const el = card.querySelector(sel);
@@ -503,7 +472,6 @@
       };
       return { fields, extra: {} };
     }
-
     return { collect };
   };
 })(typeof window !== 'undefined' ? window : this);

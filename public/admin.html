@@ -52,7 +52,6 @@
       const me = await Poem.me();
       if (!me) { location.href = 'login.html'; return; }
       if (me.role !== 'admin') { Poem.toast('需要管理员权限'); location.href = './'; return; }
-
       const tb = document.getElementById('tbody');
       const searchInput = document.getElementById('userSearch');
       const paginationEl = document.getElementById('userPagination');
@@ -146,7 +145,6 @@
             renderCurrentPage();
           }
         });
-
         const nextBtn = document.createElement('button');
         nextBtn.className = 'btn small';
         nextBtn.type = 'button';
@@ -158,11 +156,9 @@
             renderCurrentPage();
           }
         });
-
         const info = document.createElement('span');
         info.className = 'pagination-info';
         info.textContent = `第 ${currentPage} / ${totalPages} 页`;
-
         const jumpWrapper = document.createElement('div');
         jumpWrapper.className = 'pagination-jump';
         const jumpText = document.createElement('span');
@@ -189,7 +185,6 @@
         jumpWrapper.appendChild(jumpText);
         jumpWrapper.appendChild(input);
         jumpWrapper.appendChild(suffix);
-
         paginationEl.appendChild(prevBtn);
         paginationEl.appendChild(info);
         paginationEl.appendChild(nextBtn);
@@ -225,7 +220,6 @@
         allUsers = await Poem.api('/api/users');
         renderCurrentPage({ resetPage });
       };
-
       let searchTimer = null;
       searchInput.addEventListener('input', () => {
         if (searchTimer) clearTimeout(searchTimer);
@@ -240,19 +234,14 @@
       tb.addEventListener('click', async (e) => {
         const btn = e.target.closest('button'); if (!btn) return;
         const id = btn.getAttribute('data-id'); const act = btn.getAttribute('data-act');
-
-        // 确认操作
         const user = allUsers.find(u => u.id === id);
         if (!user) return;
-
         let confirmMsg = '';
         if (act === 'admin') confirmMsg = `将用户 ${user.username} 设为管理员？`;
         else if (act === 'reviewer') confirmMsg = `将用户 ${user.username} 设为审核员？`;
         else if (act === 'user') confirmMsg = `将用户 ${user.username} 设为整理员？`;
         else if (act === 'delete') confirmMsg = `删除用户 ${user.username} ？`;
-
         if (confirmMsg && !confirm(confirmMsg)) return;
-
         try {
           if (['user', 'reviewer', 'admin'].includes(act)) {
             await Poem.api(`/api/users/${id}/role`, { method: 'PUT', body: JSON.stringify({ role: act }) });

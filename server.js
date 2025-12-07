@@ -123,7 +123,6 @@ async function loadExternalList() {
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      // Assume first column is the name. Filter out empty rows/cells.
       externalItems = rows.map(row => {
         const val = row && row[0];
         return val ? String(val).trim() : '';
@@ -174,7 +173,7 @@ function idNumber(id) {
   return isNaN(num) ? 0 : num;
 }
 
-// 新id序号为当前类型的最小未使用正整数
+// 新id为当前类型最小未使用正整数
 function nextId(type) {
   if (!TYPES.includes(type)) throw new Error('Invalid type');
   const used = new Set(Object.keys(store[type].items || {}).map(k => idNumber(k)));
@@ -359,7 +358,6 @@ app.get('/api/nodes', (req, res) => {
   const repairStatus = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
   const startRaw = String(req.query.startDate || req.query.start || req.query.ds || '').trim();
   const endRaw = String(req.query.endDate || req.query.end || req.query.de || '').trim();
-
   const parseDate = (value) => {
     if (!value) return null;
     if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
@@ -369,7 +367,6 @@ app.get('/api/nodes', (req, res) => {
   const startTs = parseDate(startRaw);
   const endTs = parseDate(endRaw);
   const endInclusive = typeof endTs === 'number' ? endTs + 86400000 - 1 : null;
-
   const baseItems = allItems(type);
   let filtered = baseItems;
   if (filterType && TYPES.includes(filterType)) {
@@ -398,7 +395,6 @@ app.get('/api/nodes', (req, res) => {
   if (normalizedRepair) {
     filtered = filtered.filter(item => (item?.extra?.repairStatus || '') === normalizedRepair);
   }
-
   const searched = fuzzySearch(filtered, search);
   const off = Math.max(parseInt(offset) || 0, 0);
   const lim = Math.min(Math.max(parseInt(limit) || 50, 1), 200);
@@ -451,7 +447,6 @@ app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
       fields: data?.fields || {},
       extra: data?.extra || {},
     };
-
     await ensureNodeImageFilename(node);
     store[type].items[id] = node;
     await saveStore();
@@ -469,15 +464,18 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     if (!existing) return res.status(404).json({ error: 'Not found' });
     const type = existing.type;
     const data = req.body || {};
+    const requestedReviewStatus = typeof data.extra?.reviewStatus === 'string' ? data.extra.reviewStatus.trim() : '';
+    const normalizedReviewStatus = requestedReviewStatus || 'pending';
+    const allowedReviewStatuses = new Set(['pending', 'approved', 'rejected', 'archived', 'final']);
+    const safeReviewStatus = allowedReviewStatuses.has(normalizedReviewStatus) ? normalizedReviewStatus : 'pending';
     const previousImagePath = existing.extra?.image || '';
-    // 权限：整理员只能编辑自己创建的条目，审核员或管理员可以编辑所有条目
     const isOwnerId = existing.meta?.createdById && existing.meta.createdById === req.user.id;
     const isOwnerName = existing.meta?.createdBy && (existing.meta.createdBy === (req.user.real_name || req.user.username));
     const isOwner = !!(isOwnerId || isOwnerName);
     const canEditAll = req.user.role === 'reviewer' || req.user.role === 'admin';
     const wantsOverwriteReview = data._overwriteReview === true;
     const hasExistingReview = !!(existing.meta?.reviewedBy || existing.meta?.reviewedAt);
-    const canStampReview = canEditAll && !isOwner && (!hasExistingReview || wantsOverwriteReview);
+    const canStampReview = canEditAll && !isOwner && safeReviewStatus !== 'pending' && (!hasExistingReview || wantsOverwriteReview);
     if (!isOwner && !canEditAll) return res.status(403).json({ error: 'Forbidden' });
     existing.name = data.name ?? existing.name;
     existing.content = data.content ?? existing.content;
@@ -485,15 +483,14 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     existing.links = Array.isArray(data.links) ? data.links : existing.links;
     existing.fields = data.fields ?? existing.fields;
     existing.extra = data.extra ?? existing.extra ?? {};
+    if (!existing.extra.reviewStatus) existing.extra.reviewStatus = safeReviewStatus;
     const canOverrideCreatedAt = req.user.role === 'admin';
     const requestedCreatedAt = typeof data.meta?.createdAt === 'string' ? data.meta.createdAt.trim() : '';
     const normalizedCreatedAt = (canOverrideCreatedAt && requestedCreatedAt && /^\d{4}-\d{2}-\d{2}$/.test(requestedCreatedAt))
       ? requestedCreatedAt
       : (existing.meta?.createdAt || new Date().toISOString().slice(0, 10));
-
     existing.meta = {
       ...existing.meta,
-      // Do not backfill creator to current reviewer; keep existing creator info as-is
       createdById: existing.meta?.createdById || '',
       createdByName: existing.meta?.createdByName || '',
       createdBy: existing.meta?.createdBy || '',
@@ -540,19 +537,14 @@ app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'
   }
 });
 
-// Search endpoint (across all types)
+// 搜索
 app.get('/api/search', (req, res) => {
   const { q, type } = req.query;
   const items = allItems(type);
   const results = fuzzySearch(items, q).map(simplify).slice(0, 50);
-
-  // Check external list if query is present
   if (q && q.trim()) {
     const query = q.trim().toLowerCase();
-    // Simple inclusion check or exact match? User said "check duplicate", so exact or close match.
-    // Let's do a simple filter for now.
     const externalMatches = externalItems.filter(item => item.toLowerCase().includes(query));
-    // Limit external matches
     const limitedExternal = externalMatches.slice(0, 10).map(name => ({
       id: '总表',
       type: 'EXTERNAL',
@@ -563,21 +555,15 @@ app.get('/api/search', (req, res) => {
     }));
     results.push(...limitedExternal);
   }
-
   res.json({ query: q || '', results });
 });
 
-// Static UI
-// Ensure logo is served from assets path (fall back to script/logo or root logo.png if not present in public/assets)
+// logo加载
 app.get('/assets/logo.png', async (req, res) => {
   try {
-    const candidates = [
-      path.join(__dirname, 'public', 'assets', 'logo.png'),
-      path.join(__dirname, 'scripts', 'logo.png'),
-      path.join(__dirname, 'logo.png')
-    ];
-    for (const assetPath of candidates) {
-      if (await fs.pathExists(assetPath)) return res.sendFile(assetPath);
+    const logoPath = path.join(__dirname, 'public', 'assets', 'logo.png');
+    if (await fs.pathExists(logoPath)) {
+      return res.sendFile(logoPath);
     }
     return res.status(404).end();
   } catch (e) { console.error('logo serve failed', e); return res.status(500).end(); }
@@ -585,12 +571,12 @@ app.get('/assets/logo.png', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Fallback to index for root
+// 回退到根目录
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Initialize store then start server
+// 初始化存储然后启动服务器
 loadStore().then(() => {
   app.listen(PORT, () => {
     console.log(`Poem API running at http://localhost:${PORT}/`);
@@ -599,7 +585,7 @@ loadStore().then(() => {
   console.error('Failed to load data store', err);
   process.exit(1);
 });
-// Auth helpers
+
 function findUserByUsername(username) {
   return users.find(u => u.username === username);
 }
@@ -622,7 +608,6 @@ function authFromCookie(req, res, next) {
       req.user = { id: user.id, username: user.username, role: user.role, real_name: user.real_name, student_id: user.student_id, profile_completed: !!user.profile_completed };
     }
   } catch (e) {
-    // 忽略错误
   }
   next();
 }
@@ -634,7 +619,7 @@ function requireAuth(req, res, next) {
 
 function requireProfile(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  if (req.user.role === 'admin') return next();  // 管理员账号跳过真实姓名和学号要求
+  if (req.user.role === 'admin') return next();  // 初始管理员账号跳过真实姓名和学号要求
   if (!req.user.real_name || !req.user.student_id) return res.status(400).json({ error: 'Profile incomplete' });
   next();
 }
@@ -657,14 +642,13 @@ function formatUserDisplayName(user) {
   return user.username;
 }
 
-
-// Auth routes
+// 认证路由
 app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing credentials' });
   let u = findUserByUsername(username);
   if (!u) {
-    // 首次登录 -> 自动注册为普通用户
+    // 首次登录注册为整理员
     const now = new Date().toISOString();
     u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', created_at: now, updated_at: now, profile_completed: false };
     users.push(u);
@@ -701,13 +685,14 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
   await saveUsers();
   res.json({ ok: true });
 });
-// Admin: user management
+
+// 用户管理（管理员）
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, updated_at: u.updated_at, profile_completed: !!u.profile_completed })));
 });
 
+// 新用户id为最小未使用正整数序号
 function nextUserId() {
-  // 现在改为返回最小的未使用正整数序号（从1开始），以填补被删除用户留下的空位。
   const used = new Set(users.map(u => {
     const n = parseInt(String(u.id).split('_')[1] || '0', 10);
     return isNaN(n) ? 0 : n;
@@ -729,22 +714,17 @@ app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
   res.status(201).json({ id: u.id, username: u.username, role: u.role });
 });
 
-// Admin: delete user
+// 删除用户（管理员）
 app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
   const u = findUserById(req.params.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
-
-  // 不允许删除超级管理员
+  // 不允许删除超级管理员和自己
   if (u.id === 'u_1') {
     return res.status(403).json({ error: 'Cannot delete super admin' });
   }
-
-  // 不允许删除自己
   if (u.id === req.user.id) {
     return res.status(403).json({ error: 'Cannot delete yourself' });
   }
-
-  // 从 users 列表中移除
   users = users.filter(x => x.id !== u.id);
   await saveUsers();
   res.json({ ok: true });
@@ -761,7 +741,7 @@ app.post('/api/users/:id/reset-password', requireAuth, requireAdmin, async (req,
   res.json({ ok: true });
 });
 
-// Delete node (reviewer or admin)
+// 删除节点（审阅者或管理员）
 app.delete('/api/nodes/:id', requireAuth, requireReviewerOrAdmin, async (req, res) => {
   const id = req.params.id;
   if (!id) return res.status(400).json({ error: 'Missing id' });

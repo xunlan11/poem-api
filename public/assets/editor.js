@@ -20,8 +20,6 @@
   const reviewDurationInput = document.getElementById('metaReviewDuration');
   const acceptExpectedBtn = document.getElementById('metaAcceptExpected');
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
-
-  // Cached current user info for autofill
   let currentUser = null;
 
   function formatReviewerDisplay(user) {
@@ -32,11 +30,9 @@
   }
 
   let state = { editable: true, node: null };
-  // whether current user has reviewer or admin permissions
-  let isReviewerOrAdmin = false;
+  let isReviewerOrAdmin = false;  // 审核者或管理员权限
   let isAdmin = false;
-  // whether current user is the owner/creator of the node
-  let isOwner = false;
+  let isOwner = false;  // 创建者
   const editableWatchers = [];
   let requestImmediateSave = null;
   let saveInFlight = false;
@@ -171,7 +167,7 @@
     if (editBtn) editBtn.disabled = editable || saveInFlight;
     if (saveBtn) {
       saveBtn.disabled = !editable || saveInFlight;
-      saveBtn.textContent = saveInFlight ? '保存中…' : '保存';
+      saveBtn.textContent = saveInFlight ? '保存中' : '保存';
     }
     if (reviewBtn) reviewBtn.disabled = !editable || saveInFlight;
     if (selfCheckBtn) selfCheckBtn.disabled = !editable || saveInFlight;
@@ -244,7 +240,6 @@
     entries.forEach((entry, index) => {
       const wrapper = document.createElement('div');
       wrapper.className = opts.wrapperClass || 'ordered-item';
-
       if (allowReorder) {
         const controls = document.createElement('div');
         controls.className = 'pair-order-controls';
@@ -264,7 +259,6 @@
         controls.appendChild(downBtn);
         wrapper.appendChild(controls);
       }
-
       const input1 = document.createElement('input');
       input1.type = 'text';
       input1.value = entry[key1] || '';
@@ -275,7 +269,6 @@
         entry[key1] = input1.value;
         if (typeof opts.onChange === 'function') opts.onChange(entries);
       });
-
       const input2 = document.createElement('input');
       input2.type = 'text';
       input2.value = entry[key2] || '';
@@ -287,7 +280,6 @@
         entry[key2] = input2.value;
         if (typeof opts.onChange === 'function') opts.onChange(entries);
       });
-
       if (pairLayout) {
         const firstWrap = document.createElement('div');
         firstWrap.className = 'pair-label';
@@ -301,7 +293,6 @@
         wrapper.appendChild(input1);
         wrapper.appendChild(input2);
       }
-
       if (allowDelete) {
         const delWrap = document.createElement('div');
         delWrap.className = 'pair-remove-controls';
@@ -313,18 +304,40 @@
         delWrap.appendChild(delBtn);
         wrapper.appendChild(delWrap);
       }
-
       container.appendChild(wrapper);
     });
     initializeLinkFields(container);
   }
 
+  const DUP_MODAL_CLASS = 'dup-modal';
+
+  function removeExistingDuplicateModal() {
+    document.querySelectorAll(`.${DUP_MODAL_CLASS}`).forEach(el => el.remove());
+  }
+
+  function buildDuplicateQueries(raw) {
+    const normalized = typeof raw === 'string' ? raw.trim() : '';
+    if (!normalized) return [];
+    const parts = normalized
+      .split(/[，,、；;\r\n]+/)
+      .map(seg => seg.trim())
+      .filter(Boolean);
+    const tokens = [];
+    parts.forEach(seg => {
+      const sub = seg.split(/\s+/).map(s => s.trim()).filter(Boolean);
+      if (sub.length) tokens.push(...sub);
+      else tokens.push(seg);
+    });
+    const unique = Array.from(new Set(tokens));
+    return unique.length ? unique : [normalized];
+  }
+
   function showDuplicateModal(results, query) {
+    removeExistingDuplicateModal();
     const modal = document.createElement('div');
-    modal.className = 'modal';
+    modal.className = `modal ${DUP_MODAL_CLASS}`;
     const card = document.createElement('div');
     card.className = 'modal-card';
-    
     let listHtml = '';
     if (results.length === 0) {
       listHtml = '<div style="padding:16px;text-align:center;color:#666">未发现重复项</div>';
@@ -337,7 +350,6 @@
         if (item.creator) rightParts.push(item.creator);
         if (item.createdAt) rightParts.push(item.createdAt.slice(0, 10));
         const rightText = rightParts.join(' | ');
-
         if (isExternal) {
           listHtml += `
             <div class="result-item" style="background:#fff7ed;border-color:#ffedd5;margin-bottom:6px;padding:6px 8px;border:1px solid #ffedd5;border-radius:6px;">
@@ -356,7 +368,6 @@
       });
       listHtml += '</div>';
     }
-
     card.innerHTML = `
       <div class="modal-header">
         <div>查重结果: "${escapeHtml(query)}"</div>
@@ -366,25 +377,32 @@
         ${listHtml}
       </div>
     `;
-    
     modal.appendChild(card);
     document.body.appendChild(modal);
-    
     const close = () => modal.remove();
     card.querySelector('#closeDupModal').onclick = close;
     modal.onclick = (e) => { if (e.target === modal) close(); };
   }
 
   async function checkDuplicate(query, type) {
-    if (!query || !query.trim()) {
+    const queries = buildDuplicateQueries(query);
+    if (!queries.length) {
       Poem.toast('请先输入内容');
       return;
     }
     try {
-      const res = await Poem.api(`/api/search?type=${type}&q=${encodeURIComponent(query)}`);
       const currentId = state.node ? state.node.id : null;
-      const filtered = (res.results || []).filter(r => r.id !== currentId);
-      showDuplicateModal(filtered, query);
+      const responses = await Promise.all(queries.map(q => Poem.api(`/api/search?type=${type}&q=${encodeURIComponent(q)}`)));
+      const merged = new Map();
+      responses.forEach(res => {
+        (res?.results || []).forEach(item => {
+          const key = item && item.id ? item.id : `${item.type || ''}-${item.name || item.title || Math.random()}`;
+          if (key && !merged.has(key)) merged.set(key, item);
+        });
+      });
+      const filtered = Array.from(merged.values()).filter(r => r.id !== currentId);
+      const displayQuery = queries.join('、');
+      showDuplicateModal(filtered, displayQuery);
     } catch (err) {
       console.error(err);
       Poem.toast('查重失败');
@@ -439,44 +457,46 @@
       checkDuplicate,
     };
   }
+
   function commonMetaToNode(node) {
-    // Persist common/meta-like values into node.extra so they are sent with payload
     node.extra = node.extra || {};
-    // keep createdBy/createdAt in meta for display, but extra stores other fields
     node.meta = node.meta || {};
     node.meta.createdBy = createdBy.value || node.meta.createdBy || '';
     node.meta.createdAt = createdAt.value || node.meta.createdAt || Poem.today();
     const expectedEl = document.getElementById('metaExpectedDuration');
     const reviewDurationEl = document.getElementById('metaReviewDuration');
     const reviewStatusInputs = Array.from(document.querySelectorAll('input[name="metaReviewStatus"]'));
+    const rs = reviewStatusInputs.find(i => i.checked);
+    const reviewStatus = ((rs ? rs.value : (node.extra.reviewStatus || '')) || '').trim() || 'pending';
     const canEditReview = !isOwner && isReviewerOrAdmin;
     const reviewerDisplay = formatReviewerDisplay(currentUser);
     if (canEditReview) {
-      node.meta.reviewedBy = reviewedBy.value || node.meta.reviewedBy || reviewerDisplay || '';
-      node.meta.reviewedAt = reviewedAt.value || node.meta.reviewedAt || Poem.today();
-      // keep form inputs in sync after autofill
-      if (reviewedBy && !reviewedBy.value) reviewedBy.value = node.meta.reviewedBy;
-      if (reviewedAt && !reviewedAt.value) reviewedAt.value = node.meta.reviewedAt;
       const reviewDurationVal = ((reviewDurationEl || {}).value || '').trim();
       node.extra.reviewDuration = reviewDurationVal;
-      const rs = reviewStatusInputs.find(i => i.checked);
-      node.extra.reviewStatus = rs ? rs.value : (node.extra.reviewStatus || 'pending');
+      node.extra.reviewStatus = reviewStatus || 'pending';
+      const shouldStampMeta = reviewStatus && reviewStatus !== 'pending';
+      if (shouldStampMeta) {
+        node.meta.reviewedBy = reviewedBy.value || node.meta.reviewedBy || reviewerDisplay || '';
+        node.meta.reviewedAt = reviewedAt.value || node.meta.reviewedAt || Poem.today();
+        if (reviewedBy && !reviewedBy.value) reviewedBy.value = node.meta.reviewedBy;
+        if (reviewedAt && !reviewedAt.value) reviewedAt.value = node.meta.reviewedAt;
+      } else {
+        node.meta.reviewedBy = node.meta.reviewedBy || '';
+        node.meta.reviewedAt = node.meta.reviewedAt || '';
+      }
     } else {
       node.meta.reviewedBy = node.meta.reviewedBy || '';
       node.meta.reviewedAt = node.meta.reviewedAt || '';
       node.extra.reviewDuration = node.extra.reviewDuration || '';
       node.extra.reviewStatus = node.extra.reviewStatus || 'pending';
-      // keep form radios in sync even when read-only
       reviewStatusInputs.forEach(r => { r.checked = (r.value === (node.extra.reviewStatus || 'pending')); });
     }
-    // Extra fields
     const expectedVal = ((expectedEl || {}).value || '').trim();
     node.extra.expectedDuration = expectedVal;
     const rp = Array.from(document.querySelectorAll('input[name="metaRepairStatus"]')).find(i => i.checked);
     node.extra.repairStatus = rp ? rp.value : (node.extra.repairStatus || 'unfinished');
     const remarkInput = document.getElementById('metaRemark');
     if (remarkInput) {
-      // Allow reviewers to clear the remark field; do not fall back to the old value when empty
       node.extra.remark = remarkInput.value;
     } else if (node.extra.remark === undefined) {
       node.extra.remark = '';
@@ -484,66 +504,64 @@
   }
 
   function setCommonMeta(node) {
-    // Show full creator string including 学号 (e.g. 姓名(学号))
     createdBy.value = node.meta?.createdBy || '';
     createdAt.value = node.meta?.createdAt || '';
-    // Show full reviewer string as stored
     reviewedBy.value = node.meta?.reviewedBy || '';
     reviewedAt.value = node.meta?.reviewedAt || '';
-    // extra fields
     const ex = node.extra || {};
     const expEl = document.getElementById('metaExpectedDuration'); if (expEl) expEl.value = ex.expectedDuration || '';
     const revDurEl = document.getElementById('metaReviewDuration'); if (revDurEl) revDurEl.value = ex.reviewDuration || '';
     const remarkEl = document.getElementById('metaRemark'); if (remarkEl) { remarkEl.value = ex.remark || ''; autosizeTextarea(remarkEl); try { remarkEl.removeEventListener('input', remarkEl.__autosizeHandler); } catch (e) { } remarkEl.__autosizeHandler = () => autosizeTextarea(remarkEl); remarkEl.addEventListener('input', remarkEl.__autosizeHandler); }
-    // review status radios
-    const status = ex.reviewStatus || 'pending';
-    Array.from(document.querySelectorAll('input[name="metaReviewStatus"]')).forEach(r => { r.checked = (r.value === status); });
-    // repair status
+    // 审核状态
+    const status = (ex.reviewStatus || '').trim() || 'pending';
+    const reviewRadios = Array.from(document.querySelectorAll('input[name="metaReviewStatus"]'));
+    let anyChecked = false;
+    reviewRadios.forEach(r => {
+      const checked = (r.value === status);
+      r.checked = checked;
+      anyChecked = anyChecked || checked;
+    });
+    if (!anyChecked && reviewRadios.length) {
+      const pendingRadio = reviewRadios.find(r => r.value === 'pending');
+      if (pendingRadio) pendingRadio.checked = true;
+    }
+    // 返修状态
     const repair = ex.repairStatus || 'unfinished';
     Array.from(document.querySelectorAll('input[name="metaRepairStatus"]')).forEach(r => { r.checked = (r.value === repair); });
-    // show/hide repair field depending on status
     try { const rf = document.getElementById('metaRepairField'); if (rf) rf.style.display = (status === 'rejected') ? 'block' : 'none'; } catch (e) { }
-
-    // review status change: show/hide repair status
     Array.from(document.querySelectorAll('input[name="metaReviewStatus"]')).forEach(r => r.addEventListener('change', () => {
       const rf = document.getElementById('metaRepairField'); if (!rf) return;
       if (document.querySelector('input[name="metaReviewStatus"]:checked')?.value === 'rejected') rf.style.display = 'block'; else {
         rf.style.display = 'none';
       }
-      // apply permission after state changes
       try { if (typeof applyMetaPermissions === 'function') applyMetaPermissions(); } catch (e) { }
     }));
-
-    // apply meta-level permissions
     try { if (typeof applyMetaPermissions === 'function') applyMetaPermissions(); } catch (e) { }
   }
 
-  // Apply permissions: only reviewer/admin can edit reviewed* fields, review status and review duration
+  // 编辑权限
   function applyMetaPermissions() {
     const editable = !!state.editable;
     const allow = !!isReviewerOrAdmin;
     const allowReview = editable && allow && !isOwner;
-    // controls that require reviewer/admin and cannot be used by the creator
+    // 审核者/管理员
     const controlsReviewer = [document.getElementById('reviewedBy'), document.getElementById('reviewedAt'), document.getElementById('metaReviewDuration')];
     controlsReviewer.forEach(c => { if (c) c.disabled = !allowReview; });
-    //期望时长仅创建者可编辑
+    // 期望时长（创建者）
     const expectedEl = document.getElementById('metaExpectedDuration');
     if (expectedEl) expectedEl.disabled = !(editable && !!isOwner);
     if (acceptExpectedBtn) acceptExpectedBtn.disabled = !allowReview;
-    // review status radios (reviewer only)
+    // 审核状态（审核者）
     Array.from(document.querySelectorAll('input[name="metaReviewStatus"]')).forEach(r => { r.disabled = !allowReview; });
-    // repair radios: when review status is 'rejected' the repair status should be editable
-    // by any user in edit mode; otherwise follow reviewer/admin permission.
+    // 返修状态
     try {
-      const currentReview = document.querySelector('input[name="metaReviewStatus"]:checked')?.value;
-      const repairAllowed = !!(editable && (currentReview === 'rejected' ? true : (allow && !isOwner)));
+      const repairAllowed = !!(editable && (isOwner || allow));
       Array.from(document.querySelectorAll('input[name="metaRepairStatus"]')).forEach(r => { r.disabled = !repairAllowed; });
     } catch (e) { }
-    // remark should only be editable in edit mode
     try {
       const remarkEl = document.getElementById('metaRemark'); if (remarkEl) remarkEl.disabled = !editable;
     } catch (e) { }
-    // created date can be overridden only by admins while editing
+    // 创建日期可由管理员覆盖
     try {
       if (createdAt) {
         const allowCreatedAt = editable && isAdmin;
@@ -555,8 +573,6 @@
 
   async function init() {
     if (isNew && !TYPES.includes(type)) { Poem.toast('缺少类型参数'); return; }
-
-    // Get current user info for auto-filling
     let me = await Poem.me();
     currentUser = me;
     if (isNew) {
@@ -574,14 +590,12 @@
     }
     isReviewerOrAdmin = !!(me && (me.role === 'reviewer' || me.role === 'admin'));
     isAdmin = me?.role === 'admin';
-
     if (isNew) {
       nodeIdEl.textContent = '新建（未分配ID）';
-      // Auto-fill creator info for new nodes
+      // 自动填充创建者信息
       const creatorDisplayName = me && me.real_name && me.student_id ?
         `${me.real_name} (${me.student_id})` :
         (me && me.real_name ? me.real_name : (me ? me.username : ''));
-
       state.node = {
         id: '',
         type,
@@ -597,7 +611,6 @@
         links: []
       };
       replaceLinks([]);
-      // new node => current user is effectively the owner for permission checks
       isOwner = true;
       if (linkBtn) linkBtn.style.display = 'inline-block';
       setEditable(true);
@@ -609,7 +622,7 @@
       const loadedLinks = state.node.links.map(normalizeLink).filter(Boolean);
       replaceLinks(loadedLinks);
       nodeIdEl.textContent = node.id;
-      // Only owner or reviewer/admin can edit
+      // 仅所有者或审核者/管理员可编辑
       isOwner = (node.meta?.createdById && node.meta.createdById === me?.id) || (node.meta?.createdBy && (node.meta.createdBy === (me?.real_name || me?.username)));
       const canEditAll = me && (me.role === 'reviewer' || me.role === 'admin');
       editBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
@@ -617,9 +630,8 @@
       if (linkBtn) linkBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       reviewBtn.style.display = 'none';
     }
-
     setCommonMeta(state.node);
-    // Clicking reviewer/time autofills reviewer name+ID and timestamp (when editable)
+    // 点击审核字段自动填充
     try {
       const reviewedByEl = document.getElementById('reviewedBy');
       const reviewedAtEl = document.getElementById('reviewedAt');
@@ -636,7 +648,6 @@
         }
       };
       if (reviewedByEl) {
-
         try {
           if (acceptExpectedBtn && expectedDurationInput && reviewDurationInput) {
             const handleAcceptExpected = () => {
@@ -670,16 +681,11 @@
         });
       }
     } catch (e) { }
-
-    // Draft support removed
-
     let renderer;
     const t = isNew ? type : (state.node ? state.node.type : '');
-
     const returnTypeMatch = returnQuery.match(/(?:^|&)type=([^&]*)/);
     const returnType = returnTypeMatch ? returnTypeMatch[1] : '';
     const effectiveReturnType = returnType || 'A';
-
     const backAllTarget = (effectiveReturnType === 'A' && returnQuery) ? `list.html?${returnQuery}` : 'list.html?type=A';
     const backListTarget = (effectiveReturnType === t && returnQuery) ? `list.html?${returnQuery}` : (t ? `list.html?type=${t}` : 'list.html');
     const rendererFactory = getRendererFactory(t);
@@ -688,9 +694,6 @@
     } else {
       formContainer.innerHTML = '<div class="section-card">未知类型</div>';
     }
-
-    // Ensure editable state is applied after renderer populates the formContainer
-    // (previously setEditable(false) was called before rendering which left inputs enabled)
     setEditable(isNew ? true : false);
 
     function saveNode(opts) {
@@ -712,7 +715,8 @@
           const hasPrevReviewer = !!(prevMeta.reviewedBy || prevMeta.reviewedAt);
           const reviewerChanged = (state.node.meta?.reviewedBy || '') !== (prevMeta.reviewedBy || '')
             || (state.node.meta?.reviewedAt || '') !== (prevMeta.reviewedAt || '');
-          const intendsOverwriteReview = isReviewerOrAdmin && !isOwner && (reviewerChanged || !hasPrevReviewer);
+          const reviewStatusVal = ((state.node.extra && state.node.extra.reviewStatus) || '').trim() || 'pending';
+          const intendsOverwriteReview = isReviewerOrAdmin && !isOwner && reviewStatusVal !== 'pending' && (reviewerChanged || !hasPrevReviewer);
           if (isReviewerOrAdmin && !isOwner) {
             const reviewStatus = (state.node.extra && state.node.extra.reviewStatus) || 'pending';
             const reviewDurationVal = ((state.node.extra && state.node.extra.reviewDuration) || '').trim();
@@ -755,12 +759,12 @@
             try { renderer?.refresh?.(state.node); } catch (e) { }
             const returnSuffix = returnQuery ? `&return=${encodeURIComponent(returnQuery)}` : '';
             history.replaceState(null, '', `editor.html?id=${created.id}${returnSuffix}`);
-            // Draft clearing removed (draft feature not implemented)
           } else {
             const apiPath = `/api/node/${state.node.id}`;
             const updated = await Poem.api(apiPath, { method: 'PUT', body: JSON.stringify(payload) });
             state.node = updated;
-            if (isReviewerOrAdmin && !isOwner) {
+            const reviewStatusAfter = ((state.node.extra && state.node.extra.reviewStatus) || '').trim() || 'pending';
+            if (isReviewerOrAdmin && !isOwner && reviewStatusAfter !== 'pending') {
               const reviewerDisplay = formatReviewerDisplay(currentUser);
               const today = Poem.today();
               state.node.meta = state.node.meta || {};
@@ -771,9 +775,7 @@
             setEditable(false);
             if (!silent && !skipToast) Poem.toast('已保存');
             try { renderer?.refresh?.(state.node); } catch (e) { }
-            // refresh meta fields shown on the form
             try { setCommonMeta(state.node); } catch (e) { }
-            // Draft clearing removed (draft feature not implemented)
           }
           return true;
         } catch (err) {
@@ -796,7 +798,6 @@
     };
 
     setLinkingImmediateSave(requestImmediateSave);
-
     editBtn.onclick = () => setEditable(true);
     saveBtn.onclick = async () => { await saveNode(); };
 
@@ -829,9 +830,6 @@
     }
     const homeLink = document.querySelector('.topbar .actions a[href="./"]');
     attachConfirmNavigation(homeLink, './');
-
-    // Draft autosave removed (draft feature not implemented)
   }
-
   init();
 })();

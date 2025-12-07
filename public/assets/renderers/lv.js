@@ -12,7 +12,6 @@
     return defined;
   };
   const findSub = (subs, key) => subs.find(sub => sub.key === key);
-
   registry.L = function renderLv(ctx) {
     const context = ctx || {};
     const outer = context.formContainer;
@@ -22,16 +21,13 @@
     context.node = node;
     const subs = resolveSubs();
     outer.innerHTML = '';
-
     let activeSub = typeof node.fields.sub === 'string' ? node.fields.sub : '';
     const querySub = (context.Poem && typeof context.Poem.qs === 'function') ? context.Poem.qs('sub') : '';
     if (!findSub(subs, activeSub) && findSub(subs, querySub)) activeSub = querySub;
     let activeRenderer = null;
-
     const renderMessage = (text) => {
       outer.innerHTML = `<div class="section-card"><div class="muted">${text}</div></div>`;
     };
-
     const mountSubRenderer = (subKey) => {
       const def = findSub(subs, subKey);
       if (!def) {
@@ -59,7 +55,6 @@
       activeRenderer = factory({ ...context, formContainer: renderTarget, node });
       return true;
     };
-
     if (findSub(subs, activeSub)) {
       mountSubRenderer(activeSub);
     } else if (subs.length) {
@@ -67,7 +62,6 @@
     } else {
       renderMessage('尚未配置格律子类');
     }
-
     return {
       collect() {
         const base = activeRenderer && typeof activeRenderer.collect === 'function'

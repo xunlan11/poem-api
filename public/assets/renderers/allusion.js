@@ -1,7 +1,6 @@
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-
   registry.E = registry.renderAllusion = function renderAllusion(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -13,7 +12,6 @@
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
     const autosizeTextarea = context.autosizeTextarea || (() => { });
     const isNew = !!context.isNew;
-
     const statement = node ? node.fields?.statement || '' : '';
     const otherStatement = node ? (node.fields?.otherStatement || (Array.isArray(node.fields?.otherStatements) ? node.fields.otherStatements[0] : '')) : '';
     const explanation = node ? node.extra?.explanation || node.extra?.explain || '' : '';
@@ -24,7 +22,6 @@
     if (isNew) {
       if (!Array.isArray(examples) || examples.length === 0) examples = [{ 出处: '', 内容: '' }];
     }
-
     formContainer.innerHTML = `
       <div class="grid-2">
         <div class="field"><label>表述</label>
@@ -38,9 +35,7 @@
       <div class="field"><label>涉及人物</label><input id="f-persons" type="text" data-link-field="fields.persons" value="${escapeHtml(personsText)}"></div>
       <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
     `;
-
     initializeLinkFields(formContainer);
-
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -50,7 +45,6 @@
         context.checkDuplicate(q, 'E');
       });
     }
-
     const usageInput = formContainer.querySelector('#f-usage');
     const personsInput = formContainer.querySelector('#f-persons');
     const examplesEl = formContainer.querySelector('#examples');

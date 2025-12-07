@@ -6,7 +6,6 @@
   const pendingSummary = document.getElementById('myPendingSummary');
   const pendingPagination = document.getElementById('myPendingPagination');
   const pendingState = { items: [], page: 1 };
-
   const REVIEW_STATUS_CLASS = {
     pending: 'status-pending',
     rejected: 'status-rejected',
@@ -34,8 +33,6 @@
   function bindRow(type) {
     const addBtn = document.querySelector(`.btn.add[data-type='${type}']`);
     const viewBtn = document.querySelector(`.btn.view[data-type='${type}']`);
-
-    // addBtn may not exist for some types (e.g. 汇总)，so only attach when present
     if (addBtn) {
       addBtn.onclick = async () => {
         const ok = await Poem.requireProfile();
@@ -74,7 +71,6 @@
     if (viewBtn) viewBtn.onclick = () => { location.href = `list.html?type=${type}`; };
   }
 
-  // include 'A' for 汇总 (no 新建 button)
   ['W', 'G', 'C', 'E', 'S', 'L', 'A'].forEach(bindRow);
 
   async function fetchAllNodes() {
@@ -118,7 +114,7 @@
     if (!pendingBody || !pendingPagination) return;
     const total = pendingState.items.length;
     if (!total) {
-      pendingBody.innerHTML = '<tr><td colspan="9" class="text-muted">暂无需要关注的条目</td></tr>';
+      pendingBody.innerHTML = '<tr><td colspan="9" class="text-muted">暂无需关注的条目</td></tr>';
       pendingPagination.innerHTML = '';
       pendingPagination.style.display = 'none';
       return;
@@ -181,7 +177,7 @@
         pendingSection.style.display = 'none';
         return;
       }
-      if (pendingSummary) pendingSummary.textContent = '加载中…';
+      if (pendingSummary) pendingSummary.textContent = '加载中';
       const variants = normalizeUserNames(me);
       const all = await fetchAllNodes();
       const needsAttention = all.filter(item => {
@@ -231,7 +227,6 @@
             } catch (err) {
               console.warn('Logout request failed:', err);
             }
-            // Clear cached client-side user and force reload regardless of request outcome.
             try { window.__poem_me = undefined; } catch (e) { }
             try { sessionStorage.removeItem('poem_me_cache_v1'); } catch (e) { }
             location.reload();
@@ -245,7 +240,6 @@
       bar.textContent = '';
     }
   }
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initUserBar, { once: true });
   } else {
