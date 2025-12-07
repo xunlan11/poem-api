@@ -148,7 +148,7 @@ async function loadStore() {
     const now = new Date().toISOString();
     const admin = {
       id: 'u_1', username: 'admin', password_hash: bcrypt.hashSync('admin123', 10), role: 'admin',
-      real_name: '管理员', student_id: '', created_at: now, updated_at: now, profile_completed: false
+      real_name: '管理员', student_id: '', created_at: now, profile_completed: false
     };
     await fs.writeJson(USER_FILE, [admin], { spaces: 2 });
   }
@@ -650,7 +650,7 @@ app.post('/api/auth/login', async (req, res) => {
   if (!u) {
     // 首次登录注册为整理员
     const now = new Date().toISOString();
-    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', created_at: now, updated_at: now, profile_completed: false };
+    u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', created_at: now, profile_completed: false };
     users.push(u);
     await saveUsers();
   } else {
@@ -681,14 +681,13 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
   u.real_name = String(real_name);
   u.student_id = String(student_id);
   u.profile_completed = true;
-  u.updated_at = new Date().toISOString();
   await saveUsers();
   res.json({ ok: true });
 });
 
 // 用户管理（管理员）
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
-  res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, updated_at: u.updated_at, profile_completed: !!u.profile_completed })));
+  res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
 });
 
 // 新用户id为最小未使用正整数序号
@@ -708,7 +707,7 @@ app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
   if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
   if (findUserByUsername(username)) return res.status(409).json({ error: 'Username exists' });
   const now = new Date().toISOString();
-  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', created_at: now, updated_at: now, profile_completed: false };
+  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', created_at: now, profile_completed: false };
   users.push(u);
   await saveUsers();
   res.status(201).json({ id: u.id, username: u.username, role: u.role });
@@ -726,17 +725,6 @@ app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
     return res.status(403).json({ error: 'Cannot delete yourself' });
   }
   users = users.filter(x => x.id !== u.id);
-  await saveUsers();
-  res.json({ ok: true });
-});
-
-app.post('/api/users/:id/reset-password', requireAuth, requireAdmin, async (req, res) => {
-  const u = findUserById(req.params.id);
-  if (!u) return res.status(404).json({ error: 'User not found' });
-  const { password } = req.body || {};
-  if (!password) return res.status(400).json({ error: 'Missing password' });
-  u.password_hash = bcrypt.hashSync(password, 10);
-  u.updated_at = new Date().toISOString();
   await saveUsers();
   res.json({ ok: true });
 });
