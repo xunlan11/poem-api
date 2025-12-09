@@ -1,7 +1,9 @@
+// 注释
 (function (global) {
   const root = global;
   if (!root) return;
   root.PoemEditor = root.PoemEditor || {};
+  // 初始化注释功能的主函数
   root.PoemEditor.initAnnotations = function initAnnotations(options = {}) {
     const documentRef = options.document || root.document;
     const windowRef = options.window || root;
@@ -34,6 +36,7 @@
     let annotationFieldMap = new Map();
     let annotations = [];
 
+    // 清理注释列表的函数
     function sanitizeAnnotations(list) {
       if (!Array.isArray(list)) return [];
       return list.filter(Boolean).map(item => {
@@ -51,6 +54,7 @@
       });
     }
 
+    // 确保注释有唯一键的函数
     function ensureAnnotationKey(annotation) {
       if (!annotation || typeof annotation !== 'object') return '';
       if (typeof annotation.linkKey === 'string' && annotation.linkKey) return annotation.linkKey;
@@ -67,11 +71,13 @@
       return annotation.linkKey;
     }
 
+    // 获取注释字段键的函数
     function getAnnotationFieldKey(annotation) {
       const key = ensureAnnotationKey(annotation);
       return key ? `annotations.${key}.note` : '';
     }
 
+    // 计算注释深度的函数
     function computeDepths(list) {
       if (!Array.isArray(list) || list.length === 0) return [];
       const events = [];
@@ -101,6 +107,7 @@
       return depths;
     }
 
+    // 渲染注释列表的函数
     function renderAnnotations() {
       if (!annoArea) return;
       annotationFieldMap = new Map();
@@ -233,6 +240,7 @@
       if (renderDiv) renderAnnotatedBody();
     }
 
+    // 查找或创建渲染容器的函数
     function findOrCreateRenderContainer() {
       if (!formContainer) return null;
       let renderDiv = formContainer.querySelector(`#${renderContainerId}`);
@@ -255,6 +263,7 @@
       return renderDiv;
     }
 
+    // 渲染带注释的正文的函数
     function renderAnnotatedBody() {
       if (!textarea || !formContainer) return null;
       const text = textarea.value || '';
@@ -363,6 +372,7 @@
       return renderDiv;
     }
 
+    // 确保带注释正文的事件处理器的函数
     function ensureAnnotatedBodyHandlers(renderDiv) {
       if (!renderDiv) return;
       if (!renderDiv.__clickDelegationAttached) {
@@ -379,6 +389,7 @@
       }
     }
 
+    // 带注释正文点击处理器的函数
     function annotatedBodyClickHandler(event) {
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
@@ -404,6 +415,7 @@
       if (idx >= 0) showAnnotationEditor(annotations[idx], idx);
     }
 
+    // 带注释正文右键菜单处理器的函数
     function annotatedBodyContextMenuHandler(event) {
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
@@ -433,6 +445,7 @@
       }
     }
 
+    // 处理带注释正文选择的函数
     function handleAnnotatedSelection() {
       if (!state.editable || !textarea) return;
       const renderDiv = this;
@@ -459,6 +472,7 @@
       }
     }
 
+    // 为内容文本重新索引注释的函数
     function reindexAnnotationsForContentText(text) {
       if (!Array.isArray(annotations) || !annotations.length) return false;
       const body = typeof text === 'string' ? text : '';
@@ -488,6 +502,7 @@
       return changed;
     }
 
+    // 处理文本区域输入的函数
     function handleTextareaInput() {
       if (!textarea) return;
       reindexFieldLinks('content');
@@ -501,6 +516,7 @@
       }
     }
 
+    // 显示注释编辑器的函数
     function showAnnotationEditor(annotation, index) {
       if (!annoArea || !state.editable) return;
       annoArea.querySelectorAll('.anno-editor').forEach(ed => ed.remove());
@@ -579,6 +595,7 @@
       });
     }
 
+    // 锁定正文的函数
     function lockBody() {
       if (!textarea) return;
       textarea.readOnly = true;
@@ -589,6 +606,7 @@
       if (unlockBtn) unlockBtn.disabled = state.editable ? false : true;
     }
 
+    // 解锁正文的函数
     function unlockBody() {
       if (!textarea) return;
       if (isLinkBrushActive()) {
@@ -681,6 +699,7 @@
       });
     }
 
+    // 设置注释列表的函数
     function setAnnotations(nextList) {
       annotations = sanitizeAnnotations(nextList);
       showAllAnnotations = false;
@@ -688,15 +707,21 @@
       renderAnnotatedBody();
     }
 
+    // 获取注释列表的函数
     function getAnnotations() {
       return annotations.map(item => ({ ...item }));
     }
 
     return {
+      // 设置注释列表的方法
       setAnnotations,
+      // 获取注释列表的方法
       getAnnotations,
+      // 渲染带注释正文的方法
       renderAnnotatedBody,
+      // 锁定正文的方法
       lockBody,
+      // 解锁正文的方法
       unlockBody,
     };
   };

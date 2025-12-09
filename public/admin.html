@@ -50,8 +50,15 @@
   <script>
     (async function () {
       const me = await Poem.me();
-      if (!me) { location.href = 'login.html'; return; }
-      if (me.role !== 'admin') { Poem.toast('需要管理员权限'); location.href = './'; return; }
+      if (!me) { 
+        location.href = 'login.html'; 
+        return; 
+      }
+      if (me.role !== 'admin') { 
+        Poem.toast('需管理员权限'); 
+        location.href = './'; 
+        return; 
+      }
       const tb = document.getElementById('tbody');
       const searchInput = document.getElementById('userSearch');
       const paginationEl = document.getElementById('userPagination');

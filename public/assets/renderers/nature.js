@@ -1,5 +1,7 @@
+// 自然物渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
   registry.S = registry.renderNatureEntry = function renderNatureEntry(ctx) {
     const context = ctx || {};
@@ -74,6 +76,7 @@
     const fileInput = formContainer.querySelector('#natureImageInput');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
+    // 渲染示例列表的包装函数
     const renderExamplesWrapper = () => renderInlinePairs(examplesEl, examples, '出处', '内容', '出处', '内容', {
       containerClass: 'note-list',
       wrapperClass: 'ordered-item note-item',
@@ -85,19 +88,9 @@
     });
     renderExamplesWrapper();
 
+    // 自动调整大小
     try {
-      if (introInput) {
-        autosizeTextarea(introInput);
-        try { if (introInput.__autosizeHandler) introInput.removeEventListener('input', introInput.__autosizeHandler); } catch (err) { }
-        introInput.__autosizeHandler = () => autosizeTextarea(introInput);
-        introInput.addEventListener('input', introInput.__autosizeHandler);
-      }
-      if (sameImageryInput) {
-        autosizeTextarea(sameImageryInput);
-        try { if (sameImageryInput.__autosizeHandler) sameImageryInput.removeEventListener('input', sameImageryInput.__autosizeHandler); } catch (err) { }
-        sameImageryInput.__autosizeHandler = () => autosizeTextarea(sameImageryInput);
-        sameImageryInput.addEventListener('input', sameImageryInput.__autosizeHandler);
-      }
+      utils.bindAutoResize(formContainer, [introInput, sameImageryInput], context);
     } catch (err) { }
 
     addExBtn && addExBtn.addEventListener('click', () => {
@@ -122,6 +115,7 @@
       }
     } catch (err) { }
 
+    // 更新图片预览的函数
     function updateImagePreview() {
       if (!imagePreview) return;
       if (imagePath) {
@@ -133,6 +127,7 @@
     }
     updateImagePreview();
 
+    // 确保可编辑状态的函数
     function ensureEditableStates() {
       const allowUpload = !!state.editable;
       if (uploadBtn) {
@@ -169,6 +164,7 @@
       uploadImageFile(file);
     });
 
+    // 上传图片文件的异步函数
     async function uploadImageFile(file) {
       if (!state.editable) {
         return;
@@ -210,6 +206,7 @@
       }
     }
 
+    // 收集表单数据的函数
     function collect() {
       const fields = {
         commonName: (formContainer.querySelector('#f-common-name') || {}).value || '',

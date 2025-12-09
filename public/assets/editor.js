@@ -1,27 +1,51 @@
+// 编辑器
 (function () {
+  // 节点类型列表
   const TYPES = Poem.TYPES;
+  // 编辑器ID
   const id = Poem.qs('id');
+  // 是否新建
   let isNew = Poem.qs('new') === '1';
+  // 节点类型
   const type = Poem.qs('type');
+  // 节点ID元素
   const nodeIdEl = document.getElementById('nodeId');
+  // 链接按钮
   const linkBtn = document.getElementById('linkBtn');
+  // 编辑按钮
   const editBtn = document.getElementById('editBtn');
+  // 保存按钮
   const saveBtn = document.getElementById('saveBtn');
+  // 审核按钮
   const reviewBtn = document.getElementById('reviewBtn');
+  // 自检按钮
   const selfCheckBtn = document.getElementById('selfCheckBtn');
+  // 返回列表按钮
   const backListBtn = document.getElementById('backListBtn');
+  // 返回全部按钮
   const backAllBtn = document.getElementById('backAllBtn');
+  // 表单容器
   const formContainer = document.getElementById('formContainer');
+  // 创建者元素
   const createdBy = document.getElementById('createdBy');
+  // 创建时间元素
   const createdAt = document.getElementById('createdAt');
+  // 审核者元素
   const reviewedBy = document.getElementById('reviewedBy');
+  // 审核时间元素
   const reviewedAt = document.getElementById('reviewedAt');
+  // 期望时长输入
   const expectedDurationInput = document.getElementById('metaExpectedDuration');
+  // 审核时长输入
   const reviewDurationInput = document.getElementById('metaReviewDuration');
+  // 接受期望按钮
   const acceptExpectedBtn = document.getElementById('metaAcceptExpected');
+  // 返回查询
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
+  // 当前用户
   let currentUser = null;
 
+  // 格式化审核者显示的函数
   function formatReviewerDisplay(user) {
     if (!user) return '';
     if (user.real_name && user.student_id) return `${user.real_name} (${user.student_id})`;
@@ -121,6 +145,7 @@
     };
   };
 
+  // 注册可编辑观察者的函数
   function registerEditableWatcher(fn) {
     if (typeof fn !== 'function') return () => { };
     editableWatchers.push(fn);
@@ -131,6 +156,7 @@
     };
   }
 
+  // 设置可编辑状态的函数
   function setEditable(nextEditable) {
     const editable = !!nextEditable;
     if (state.editable === editable) {
@@ -162,6 +188,7 @@
     refreshActionButtons();
   }
 
+  // 刷新动作按钮的函数
   function refreshActionButtons() {
     const editable = !!state.editable;
     if (editBtn) editBtn.disabled = editable || saveInFlight;
@@ -174,6 +201,7 @@
     if (linkBtn) linkBtn.disabled = editable;
   }
 
+  // 自动调整文本区域大小的函数
   function autosizeTextarea(el) {
     if (!el || el.tagName !== 'TEXTAREA') return;
     el.dataset.autosize = 'true';
@@ -203,6 +231,7 @@
     if (target === 0) el.style.height = previous;
   }
 
+  // 分割多行文本的函数
   function splitMultilineText(raw) {
     if (!raw) return [];
     return raw
@@ -211,6 +240,7 @@
       .filter(Boolean);
   }
 
+  // 渲染内联对的函数
   function renderInlinePairs(container, list, key1, key2, label1, label2, options) {
     if (!container) return;
     const opts = options || {};
@@ -311,10 +341,12 @@
 
   const DUP_MODAL_CLASS = 'dup-modal';
 
+  // 移除现有重复模态框的函数
   function removeExistingDuplicateModal() {
     document.querySelectorAll(`.${DUP_MODAL_CLASS}`).forEach(el => el.remove());
   }
 
+  // 构建重复查询的函数
   function buildDuplicateQueries(raw) {
     const normalized = typeof raw === 'string' ? raw.trim() : '';
     if (!normalized) return [];
@@ -332,6 +364,7 @@
     return unique.length ? unique : [normalized];
   }
 
+  // 显示重复模态框的函数
   function showDuplicateModal(results, query) {
     removeExistingDuplicateModal();
     const modal = document.createElement('div');
@@ -384,6 +417,7 @@
     modal.onclick = (e) => { if (e.target === modal) close(); };
   }
 
+  // 检查重复的函数
   async function checkDuplicate(query, type) {
     const queries = buildDuplicateQueries(query);
     if (!queries.length) {
@@ -409,6 +443,7 @@
     }
   }
 
+  // 获取渲染器工厂的函数
   function getRendererFactory(typeCode) {
     if (!typeCode) return null;
     const registry = window.PoemRenderers || {};
@@ -421,6 +456,7 @@
     return null;
   }
 
+  // 构建渲染器上下文的函数
   function buildRendererContext(node, typeCode) {
     return {
       node,
@@ -458,6 +494,7 @@
     };
   }
 
+  // 将通用元数据应用到节点的函数
   function commonMetaToNode(node) {
     node.extra = node.extra || {};
     node.meta = node.meta || {};
@@ -503,6 +540,7 @@
     }
   }
 
+  // 设置通用元数据的函数
   function setCommonMeta(node) {
     createdBy.value = node.meta?.createdBy || '';
     createdAt.value = node.meta?.createdAt || '';
@@ -571,6 +609,7 @@
     } catch (e) { }
   }
 
+  // 初始化编辑器的函数
   async function init() {
     if (isNew && !TYPES.includes(type)) { Poem.toast('缺少类型参数'); return; }
     let me = await Poem.me();
@@ -696,6 +735,7 @@
     }
     setEditable(isNew ? true : false);
 
+    // 保存节点的函数
     function saveNode(opts) {
       const options = opts || {};
       const silent = !!options.silent;
@@ -791,6 +831,7 @@
       return currentSavePromise;
     }
 
+    // 立即保存请求的函数
     requestImmediateSave = async function (options) {
       const opts = options ? { ...options } : {};
       if (opts.silent === undefined) opts.silent = true;
@@ -801,6 +842,7 @@
     editBtn.onclick = () => setEditable(true);
     saveBtn.onclick = async () => { await saveNode(); };
 
+    // 附加确认导航的函数
     function attachConfirmNavigation(el, target) {
       if (!el) return;
       el.addEventListener('click', async (event) => {

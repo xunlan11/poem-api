@@ -1,19 +1,26 @@
+// 词曲谱渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-  const SUB_KEY = 'ciqupu';
-  const SUB_LABEL = '词曲谱';
+  // 子类型
+  const SUB_KEY = 'ciqupu'; 
+  const SUB_LABEL = '词曲谱'; 
+  // 平仄标记模式的标签
   const MARK_MODE_LABELS = {
     variable: '可变',
     fixed: '固定',
     rhyme: '韵脚'
-  };
+  }; // 平仄标记模式标签映射
+  // 标记类型的CSS类映射
   const MARK_CLASS_MAP = {
     fixed: 'locked-char--fixed',
     rhyme: 'locked-char--rhyme'
-  };
-  const DEFAULT_MARK_MODE = 'variable';
+  }; // 标记类型CSS类映射
+  // 默认标记模式
+  const DEFAULT_MARK_MODE = 'variable'; // 默认平仄标记模式
 
+  // 计算可渲染字符数的函数（排除换行符）
   function countRenderableChars(text) {
     if (!text) return 0;
     let count = 0;
@@ -23,6 +30,7 @@
     return count;
   }
 
+  // 标准化平仄标记以匹配文本长度的函数
   function normalizePingzeMarksForText(text, marks) {
     const total = countRenderableChars(text);
     const source = Array.isArray(marks) ? marks : [];
@@ -33,26 +41,31 @@
     return normalized;
   }
 
+  // 渲染词曲谱表单的主函数
   registry[`L_${SUB_KEY}`] = function renderLvCiqupu(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
     if (!formContainer) return null;
     const node = context.node || {};
     let editable = context.state ? !!context.state.editable : true;
+    // 从上下文获取辅助函数
     const registerEditableWatcher = typeof context.registerEditableWatcher === 'function' ? context.registerEditableWatcher : () => () => { };
     const escapeHtml = context.escapeHtml || (s => String(s || ''));
     const autosizeTextarea = context.autosizeTextarea || (() => { });
     const initializeLinkFields = context.initializeLinkFields || (() => { });
+    // 提取节点字段数据
     const title = node.fields?.title || '';
     const otherNames = node.fields?.otherNames || '';
     const mode = node.fields?.mode || 'single';
     const gongdiao = node.fields?.gongdiao || '';
 
+    // 创建变体名称的函数
     function createVariantName(index) {
       if (index === 0) return '正体';
       return `变体${index}`;
     }
 
+    // 标准化变体列表的函数
     function normalizeVariants(list) {
       if (!Array.isArray(list) || !list.length) {
         return [{ name: '正体', cipai: '', author: '', summary: '', origin: '', sample: '', pingze: '', pingzeMarks: [], locked: false }];
@@ -73,6 +86,7 @@
     let variants = normalizeVariants(node.fields?.variants);
     let lockStates = variants.map(v => !!v.locked);
     let pingzeModeStates = variants.map(() => DEFAULT_MARK_MODE);
+    // 生成表单HTML结构
     formContainer.innerHTML = `
       <div class="grid-2">
         <div class="field"><label>词曲谱</label>
@@ -107,6 +121,7 @@
         context.checkDuplicate(q, 'L');
       });
     }
+    // 确保状态数组长度的函数
     const ensureStateLengths = () => {
       if (lockStates.length > variants.length) {
         lockStates.length = variants.length;
@@ -121,6 +136,7 @@
         pingzeModeStates.push(DEFAULT_MARK_MODE);
       }
     };
+    // 确保变体标记的函数
     const ensureVariantMarks = (variant, text) => {
       if (!variant) return [];
       const normalized = normalizePingzeMarksForText(text, variant.pingzeMarks);
@@ -129,6 +145,7 @@
     };
     const getModeLabel = (mode) => MARK_MODE_LABELS[mode] || MARK_MODE_LABELS[DEFAULT_MARK_MODE];
 
+    // 渲染锁定文本的函数
     function renderLockedText(text, target, options) {
       if (!target) return;
       const fragment = document.createDocumentFragment();
@@ -165,12 +182,7 @@
       target.appendChild(fragment);
     }
 
-    function autosizeAndBind(el) {
-      if (!el) return;
-      autosizeTextarea(el);
-      el.addEventListener('input', () => autosizeTextarea(el));
-    }
-
+    // 渲染变体列表的函数
     function renderVariants() {
       ensureStateLengths();
       variantListEl.innerHTML = '';
@@ -250,7 +262,7 @@
         wrapper.querySelectorAll('input[data-field], textarea[data-field]').forEach(input => {
           const field = input.dataset.field;
           if (!field) return;
-          if (input.tagName === 'TEXTAREA') autosizeAndBind(input);
+          if (input.tagName === 'TEXTAREA') utils.autoResizeTextarea(input, context);
           assignLinkField(input, field);
           input.addEventListener('input', () => {
             variants[index][field] = input.value;
@@ -277,6 +289,7 @@
         if (pingzeMarkToolbar) {
           pingzeMarkToolbar.style.display = editable ? '' : 'none';
         }
+        // 高亮匹配字符的函数
         const highlightMatches = (charIdx) => {
           const apply = (view) => {
             if (!view) return;
@@ -287,6 +300,7 @@
           apply(sampleLockView);
           apply(pingzeLockView);
         };
+        // 附加悬停事件的函数
         const attachHover = (view) => {
           if (!view) return;
           view.addEventListener('mouseover', (event) => {
@@ -298,7 +312,9 @@
         };
         attachHover(sampleLockView);
         attachHover(pingzeLockView);
+        // 获取当前标记模式的函数
         const getCurrentMode = () => pingzeModeStates[index] || DEFAULT_MARK_MODE;
+        // 更新标记控件状态的函数
         const updateMarkControls = () => {
           const locked = !!lockStates[index];
           pingzeMarkButtons.forEach(btn => {
@@ -315,6 +331,7 @@
             updateMarkControls();
           });
         });
+        // 解析字符跨度的函数
         const resolveCharSpan = (node) => {
           if (!node) return null;
           if (node.nodeType === 1 && node.classList && node.classList.contains('locked-char')) {
@@ -325,6 +342,7 @@
           }
           return null;
         };
+        // 应用标记到范围的函数
         const applyMarksToRange = (from, to) => {
           const marks = ensureVariantMarks(variants[index], pingzeTextarea?.value || '');
           const mode = getCurrentMode();
@@ -335,6 +353,7 @@
           renderLockedText(pingzeTextarea?.value || '', pingzeLockView, { marks, classMap: MARK_CLASS_MAP });
           highlightMatches(null);
         };
+        // 处理平仄选择的函数
         const handlePingzeSelection = () => {
           if (!editable || !lockStates[index]) return;
           if (!pingzeLockView) return;
@@ -357,6 +376,7 @@
         if (pingzeLockView) {
           pingzeLockView.addEventListener('mouseup', handlePingzeSelection);
         }
+        // 应用锁定状态的函数
         const applyLockState = () => {
           const locked = !!lockStates[index] || !editable;
           const setDisplay = (el, show) => {
@@ -398,6 +418,7 @@
     }
     renderVariants();
 
+    // 同步添加按钮显示状态的函数
     function syncAddButton() {
       if (!addVariantBtn) return;
       addVariantBtn.style.display = editable ? '' : 'none';
@@ -434,6 +455,7 @@
     });
     initializeLinkFields(formContainer);
 
+    // 收集表单数据的函数
     function collect() {
       const modeInput = formContainer.querySelector('input[name="lvMode"]:checked');
       if (lockStates) lockStates.fill(true);

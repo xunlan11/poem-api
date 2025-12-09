@@ -1,19 +1,28 @@
+// 通用工具
 (function () {
+  // 节点类型
   const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
   const LV_SUB_TYPES = [
     { key: 'yunbu', label: '韵部（L）' },
     { key: 'ciqupu', label: '词曲谱（L）' },
   ];
+  // 搜索脚本列表
   const SEARCH_SCRIPTS = {
     fuse: 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0',
     pinyin: 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js'
   };
+  // 已加载脚本映射
   const loadedScripts = new Map();
+  // 全局脚本缓存
   const globalScriptCache = typeof window !== 'undefined' ? (window.__poemScriptCache = window.__poemScriptCache || {}) : {};
+  // 用户缓存键
   const ME_CACHE_KEY = 'poem_me_cache_v1';
+  // 用户缓存TTL
   const ME_CACHE_TTL = 5 * 60 * 1000; 
+  // 用户Promise
   let mePromise = null;
 
+  // 读取用户缓存的函数
   function readMeCache() {
     try {
       const raw = sessionStorage.getItem(ME_CACHE_KEY);
@@ -30,6 +39,7 @@
     }
   }
 
+  // 写入用户缓存的函数
   function writeMeCache(value) {
     if (!value || typeof value !== 'object') {
       try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
@@ -40,6 +50,7 @@
     } catch (err) { }
   }
 
+  // 清除用户缓存的函数
   function clearMeCache() {
     try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
     if (typeof window !== 'undefined') {
@@ -47,6 +58,7 @@
     }
   }
 
+  // 一次性加载脚本的函数
   function loadScriptOnce(src) {
     if (!src) return Promise.resolve();
     if (loadedScripts.has(src)) return loadedScripts.get(src);
@@ -70,6 +82,7 @@
     return promise;
   }
 
+  // 确保搜索依赖的函数
   async function ensureSearchDeps() {
     const tasks = [];
     if (typeof window !== 'undefined') {
@@ -84,6 +97,7 @@
       }
     }
   }
+  // 构建搜索令牌的函数
   function buildSearchTokens(text) {
     if (!text) return [];
     const str = String(text);
@@ -105,6 +119,7 @@
     return Array.from(tokens);
   }
 
+  // 创建模糊搜索的函数
   function createFuzzySearch() {
     const fuseCache = new Map();
     function ensureFuse(list) {
@@ -163,12 +178,16 @@
   window.Poem = {
     TYPES,
     LV_SUB_TYPES,
+    // 获取查询字符串参数的函数
     qs(name) { const p = new URLSearchParams(location.search); return p.get(name); },
+    // 获取今天的日期字符串的函数
     today() { return new Date().toISOString().slice(0, 10); },
+    // 获取基础路径的函数
     base() {
       const p = location.pathname;
       return p.startsWith('/poem') ? '/poem' : '';
     },
+    // API调用的函数
     async api(path, opts) {
       const url = `${Poem.base()}${path}`;
       const defaults = { headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
@@ -177,6 +196,7 @@
       const ct = res.headers.get('content-type') || '';
       return ct.includes('application/json') ? res.json() : res.text();
     },
+    // 获取当前用户信息的函数
     async me(options) {
       const forceRefresh = !!(options && options.force);
       if (forceRefresh) {
@@ -209,11 +229,13 @@
       }).finally(() => { mePromise = null; });
       return mePromise;
     },
+    // 要求登录的函数
     async requireLogin() {
       const me = await Poem.me();
       if (!me) { location.href = 'login.html'; return false; }
       return true;
     },
+    // 要求完善资料的函数
     async requireProfile() {
       const me = await Poem.me();
       if (!me) { location.href = 'login.html'; return false; }
@@ -221,11 +243,14 @@
       if (!me.real_name || !me.student_id) { location.href = 'profile.html'; return false; }
       return true;
     },
+    // 显示提示消息的函数
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
     fuzzySearch: createFuzzySearch(),
     ensureSearchDeps,
+    // 重新加载页面的函数
     reloadNow() { window.location.reload(); },
     clearMeCache,
+    // 打开链接选择器的函数
     openLinkPicker(onPick, options) {
       const opts = options || {};
       const allowPlaceholder = opts.allowPlaceholder !== false;
@@ -333,6 +358,7 @@
         }
       }
     },
+    // 打开格律子类型选择器的函数
     openLvSubtypePicker(options) {
       const opts = options || {};
       const subs = Array.isArray(LV_SUB_TYPES) && LV_SUB_TYPES.length ? LV_SUB_TYPES : [];
@@ -364,6 +390,7 @@
       });
       return close;
     },
+    // 打开类型选择器的函数
     openTypePicker(options) {
       const opts = options || {};
       const baseEntries = [

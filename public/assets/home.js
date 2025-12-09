@@ -1,11 +1,20 @@
+// 首页
 (function () {
+  // 类型标签映射
   const TYPE_LABELS = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律' };
+  // 待审核页面大小
   const PENDING_PAGE_SIZE = 8;
+  // 待审核部分元素
   const pendingSection = document.getElementById('myPendingSection');
+  // 待审核主体元素
   const pendingBody = document.getElementById('myPendingBody');
+  // 待审核摘要元素
   const pendingSummary = document.getElementById('myPendingSummary');
+  // 待审核分页元素
   const pendingPagination = document.getElementById('myPendingPagination');
+  // 待审核状态
   const pendingState = { items: [], page: 1 };
+  // 审核状态CSS类映射
   const REVIEW_STATUS_CLASS = {
     pending: 'status-pending',
     rejected: 'status-rejected',
@@ -13,23 +22,28 @@
     archived: 'status-archived',
     final: 'status-final'
   };
+  // 角色标签映射
   const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
+  // 返修状态CSS类映射
   const REPAIR_STATUS_CLASS = {
     unfinished: 'status-rejected',
     finished: 'status-approved'
   };
 
+  // 转义HTML的函数
   function escapeHtml(str) {
     const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
   }
 
+  // 渲染状态标签的函数
   function renderStatusTag(status, label, classMap) {
     if (!label) return '';
     const cls = classMap[status] || 'status-default';
     return `<span class="status-tag ${cls}">${escapeHtml(label)}</span>`;
   }
 
+  // 绑定行事件的函数
   function bindRow(type) {
     const addBtn = document.querySelector(`.btn.add[data-type='${type}']`);
     const viewBtn = document.querySelector(`.btn.view[data-type='${type}']`);
@@ -73,6 +87,7 @@
 
   ['W', 'G', 'C', 'E', 'S', 'L', 'A'].forEach(bindRow);
 
+  // 获取所有节点的函数
   async function fetchAllNodes() {
     const limit = 200;
     let offset = 0;
@@ -93,6 +108,7 @@
     return collected;
   }
 
+  // 标准化用户名的函数
   function normalizeUserNames(me) {
     const variants = new Set();
     if (!me) return variants;
@@ -106,10 +122,12 @@
     return new Set(Array.from(variants).filter(Boolean).map(str => str.trim()));
   }
 
+  // 格式化状态标签的函数
   function formatStatusLabel(item) {
     return item.reviewStatusLabel || (item.reviewStatus === 'pending' ? '未审核' : (item.reviewStatus === 'rejected' ? '未通过' : ''));
   }
 
+  // 渲染待审核表格的函数
   function renderPendingTable() {
     if (!pendingBody || !pendingPagination) return;
     const total = pendingState.items.length;
@@ -169,6 +187,7 @@
     }
   }
 
+  // 初始化待审核列表的函数
   async function initPendingList() {
     if (!pendingSection) return;
     try {
@@ -210,6 +229,7 @@
 
   initPendingList();
 
+  // 初始化用户栏的函数
   async function initUserBar() {
     const bar = document.getElementById('userBar');
     const adminEntry = document.getElementById('adminEntry');

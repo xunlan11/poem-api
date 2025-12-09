@@ -1,5 +1,7 @@
+// 诗歌渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
   registry.W = registry.renderPoem = function renderPoem(ctx) {
     const context = ctx || {};
@@ -75,6 +77,8 @@
       </div>
     `;
     initializeLinkFields(formContainer);
+    // 自动调整大小
+    utils.bindAutoResize(formContainer, ['#f-translation', '#f-background'], context);
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -146,6 +150,7 @@
     replaceLinks(initialLinks);
     const formSelect = formContainer.querySelector('#f-form');
     const formOpts = formContainer.querySelector('#form-opts');
+    // 渲染表单选项的函数
     function renderFormOpts() {
       const v = formSelect.value;
       formOpts.innerHTML = '';
@@ -176,6 +181,7 @@
     if (form) formSelect.value = form;
     renderFormOpts();
 
+    // 从节点刷新数据的函数
     function refreshFromNode(nextNode) {
       if (!nextNode) return;
       const nextAnnotations = Array.isArray(nextNode.annotations) ? nextNode.annotations : [];
@@ -188,6 +194,7 @@
       replaceLinks(refreshedLinks);
     }
 
+    // 收集表单数据的函数
     function collect() {
       const commentsPayload = Array.from(formContainer.querySelectorAll('#comment-list .note-item')).map(n => ({
         source: n.querySelector('.c-source').value,

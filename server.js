@@ -1,3 +1,4 @@
+// 服务器
 const express = require('express');
 const path = require('path');
 const fs = require('fs-extra');
@@ -14,19 +15,17 @@ const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
 const COOKIE_NAME = 'poem_token';
 const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'lax' };
-
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(authFromCookie);
-
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'nodes.json');
 const USER_FILE = path.join(DATA_DIR, 'users.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
-
 fs.ensureDirSync(UPLOAD_DIR);
 
+// 清理节点ID的函数
 function sanitizeNodeId(rawId) {
   if (!rawId) return '';
   const cleaned = String(rawId).trim().toUpperCase();
@@ -34,12 +33,14 @@ function sanitizeNodeId(rawId) {
   return safe;
 }
 
+// 获取文件扩展名的安全函数
 function safeExtname(filename) {
   const ext = path.extname(filename || '').toLowerCase();
   if (!ext) return '.png';
   return /^\.[a-z0-9]+$/i.test(ext) ? ext : '.png';
 }
 
+// 从图片路径中提取上传文件名
 function extractUploadFilename(imagePath = '') {
   if (!imagePath || typeof imagePath !== 'string') return '';
   const match = imagePath.match(/\/uploads\/([^/?#]+)/i);
@@ -47,6 +48,7 @@ function extractUploadFilename(imagePath = '') {
   return path.basename(imagePath);
 }
 
+// 确保节点图片文件名正确
 async function ensureNodeImageFilename(node) {
   if (!node || !node.extra || !node.extra.image) return;
   const nodeId = sanitizeNodeId(node.id);
@@ -63,6 +65,7 @@ async function ensureNodeImageFilename(node) {
   node.extra.image = `/uploads/${desiredName}`;
 }
 
+// 根据节点ID删除节点图片
 async function deleteNodeImageByPath(nodeId, imagePath) {
   const cleanId = sanitizeNodeId(nodeId);
   if (!cleanId) return;
@@ -80,6 +83,7 @@ async function deleteNodeImageByPath(nodeId, imagePath) {
   }
 }
 
+// Multer上传
 const uploadStorage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOAD_DIR),
   filename: (req, file, cb) => {
@@ -90,7 +94,6 @@ const uploadStorage = multer.diskStorage({
     cb(null, `${base}${ext}`);
   }
 });
-
 const upload = multer({
   storage: uploadStorage,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -100,8 +103,10 @@ const upload = multer({
   }
 });
 
+// 节点类型定义
 const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
 
+// 默认存储结构
 const defaultStore = () => ({
   W: { lastId: 0, items: {} },
   G: { lastId: 0, items: {} },
@@ -111,10 +116,12 @@ const defaultStore = () => ({
   L: { lastId: 0, items: {} }
 });
 
+// 全局数据存储
 let store = defaultStore();
 let users = [];
 let externalItems = [];
 
+// 加载外部列表（从Excel文件）
 async function loadExternalList() {
   try {
     const filePath = path.join(__dirname, '构建总表.xlsx');
@@ -134,6 +141,7 @@ async function loadExternalList() {
   }
 }
 
+// 加载数据存储
 async function loadStore() {
   await loadExternalList();
   await fs.ensureDir(DATA_DIR);
@@ -155,25 +163,29 @@ async function loadStore() {
   users = await fs.readJson(USER_FILE);
 }
 
+// 保存数据存储到文件
 async function saveStore() {
   await fs.writeJson(DATA_FILE, store, { spaces: 2 });
 }
 
+// 保存用户数据到文件
 async function saveUsers() {
   await fs.writeJson(USER_FILE, users, { spaces: 2 });
 }
 
+// 数字补齐5位字符串
 function pad5(n) {
   return String(n).padStart(5, '0');
 }
 
+// 从ID中提取数字部分
 function idNumber(id) {
   if (!id || id.length < 2) return 0;
   const num = parseInt(id.slice(1), 10);
   return isNaN(num) ? 0 : num;
 }
 
-// 新id为当前类型最小未使用正整数
+// 生成下一个ID
 function nextId(type) {
   if (!TYPES.includes(type)) throw new Error('Invalid type');
   const used = new Set(Object.keys(store[type].items || {}).map(k => idNumber(k)));
@@ -183,6 +195,7 @@ function nextId(type) {
   return `${type}${pad5(i)}`;
 }
 
+// 根据ID查找节点
 function findById(id) {
   if (!id) return null;
   const type = id[0];
@@ -195,6 +208,7 @@ function findById(id) {
   return null;
 }
 
+// 简化节点数据用于显示
 function simplify(node) {
   const fields = node.fields || {};
   let displayName = '';
@@ -253,6 +267,7 @@ function simplify(node) {
   };
 }
 
+// 获取所有项目（可选按类型过滤）
 function allItems(type) {
   if (type && TYPES.includes(type)) {
     return Object.values(store[type].items);
@@ -260,6 +275,7 @@ function allItems(type) {
   return TYPES.flatMap(t => Object.values(store[t].items));
 }
 
+// 构建搜索令牌（包括拼音）
 function buildSearchTokens(text) {
   if (!text) return [];
   const str = String(text);
@@ -281,6 +297,7 @@ function buildSearchTokens(text) {
   return Array.from(tokens);
 }
 
+// 模糊搜索项目
 function fuzzySearch(items, q) {
   if (!q || !q.trim()) return items;
   const searchKeys = [
@@ -337,10 +354,12 @@ function fuzzySearch(items, q) {
   return fuse.search(q).map(r => r.item);
 }
 
+// 健康检查路由
 app.get('/health', (req, res) => {
   res.type('text/plain').send('healthy');
 });
 
+// 获取统计信息路由
 app.get('/api/stats', (req, res) => {
   const stats = { total: 0, by_type: {} };
   for (const t of TYPES) {
@@ -351,6 +370,7 @@ app.get('/api/stats', (req, res) => {
   res.json(stats);
 });
 
+// 获取节点列表路由
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
   const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
@@ -414,12 +434,14 @@ app.get('/api/nodes', (req, res) => {
   res.json({ data: page, pagination: { total: ordered.length, limit: lim, offset: off } });
 });
 
+// 获取单个节点路由
 app.get('/api/node/:id', (req, res) => {
   const node = findById(req.params.id);
   if (!node) return res.status(404).json({ error: 'Not found' });
   res.json(node);
 });
 
+// 创建节点路由
 app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
   try {
     const { type, data } = req.body || {};
@@ -457,6 +479,7 @@ app.post('/api/node', requireAuth, requireProfile, async (req, res) => {
   }
 });
 
+// 更新节点路由
 app.put('/api/node/:id', requireAuth, async (req, res) => {
   try {
     const id = req.params.id;
@@ -537,7 +560,30 @@ app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'
   }
 });
 
-// 搜索
+// 上传图片路由
+app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'Missing file' });
+    let filename = req.file.filename;
+    let filePath = req.file.path || path.join(UPLOAD_DIR, filename);
+    const nodeId = sanitizeNodeId(req.body?.nodeId);
+    if (nodeId) {
+      const desiredName = `node_${nodeId}${safeExtname(req.file.originalname || filename)}`;
+      if (desiredName !== filename) {
+        const targetPath = path.join(UPLOAD_DIR, desiredName);
+        await fs.move(filePath, targetPath, { overwrite: true });
+        filename = desiredName;
+        filePath = targetPath;
+      }
+    }
+    res.json({ ok: true, path: `/uploads/${filename}` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message || 'Upload failed' });
+  }
+});
+
+// 搜索路由
 app.get('/api/search', (req, res) => {
   const { q, type } = req.query;
   const items = allItems(type);
@@ -558,7 +604,7 @@ app.get('/api/search', (req, res) => {
   res.json({ query: q || '', results });
 });
 
-// logo加载
+// Logo文件路由
 app.get('/assets/logo.png', async (req, res) => {
   try {
     const logoPath = path.join(__dirname, 'public', 'assets', 'logo.png');
@@ -569,14 +615,15 @@ app.get('/assets/logo.png', async (req, res) => {
   } catch (e) { console.error('logo serve failed', e); return res.status(500).end(); }
 });
 
+// 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 回退到根目录
+// 根路径重定向到index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 初始化存储然后启动服务器
+// 初始化存储并启动服务器
 loadStore().then(() => {
   app.listen(PORT, () => {
     console.log(`Poem API running at http://localhost:${PORT}/`);
@@ -594,10 +641,12 @@ function findUserById(id) {
   return users.find(u => u.id === id);
 }
 
+// 生成JWT令牌
 function issueToken(user) {
   return jwt.sign({ uid: user.id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+// 从Cookie中认证用户
 function authFromCookie(req, res, next) {
   const token = req.cookies[COOKIE_NAME];
   if (!token) return next();
@@ -623,6 +672,7 @@ function requireProfile(req, res, next) {
   if (!req.user.real_name || !req.user.student_id) return res.status(400).json({ error: 'Profile incomplete' });
   next();
 }
+
 function requireAdmin(req, res, next) {
   if (!req.user || req.user.role !== 'admin') return res.status(403).json({ error: 'Forbidden' });
   next();
@@ -634,7 +684,7 @@ function requireReviewerOrAdmin(req, res, next) {
   return res.status(403).json({ error: 'Forbidden' });
 }
 
-// 用户名显示：姓名(学号)
+// 格式化用户显示名称
 function formatUserDisplayName(user) {
   if (user.real_name && user.student_id) {
     return `${user.real_name}(${user.student_id})`;
@@ -642,7 +692,7 @@ function formatUserDisplayName(user) {
   return user.username;
 }
 
-// 认证路由
+// 登录路由
 app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing credentials' });
@@ -663,16 +713,19 @@ app.post('/api/auth/login', async (req, res) => {
   res.json({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, profile_completed: !!u.profile_completed });
 });
 
+// 登出路由
 app.post('/api/auth/logout', (req, res) => {
   res.clearCookie(COOKIE_NAME, COOKIE_OPTIONS);
   res.json({ ok: true });
 });
 
+// 获取当前用户信息路由
 app.get('/api/auth/me', (req, res) => {
   if (!req.user) return res.status(200).json(null);
   res.json(req.user);
 });
 
+// 更新用户资料路由
 app.post('/api/auth/profile', requireAuth, async (req, res) => {
   const { real_name, student_id } = req.body || {};
   const u = findUserById(req.user.id);
@@ -685,12 +738,12 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
   res.json({ ok: true });
 });
 
-// 用户管理（管理员）
+// 获取用户列表路由（管理员）
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
 });
 
-// 新用户id为最小未使用正整数序号
+// 生成下一个用户ID
 function nextUserId() {
   const used = new Set(users.map(u => {
     const n = parseInt(String(u.id).split('_')[1] || '0', 10);
@@ -701,6 +754,7 @@ function nextUserId() {
   }
 }
 
+// 创建用户路由（管理员）
 app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
   const { username, password, role = 'user' } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing username or password' });
@@ -713,7 +767,7 @@ app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
   res.status(201).json({ id: u.id, username: u.username, role: u.role });
 });
 
-// 删除用户（管理员）
+// 删除用户路由（管理员）
 app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
   const u = findUserById(req.params.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
@@ -729,7 +783,7 @@ app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
-// 删除节点（审阅者或管理员）
+// 删除节点路由（审阅者或管理员）
 app.delete('/api/nodes/:id', requireAuth, requireReviewerOrAdmin, async (req, res) => {
   const id = req.params.id;
   if (!id) return res.status(400).json({ error: 'Missing id' });
@@ -743,6 +797,7 @@ app.delete('/api/nodes/:id', requireAuth, requireReviewerOrAdmin, async (req, re
   res.json({ ok: true });
 });
 
+// 批量归档节点路由（管理员）
 app.post('/api/nodes/archive', requireAuth, requireAdmin, async (req, res) => {
   try {
     const { ids } = req.body || {};

@@ -1,5 +1,7 @@
+// 典故渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
   registry.E = registry.renderAllusion = function renderAllusion(ctx) {
     const context = ctx || {};
@@ -36,6 +38,7 @@
       <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
     `;
     initializeLinkFields(formContainer);
+    // 查重
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -49,6 +52,7 @@
     const personsInput = formContainer.querySelector('#f-persons');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
+    // 示例列表
     const renderExamplesWrapper = () => renderInlinePairs(examplesEl, examples, '出处', '内容', '出处', '内容', {
       containerClass: 'note-list',
       wrapperClass: 'ordered-item note-item',
@@ -59,10 +63,9 @@
       paragraphCheck2: true,
     });
     renderExamplesWrapper();
-    try { const exTa = formContainer.querySelector('#f-explanation'); if (exTa) { autosizeTextarea(exTa); try { if (exTa.__autosizeHandler) exTa.removeEventListener('input', exTa.__autosizeHandler); } catch (err) { } exTa.__autosizeHandler = () => autosizeTextarea(exTa); exTa.addEventListener('input', exTa.__autosizeHandler); } } catch (err) { }
-    try { if (usageInput) { autosizeTextarea(usageInput); try { if (usageInput.__autosizeHandler) usageInput.removeEventListener('input', usageInput.__autosizeHandler); } catch (err) { } usageInput.__autosizeHandler = () => autosizeTextarea(usageInput); usageInput.addEventListener('input', usageInput.__autosizeHandler); } } catch (err) { }
-    try { const oriTa = formContainer.querySelector('#f-origin'); if (oriTa) { autosizeTextarea(oriTa); try { if (oriTa.__autosizeHandler) oriTa.removeEventListener('input', oriTa.__autosizeHandler); } catch (err) { } oriTa.__autosizeHandler = () => autosizeTextarea(oriTa); oriTa.addEventListener('input', oriTa.__autosizeHandler); } } catch (err) { }
     addExBtn && addExBtn.addEventListener('click', () => { examples.push({ 出处: '', 内容: '' }); renderExamplesWrapper(); });
+    // 自动调整大小
+    try { utils.bindAutoResize(formContainer, ['#f-explanation', '#f-usage', '#f-origin'], context); } catch (err) { }
 
     function collect() {
       const personsRaw = (personsInput?.value || '').replace(/[，,；;]/g, '\n');

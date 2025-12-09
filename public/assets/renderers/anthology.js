@@ -1,5 +1,7 @@
+// 文集渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
   registry.G = registry.renderAnthology = function renderAnthology(ctx) {
     const context = ctx || {};
@@ -34,6 +36,7 @@
         </div>
       `;
     initializeLinkFields(formContainer);
+    // 查重
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -46,22 +49,12 @@
     const evalList = formContainer.querySelector('#evalList');
     const addEvalBtn = formContainer.querySelector('#addEval');
     const evalRenderOpts = { wrapperClass: 'ordered-item note-item', inputClass1: 'c-source', inputClass2: 'c-content', linkFieldPrefix: 'extra.evaluation', onChange: (arr) => { }, paragraphCheck2: true };
-    const renderEvalsWrapper = () => {
-      renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);
-    };
+    // 评价列表
+    const renderEvalsWrapper = () => {renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);};
     renderEvalsWrapper();
     addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); try { if (typeof addLinkButtons === 'function') addLinkButtons(); } catch (e) { } });
-    try {
-      const autoResize = (el) => {
-        if (!el) return;
-        autosizeTextarea(el);
-        try { if (el.__autosizeHandler) el.removeEventListener('input', el.__autosizeHandler); } catch (err) { }
-        el.__autosizeHandler = () => autosizeTextarea(el);
-        el.addEventListener('input', el.__autosizeHandler);
-      };
-      autoResize(overviewEl);
-      autoResize(formContainer.querySelector('#f-background'));
-    } catch (err) { }
+    // 自动调整大小
+    try { utils.bindAutoResize(formContainer, [overviewEl, '#f-background'], context); } catch (err) { }
 
     function collect() {
       const worksRaw = (worksInput?.value || '').replace(/[，,；;、]/g, '\n');

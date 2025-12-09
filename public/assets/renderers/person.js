@@ -1,5 +1,7 @@
+// 人物渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
   registry.C = registry.renderPerson = function renderPerson(ctx) {
     const context = ctx || {};
@@ -89,15 +91,11 @@
     const addJointBtn = formContainer.querySelector('#addJoint');
     const addEvalBtn = formContainer.querySelector('#addEval');
     const addEBtn = formContainer.querySelector('#addE');
+    // 自动调整大小
     try {
-      const target = formContainer.querySelector('#f-achievements');
-      if (target) {
-        autosizeTextarea(target);
-        try { if (target.__autosizeHandler) target.removeEventListener('input', target.__autosizeHandler); } catch (err) { }
-        target.__autosizeHandler = () => autosizeTextarea(target);
-        target.addEventListener('input', target.__autosizeHandler);
-      }
+      utils.bindAutoResize(formContainer, '#f-achievements', context);
     } catch (err) { }
+    // 渲染人际关系的函数
     const renderRelations = () => renderInlinePairs(relationsEl, relations, '人物', '关系', '人物', '关系', {
       linkFieldPrefix: 'fields.relations',
       onChange: (arr) => { },
@@ -105,6 +103,7 @@
       containerClass: 'relation-grid pair-grid',
       wrapperClass: 'ordered-item relation-inline'
     });
+    // 渲染大事年表的函数
     const renderChrono = () => renderInlinePairs(chronoEl, chrono, '纪年', '事件', '纪年', '事件', {
       linkFieldPrefix: 'fields.chrono',
       onChange: (arr) => { },
@@ -114,6 +113,7 @@
       inputClass2: 'c-content',
       paragraphCheck2: true,
     });
+    // 渲染合称的函数
     const renderJoint = () => renderInlinePairs(jointEl, joint, '合称', '其他人物', '合称', '其他人物', {
       linkFieldPrefix: 'fields.joint',
       onChange: (arr) => { },
@@ -121,6 +121,7 @@
       containerClass: 'relation-grid pair-grid',
       wrapperClass: 'ordered-item relation-inline'
     });
+    // 渲染评价列表的函数
     const renderEvalList = () => renderInlinePairs(evalList, evaluation, '出处', '内容', '出处', '内容', {
       linkFieldPrefix: 'extra.evaluation',
       onChange: (arr) => { },
@@ -130,6 +131,7 @@
       inputClass2: 'c-content',
       paragraphCheck2: true,
     });
+    // 渲染相关典故的函数
     const renderRelated = () => renderInlinePairs(relatedEl, relatedE, '典故名', '内容', '典故', '内容', {
       linkFieldPrefix: 'fields.relatedE',
       onChange: (arr) => { },
@@ -150,6 +152,7 @@
     addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ 出处: '', 内容: '' }); renderEvalList(); });
     addEBtn && addEBtn.addEventListener('click', () => { relatedE.push({ 典故名: '', 内容: '' }); renderRelated(); });
 
+    // 收集表单数据的函数
     function collect() {
       const repWorksRaw = (repWorksInput?.value || '').replace(/[，,；;、]/g, '\n');
       const repWorksList = splitMultilineText(repWorksRaw);

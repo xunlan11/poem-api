@@ -1,17 +1,23 @@
+// 格律渲染器
 (function (root) {
   if (!root) return;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
+  // 子类型列表
   const fallbackSubs = [
     { key: 'yunbu', label: '韵部' },
     { key: 'ciqupu', label: '词曲谱' }
-  ];
+  ]; 
+  // 解析子类型
   const resolveSubs = () => {
     const defined = root.Poem && Array.isArray(root.Poem.LV_SUB_TYPES) && root.Poem.LV_SUB_TYPES.length
       ? root.Poem.LV_SUB_TYPES
       : fallbackSubs;
     return defined;
   };
+  const subs = resolveSubs();
+  // 查找子类型
   const findSub = (subs, key) => subs.find(sub => sub.key === key);
+  // 渲染
   registry.L = function renderLv(ctx) {
     const context = ctx || {};
     const outer = context.formContainer;
@@ -19,7 +25,6 @@
     let node = context.node || {};
     node.fields = node.fields || {};
     context.node = node;
-    const subs = resolveSubs();
     outer.innerHTML = '';
     let activeSub = typeof node.fields.sub === 'string' ? node.fields.sub : '';
     const querySub = (context.Poem && typeof context.Poem.qs === 'function') ? context.Poem.qs('sub') : '';
@@ -28,11 +33,12 @@
     const renderMessage = (text) => {
       outer.innerHTML = `<div class="section-card"><div class="muted">${text}</div></div>`;
     };
+    // 挂载子渲染器
     const mountSubRenderer = (subKey) => {
       const def = findSub(subs, subKey);
       if (!def) {
         activeSub = '';
-        renderMessage('缺少格律子类信息，请返回列表重新创建。');
+        renderMessage('缺少子类信息。');
         activeRenderer = null;
         return false;
       }
@@ -41,7 +47,7 @@
         activeSub = def.key;
         node.fields.sub = def.key;
         node.fields.subLabel = def.label;
-        renderMessage('尚未加载对应子类的编辑器');
+        renderMessage('尚未加载子类编辑器');
         activeRenderer = null;
         return false;
       }
@@ -58,11 +64,12 @@
     if (findSub(subs, activeSub)) {
       mountSubRenderer(activeSub);
     } else if (subs.length) {
-      renderMessage('缺少格律子类信息，请返回列表重新创建。');
+      renderMessage('缺少子类信息。');
     } else {
-      renderMessage('尚未配置格律子类');
+      renderMessage('尚未配置子类');
     }
     return {
+      // 收集表单数据的函数
       collect() {
         const base = activeRenderer && typeof activeRenderer.collect === 'function'
           ? activeRenderer.collect()
@@ -76,6 +83,7 @@
         }
         return base;
       },
+      // 刷新渲染器的函数
       refresh(nextNode) {
         if (!nextNode) return;
         node = nextNode;

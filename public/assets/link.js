@@ -1,3 +1,4 @@
+// 链接
 (function (global) {
   const root = global;
   if (!root) return;
@@ -18,11 +19,11 @@
     let requestImmediateSave = typeof options.requestImmediateSave === 'function' ? options.requestImmediateSave : null;
     let linkDelegationInstalled = false;
 
-    function setRequestImmediateSave(fn) {
+    function setRequestImmediateSave(fn) { // 设置立即保存请求函数
       requestImmediateSave = typeof fn === 'function' ? fn : null;
     }
 
-    function normalizeLink(raw) {
+    function normalizeLink(raw) { // 规范化链接对象：清理和标准化链接数据
       if (!raw) return null;
       const field = raw.field || 'content';
       const start = Math.max(0, parseInt(raw.start, 10) || 0);
@@ -40,7 +41,7 @@
       };
     }
 
-    function syncLinksToState() {
+    function syncLinksToState() { // 同步链接到状态：将链接列表保存到节点状态中
       if (!state.node) return;
       state.node.links = links.map(link => ({
         field: link.field || 'content',
@@ -59,7 +60,7 @@
       } catch (e) { }
     }
 
-    function cleanupLinkFieldSpec(spec) {
+    function cleanupLinkFieldSpec(spec) { // 清理链接字段规格：移除事件监听器和DOM元素，清理注册表
       if (!spec || !spec.element) return;
       try { if (spec.key) linkFieldRegistry.delete(spec.key); } catch (e) { }
       try {
@@ -84,12 +85,12 @@
       } catch (e) { }
     }
 
-    function getFieldSpec(fieldKey) {
+    function getFieldSpec(fieldKey) { // 获取字段规格：从注册表中获取指定字段的规格信息
       if (!fieldKey) return undefined;
       return linkFieldRegistry.get(fieldKey);
     }
 
-    function setFieldEditableState(spec, editable) {
+    function setFieldEditableState(spec, editable) { // 设置字段可编辑状态：根据编辑状态更新字段元素的属性和显示
       if (!spec || !spec.element) return;
       try {
         if (typeof spec.onEditableChange === 'function') {
@@ -114,7 +115,7 @@
       } catch (e) { }
     }
 
-    function registerLinkField(fieldKey, element, options) {
+    function registerLinkField(fieldKey, element, options) { // 注册链接字段：为指定元素注册链接功能，包括显示元素和事件监听器
       if (!fieldKey || !element) return;
       if (element.__linkFieldSpec && element.__linkFieldSpec.key === fieldKey) return;
       element.dataset.linkField = fieldKey;
@@ -180,7 +181,7 @@
       setFieldEditableState(spec, state.editable);
     }
 
-    function initializeLinkFields(scope) {
+    function initializeLinkFields(scope) { // 初始化链接字段：在指定范围内查找并注册所有链接字段
       if (!scope) return;
       scope.querySelectorAll('[data-link-field]').forEach(el => {
         const key = el.dataset.linkField;
@@ -188,7 +189,7 @@
       });
     }
 
-    function notifyLinksUpdated(fieldKey) {
+    function notifyLinksUpdated(fieldKey) { // 通知链接更新：触发字段规格的更新回调和重新渲染显示
       const spec = getFieldSpec(fieldKey);
       if (spec) {
         if (typeof spec.onLinksUpdated === 'function') {
@@ -198,7 +199,7 @@
       }
     }
 
-    function getFieldValue(fieldKey) {
+    function getFieldValue(fieldKey) { // 获取字段值：从字段规格中获取当前值
       const spec = getFieldSpec(fieldKey);
       if (!spec) return '';
       try {
@@ -208,7 +209,7 @@
       }
     }
 
-    function findBestLinkPosition(text, snippet, approxStart) {
+    function findBestLinkPosition(text, snippet, approxStart) { // 查找最佳链接位置：在文本中找到片段的最佳匹配位置
       if (!text || !snippet) return -1;
       const max = text.length;
       const approx = Math.min(max, Math.max(0, typeof approxStart === 'number' ? approxStart : parseInt(approxStart, 10) || 0));
@@ -250,7 +251,7 @@
       return -1;
     }
 
-    function reindexFieldLinks(fieldKey) {
+    function reindexFieldLinks(fieldKey) { // 重新索引字段链接：根据文本变化调整链接的位置
       if (!fieldKey) return;
       const text = getFieldValue(fieldKey);
       const max = text.length;
@@ -292,7 +293,7 @@
       }
     }
 
-    function handleDelegatedLinkClick(event) {
+    function handleDelegatedLinkClick(event) { // 处理委托链接点击：处理链接元素的点击事件，根据状态执行编辑或导航
       const span = event.target.closest('span[data-link-index]');
       if (!span) return;
       if (formContainer && !formContainer.contains(span)) return;
@@ -313,7 +314,7 @@
       }
     }
 
-    function handleDelegatedLinkContextMenu(event) {
+    function handleDelegatedLinkContextMenu(event) { // 处理委托链接右键菜单：处理链接元素的右键菜单，用于删除链接
       const span = event.target.closest('span[data-link-index]');
       if (!span) return;
       if (formContainer && !formContainer.contains(span)) return;
@@ -331,14 +332,14 @@
       }
     }
 
-    function ensureLinkDelegation() {
+    function ensureLinkDelegation() { // 确保链接委托：安装全局事件监听器来处理链接交互
       if (linkDelegationInstalled) return;
       linkDelegationInstalled = true;
       documentRef.addEventListener('click', handleDelegatedLinkClick);
       documentRef.addEventListener('contextmenu', handleDelegatedLinkContextMenu);
     }
 
-    function findSpanForNode(rootNode, node) {
+    function findSpanForNode(rootNode, node) { // 查找节点的跨度元素：在DOM树中向上查找包含data-pos属性的跨度元素
       let current = node;
       while (current && current !== rootNode) {
         if (current.nodeType === 1 && current.hasAttribute && current.hasAttribute('data-pos')) return current;
@@ -347,7 +348,7 @@
       return null;
     }
 
-    function offsetWithinSpan(span, container, offset) {
+    function offsetWithinSpan(span, container, offset) { // 计算跨度内的偏移量：计算容器节点在跨度元素内的文本偏移量
       if (container === span) {
         const len = parseInt(span.getAttribute('data-len') || '0', 10);
         return Math.max(0, Math.min(len, offset));
@@ -373,7 +374,7 @@
       return acc;
     }
 
-    function renderFieldDisplay(spec) {
+    function renderFieldDisplay(spec) { // 渲染字段显示：在显示元素中渲染文本和链接高亮
       if (!spec || !spec.displayEl) return;
       const text = getFieldValue(spec.key) || '';
       const display = spec.displayEl;
@@ -430,7 +431,7 @@
       ensureDisplaySelectionHandler(spec);
     }
 
-    function ensureDisplaySelectionHandler(spec) {
+    function ensureDisplaySelectionHandler(spec) { // 确保显示选择处理器：为显示元素添加选择事件处理器以支持链接创建
       if (!spec || !spec.displayEl) return;
       if (spec.displayEl.__hasSelectionHandler) return;
       const handler = (evt) => {
@@ -478,7 +479,7 @@
       spec.displayEl.__hasSelectionHandler = true;
     }
 
-    function upsertLink(link) {
+    function upsertLink(link) { // 插入或更新链接：添加新链接或更新现有链接，处理重叠冲突
       if (!link) return;
       const fieldKey = link.field || 'content';
       const text = getFieldValue(fieldKey);
@@ -516,7 +517,7 @@
       notifyLinksUpdated(fieldKey);
     }
 
-    function persistLinks() {
+    function persistLinks() { // 持久化链接：异步保存链接到服务器
       syncLinksToState();
       if (!state.node || !state.node.id) return;
       linkSaveChain = linkSaveChain.then(async () => {
@@ -533,7 +534,7 @@
       }).catch(() => { });
     }
 
-    function startLinkFlow(fieldKey, start, end, sample) {
+    function startLinkFlow(fieldKey, start, end, sample) { // 开始链接流程：启动链接创建流程，包括选择目标节点
       const spec = getFieldSpec(fieldKey);
       if (!spec) {
         if (Poem && typeof Poem.toast === 'function') Poem.toast('当前字段不支持链接');
@@ -587,7 +588,7 @@
       });
     }
 
-    function editExistingLink(index) {
+    function editExistingLink(index) { // 编辑现有链接：修改指定索引的链接目标
       const current = links[index];
       if (!current) return;
       if (!state.node || !state.node.id) {
@@ -625,7 +626,7 @@
       });
     }
 
-    function handleFieldSelection(event, spec) {
+    function handleFieldSelection(event, spec) { // 处理字段选择：处理文本字段中的选择事件以创建链接
       if (!spec || !spec.element) return;
       if (state.editable) return;
       if (!linkBrushActive) return;
@@ -652,7 +653,7 @@
       }, 0);
     }
 
-    function registerEditableWatcher(fn) {
+    function registerEditableWatcher(fn) { // 注册可编辑状态监听器：添加监听器来跟踪编辑状态变化
       if (typeof fn !== 'function') return () => { };
       editableWatchers.push(fn);
       try { fn(state.editable); } catch (e) { }
@@ -662,7 +663,7 @@
       };
     }
 
-    function registerLinkBrushHandler(fn) {
+    function registerLinkBrushHandler(fn) { // 注册链接刷子处理器：添加监听器来跟踪链接刷子状态变化
       if (typeof fn !== 'function') return () => { };
       linkBrushHandlers.push(fn);
       try { fn(linkBrushActive); } catch (e) { }
@@ -672,7 +673,7 @@
       };
     }
 
-    function setLinkBrushActive(on) {
+    function setLinkBrushActive(on) { // 设置链接刷子激活状态：启用或禁用链接选择模式
       let next = !!on;
       if (state.editable) next = false;
       if (linkBtn && linkBtn.disabled) next = false;
@@ -691,7 +692,7 @@
       }
     }
 
-    function applyEditableState(editable) {
+    function applyEditableState(editable) { // 应用可编辑状态：更新所有字段和UI元素的可编辑状态
       try { linkFieldRegistry.forEach(spec => setFieldEditableState(spec, editable)); } catch (e) { }
       if (linkBtn) {
         linkBtn.disabled = editable;
@@ -702,7 +703,7 @@
       } catch (e) { }
     }
 
-    function replaceLinks(nextList) {
+    function replaceLinks(nextList) { // 替换链接列表：用新列表替换当前链接列表
       links.length = 0;
       if (Array.isArray(nextList)) {
         nextList.forEach(item => {

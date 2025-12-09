@@ -1,8 +1,12 @@
+// 韵部渲染器
 (function (root) {
   if (!root) return;
+  const utils = root.PoemRendererUtils;
   const registry = root.PoemRenderers = root.PoemRenderers || {};
-  const SUB_KEY = 'yunbu';
-  const SUB_LABEL = '韵部';
+  // 子类型
+  const SUB_KEY = 'yunbu'; 
+  const SUB_LABEL = '韵部'; 
+  // 渲染韵部表单的主函数
   registry[`L_${SUB_KEY}`] = function renderLvYunbu(ctx) {
     const context = ctx || {};
     const formContainer = context.formContainer;
@@ -33,13 +37,8 @@
       <div class="field"><label>常用字</label><textarea id="lv-common" rows="1" data-autosize-min="32" data-link-field="fields.commonChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(commonChars)}</textarea></div>
       <div class="field"><label>生僻字</label><textarea id="lv-rare" rows="1" data-autosize-min="32" data-link-field="fields.rareChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(rareChars)}</textarea></div>
     `;
-    const bindAutosize = (selector) => {
-      const target = formContainer.querySelector(selector);
-      if (!target) return;
-      autosizeTextarea(target);
-      target.addEventListener('input', () => autosizeTextarea(target));
-    };
-    ['#lv-common', '#lv-rare'].forEach(bindAutosize);
+    // 绑定自动调整大小
+    utils.bindAutoResize(formContainer, ['#lv-common', '#lv-rare'], context);
     initializeLinkFields(formContainer);
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
