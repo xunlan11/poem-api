@@ -16,6 +16,7 @@
     const SELF_CHECK_EMPTY_LINE_SNIPPET_LIMIT = 8;
     const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
     const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；'];
+    const EXTRA_PARAGRAPH_ENDINGS_BY_ID = { 'f-origin': ['，', '：'], };
     const EXTRA_PARAGRAPH_ENDING_FIELDS = {
       ids: new Set(['f-body', 'f-translation']), 
       linkFields: new Set(['content', 'extra.translation']) 
@@ -661,6 +662,9 @@
     function getExtraParagraphEndings(el) {
       if (!el) return null;
       const id = el.id || '';
+      if (id && EXTRA_PARAGRAPH_ENDINGS_BY_ID[id]) {
+        return EXTRA_PARAGRAPH_ENDINGS_BY_ID[id];
+      }
       const linkField = (el.dataset && el.dataset.linkField) || '';
       if (EXTRA_PARAGRAPH_ENDING_FIELDS.ids.has(id) || EXTRA_PARAGRAPH_ENDING_FIELDS.linkFields.has(linkField)) {
         return POEM_EXTRA_PARAGRAPH_ENDINGS;

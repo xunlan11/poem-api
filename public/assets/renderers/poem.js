@@ -33,6 +33,7 @@
     const windowRef = context.window || root;
     const PoemRef = context.Poem || root.Poem;
     const name = node ? (node.fields?.title || node.fields?.name || '') : '';
+    const otherNames = node ? node.fields?.otherNames || '' : '';
     const author = node ? node.fields?.author || '' : '';
     const source = node ? node.fields?.origin || '' : '';
     const form = node ? node.fields?.form || '' : '';
@@ -44,10 +45,11 @@
     const background = node ? node.extra?.background || '' : '';
     const comments = node ? node.extra?.evaluation || [] : [];
     formContainer.innerHTML = `
-      <div class="grid-3">
+      <div class="grid-4">
         <div class="field"><label>作品</label>
           <div class="field-row"><input id="f-name" type="text" data-link-field="fields.title" value="${escapeHtml(name)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
         </div>
+        <div class="field"><label>其他名称</label><input id="f-other" type="text" data-link-field="fields.otherNames" value="${escapeHtml(otherNames)}"></div>
         <div class="field"><label>作者</label><input id="f-author" type="text" data-link-field="fields.author" value="${escapeHtml(author)}"></div>
         <div class="field"><label>出处</label><input id="f-source" type="text" data-link-field="fields.origin" value="${escapeHtml(source)}"></div>
       </div>
@@ -83,7 +85,9 @@
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
         const nameVal = (formContainer.querySelector('#f-name').value || '').trim();
-        context.checkDuplicate(nameVal, 'W');
+        const otherVal = (formContainer.querySelector('#f-other')?.value || '').trim();
+        const combined = [nameVal, otherVal].filter(Boolean).join('、');
+        context.checkDuplicate(combined, 'W');
       });
     }
     const sel = formContainer.querySelector('#f-form'); if (form) sel.value = form;
@@ -208,6 +212,7 @@
       return {
         fields: {
           title: formContainer.querySelector('#f-name').value,
+          otherNames: formContainer.querySelector('#f-other').value,
           author: formContainer.querySelector('#f-author').value,
           origin: formContainer.querySelector('#f-source').value,
           form: formContainer.querySelector('#f-form').value,
