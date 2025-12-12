@@ -62,8 +62,8 @@
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
         const commonVal = (formContainer.querySelector('#f-common-name').value || '').trim();
-        const sciVal = (formContainer.querySelector('#f-scientific-name').value || '').trim();
-        const q = [commonVal, sciVal].filter(Boolean).join(' ');
+        const stmtVal = (formContainer.querySelector('#f-statement').value || '').trim();
+        const q = [commonVal, stmtVal].filter(Boolean).join(' ');
         context.checkDuplicate(q, 'S');
       });
     }

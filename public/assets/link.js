@@ -18,12 +18,12 @@
     let linkSaveChain = Promise.resolve();
     let requestImmediateSave = typeof options.requestImmediateSave === 'function' ? options.requestImmediateSave : null;
     let linkDelegationInstalled = false;
-
-    function setRequestImmediateSave(fn) { // 设置立即保存请求函数
+    // 立即保存请求
+    function setRequestImmediateSave(fn) { 
       requestImmediateSave = typeof fn === 'function' ? fn : null;
     }
-
-    function normalizeLink(raw) { // 规范化链接对象：清理和标准化链接数据
+    // 规范化链接对象
+    function normalizeLink(raw) { 
       if (!raw) return null;
       const field = raw.field || 'content';
       const start = Math.max(0, parseInt(raw.start, 10) || 0);
@@ -40,8 +40,8 @@
         placeholder: !!raw.placeholder,
       };
     }
-
-    function syncLinksToState() { // 同步链接到状态：将链接列表保存到节点状态中
+    // 同步链接到节点状态
+    function syncLinksToState() { 
       if (!state.node) return;
       state.node.links = links.map(link => ({
         field: link.field || 'content',
@@ -59,8 +59,8 @@
         });
       } catch (e) { }
     }
-
-    function cleanupLinkFieldSpec(spec) { // 清理链接字段规格：移除事件监听器和DOM元素，清理注册表
+    // 清理链接字段规格
+    function cleanupLinkFieldSpec(spec) {
       if (!spec || !spec.element) return;
       try { if (spec.key) linkFieldRegistry.delete(spec.key); } catch (e) { }
       try {

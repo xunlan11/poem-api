@@ -25,7 +25,7 @@ const USER_FILE = path.join(DATA_DIR, 'users.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 fs.ensureDirSync(UPLOAD_DIR);
 
-// 清理节点ID的函数
+// 清理节点ID
 function sanitizeNodeId(rawId) {
   if (!rawId) return '';
   const cleaned = String(rawId).trim().toUpperCase();
@@ -33,14 +33,14 @@ function sanitizeNodeId(rawId) {
   return safe;
 }
 
-// 获取文件扩展名的安全函数
+// 安全获取文件扩展名
 function safeExtname(filename) {
   const ext = path.extname(filename || '').toLowerCase();
   if (!ext) return '.png';
   return /^\.[a-z0-9]+$/i.test(ext) ? ext : '.png';
 }
 
-// 从图片路径中提取上传文件名
+// 提取上传文件名
 function extractUploadFilename(imagePath = '') {
   if (!imagePath || typeof imagePath !== 'string') return '';
   const match = imagePath.match(/\/uploads\/([^/?#]+)/i);
@@ -48,7 +48,7 @@ function extractUploadFilename(imagePath = '') {
   return path.basename(imagePath);
 }
 
-// 确保节点图片文件名正确
+// 确保图片文件名正确
 async function ensureNodeImageFilename(node) {
   if (!node || !node.extra || !node.extra.image) return;
   const nodeId = sanitizeNodeId(node.id);
@@ -65,7 +65,7 @@ async function ensureNodeImageFilename(node) {
   node.extra.image = `/uploads/${desiredName}`;
 }
 
-// 根据节点ID删除节点图片
+// 删除图片
 async function deleteNodeImageByPath(nodeId, imagePath) {
   const cleanId = sanitizeNodeId(nodeId);
   if (!cleanId) return;
@@ -103,10 +103,8 @@ const upload = multer({
   }
 });
 
-// 节点类型定义
+// 节点类型
 const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
-
-// 默认存储结构
 const defaultStore = () => ({
   W: { lastId: 0, items: {} },
   G: { lastId: 0, items: {} },
@@ -115,13 +113,11 @@ const defaultStore = () => ({
   S: { lastId: 0, items: {} },
   L: { lastId: 0, items: {} }
 });
-
-// 全局数据存储
 let store = defaultStore();
 let users = [];
 let externalItems = [];
 
-// 加载外部列表（从Excel文件）
+// 外部列表
 async function loadExternalList() {
   try {
     const filePath = path.join(__dirname, '构建总表.xlsx');
@@ -141,7 +137,7 @@ async function loadExternalList() {
   }
 }
 
-// 加载数据存储
+// 数据存储
 async function loadStore() {
   await loadExternalList();
   await fs.ensureDir(DATA_DIR);
@@ -163,17 +159,17 @@ async function loadStore() {
   users = await fs.readJson(USER_FILE);
 }
 
-// 保存数据存储到文件
+// 保存数据
 async function saveStore() {
   await fs.writeJson(DATA_FILE, store, { spaces: 2 });
 }
 
-// 保存用户数据到文件
+// 保存用户数据
 async function saveUsers() {
   await fs.writeJson(USER_FILE, users, { spaces: 2 });
 }
 
-// 数字补齐5位字符串
+// 数字补齐5位
 function pad5(n) {
   return String(n).padStart(5, '0');
 }
@@ -185,7 +181,7 @@ function idNumber(id) {
   return isNaN(num) ? 0 : num;
 }
 
-// 生成下一个ID
+// 生成下一ID
 function nextId(type) {
   if (!TYPES.includes(type)) throw new Error('Invalid type');
   const used = new Set(Object.keys(store[type].items || {}).map(k => idNumber(k)));
@@ -208,7 +204,73 @@ function findById(id) {
   return null;
 }
 
-// 简化节点数据用于显示
+// 构建节点显示名称
+function buildNodeLabel(node) {
+  if (!node) return '';
+  const f = node.fields || {};
+  return node.name || f.title || f.name || f.common || f.commonName || f.statement || '';
+}
+
+// 查找引用指定目标ID的节点
+function findReferences(targetId) {
+  const result = [];
+  if (!targetId) return result;
+  for (const t of TYPES) {
+    const items = store[t]?.items || {};
+    for (const node of Object.values(items)) {
+      if (!node) continue;
+      const matched = (Array.isArray(node.links) ? node.links : []).filter(link => link && link.targetId === targetId);
+      if (!matched.length) continue;
+      result.push({
+        id: node.id,
+        type: node.type,
+        label: buildNodeLabel(node),
+        linkCount: matched.length,
+        links: matched.map(link => ({
+          field: link.field || 'content',
+          start: Math.max(0, parseInt(link.start, 10) || 0),
+          end: Math.max(0, parseInt(link.end, 10) || 0),
+          text: link.text || '',
+        })),
+      });
+    }
+  }
+  return result;
+}
+
+// 将指向目标ID的链接置为空置
+function clearLinksToTarget(targetId) {
+  const updated = [];
+  let cleared = 0;
+  if (!targetId) return { updated, cleared };
+  for (const t of TYPES) {
+    const items = store[t]?.items || {};
+    for (const node of Object.values(items)) {
+      if (!node) continue;
+      const links = Array.isArray(node.links) ? node.links : [];
+      let changed = false;
+      let clearedInNode = 0;
+      links.forEach(link => {
+        if (link && link.targetId === targetId) {
+          link.targetId = '';
+          link.targetName = '';
+          link.targetType = '';
+          link.placeholder = true;
+          cleared += 1;
+          clearedInNode += 1;
+          changed = true;
+        }
+      });
+      if (changed) {
+        node.links = links;
+        updated.push({ id: node.id, type: node.type, cleared: clearedInNode, label: buildNodeLabel(node) });
+      }
+    }
+  }
+  return { updated, cleared };
+}
+
+// 简化节点显示数据
 function simplify(node) {
   const fields = node.fields || {};
   let displayName = '';
@@ -258,6 +320,7 @@ function simplify(node) {
     reviewer: rawReviewer || '',
     reviewDuration: reviewDurationVal,
     expectedDuration: expectedDurationVal,
+
     reviewStatus: reviewStatusVal,
     reviewStatusLabel: statusMap[reviewStatusVal] || '',
     repairStatus: repairStatusVal,
@@ -267,7 +330,7 @@ function simplify(node) {
   };
 }
 
-// 获取所有项目（可选按类型过滤）
+// 获取所有项目
 function allItems(type) {
   if (type && TYPES.includes(type)) {
     return Object.values(store[type].items);
@@ -275,7 +338,7 @@ function allItems(type) {
   return TYPES.flatMap(t => Object.values(store[t].items));
 }
 
-// 构建搜索令牌（包括拼音）
+// 构建搜索令牌
 function buildSearchTokens(text) {
   if (!text) return [];
   const str = String(text);
@@ -297,7 +360,7 @@ function buildSearchTokens(text) {
   return Array.from(tokens);
 }
 
-// 模糊搜索项目
+// 模糊搜索
 function fuzzySearch(items, q) {
   if (!q || !q.trim()) return items;
   const searchKeys = [
@@ -359,7 +422,7 @@ app.get('/health', (req, res) => {
   res.type('text/plain').send('healthy');
 });
 
-// 获取统计信息路由
+// 统计信息路由
 app.get('/api/stats', (req, res) => {
   const stats = { total: 0, by_type: {} };
   for (const t of TYPES) {
@@ -370,7 +433,7 @@ app.get('/api/stats', (req, res) => {
   res.json(stats);
 });
 
-// 获取节点列表路由
+// 节点列表路由
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
   const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
@@ -434,7 +497,7 @@ app.get('/api/nodes', (req, res) => {
   res.json({ data: page, pagination: { total: ordered.length, limit: lim, offset: off } });
 });
 
-// 获取单个节点路由
+// 单节点路由
 app.get('/api/node/:id', (req, res) => {
   const node = findById(req.params.id);
   if (!node) return res.status(404).json({ error: 'Not found' });
@@ -535,6 +598,30 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to update node' });
+  }
+});
+
+// 查询引用指定节点的列表（审阅者或管理员）
+app.get('/api/nodes/references/:id', requireAuth, requireReviewerOrAdmin, (req, res) => {
+  const targetId = req.params.id;
+  if (!targetId) return res.status(400).json({ error: 'Missing id' });
+  const references = findReferences(targetId);
+  res.json({ ok: true, total: references.length, data: references });
+});
+
+// 将引用目标节点的链接置为空置（审阅者或管理员）
+app.post('/api/nodes/clear-links', requireAuth, requireReviewerOrAdmin, async (req, res) => {
+  try {
+    const targetId = typeof req.body?.targetId === 'string' ? req.body.targetId.trim() : '';
+    if (!targetId) return res.status(400).json({ error: 'Missing targetId' });
+    const { updated, cleared } = clearLinksToTarget(targetId);
+    if (cleared > 0) {
+      await saveStore();
+    }
+    res.json({ ok: true, cleared, updated });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Failed to clear links' });
   }
 });
 
@@ -668,7 +755,7 @@ function requireAuth(req, res, next) {
 
 function requireProfile(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  if (req.user.role === 'admin') return next();  // 初始管理员账号跳过真实姓名和学号要求
+  if (req.user.role === 'admin') return next(); 
   if (!req.user.real_name || !req.user.student_id) return res.status(400).json({ error: 'Profile incomplete' });
   next();
 }
@@ -684,7 +771,7 @@ function requireReviewerOrAdmin(req, res, next) {
   return res.status(403).json({ error: 'Forbidden' });
 }
 
-// 格式化用户显示名称
+// 格式化用户显示
 function formatUserDisplayName(user) {
   if (user.real_name && user.student_id) {
     return `${user.real_name}(${user.student_id})`;
@@ -698,7 +785,6 @@ app.post('/api/auth/login', async (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Missing credentials' });
   let u = findUserByUsername(username);
   if (!u) {
-    // 首次登录注册为整理员
     const now = new Date().toISOString();
     u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role: 'user', real_name: '', student_id: '', created_at: now, profile_completed: false };
     users.push(u);
@@ -743,7 +829,7 @@ app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
 });
 
-// 生成下一个用户ID
+// 生成下一用户ID
 function nextUserId() {
   const used = new Set(users.map(u => {
     const n = parseInt(String(u.id).split('_')[1] || '0', 10);
@@ -753,19 +839,6 @@ function nextUserId() {
     if (!used.has(i)) return `u_${i}`;
   }
 }
-
-// 创建用户路由（管理员）
-app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
-  const { username, password, role = 'user' } = req.body || {};
-  if (!username || !password) return res.status(400).json({ error: 'Missing username or password' });
-  if (!['user', 'reviewer', 'admin'].includes(role)) return res.status(400).json({ error: 'Invalid role' });
-  if (findUserByUsername(username)) return res.status(409).json({ error: 'Username exists' });
-  const now = new Date().toISOString();
-  const u = { id: nextUserId(), username, password_hash: bcrypt.hashSync(password, 10), role, real_name: '', student_id: '', created_at: now, profile_completed: false };
-  users.push(u);
-  await saveUsers();
-  res.status(201).json({ id: u.id, username: u.username, role: u.role });
-});
 
 // 删除用户路由（管理员）
 app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {

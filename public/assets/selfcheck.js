@@ -14,59 +14,11 @@
     const SELF_CHECK_SPACE_SNIPPET_LIMIT = 12;
     const SELF_CHECK_SPACE_CONTEXT = 8;
     const SELF_CHECK_EMPTY_LINE_SNIPPET_LIMIT = 8;
-    const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
-    const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；'];
-    const EXTRA_PARAGRAPH_ENDINGS_BY_ID = { 'f-origin': ['，', '：'], };
-    const EXTRA_PARAGRAPH_ENDING_FIELDS = {
-      ids: new Set(['f-body', 'f-translation']), 
-      linkFields: new Set(['content', 'extra.translation']) 
-    };
-    const CN_ELLIPSIS = '……';
-    const TRAILING_ENCLOSURE_REGEX = /[)\]\}>'"\u201d\u2019\u3009\u300b\u300d\u300f\uff09\uff3d\uff3f\uff60\u3011\u3015\u3017\u3019\uff5d]/;
-    // 成对符号
-    const PAIRED_SYMBOLS = [
-      { open: '“', close: '”', label: '“”' },
-      { open: '‘', close: '’', label: '‘’' },
-      { open: '《', close: '》', label: '《》' },
-      { open: '〈', close: '〉', label: '〈〉' },
-      { open: '（', close: '）', label: '（）' },
-    ];
-    // 中英文符号映射
-    const ENGLISH_PUNCTUATION_MAP = {
-      ',': '，',
-      '.': '。',
-      '?': '？',
-      '!': '！',
-      ';': '；',
-      ':': '：',
-      '(': '（',
-      ')': '）',
-      '<': '《',
-      '>': '》'
-    };
-    // 非法符号
-    const ILLEGAL_SYMBOLS = [
-      { char: '「', label: '「' },
-      { char: '」', label: '」' },
-      { char: '『', label: '『' },
-      { char: '』', label: '』' },
-      { char: '【', label: '【' },
-      { char: '】', label: '' },
-      { char: '〔', label: '〔' },
-      { char: '〕', label: '〕' },
-      { char: '{', label: '{' },
-      { char: '}', label: '}' }
-    ];
-    const ILLEGAL_SYMBOL_LOOKUP = ILLEGAL_SYMBOLS.reduce((acc, item) => {
-      acc[item.char] = item;
-      return acc;
-    }, {});
+
     // 自检队列
     let selfCheckQueue = [];
     // 文本输入类型
     const TEXT_INPUT_TYPES = new Set(['', 'text', 'search', 'url', 'tel', 'email']);
-    // 段落检查跳过
-    const PARAGRAPH_CHECK_SKIP = new Set(['fields.commonChars', 'fields.rareChars']);
     // 检查是否在公共元数据中
     function isInCommonMeta(el) {
       if (!el || typeof el.closest !== 'function') return false;
@@ -215,6 +167,123 @@
       });
       selfCheckQueue = [];
     }
+    
+    // 是否为文本类字段
+    function isTextLikeField(el) {
+      if (!el) return false;
+      if (el.tagName === 'TEXTAREA') return true;
+      if (el.tagName !== 'INPUT') return false;
+      const type = (el.type || '').toLowerCase();
+      return TEXT_INPUT_TYPES.has(type);
+    }
+    // 获取字符上下文
+    function getCharContext(value, index, radius) {
+      if (!value || typeof value !== 'string') return { before: '', after: '' };
+      const size = typeof radius === 'number' ? radius : 6;
+      const before = value.slice(Math.max(0, index - size), index);
+      const after = value.slice(index + 1, Math.min(value.length, index + 1 + size));
+      return { before, after };
+    }
+    // 是否为自动调整文本区域
+    function isAutosizeTextarea(el) {
+      if (!el || el.tagName !== 'TEXTAREA') return false;
+      if (typeof el.__autosizeHandler === 'function') return true;
+      try {
+        if (el.dataset && el.dataset.autosize === 'true') return true;
+        if (el.style && (el.style.resize === 'none' || el.style.overflow === 'hidden')) return true;
+        const cs = windowRef.getComputedStyle ? windowRef.getComputedStyle(el) : null;
+        if (cs && (cs.resize === 'none' || cs.overflowY === 'hidden')) return true;
+      } catch (e) { }
+      return false;
+    }
+
+    // 段尾
+    const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
+    const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；'];
+    const EXTRA_PARAGRAPH_ENDINGS_BY_ID = { 'f-origin': ['，', '：'], };
+    const EXTRA_PARAGRAPH_ENDING_FIELDS = {
+      ids: new Set(['f-body', 'f-translation']), 
+      linkFields: new Set(['content', 'extra.translation']) 
+    };
+    const CN_ELLIPSIS = '……';
+    const TRAILING_ENCLOSURE_REGEX = /[)\]\}>'"\u201d\u2019\u3009\u300b\u300d\u300f\uff09\uff3d\uff3f\uff60\u3011\u3015\u3017\u3019\uff5d]/;
+    // 跳过
+    const PARAGRAPH_CHECK_SKIP = new Set(['fields.commonChars', 'fields.rareChars']);
+    // 剥离尾随闭合器
+    function stripTrailingClosers(text) {
+      let result = text;
+      while (result.length > 0) {
+        const last = result[result.length - 1];
+        if (TRAILING_ENCLOSURE_REGEX.test(last)) result = result.slice(0, -1);
+        else break;
+      }
+      return result;
+    }
+    // 额外段落结尾
+    function getExtraParagraphEndings(el) {
+      if (!el) return null;
+      const id = el.id || '';
+      if (id && EXTRA_PARAGRAPH_ENDINGS_BY_ID[id]) {
+        return EXTRA_PARAGRAPH_ENDINGS_BY_ID[id];
+      }
+      const linkField = (el.dataset && el.dataset.linkField) || '';
+      if (EXTRA_PARAGRAPH_ENDING_FIELDS.ids.has(id) || EXTRA_PARAGRAPH_ENDING_FIELDS.linkFields.has(linkField)) {
+        return POEM_EXTRA_PARAGRAPH_ENDINGS;
+      }
+      return null;
+    }
+    // 有效段落结尾
+    function hasValidParagraphEnding(text, extraEndings) {
+      if (!text) return false;
+      if (text.endsWith(CN_ELLIPSIS)) return true;
+      const endings = VALID_PARAGRAPH_ENDINGS.slice();
+      if (Array.isArray(extraEndings) && extraEndings.length) {
+        extraEndings.forEach(ch => {
+          if (!endings.includes(ch)) endings.push(ch);
+        });
+      }
+      const lastChar = text[text.length - 1];
+      return endings.includes(lastChar);
+    }
+    // 收集段落
+    function collectParagraphs(value) {
+      const lines = value.split(/\r?\n/);
+      return lines.reduce((acc, line, idx) => {
+        if (line.trim()) {
+          acc.push({ text: line, lineNumber: idx + 1 });
+        }
+        return acc;
+      }, []);
+    }
+    // 段尾检查
+    function checkTextareaParagraphEnds(el) {
+      if (!el || typeof el.value !== 'string') return 0;
+      const value = el.value;
+      if (!value || !value.trim()) return 0;
+      const paragraphs = collectParagraphs(value);
+      if (!paragraphs.length) return 0;
+      const issues = [];
+      paragraphs.forEach((para, idx) => {
+        let content = para.text;
+        if (!content) return;
+        content = content.replace(/\s+$/, '');
+        if (!content) return;
+        const stripped = stripTrailingClosers(content);
+        if (!stripped) return;
+        const extraEndings = getExtraParagraphEndings(el);
+        if (!hasValidParagraphEnding(stripped, extraEndings)) {
+          issues.push({ paragraph: idx + 1 });
+        }
+      });
+      if (!issues.length) return 0;
+      const rows = issues.map(item => `<div class="self-check-punct-item">第${item.paragraph}段</div>`).join('');
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-punctuation"><div class="self-check-punct-list">${rows}</div></div>`;
+      queueSelfCheckMessage(el, 'manual', { category: '段尾符号', count: issues.length, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return issues.length;
+    }
+
+    // 空格（韵母间空格保留）与空行
     // 渲染空格跨度
     function renderSpaceSpan(ch) {
       if (ch === '\t') return '<span class="self-check-space-char" data-space-type="tab">[tab]</span>';
@@ -290,16 +359,14 @@
     function isPinyinTokenChar(ch) {
       return /[A-Za-z\u00c0-\u024f\u1e00-\u1eff'’\-1-5]/.test(ch);
     }
-    // 是否应该保留空格运行
+    // 是否应保留空格
     function shouldPreserveSpaceRun(value, start, end) {
       if (!value || typeof value !== 'string') return false;
-      // 找到前一个 token 的结尾位置
       let i = start - 1;
       while (i >= 0 && isSpaceChar(value[i])) i -= 1;
       let endPrev = i;
       while (i >= 0 && isPinyinTokenChar(value[i])) i -= 1;
       const prevToken = value.slice(i + 1, endPrev + 1);
-      // 找到下一个 token 的起始位置
       i = end;
       while (i < value.length && isSpaceChar(value[i])) i += 1;
       const startNext = i;
@@ -307,76 +374,6 @@
       const nextToken = value.slice(startNext, i);
       if (!prevToken || !nextToken) return false;
       return looksLikePinyinWord(prevToken) && looksLikePinyinWord(nextToken);
-    }
-    // 规范化交替对
-    function normalizeAlternatingPairs(el) {
-      if (!isTextLikeField(el)) return 0;
-      const original = typeof el.value === 'string' ? el.value : '';
-      if (!original) return 0;
-      const PAIR_PLANS = [
-        { label: '引号', openOuter: '“', closeOuter: '”', openInner: '‘', closeInner: '’' },
-        { label: '书名号', openOuter: '《', closeOuter: '》', openInner: '〈', closeInner: '〉' }
-      ];
-      let current = original;
-      const changes = [];
-      const normalizeOnce = (text, plan) => {
-        const stack = [];
-        let changed = false;
-        let result = '';
-        for (let i = 0; i < text.length; i += 1) {
-          const ch = text[i];
-          const isOpen = ch === plan.openOuter || ch === plan.openInner;
-          const isClose = ch === plan.closeOuter || ch === plan.closeInner;
-          if (!isOpen && !isClose) {
-            result += ch;
-            continue;
-          }
-          if (isOpen) {
-            const depth = stack.length;
-            const expectedType = depth % 2 === 0 ? 'outer' : 'inner';
-            const expectedChar = expectedType === 'outer' ? plan.openOuter : plan.openInner;
-            if (ch !== expectedChar) {
-              changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
-              changed = true;
-            }
-            stack.push(expectedType);
-            result += expectedChar;
-            continue;
-          }
-          let expectedType;
-          if (stack.length) {
-            expectedType = stack.pop();
-          } else {
-            expectedType = 'outer';
-          }
-          const expectedChar = expectedType === 'outer' ? plan.closeOuter : plan.closeInner;
-          if (ch !== expectedChar) {
-            changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
-            changed = true;
-          }
-          result += expectedChar;
-        }
-        return { text: result, changed };
-      };
-      PAIR_PLANS.forEach(plan => {
-        const res = normalizeOnce(current, plan);
-        if (res.changed) current = res.text;
-      });
-      if (!changes.length) return 0;
-      el.value = current;
-      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
-      const snippetLimit = SELF_CHECK_SPACE_SNIPPET_LIMIT;
-      const snippets = changes.slice(0, snippetLimit).map(change => {
-        const { before, after } = getCharContext(original, change.index, 8);
-        const snippet = `${escapeHtml(before)}<span class="self-check-inline-change" data-original="${escapeHtml(change.from)}" title="原字符：${escapeHtml(change.from)}">${escapeHtml(change.to)}</span>${escapeHtml(after)}`;
-        const title = `${change.label}层级自动调整`;
-        return `<div class="self-check-inline-snippet" title="${escapeHtml(title)}">${snippet}</div>`;
-      });
-      const moreHint = changes.length > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${changes.length} 处</div>` : '';
-      const detail = `<div class="self-check-detail-block self-check-auto-block"><div class="self-check-auto-detail">${snippets.join('')}${moreHint}</div></div>`;
-      queueSelfCheckMessage(el, 'auto', { category: '成对符号', count: changes.length, detail });
-      el.classList.add(SELF_CHECK_FIELD_CLASS);
-      return changes.length;
     }
     // 移除空行
     function removeEmptyLines(el) {
@@ -479,23 +476,40 @@
       return issues.length;
     }
 
-    // 是否为文本类字段
-    function isTextLikeField(el) {
-      if (!el) return false;
-      if (el.tagName === 'TEXTAREA') return true;
-      if (el.tagName !== 'INPUT') return false;
-      const type = (el.type || '').toLowerCase();
-      return TEXT_INPUT_TYPES.has(type);
+    // 成对符号
+    const PAIRED_SYMBOLS = [
+      { open: '“', close: '”', label: '“”' },
+      { open: '‘', close: '’', label: '‘’' },
+      { open: '《', close: '》', label: '《》' },
+      { open: '〈', close: '〉', label: '〈〉' },
+      { open: '（', close: '）', label: '（）' },
+    ];
+    // 成对符号检查
+    function checkPairedSymbols(el) {
+      if (!isTextLikeField(el)) return 0;
+      const value = typeof el.value === 'string' ? el.value : '';
+      if (!value) return 0;
+      const pairIssues = [];
+      let totalLonely = 0;
+      PAIRED_SYMBOLS.forEach(pair => {
+        const unmatched = collectUnmatchedPairSymbols(value, pair);
+        if (!unmatched.length) return;
+        totalLonely += unmatched.length;
+        pairIssues.push({ label: pair.label, unmatched });
+      });
+      if (!pairIssues.length) return 0;
+      const rows = pairIssues.map(item => item.unmatched.map(info => {
+        const { before, after } = getCharContext(value, info.index, 8);
+        const snippet = `${escapeHtml(before)}<span class="self-check-pair-char" data-pair-role="${info.role || 'open'}">${escapeHtml(info.char)}</span>${escapeHtml(after)}`;
+        const title = `第${info.line}行第${info.column}列 · ${item.label} 落单`;
+        return `<div class="self-check-pair-item" title="${escapeHtml(title)}"><div class="self-check-inline-snippet">${snippet}</div></div>`;
+      }).join('')).join('');
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-pairs"><div class="self-check-pair-list">${rows}</div></div>`;
+      queueSelfCheckMessage(el, 'manual', { category: '成对符号', count: totalLonely, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return totalLonely;
     }
-    // 获取字符上下文
-    function getCharContext(value, index, radius) {
-      if (!value || typeof value !== 'string') return { before: '', after: '' };
-      const size = typeof radius === 'number' ? radius : 6;
-      const before = value.slice(Math.max(0, index - size), index);
-      const after = value.slice(index + 1, Math.min(value.length, index + 1 + size));
-      return { before, after };
-    }
-    // 收集不匹配的成对符号
+    // 不匹配
     function collectUnmatchedPairSymbols(value, pair) {
       const lonely = [];
       const stack = [];
@@ -523,7 +537,92 @@
       }
       return lonely.sort((a, b) => a.index - b.index);
     }
+    // 层级
+    function normalizeAlternatingPairs(el) {
+      if (!isTextLikeField(el)) return 0;
+      const original = typeof el.value === 'string' ? el.value : '';
+      if (!original) return 0;
+      const PAIR_PLANS = [
+        { label: '引号', openOuter: '“', closeOuter: '”', openInner: '‘', closeInner: '’' },
+        { label: '书名号', openOuter: '《', closeOuter: '》', openInner: '〈', closeInner: '〉' }
+      ];
+      let current = original;
+      const changes = [];
+      const normalizeOnce = (text, plan) => {
+        const stack = [];
+        let changed = false;
+        let result = '';
+        for (let i = 0; i < text.length; i += 1) {
+          const ch = text[i];
+          const isOpen = ch === plan.openOuter || ch === plan.openInner;
+          const isClose = ch === plan.closeOuter || ch === plan.closeInner;
+          if (!isOpen && !isClose) {
+            result += ch;
+            continue;
+          }
+          if (isOpen) {
+            const depth = stack.length;
+            const expectedType = depth % 2 === 0 ? 'outer' : 'inner';
+            const expectedChar = expectedType === 'outer' ? plan.openOuter : plan.openInner;
+            if (ch !== expectedChar) {
+              changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
+              changed = true;
+            }
+            stack.push(expectedType);
+            result += expectedChar;
+            continue;
+          }
+          let expectedType;
+          if (stack.length) {
+            expectedType = stack.pop();
+          } else {
+            expectedType = 'outer';
+          }
+          const expectedChar = expectedType === 'outer' ? plan.closeOuter : plan.closeInner;
+          if (ch !== expectedChar) {
+            changes.push({ index: i, from: ch, to: expectedChar, label: plan.label });
+            changed = true;
+          }
+          result += expectedChar;
+        }
+        return { text: result, changed };
+      };
+      PAIR_PLANS.forEach(plan => {
+        const res = normalizeOnce(current, plan);
+        if (res.changed) current = res.text;
+      });
+      if (!changes.length) return 0;
+      el.value = current;
+      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
+      const snippetLimit = SELF_CHECK_SPACE_SNIPPET_LIMIT;
+      const snippets = changes.slice(0, snippetLimit).map(change => {
+        const { before, after } = getCharContext(original, change.index, 8);
+        const snippet = `${escapeHtml(before)}<span class="self-check-inline-change" data-original="${escapeHtml(change.from)}" title="原字符：${escapeHtml(change.from)}">${escapeHtml(change.to)}</span>${escapeHtml(after)}`;
+        const title = `${change.label}层级自动调整`;
+        return `<div class="self-check-inline-snippet" title="${escapeHtml(title)}">${snippet}</div>`;
+      });
+      const moreHint = changes.length > snippets.length ? `<div class="self-check-inline-note">仅展示前 ${snippets.length} 处，共 ${changes.length} 处</div>` : '';
+      const detail = `<div class="self-check-detail-block self-check-auto-block"><div class="self-check-auto-detail">${snippets.join('')}${moreHint}</div></div>`;
+      queueSelfCheckMessage(el, 'auto', { category: '成对符号', count: changes.length, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return changes.length;
+    }
+
     // 替换半角符号
+    // 映射
+    const ENGLISH_PUNCTUATION_MAP = {
+      ',': '，',
+      '.': '。',
+      '?': '？',
+      '!': '！',
+      ';': '；',
+      ':': '：',
+      '(': '（',
+      ')': '）',
+      '<': '《',
+      '>': '》'
+    };
+    // 替换
     function replaceEnglishPunctuation(el) {
       if (!isTextLikeField(el)) return 0;
       const value = typeof el.value === 'string' ? el.value : '';
@@ -566,7 +665,24 @@
       el.classList.add(SELF_CHECK_FIELD_CLASS);
       return replacements.length;
     }
-    // 禁用符号检查
+    
+    // 非法符号
+    const ILLEGAL_SYMBOLS = [
+      { char: '「', label: '「' },
+      { char: '」', label: '」' },
+      { char: '『', label: '『' },
+      { char: '』', label: '』' },
+      { char: '【', label: '【' },
+      { char: '】', label: '' },
+      { char: '〔', label: '〔' },
+      { char: '〕', label: '〕' },
+      { char: '{', label: '{' },
+      { char: '}', label: '}' }
+    ];
+    const ILLEGAL_SYMBOL_LOOKUP = ILLEGAL_SYMBOLS.reduce((acc, item) => {
+      acc[item.char] = item;
+      return acc;
+    }, {});
     function flagIllegalSymbols(el) {
       if (!isTextLikeField(el)) return 0;
       const value = typeof el.value === 'string' ? el.value : '';
@@ -589,53 +705,8 @@
       el.classList.add(SELF_CHECK_FIELD_CLASS);
       return hits.length;
     }
-    // 成对符号检查
-    function checkPairedSymbols(el) {
-      if (!isTextLikeField(el)) return 0;
-      const value = typeof el.value === 'string' ? el.value : '';
-      if (!value) return 0;
-      const pairIssues = [];
-      let totalLonely = 0;
-      PAIRED_SYMBOLS.forEach(pair => {
-        const unmatched = collectUnmatchedPairSymbols(value, pair);
-        if (!unmatched.length) return;
-        totalLonely += unmatched.length;
-        pairIssues.push({ label: pair.label, unmatched });
-      });
-      if (!pairIssues.length) return 0;
-      const rows = pairIssues.map(item => item.unmatched.map(info => {
-        const { before, after } = getCharContext(value, info.index, 8);
-        const snippet = `${escapeHtml(before)}<span class="self-check-pair-char" data-pair-role="${info.role || 'open'}">${escapeHtml(info.char)}</span>${escapeHtml(after)}`;
-        const title = `第${info.line}行第${info.column}列 · ${item.label} 落单`;
-        return `<div class="self-check-pair-item" title="${escapeHtml(title)}"><div class="self-check-inline-snippet">${snippet}</div></div>`;
-      }).join('')).join('');
-      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-pairs"><div class="self-check-pair-list">${rows}</div></div>`;
-      queueSelfCheckMessage(el, 'manual', { category: '成对符号', count: totalLonely, detail });
-      el.classList.add(SELF_CHECK_FIELD_CLASS);
-      return totalLonely;
-    }
-    // 是否为自动调整文本区域
-    function isAutosizeTextarea(el) {
-      if (!el || el.tagName !== 'TEXTAREA') return false;
-      if (typeof el.__autosizeHandler === 'function') return true;
-      try {
-        if (el.dataset && el.dataset.autosize === 'true') return true;
-        if (el.style && (el.style.resize === 'none' || el.style.overflow === 'hidden')) return true;
-        const cs = windowRef.getComputedStyle ? windowRef.getComputedStyle(el) : null;
-        if (cs && (cs.resize === 'none' || cs.overflowY === 'hidden')) return true;
-      } catch (e) { }
-      return false;
-    }
-    // 剥离尾随闭合器
-    function stripTrailingClosers(text) {
-      let result = text;
-      while (result.length > 0) {
-        const last = result[result.length - 1];
-        if (TRAILING_ENCLOSURE_REGEX.test(last)) result = result.slice(0, -1);
-        else break;
-      }
-      return result;
-    }
+
+    // 书名号
     // 是否有书名号对
     function hasBookTitlePair(text) {
       if (!text) return false;
@@ -658,69 +729,8 @@
       el.classList.add(SELF_CHECK_FIELD_CLASS);
       return 1;
     }
-    // 获取额外段落结尾
-    function getExtraParagraphEndings(el) {
-      if (!el) return null;
-      const id = el.id || '';
-      if (id && EXTRA_PARAGRAPH_ENDINGS_BY_ID[id]) {
-        return EXTRA_PARAGRAPH_ENDINGS_BY_ID[id];
-      }
-      const linkField = (el.dataset && el.dataset.linkField) || '';
-      if (EXTRA_PARAGRAPH_ENDING_FIELDS.ids.has(id) || EXTRA_PARAGRAPH_ENDING_FIELDS.linkFields.has(linkField)) {
-        return POEM_EXTRA_PARAGRAPH_ENDINGS;
-      }
-      return null;
-    }
-    // 是否有有效段落结尾
-    function hasValidParagraphEnding(text, extraEndings) {
-      if (!text) return false;
-      if (text.endsWith(CN_ELLIPSIS)) return true;
-      const endings = VALID_PARAGRAPH_ENDINGS.slice();
-      if (Array.isArray(extraEndings) && extraEndings.length) {
-        extraEndings.forEach(ch => {
-          if (!endings.includes(ch)) endings.push(ch);
-        });
-      }
-      const lastChar = text[text.length - 1];
-      return endings.includes(lastChar);
-    }
-    // 收集段落
-    function collectParagraphs(value) {
-      const lines = value.split(/\r?\n/);
-      return lines.reduce((acc, line, idx) => {
-        if (line.trim()) {
-          acc.push({ text: line, lineNumber: idx + 1 });
-        }
-        return acc;
-      }, []);
-    }
-    // 段尾检查
-    function checkTextareaParagraphEnds(el) {
-      if (!el || typeof el.value !== 'string') return 0;
-      const value = el.value;
-      if (!value || !value.trim()) return 0;
-      const paragraphs = collectParagraphs(value);
-      if (!paragraphs.length) return 0;
-      const issues = [];
-      paragraphs.forEach((para, idx) => {
-        let content = para.text;
-        if (!content) return;
-        content = content.replace(/\s+$/, '');
-        if (!content) return;
-        const stripped = stripTrailingClosers(content);
-        if (!stripped) return;
-        const extraEndings = getExtraParagraphEndings(el);
-        if (!hasValidParagraphEnding(stripped, extraEndings)) {
-          issues.push({ paragraph: idx + 1 });
-        }
-      });
-      if (!issues.length) return 0;
-      const rows = issues.map(item => `<div class="self-check-punct-item">第${item.paragraph}段</div>`).join('');
-      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-punctuation"><div class="self-check-punct-list">${rows}</div></div>`;
-      queueSelfCheckMessage(el, 'manual', { category: '段尾符号', count: issues.length, detail });
-      el.classList.add(SELF_CHECK_FIELD_CLASS);
-      return issues.length;
-    }
+
+    // 词曲谱字符数
     // 计算字符数
     function countRenderableChars(text) {
       if (!text) return 0;
@@ -732,7 +742,7 @@
       }
       return count;
     }
-    // 词曲谱长度检查
+    // 字符数检查
     function runCiqupuLengthCheck() {
       if (!documentRef?.querySelector?.('.variant-card textarea[data-field="sample"]')) return 0;
       const cards = Array.from(documentRef.querySelectorAll('.variant-card'));
@@ -762,6 +772,7 @@
       });
       return issues;
     }
+
     // 运行自检
     function runSelfCheck() {
       clearSelfCheckIndicators();

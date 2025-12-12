@@ -1,45 +1,38 @@
 // 列表
 (async function () {
-  // 获取URL参数中的类型
+  // 类型与标题
   const type = Poem.qs('type') || '';
-  // 页面标题元素
   const title = document.getElementById('listTitle');
-  // 类型到标题的映射
   const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', L: '格律（L）', A: '汇总' };
   title.textContent = type ? (TITLE_MAP[type] || '列表') : '全部';
+  // 表格
+  const tbody = document.getElementById('listBody');
   // 名称列标题
   try {
-    // 类型到名称的映射
     const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律', A: '名称' };
     const nameHeader = document.getElementById('colNameHeader');
     if (nameHeader) nameHeader.textContent = type && NAME_MAP[type] ? NAME_MAP[type] : '名称';
   } catch (e) { }
-  // 搜索输入框
-  const searchInput = document.getElementById('listSearch');
-  // 表格主体
-  const tbody = document.getElementById('listBody');
-  // 创建按钮
-  const createBtn = document.getElementById('createBtn');
-  // 计数显示元素
+  // 计数
   const countEl = document.getElementById('listCount');
-  // 分页元素
-  const paginationEl = document.getElementById('pagination');
-  // 每页大小
-  const PAGE_SIZE = 15;
-  // 初始页面参数
-  const initialPageParam = parseInt(Poem.qs('page'), 10);
-  // 当前页面
-  let currentPage = Number.isNaN(initialPageParam) || initialPageParam < 1 ? 1 : initialPageParam;
-  // 搜索定时器
-  let searchTimer = null;
-  // 总数
   let totalCount = 0;
-  // 当前项目列表
+  function updateCountDisplay(count) {
+    if (!countEl) return;
+    const safe = typeof count === 'number' && !isNaN(count) ? count : (tbody ? tbody.querySelectorAll('tr').length : 0);
+    countEl.textContent = `共 ${safe} 条`;
+  }
+  // 删除权限
+  const me = await Poem.me();
+  const canDelete = me && (me.role === 'reviewer' || me.role === 'admin');
+  // 分页
+  const paginationEl = document.getElementById('pagination');
+  const PAGE_SIZE = 15;
+  const initialPageParam = parseInt(Poem.qs('page'), 10);
+  let currentPage = Number.isNaN(initialPageParam) || initialPageParam < 1 ? 1 : initialPageParam;
   let currentItems = [];
   // 创建
-  // 可创建的类型列表
+  const createBtn = document.getElementById('createBtn');
   const CREATABLE = ['W', 'G', 'C', 'E', 'S', 'L'];
-  // 是否为汇总列表
   const isAggregatedList = !type || type === 'A';
   if (createBtn) {
     createBtn.textContent = '新建';
@@ -87,377 +80,6 @@
       };
     }
   }
-  // 获取当前用户信息
-  const me = await Poem.me();
-  // 是否可以删除
-  const canDelete = me && (me.role === 'reviewer' || me.role === 'admin');
-  // 筛选
-  // 筛选按钮
-  const filterBtn = document.getElementById('filterBtn');
-  // 导出时长按钮
-  const exportDurationBtn = document.getElementById('exportDurationBtn');
-  // 导出列表按钮
-  const exportListBtn = document.getElementById('exportListBtn');
-  // 归档按钮
-  const archiveBtn = document.getElementById('archiveBtn');
-  // 日期筛选
-  let dateFilter = { start: null, end: null };
-  // 类型筛选
-  let typeFilter = '';
-  // 审核筛选
-  let reviewFilter = '';
-  // 返修筛选
-  let repairFilter = '';
-  // XLSX加载Promise
-  let loadXlsxPromise = null;
-  // 导出限制
-  const EXPORT_LIMIT = 200;
-  // 初始搜索
-  const initialSearch = Poem.qs('q') || '';
-  if (searchInput) searchInput.value = initialSearch;
-  const initialStart = Poem.qs('ds');
-  const initialEnd = Poem.qs('de');
-  dateFilter = {
-    start: initialStart ? initialStart : null,
-    end: initialEnd ? initialEnd : null
-  };
-  typeFilter = Poem.qs('ft') || '';
-  reviewFilter = Poem.qs('rs') || '';
-  repairFilter = reviewFilter === 'rejected' ? (Poem.qs('rr') || '') : '';
-  // 确保XLSX库已加载
-  async function ensureXLSX() {
-    if (typeof XLSX !== 'undefined') return;
-    if (!loadXlsxPromise) {
-      loadXlsxPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
-        script.async = true;
-        script.onload = () => resolve();
-        script.onerror = () => { script.remove(); loadXlsxPromise = null; reject(new Error('无法加载导出组件')); };
-        document.head.appendChild(script);
-      });
-    }
-    await loadXlsxPromise;
-  }
-
-  // 更新计数显示
-  function updateCountDisplay(count) {
-    if (!countEl) return;
-    const safe = typeof count === 'number' && !isNaN(count) ? count : (tbody ? tbody.querySelectorAll('tr').length : 0);
-    countEl.textContent = `共 ${safe} 条`;
-  }
-
-  // 同步查询参数到URL
-  function syncQueryParams() {
-    const url = new URL(window.location.href);
-    const qValue = (searchInput?.value || '').trim();
-    if (qValue) url.searchParams.set('q', qValue);
-    else url.searchParams.delete('q');
-    if (dateFilter.start) url.searchParams.set('ds', dateFilter.start);
-    else url.searchParams.delete('ds');
-    if (dateFilter.end) url.searchParams.set('de', dateFilter.end);
-    else url.searchParams.delete('de');
-    if (typeFilter) url.searchParams.set('ft', typeFilter);
-    else url.searchParams.delete('ft');
-    if (reviewFilter) {
-      url.searchParams.set('rs', reviewFilter);
-      if (reviewFilter === 'rejected' && repairFilter) url.searchParams.set('rr', repairFilter);
-      else url.searchParams.delete('rr');
-    } else {
-      url.searchParams.delete('rs');
-      url.searchParams.delete('rr');
-    }
-    if (currentPage > 1) url.searchParams.set('page', String(currentPage));
-    else url.searchParams.delete('page');
-    history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
-  }
-
-  // 获取编码的返回查询字符串
-  function getEncodedReturnQuery() {
-    const search = window.location.search || '';
-    const trimmed = search.startsWith('?') ? search.slice(1) : search;
-    return trimmed ? encodeURIComponent(trimmed) : '';
-  }
-
-  // 构建基础查询参数
-  function buildBaseQueryParams() {
-    const params = new URLSearchParams();
-    if (type) params.set('type', type);
-    const q = (searchInput?.value || '').trim();
-    if (q) params.set('search', q);
-    if (dateFilter.start) params.set('ds', dateFilter.start);
-    if (dateFilter.end) params.set('de', dateFilter.end);
-    if (typeFilter) params.set('ft', typeFilter);
-    if (reviewFilter) params.set('rs', reviewFilter);
-    if (reviewFilter === 'rejected' && repairFilter) params.set('rr', repairFilter);
-    return params;
-  }
-
-  // 构建页面查询参数
-  function buildPageQuery(page, pageSize) {
-    const params = buildBaseQueryParams();
-    const limit = pageSize || PAGE_SIZE;
-    const offset = Math.max(0, (Math.max(1, page) - 1) * limit);
-    params.set('limit', String(limit));
-    params.set('offset', String(offset));
-    return params;
-  }
-
-  // 获取页面数据
-  async function fetchPage(page) {
-    const params = buildPageQuery(page, PAGE_SIZE);
-    const query = params.toString();
-    return Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
-  }
-
-  // 获取所有匹配的数据
-  async function fetchAllMatching(limitPerRequest = EXPORT_LIMIT) {
-    const params = buildBaseQueryParams();
-    const limit = Math.min(Math.max(limitPerRequest || EXPORT_LIMIT, 1), 200);
-    let offset = 0;
-    const collected = [];
-    while (true) {
-      params.set('limit', String(limit));
-      params.set('offset', String(offset));
-      const query = params.toString();
-      const { data, pagination } = await Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
-      const chunk = Array.isArray(data) ? data : [];
-      collected.push(...chunk);
-      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : null;
-      if (!pagination || !chunk.length) break;
-      if (Number.isInteger(total) && offset + chunk.length >= total) break;
-      if (chunk.length < limit) break;
-      offset += limit;
-    }
-    return collected;
-  }
-
-  // 排队搜索
-  function queueSearch() {
-    if (searchTimer) clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => { search(); }, 200);
-  }
-
-  // 审核状态CSS类映射
-  const REVIEW_STATUS_CLASS = {
-    pending: 'status-pending',
-    rejected: 'status-rejected',
-    approved: 'status-approved',
-    archived: 'status-archived',
-    final: 'status-final'
-  };
-  // 返修状态CSS类映射
-  const REPAIR_STATUS_CLASS = {
-    unfinished: 'status-rejected',
-    finished: 'status-approved'
-  };
-
-  // HTML转义函数
-  function escapeHtml(str) {
-    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-    return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
-  }
-
-  // 从ID中提取数字
-  function idNumber(id) {
-    if (!id || typeof id !== 'string') return 0;
-    const num = parseInt(id.slice(1), 10);
-    return Number.isNaN(num) ? 0 : num;
-  }
-
-  // 渲染状态标签
-  function renderStatusTag(status, label, classMap) {
-    if (!label) return '';
-    const cls = classMap[status] || 'status-default';
-    return `<span class="status-tag ${cls}">${escapeHtml(label)}</span>`;
-  }
-
-  // 跳转到指定页面
-  function goToPage(page) {
-    const totalPages = totalCount ? Math.ceil(totalCount / PAGE_SIZE) : 1;
-    const parsed = parseInt(page, 10);
-    const target = Math.max(1, Math.min(Number.isNaN(parsed) ? currentPage : parsed, totalPages));
-    if (target === currentPage) return;
-    search({ keepPage: true, page: target }).catch(err => { console.error(err); });
-  }
-
-  // 渲染分页
-  function renderPagination(totalCount, totalPages) {
-    if (!paginationEl) return;
-    paginationEl.innerHTML = '';
-    if (countEl) {
-      countEl.classList.add('pagination-count');
-      paginationEl.appendChild(countEl);
-    }
-    if (!totalCount) {
-      const empty = document.createElement('span');
-      empty.className = 'pagination-info';
-      empty.textContent = '暂无数据';
-      paginationEl.appendChild(empty);
-      return;
-    }
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'btn small';
-    prevBtn.type = 'button';
-    prevBtn.textContent = '上一页';
-    prevBtn.disabled = currentPage <= 1;
-    prevBtn.addEventListener('click', () => { if (currentPage > 1) goToPage(currentPage - 1); });
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'btn small';
-    nextBtn.type = 'button';
-    nextBtn.textContent = '下一页';
-    nextBtn.disabled = currentPage >= totalPages;
-    nextBtn.addEventListener('click', () => { if (currentPage < totalPages) goToPage(currentPage + 1); });
-    const info = document.createElement('span');
-    info.className = 'pagination-info';
-    info.textContent = `第 ${currentPage} / ${totalPages} 页`;
-    const jumpWrapper = document.createElement('div');
-    jumpWrapper.className = 'pagination-jump';
-    const jumpText = document.createElement('span');
-    jumpText.textContent = '跳至';
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.className = 'pagination-input';
-    input.min = '1';
-    input.max = String(totalPages);
-    input.value = String(currentPage);
-    input.title = '按回车跳转';
-    input.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const target = parseInt(input.value, 10);
-        if (!Number.isNaN(target)) goToPage(target);
-      }
-    });
-    input.addEventListener('blur', () => { input.value = String(currentPage); });
-    const suffix = document.createElement('span');
-    suffix.textContent = '页';
-    jumpWrapper.appendChild(jumpText);
-    jumpWrapper.appendChild(input);
-    jumpWrapper.appendChild(suffix);
-    paginationEl.appendChild(prevBtn);
-    paginationEl.appendChild(info);
-    paginationEl.appendChild(nextBtn);
-    paginationEl.appendChild(jumpWrapper);
-  }
-
-  // 渲染当前页面
-  function renderCurrentPage() {
-    const rows = Array.isArray(currentItems) ? currentItems : [];
-    const total = Math.max(0, parseInt(totalCount, 10) || 0);
-    const totalPages = total ? Math.max(1, Math.ceil(total / PAGE_SIZE)) : 1;
-    if (currentPage < 1) currentPage = 1;
-    if (currentPage > totalPages) currentPage = totalPages;
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    syncQueryParams();
-    const currentQueryEncoded = getEncodedReturnQuery();
-    const pageItems = rows;
-    pageItems.forEach(item => {
-      const reviewerDisplay = item.reviewer || '';
-      const durationDisplay = item.reviewDuration ?? '';
-      const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
-      const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
-      const typeCls = item.type ? `type-${item.type}` : '';
-      const idText = escapeHtml(item.id || '');
-      const idLabel = typeCls ? `<span class="type-tag ${typeCls}">${idText}</span>` : idText;
-      const encodedId = encodeURIComponent(item.id || '');
-      const editorHref = currentQueryEncoded ? `editor.html?id=${encodedId}&return=${currentQueryEncoded}` : `editor.html?id=${encodedId}`;
-      const editorHrefEsc = escapeHtml(editorHref);
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${idLabel}</td>
-        <td><div class="name-cell">${item.name || ''}</div></td>
-        <td>${item.creator || ''}</td>
-        <td>${item.createdAt || ''}</td>
-        <td>${reviewerDisplay}</td>
-        <td>${durationDisplay}</td>
-        <td>${reviewStatusHtml}</td>
-        <td>${repairStatusHtml}</td>
-        <td class="actions-cell"><div class="row-actions"><button data-act="open" data-id="${item.id}" data-url="${editorHrefEsc}" class="btn small">打开</button>
-        <button data-act="delete" data-id="${item.id}" class="btn danger small" ${canDelete ? '' : 'disabled'}>删除</button></div></td>
-      `;
-      tr.querySelectorAll('button[data-act]').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const act = btn.dataset.act;
-          const id = btn.dataset.id;
-          if (act === 'open') {
-            const targetUrl = btn.dataset.url || (() => {
-              const encoded = encodeURIComponent(id || '');
-              const currentQuery = getEncodedReturnQuery();
-              return currentQuery ? `editor.html?id=${encoded}&return=${currentQuery}` : `editor.html?id=${encoded}`;
-            })();
-            location.href = targetUrl;
-            return;
-          }
-          if (act === 'delete') {
-            if (!canDelete) { Poem.toast('权限不足'); return; }
-            const ok = confirm(`删除 ${id} ？`);
-            if (!ok) return;
-            try {
-              await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
-              Poem.toast('删除成功');
-              await search({ keepPage: true });
-              return;
-            } catch (err) {
-              console.error(err);
-              Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
-            }
-          }
-        });
-      });
-      tbody.appendChild(tr);
-    });
-    updateCountDisplay(total);
-    renderPagination(total, totalPages);
-  }
-
-  // 导出（汇总，审核者/管理员）
-  const hasExportPermission = me && (me.role === 'reviewer' || me.role === 'admin');
-  const isAdmin = me && me.role === 'admin';
-  if (exportDurationBtn) {
-    if (type !== 'A') {
-      exportDurationBtn.style.display = 'none';
-    } else {
-      if (!hasExportPermission) {
-        exportDurationBtn.disabled = true;
-        exportDurationBtn.title = '仅审核者/管理员可用';
-      } else {
-        exportDurationBtn.disabled = false;
-        exportDurationBtn.title = '';
-        exportDurationBtn.addEventListener('click', showExportModal);
-      }
-    }
-  }
-  if (exportListBtn) {
-    if (type !== 'A') {
-      exportListBtn.style.display = 'none';
-    } else {
-      if (!hasExportPermission) {
-        exportListBtn.disabled = true;
-        exportListBtn.title = '仅审核者/管理员可用';
-      } else {
-        exportListBtn.disabled = false;
-        exportListBtn.title = '';
-        exportListBtn.addEventListener('click', handleExportList);
-      }
-    }
-  }
-  if (archiveBtn) {
-    if (type !== 'A') {
-      archiveBtn.style.display = 'none';
-    } else {
-      if (!isAdmin) {
-        archiveBtn.disabled = true;
-        archiveBtn.title = '仅管理员可用';
-      } else {
-        archiveBtn.disabled = false;
-        archiveBtn.title = '';
-        archiveBtn.addEventListener('click', handleArchiveAction);
-      }
-    }
-  }
-
   // 创建模态框
   function createModal(titleText) {
     const modal = document.createElement('div'); modal.className = 'modal';
@@ -468,8 +90,13 @@
     card.querySelector('#closeModal').onclick = close;
     return { modal, card, close };
   }
-
-  // 显示筛选模态框
+  // 筛选
+  const filterBtn = document.getElementById('filterBtn');
+  let dateFilter = { start: null, end: null };
+  let typeFilter = '';
+  let reviewFilter = '';
+  let repairFilter = '';
+  // 筛选模态框
   function showFilterModal() {
     const { modal, card, close } = createModal('筛选');
     const body = card.querySelector('.modal-body');
@@ -569,8 +196,432 @@
     };
     body.querySelector('#fltCancel').onclick = () => { close(); };
   }
+  // 归档
+  const archiveBtn = document.getElementById('archiveBtn');
+  async function handleArchiveAction() {
+    if (!isAdmin || type !== 'A') {
+      Poem.toast('仅管理员可用');
+      return;
+    }
+    const items = await fetchAllMatching();
+    if (!items.length) {
+      alert('当前筛选没有可归档节点。');
+      return;
+    }
+    const hasNonApproved = items.some(item => (item.reviewStatus || '') !== 'approved');
+    if (hasNonApproved) {
+      alert('仅可归档通过节点，请调整筛选条件。');
+      return;
+    }
+    if (!confirm(`归档当前 ${items.length} 条记录？`)) return;
+    if (archiveBtn) archiveBtn.disabled = true;
+    try {
+      const ids = items.map(item => item.id).filter(Boolean);
+      if (!ids.length) {
+        Poem.toast('没有可归档节点');
+        return;
+      }
+      await Poem.api('/api/nodes/archive', { method: 'POST', body: JSON.stringify({ ids }) });
+      Poem.toast('归档成功');
+      await search({ keepPage: true });
+    } catch (err) {
+      console.error(err);
+      Poem.toast('归档失败');
+    } finally {
+      if (archiveBtn) archiveBtn.disabled = !isAdmin;
+    }
+  }
+  // 搜索
+  const searchInput = document.getElementById('listSearch');
+  let searchTimer = null;
+  // 初始搜索
+  const initialSearch = Poem.qs('q') || '';
+  if (searchInput) searchInput.value = initialSearch;
+  const initialStart = Poem.qs('ds');
+  const initialEnd = Poem.qs('de');
+  dateFilter = {
+    start: initialStart ? initialStart : null,
+    end: initialEnd ? initialEnd : null
+  };
+  typeFilter = Poem.qs('ft') || '';
+  reviewFilter = Poem.qs('rs') || '';
+  repairFilter = reviewFilter === 'rejected' ? (Poem.qs('rr') || '') : '';
+  // 搜索函数
+  async function search(options) {
+    try {
+      const keepPage = !!(options && options.keepPage);
+      const requestedPage = options && Number(options.page);
+      let targetPage = keepPage ? (Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : currentPage || 1) : 1;
+      if (!keepPage) targetPage = 1;
+      const { data, pagination } = await fetchPage(targetPage);
+      const rows = Array.isArray(data) ? data : [];
+      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : rows.length;
+      currentItems = rows;
+      totalCount = Number.isNaN(total) ? rows.length : total;
+      currentPage = targetPage;
+      if (!rows.length && totalCount > 0 && targetPage > 1 && !options?.__retry) {
+        await search({ keepPage: true, page: targetPage - 1, __retry: true });
+        return;
+      }
+      renderCurrentPage();
+    } catch (err) {
+      console.error(err);
+      Poem.toast('加载失败');
+    }
+  }
+  searchInput.addEventListener('input', queueSearch);
+  search({ keepPage: true });
+  // XLSX加载Promise
+  let loadXlsxPromise = null;
+  async function ensureXLSX() {
+    if (typeof XLSX !== 'undefined') return;
+    if (!loadXlsxPromise) {
+      loadXlsxPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => { script.remove(); loadXlsxPromise = null; reject(new Error('无法加载导出组件')); };
+        document.head.appendChild(script);
+      });
+    }
+    await loadXlsxPromise;
+  }
+  // 同步查询参数到URL
+  function syncQueryParams() {
+    const url = new URL(window.location.href);
+    const qValue = (searchInput?.value || '').trim();
+    if (qValue) url.searchParams.set('q', qValue);
+    else url.searchParams.delete('q');
+    if (dateFilter.start) url.searchParams.set('ds', dateFilter.start);
+    else url.searchParams.delete('ds');
+    if (dateFilter.end) url.searchParams.set('de', dateFilter.end);
+    else url.searchParams.delete('de');
+    if (typeFilter) url.searchParams.set('ft', typeFilter);
+    else url.searchParams.delete('ft');
+    if (reviewFilter) {
+      url.searchParams.set('rs', reviewFilter);
+      if (reviewFilter === 'rejected' && repairFilter) url.searchParams.set('rr', repairFilter);
+      else url.searchParams.delete('rr');
+    } else {
+      url.searchParams.delete('rs');
+      url.searchParams.delete('rr');
+    }
+    if (currentPage > 1) url.searchParams.set('page', String(currentPage));
+    else url.searchParams.delete('page');
+    history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+  // 获取编码的返回查询字符串
+  function getEncodedReturnQuery() {
+    const search = window.location.search || '';
+    const trimmed = search.startsWith('?') ? search.slice(1) : search;
+    return trimmed ? encodeURIComponent(trimmed) : '';
+  }
+  // 构建基础查询参数
+  function buildBaseQueryParams() {
+    const params = new URLSearchParams();
+    if (type) params.set('type', type);
+    const q = (searchInput?.value || '').trim();
+    if (q) params.set('search', q);
+    if (dateFilter.start) params.set('ds', dateFilter.start);
+    if (dateFilter.end) params.set('de', dateFilter.end);
+    if (typeFilter) params.set('ft', typeFilter);
+    if (reviewFilter) params.set('rs', reviewFilter);
+    if (reviewFilter === 'rejected' && repairFilter) params.set('rr', repairFilter);
+    return params;
+  }
+  // 构建页面查询参数
+  function buildPageQuery(page, pageSize) {
+    const params = buildBaseQueryParams();
+    const limit = pageSize || PAGE_SIZE;
+    const offset = Math.max(0, (Math.max(1, page) - 1) * limit);
+    params.set('limit', String(limit));
+    params.set('offset', String(offset));
+    return params;
+  }
+  // 获取页面数据
+  async function fetchPage(page) {
+    const params = buildPageQuery(page, PAGE_SIZE);
+    const query = params.toString();
+    return Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
+  }
+  // 获取所有匹配的数据
+  async function fetchAllMatching(limitPerRequest = EXPORT_LIMIT) {
+    const params = buildBaseQueryParams();
+    const limit = Math.min(Math.max(limitPerRequest || EXPORT_LIMIT, 1), 200);
+    let offset = 0;
+    const collected = [];
+    while (true) {
+      params.set('limit', String(limit));
+      params.set('offset', String(offset));
+      const query = params.toString();
+      const { data, pagination } = await Poem.api(`/api/nodes${query ? `?${query}` : ''}`);
+      const chunk = Array.isArray(data) ? data : [];
+      collected.push(...chunk);
+      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : null;
+      if (!pagination || !chunk.length) break;
+      if (Number.isInteger(total) && offset + chunk.length >= total) break;
+      if (chunk.length < limit) break;
+      offset += limit;
+    }
+    return collected;
+  }
+  // 排队搜索
+  function queueSearch() {
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { search(); }, 200);
+  }
+  // 审核状态CSS类映射
+  const REVIEW_STATUS_CLASS = {
+    pending: 'status-pending',
+    rejected: 'status-rejected',
+    approved: 'status-approved',
+    archived: 'status-archived',
+    final: 'status-final'
+  };
+  // 返修状态CSS类映射
+  const REPAIR_STATUS_CLASS = {
+    unfinished: 'status-rejected',
+    finished: 'status-approved'
+  };
+  // HTML转义函数
+  function escapeHtml(str) {
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
+  }
+  // 从ID中提取数字
+  function idNumber(id) {
+    if (!id || typeof id !== 'string') return 0;
+    const num = parseInt(id.slice(1), 10);
+    return Number.isNaN(num) ? 0 : num;
+  }
+  // 渲染状态标签
+  function renderStatusTag(status, label, classMap) {
+    if (!label) return '';
+    const cls = classMap[status] || 'status-default';
+    return `<span class="status-tag ${cls}">${escapeHtml(label)}</span>`;
+  }
+  // 跳转到指定页面
+  function goToPage(page) {
+    const totalPages = totalCount ? Math.ceil(totalCount / PAGE_SIZE) : 1;
+    const parsed = parseInt(page, 10);
+    const target = Math.max(1, Math.min(Number.isNaN(parsed) ? currentPage : parsed, totalPages));
+    if (target === currentPage) return;
+    search({ keepPage: true, page: target }).catch(err => { console.error(err); });
+  }
+  // 渲染分页
+  function renderPagination(totalCount, totalPages) {
+    if (!paginationEl) return;
+    paginationEl.innerHTML = '';
+    if (countEl) {
+      countEl.classList.add('pagination-count');
+      paginationEl.appendChild(countEl);
+    }
+    if (!totalCount) {
+      const empty = document.createElement('span');
+      empty.className = 'pagination-info';
+      empty.textContent = '暂无数据';
+      paginationEl.appendChild(empty);
+      return;
+    }
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'btn small';
+    prevBtn.type = 'button';
+    prevBtn.textContent = '上一页';
+    prevBtn.disabled = currentPage <= 1;
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) goToPage(currentPage - 1); });
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn small';
+    nextBtn.type = 'button';
+    nextBtn.textContent = '下一页';
+    nextBtn.disabled = currentPage >= totalPages;
+    nextBtn.addEventListener('click', () => { if (currentPage < totalPages) goToPage(currentPage + 1); });
+    const info = document.createElement('span');
+    info.className = 'pagination-info';
+    info.textContent = `第 ${currentPage} / ${totalPages} 页`;
+    const jumpWrapper = document.createElement('div');
+    jumpWrapper.className = 'pagination-jump';
+    const jumpText = document.createElement('span');
+    jumpText.textContent = '跳至';
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'pagination-input';
+    input.min = '1';
+    input.max = String(totalPages);
+    input.value = String(currentPage);
+    input.title = '按回车跳转';
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const target = parseInt(input.value, 10);
+        if (!Number.isNaN(target)) goToPage(target);
+      }
+    });
+    input.addEventListener('blur', () => { input.value = String(currentPage); });
+    const suffix = document.createElement('span');
+    suffix.textContent = '页';
+    jumpWrapper.appendChild(jumpText);
+    jumpWrapper.appendChild(input);
+    jumpWrapper.appendChild(suffix);
+    paginationEl.appendChild(prevBtn);
+    paginationEl.appendChild(info);
+    paginationEl.appendChild(nextBtn);
+    paginationEl.appendChild(jumpWrapper);
+  }
 
-  // 显示导出模态框
+  // 查询引用并格式化提示
+  async function fetchReferences(nodeId) {
+    if (!nodeId) return null;
+    try {
+      return await Poem.api(`/api/nodes/references/${nodeId}`);
+    } catch (err) {
+      console.error('查询引用失败', err);
+      return null;
+    }
+  }
+
+  function buildReferenceMessage(id, payload, maxItems = 5) {
+    const list = Array.isArray(payload?.data) ? payload.data : [];
+    const total = typeof payload?.total === 'number' ? payload.total : list.length;
+    if (!list.length) return `删除 ${id} ？`;
+    const lines = list.slice(0, maxItems).map(r => {
+      const name = r.label || '';
+      const count = r.linkCount ? `（链接${r.linkCount}处）` : '';
+      return `- ${r.id}${name ? ' ' + name : ''}${count}`;
+    });
+    const extra = total > lines.length ? `... 共 ${total} 个引用` : '';
+    return `以下节点引用了 ${id}：\n${lines.join('\n')}${extra ? `\n${extra}` : ''}\n\n继续删除并将这些链接置为空置吗？`;
+  }
+
+  async function clearLinksToNode(targetId) {
+    if (!targetId) return { ok: false };
+    return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
+  }
+
+  // 渲染当前页面
+  function renderCurrentPage() {
+    const rows = Array.isArray(currentItems) ? currentItems : [];
+    const total = Math.max(0, parseInt(totalCount, 10) || 0);
+    const totalPages = total ? Math.max(1, Math.ceil(total / PAGE_SIZE)) : 1;
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    syncQueryParams();
+    const currentQueryEncoded = getEncodedReturnQuery();
+    const pageItems = rows;
+    pageItems.forEach(item => {
+      const reviewerDisplay = item.reviewer || '';
+      const durationDisplay = item.reviewDuration ?? '';
+      const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
+      const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
+      const typeCls = item.type ? `type-${item.type}` : '';
+      const idText = escapeHtml(item.id || '');
+      const idLabel = typeCls ? `<span class="type-tag ${typeCls}">${idText}</span>` : idText;
+      const encodedId = encodeURIComponent(item.id || '');
+      const editorHref = currentQueryEncoded ? `editor.html?id=${encodedId}&return=${currentQueryEncoded}` : `editor.html?id=${encodedId}`;
+      const editorHrefEsc = escapeHtml(editorHref);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${idLabel}</td>
+        <td><div class="name-cell">${item.name || ''}</div></td>
+        <td>${item.creator || ''}</td>
+        <td>${item.createdAt || ''}</td>
+        <td>${reviewerDisplay}</td>
+        <td>${durationDisplay}</td>
+        <td>${reviewStatusHtml}</td>
+        <td>${repairStatusHtml}</td>
+        <td class="actions-cell"><div class="row-actions"><button data-act="open" data-id="${item.id}" data-url="${editorHrefEsc}" class="btn small">打开</button>
+        <button data-act="delete" data-id="${item.id}" class="btn danger small" ${canDelete ? '' : 'disabled'}>删除</button></div></td>
+      `;
+      tr.querySelectorAll('button[data-act]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const act = btn.dataset.act;
+          const id = btn.dataset.id;
+          if (act === 'open') {
+            const targetUrl = btn.dataset.url || (() => {
+              const encoded = encodeURIComponent(id || '');
+              const currentQuery = getEncodedReturnQuery();
+              return currentQuery ? `editor.html?id=${encoded}&return=${currentQuery}` : `editor.html?id=${encoded}`;
+            })();
+            location.href = targetUrl;
+            return;
+          }
+          if (act === 'delete') {
+            if (!canDelete) { Poem.toast('权限不足'); return; }
+            const references = await fetchReferences(id);
+            const hasRefs = references && Array.isArray(references.data) && references.data.length > 0;
+            const ok = confirm(hasRefs ? buildReferenceMessage(id, references) : `删除 ${id} ？`);
+            if (!ok) return;
+            try {
+              if (hasRefs) {
+                await clearLinksToNode(id);
+              }
+              await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
+              Poem.toast('删除成功');
+              await search({ keepPage: true });
+              return;
+            } catch (err) {
+              console.error(err);
+              Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
+            }
+          }
+        });
+      });
+      tbody.appendChild(tr);
+    });
+    updateCountDisplay(total);
+    renderPagination(total, totalPages);
+  }
+  // 导出（汇总，审核者/管理员）
+  const exportDurationBtn = document.getElementById('exportDurationBtn');
+  const exportListBtn = document.getElementById('exportListBtn');
+  const EXPORT_LIMIT = 200;
+  const hasExportPermission = me && (me.role === 'reviewer' || me.role === 'admin');
+  const isAdmin = me && me.role === 'admin';
+  if (exportDurationBtn) {
+    if (type !== 'A') {
+      exportDurationBtn.style.display = 'none';
+    } else {
+      if (!hasExportPermission) {
+        exportDurationBtn.disabled = true;
+        exportDurationBtn.title = '仅审核者/管理员可用';
+      } else {
+        exportDurationBtn.disabled = false;
+        exportDurationBtn.title = '';
+        exportDurationBtn.addEventListener('click', showExportModal);
+      }
+    }
+  }
+  if (exportListBtn) {
+    if (type !== 'A') {
+      exportListBtn.style.display = 'none';
+    } else {
+      if (!hasExportPermission) {
+        exportListBtn.disabled = true;
+        exportListBtn.title = '仅审核者/管理员可用';
+      } else {
+        exportListBtn.disabled = false;
+        exportListBtn.title = '';
+        exportListBtn.addEventListener('click', handleExportList);
+      }
+    }
+  }
+  if (archiveBtn) {
+    if (type !== 'A') {
+      archiveBtn.style.display = 'none';
+    } else {
+      if (!isAdmin) {
+        archiveBtn.disabled = true;
+        archiveBtn.title = '仅管理员可用';
+      } else {
+        archiveBtn.disabled = false;
+        archiveBtn.title = '';
+        archiveBtn.addEventListener('click', handleArchiveAction);
+      }
+    }
+  }
+  // 导出数据模态框
   function showExportModal() {
     const { modal, card, close } = createModal('导出：填写期数');
     const body = card.querySelector('.modal-body');
@@ -619,10 +670,8 @@
     };
     body.querySelector('#exportCancel').onclick = () => { close(); };
   }
-
   if (filterBtn) filterBtn.addEventListener('click', showFilterModal);
-
-  // 处理导出列表
+  // 导出列表
   async function handleExportList() {
     try {
       await ensureXLSX();
@@ -653,65 +702,4 @@
       Poem.toast('导出失败');
     }
   }
-
-  // 处理归档操作
-  async function handleArchiveAction() {
-    if (!isAdmin || type !== 'A') {
-      Poem.toast('仅管理员可用');
-      return;
-    }
-    const items = await fetchAllMatching();
-    if (!items.length) {
-      alert('当前筛选没有可归档节点。');
-      return;
-    }
-    const hasNonApproved = items.some(item => (item.reviewStatus || '') !== 'approved');
-    if (hasNonApproved) {
-      alert('仅可归档通过节点，请调整筛选条件。');
-      return;
-    }
-    if (!confirm(`归档当前 ${items.length} 条记录？`)) return;
-    if (archiveBtn) archiveBtn.disabled = true;
-    try {
-      const ids = items.map(item => item.id).filter(Boolean);
-      if (!ids.length) {
-        Poem.toast('没有可归档节点');
-        return;
-      }
-      await Poem.api('/api/nodes/archive', { method: 'POST', body: JSON.stringify({ ids }) });
-      Poem.toast('归档成功');
-      await search({ keepPage: true });
-    } catch (err) {
-      console.error(err);
-      Poem.toast('归档失败');
-    } finally {
-      if (archiveBtn) archiveBtn.disabled = !isAdmin;
-    }
-  }
-
-  // 搜索函数
-  async function search(options) {
-    try {
-      const keepPage = !!(options && options.keepPage);
-      const requestedPage = options && Number(options.page);
-      let targetPage = keepPage ? (Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : currentPage || 1) : 1;
-      if (!keepPage) targetPage = 1;
-      const { data, pagination } = await fetchPage(targetPage);
-      const rows = Array.isArray(data) ? data : [];
-      const total = pagination && typeof pagination.total !== 'undefined' ? parseInt(pagination.total, 10) : rows.length;
-      currentItems = rows;
-      totalCount = Number.isNaN(total) ? rows.length : total;
-      currentPage = targetPage;
-      if (!rows.length && totalCount > 0 && targetPage > 1 && !options?.__retry) {
-        await search({ keepPage: true, page: targetPage - 1, __retry: true });
-        return;
-      }
-      renderCurrentPage();
-    } catch (err) {
-      console.error(err);
-      Poem.toast('加载失败');
-    }
-  }
-  searchInput.addEventListener('input', queueSearch);
-  search({ keepPage: true });
 })();
