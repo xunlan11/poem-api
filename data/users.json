@@ -837,5 +837,25 @@
     "created_at": "2025-12-07T10:52:25.452Z",
     "updated_at": "2025-12-07T10:53:23.189Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_66",
+    "username": "薛博予",
+    "password_hash": "$2a$10$V2.CxNiThNGbP6uN.Nw7kOKb2eLC7onRja4oa1/YOvXy7DTo8LFlK",
+    "role": "user",
+    "real_name": "薛博予",
+    "student_id": "2510938",
+    "created_at": "2025-12-17T09:11:29.760Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_67",
+    "username": "su",
+    "password_hash": "$2a$10$STzWdqYkqN4gzMOJpHfSY.JWeTp4qMx5V8yS.0WKqmruf3HUVboUe",
+    "role": "user",
+    "real_name": "苏雅祺",
+    "student_id": "2513282",
+    "created_at": "2025-12-17T12:11:24.475Z",
+    "profile_completed": true
   }
 ]

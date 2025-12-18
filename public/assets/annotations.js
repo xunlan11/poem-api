@@ -33,8 +33,31 @@
     const links = options.linking && Array.isArray(options.linking.links) ? options.linking.links : [];
     const MAX_VISIBLE = (typeof options.maxVisible === 'number' && options.maxVisible > 0) ? options.maxVisible : 5;
     const renderContainerId = options.renderContainerId || 'f-body-render';
+    const wordCountEl = options.wordCountEl || formContainer?.querySelector?.('#body-word-count') || null;
+    let wordCountMode = 'body';
     let annotationFieldMap = new Map();
     let annotations = [];
+
+    // 统计文本长度（忽略符号）的函数
+    const countTextLength = (text) => {
+      if (!text) return 0;
+      const normalized = text.replace(/[^\p{L}\p{N}]/gu, '');
+      return normalized.length;
+    };
+
+    // 渲染字数显示的函数
+    const renderWordCount = (count, mode = 'body') => {
+      if (!wordCountEl) return;
+      wordCountMode = mode === 'selection' ? 'selection' : 'body';
+      const prefix = wordCountMode === 'selection' ? '选中' : '共';
+      wordCountEl.textContent = `${prefix}${count}字`;
+    };
+
+    // 根据正文内容刷新字数的函数
+    const updateWordCountFromBody = () => {
+      if (!textarea) return;
+      renderWordCount(countTextLength(textarea.value || ''), 'body');
+    };
 
     // 清理注释列表的函数
     function sanitizeAnnotations(list) {
@@ -247,19 +270,18 @@
       if (!renderDiv) {
         renderDiv = documentRef.createElement('div');
         renderDiv.id = renderContainerId;
-        renderDiv.style.padding = '8px';
-        renderDiv.style.border = '1px solid #ddd';
-        renderDiv.style.borderRadius = '6px';
-        renderDiv.style.marginTop = '8px';
-        renderDiv.style.background = '#fff';
-        renderDiv.style.display = 'none';
         const bodyField = formContainer.querySelector('#f-body');
-        if (bodyField && bodyField.parentNode) {
-          bodyField.parentNode.insertBefore(renderDiv, bodyField.nextSibling);
-        } else {
-          formContainer.appendChild(renderDiv);
-        }
+        if (bodyField && bodyField.parentNode) bodyField.parentNode.insertBefore(renderDiv, bodyField.nextSibling);
+        else formContainer.appendChild(renderDiv);
       }
+      renderDiv.classList.add('body-render');
+      if (!renderDiv.style.padding) renderDiv.style.padding = '8px';
+      if (!renderDiv.style.paddingBottom) renderDiv.style.paddingBottom = '32px';
+      if (!renderDiv.style.border) renderDiv.style.border = '1px solid #ddd';
+      if (!renderDiv.style.borderRadius) renderDiv.style.borderRadius = '6px';
+      if (!renderDiv.style.marginTop) renderDiv.style.marginTop = '8px';
+      if (!renderDiv.style.background) renderDiv.style.background = '#fff';
+      if (!renderDiv.style.display) renderDiv.style.display = 'none';
       return renderDiv;
     }
 
@@ -369,6 +391,7 @@
         if (tipParts.length) sp.title = tipParts.join('\n');
       });
       ensureAnnotatedBodyHandlers(renderDiv);
+      if (wordCountMode !== 'selection') updateWordCountFromBody();
       return renderDiv;
     }
 
@@ -403,6 +426,7 @@
         }
         return;
       }
+      if (wordCountMode === 'selection') updateWordCountFromBody();
       const sel = windowRef.getSelection ? windowRef.getSelection() : null;
       if (sel && !sel.isCollapsed) return;
       if (renderDiv.__lastSelectionAt && (Date.now() - renderDiv.__lastSelectionAt) < 600) {
@@ -461,6 +485,7 @@
       const ePos = parseInt(endSpan.getAttribute('data-pos') || 0, 10) + eOffset;
       if (Number.isNaN(sPos) || Number.isNaN(ePos) || ePos <= sPos) return;
       const selText = textarea.value.slice(sPos, ePos);
+      renderWordCount(countTextLength(selText), 'selection');
       if (isLinkBrushActive()) {
         sel.removeAllRanges();
         renderDiv.__lastSelectionAt = Date.now();
@@ -507,6 +532,7 @@
       if (!textarea) return;
       reindexFieldLinks('content');
       const textValue = textarea.value || '';
+      updateWordCountFromBody();
       if (reindexAnnotationsForContentText(textValue)) {
         renderAnnotations();
         const renderDiv = formContainer ? formContainer.querySelector(`#${renderContainerId}`) : null;
@@ -533,9 +559,26 @@
       const leftTop = documentRef.createElement('div');
       leftTop.style.padding = '6px';
       leftTop.style.border = '1px solid #f0f0f0';
-      leftTop.style.overflow = 'auto';
-      leftTop.style.maxHeight = '6em';
-      leftTop.textContent = annotation.text || '';
+      leftTop.style.overflow = 'hidden';
+      leftTop.style.whiteSpace = 'pre-wrap';
+      leftTop.style.wordBreak = 'break-word';
+      const leftText = annotation.text || '';
+      leftTop.textContent = leftText;
+      // 根据内容行数和实际渲染高度自适应左侧预览高度
+      try {
+        const adjust = () => {
+          try {
+            const cs = windowRef.getComputedStyle ? windowRef.getComputedStyle(leftTop) : null;
+            const lineH = cs ? (parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) || 20) : 20;
+            const raw = leftTop.scrollHeight + 2;
+            const cap = (windowRef.innerHeight || 800);
+            const desired = Math.min(Math.max(raw, lineH + 6), cap);
+            leftTop.style.height = `${desired}px`;
+          } catch (e) { /* noop */ }
+        };
+        // 在下一帧测量，确保已插入 DOM 时计算正确
+        requestAnimationFrame(adjust);
+      } catch (e) { /* noop */ }
       const rightTop = documentRef.createElement('div');
       rightTop.style.gridColumn = '2 / 3';
       rightTop.innerHTML = `<textarea class="anno-input" rows="1" data-check-paragraph="true" style="width:100%;resize:none;overflow:hidden">${escapeHtml(annotation.note || '')}</textarea>`;
@@ -585,6 +628,7 @@
         syncLinksToState();
         editor.remove();
         renderAnnotations();
+        updateWordCountFromBody();
       });
       del.addEventListener('click', () => {
         editor.remove();
@@ -592,6 +636,7 @@
           annotations.splice(index, 1);
           renderAnnotations();
         }
+        updateWordCountFromBody();
       });
     }
 
@@ -602,6 +647,7 @@
       textarea.style.display = 'none';
       const rv = renderAnnotatedBody();
       if (rv) rv.style.display = 'block';
+      updateWordCountFromBody();
       if (lockBtn) lockBtn.disabled = true;
       if (unlockBtn) unlockBtn.disabled = state.editable ? false : true;
     }
@@ -619,6 +665,7 @@
       try { autosizeTextarea(textarea); } catch (e) { }
       const rv = formContainer ? formContainer.querySelector(`#${renderContainerId}`) : null;
       if (rv) rv.style.display = 'none';
+      updateWordCountFromBody();
     }
 
     if (lockBtn) lockBtn.addEventListener('click', lockBody);
@@ -698,6 +745,8 @@
         ta.addEventListener('input', ta.__autosizeHandler);
       });
     }
+
+    updateWordCountFromBody();
 
     // 设置注释列表的函数
     function setAnnotations(nextList) {

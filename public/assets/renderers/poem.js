@@ -68,7 +68,12 @@
       </div>
       <div id="sub2-row" class="field" style="display:none;margin-top:8px"><label>曲牌</label><input id="f-sub2" type="text" value="${escapeHtml(sub2)}"></div>
       <div id="rhyme-row" class="field" style="display:none;margin-top:8px"><label>韵部</label><input id="f-rhyme" type="text" value="${escapeHtml(rhyme)}"></div>
-      <div class="field"><label>正文</label><textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden">${escapeHtml(body)}</textarea>
+      <div class="field"><label>正文</label>
+        <div class="body-area">
+          <textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden;padding-bottom:32px">${escapeHtml(body)}</textarea>
+          <div id="f-body-render" class="body-render" style="padding:8px 8px 32px 8px;border:1px solid #ddd;border-radius:6px;margin-top:8px;background:#fff;display:none"></div>
+          <div id="body-word-count" class="body-word-count" aria-live="polite"></div>
+        </div>
         <div id="bodyLockControls" class="body-lock-controls" style="margin-top:8px"><button id="lock-body" class="btn small">🔒 锁定</button> <button id="unlock-body" class="btn small">✏️ 编辑</button></div>
         <div id="annotation-area" class="muted" style="margin-top:8px"></div>
       </div>

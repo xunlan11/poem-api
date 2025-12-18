@@ -633,8 +633,13 @@
       const quoteState = { double: false, single: false };
       for (let i = 0; i < value.length; i += 1) {
         const ch = value[i];
+        const prevCh = i > 0 ? value[i - 1] : '';
+        const nextCh = i < value.length - 1 ? value[i + 1] : '';
+        const isDecimalPoint = ch === '.' && /\d/.test(prevCh) && /\d/.test(nextCh);
         let replacement;
-        if (ch === '"') {
+        if (isDecimalPoint) {
+          replacement = null; // 保留数字中的小数点
+        } else if (ch === '"') {
           replacement = quoteState.double ? '”' : '“';
           quoteState.double = !quoteState.double;
         } else if (ch === '\'') {
