@@ -156,7 +156,7 @@
       if (renderList.length === 0) {
         const empty = documentRef.createElement('div');
         empty.className = 'muted';
-        empty.textContent = '暂无注释';
+        empty.textContent = '暂无';
         list.appendChild(empty);
       }
       renderList.forEach((item, dispIdx) => {

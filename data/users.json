@@ -857,5 +857,25 @@
     "student_id": "2513282",
     "created_at": "2025-12-17T12:11:24.475Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_68",
+    "username": "王欣然",
+    "password_hash": "$2a$10$tLGgIpljgvEr3STazzsJU.RAwbLuG7BDipeK2dCy1lI/bzZz8xqce",
+    "role": "user",
+    "real_name": "王欣然",
+    "student_id": "2412543",
+    "created_at": "2025-12-22T08:35:41.435Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_69",
+    "username": "刘婕",
+    "password_hash": "$2a$10$1EYrIhSnnR/S00xXHIIT8ebCHgg2w/TWvqWLEBD0zWMl96L2ydOZq",
+    "role": "user",
+    "real_name": "刘婕",
+    "student_id": "2512130",
+    "created_at": "2025-12-22T09:06:22.675Z",
+    "profile_completed": true
   }
 ]
