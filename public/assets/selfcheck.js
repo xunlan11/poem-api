@@ -199,7 +199,7 @@
 
     // 段尾
     const VALID_PARAGRAPH_ENDINGS = ['。', '！', '？'];
-    const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；'];
+    const POEM_EXTRA_PARAGRAPH_ENDINGS = ['，', '；', '：'];
     const EXTRA_PARAGRAPH_ENDINGS_BY_ID = { 'f-origin': ['，', '：'], };
     const EXTRA_PARAGRAPH_ENDING_FIELDS = {
       ids: new Set(['f-body', 'f-translation']), 

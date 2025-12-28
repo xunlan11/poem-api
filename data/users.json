@@ -844,7 +844,7 @@
     "password_hash": "$2a$10$V2.CxNiThNGbP6uN.Nw7kOKb2eLC7onRja4oa1/YOvXy7DTo8LFlK",
     "role": "user",
     "real_name": "薛博予",
-    "student_id": "2510938",
+    "student_id": "2510939",
     "created_at": "2025-12-17T09:11:29.760Z",
     "profile_completed": true
   },
@@ -876,6 +876,26 @@
     "real_name": "刘婕",
     "student_id": "2512130",
     "created_at": "2025-12-22T09:06:22.675Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_70",
+    "username": "1765269203",
+    "password_hash": "$2a$10$UY1psPW9rIFKXWE25X2K..TxK3T9yijC8oj2fB4j1s77Zgr1zTy6O",
+    "role": "user",
+    "real_name": "赵京昊",
+    "student_id": "2120240604",
+    "created_at": "2025-12-23T08:07:58.035Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_71",
+    "username": "2210870",
+    "password_hash": "$2a$10$EphWDiikqjo4bIpNhm/nk.MjGDyimVykavzkudeG4DZodD3mzGIEO",
+    "role": "user",
+    "real_name": "沈宇航",
+    "student_id": "2210870",
+    "created_at": "2025-12-24T00:41:53.486Z",
     "profile_completed": true
   }
 ]
