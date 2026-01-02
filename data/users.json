@@ -897,5 +897,15 @@
     "student_id": "2210870",
     "created_at": "2025-12-24T00:41:53.486Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_72",
+    "username": "1",
+    "password_hash": "$2a$10$yu05JhKP4K2VOk93LyCfRuG4mM4gmZhonJJ2wig5.SM3jZmz6/Kym",
+    "role": "user",
+    "real_name": "1",
+    "student_id": "1",
+    "created_at": "2026-01-02T05:15:28.228Z",
+    "profile_completed": true
   }
 ]

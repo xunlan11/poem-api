@@ -427,22 +427,17 @@
     const prevBtn = document.createElement('button');
     prevBtn.className = 'btn small';
     prevBtn.type = 'button';
-    prevBtn.textContent = '上一页';
+    prevBtn.textContent = '◀';
     prevBtn.disabled = currentPage <= 1;
     prevBtn.addEventListener('click', () => { if (currentPage > 1) goToPage(currentPage - 1); });
     const nextBtn = document.createElement('button');
     nextBtn.className = 'btn small';
     nextBtn.type = 'button';
-    nextBtn.textContent = '下一页';
+    nextBtn.textContent = '▶';
     nextBtn.disabled = currentPage >= totalPages;
     nextBtn.addEventListener('click', () => { if (currentPage < totalPages) goToPage(currentPage + 1); });
     const info = document.createElement('span');
     info.className = 'pagination-info';
-    info.textContent = `第 ${currentPage} / ${totalPages} 页`;
-    const jumpWrapper = document.createElement('div');
-    jumpWrapper.className = 'pagination-jump';
-    const jumpText = document.createElement('span');
-    jumpText.textContent = '跳至';
     const input = document.createElement('input');
     input.type = 'number';
     input.className = 'pagination-input';
@@ -458,15 +453,14 @@
       }
     });
     input.addEventListener('blur', () => { input.value = String(currentPage); });
-    const suffix = document.createElement('span');
-    suffix.textContent = '页';
-    jumpWrapper.appendChild(jumpText);
-    jumpWrapper.appendChild(input);
-    jumpWrapper.appendChild(suffix);
+    info.textContent = '第 ';
+    info.appendChild(input);
+    const totalSpan = document.createElement('span');
+    totalSpan.textContent = ` / ${totalPages} 页`;
+    info.appendChild(totalSpan);
     paginationEl.appendChild(prevBtn);
     paginationEl.appendChild(info);
     paginationEl.appendChild(nextBtn);
-    paginationEl.appendChild(jumpWrapper);
   }
 
   // 查询引用并格式化提示
@@ -522,6 +516,7 @@
       const editorHref = currentQueryEncoded ? `editor.html?id=${encodedId}&return=${currentQueryEncoded}` : `editor.html?id=${encodedId}`;
       const editorHrefEsc = escapeHtml(editorHref);
       const tr = document.createElement('tr');
+      const deleteButtonHtml = canDelete ? `<button data-act="delete" data-id="${item.id}" class="btn danger small">删除</button>` : '';
       tr.innerHTML = `
         <td>${idLabel}</td>
         <td><div class="name-cell">${item.name || ''}</div></td>
@@ -532,7 +527,7 @@
         <td>${reviewStatusHtml}</td>
         <td>${repairStatusHtml}</td>
         <td class="actions-cell"><div class="row-actions"><button data-act="open" data-id="${item.id}" data-url="${editorHrefEsc}" class="btn small">打开</button>
-        <button data-act="delete" data-id="${item.id}" class="btn danger small" ${canDelete ? '' : 'disabled'}>删除</button></div></td>
+        ${deleteButtonHtml}</div></td>
       `;
       tr.querySelectorAll('button[data-act]').forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -584,9 +579,9 @@
       exportDurationBtn.style.display = 'none';
     } else {
       if (!hasExportPermission) {
-        exportDurationBtn.disabled = true;
-        exportDurationBtn.title = '仅审核者/管理员可用';
+        exportDurationBtn.style.display = 'none';
       } else {
+        exportDurationBtn.style.display = '';
         exportDurationBtn.disabled = false;
         exportDurationBtn.title = '';
         exportDurationBtn.addEventListener('click', showExportModal);
@@ -598,9 +593,9 @@
       exportListBtn.style.display = 'none';
     } else {
       if (!hasExportPermission) {
-        exportListBtn.disabled = true;
-        exportListBtn.title = '仅审核者/管理员可用';
+        exportListBtn.style.display = 'none';
       } else {
+        exportListBtn.style.display = '';
         exportListBtn.disabled = false;
         exportListBtn.title = '';
         exportListBtn.addEventListener('click', handleExportList);
@@ -612,9 +607,9 @@
       archiveBtn.style.display = 'none';
     } else {
       if (!isAdmin) {
-        archiveBtn.disabled = true;
-        archiveBtn.title = '仅管理员可用';
+        archiveBtn.style.display = 'none';
       } else {
+        archiveBtn.style.display = '';
         archiveBtn.disabled = false;
         archiveBtn.title = '';
         archiveBtn.addEventListener('click', handleArchiveAction);

@@ -9,7 +9,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { pinyin } = require('pinyin-pro');
 const multer = require('multer');
-const XLSX = require('xlsx');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
@@ -115,31 +114,9 @@ const defaultStore = () => ({
 });
 let store = defaultStore();
 let users = [];
-let externalItems = [];
-
-// 外部列表
-async function loadExternalList() {
-  try {
-    const filePath = path.join(__dirname, '构建总表.xlsx');
-    if (await fs.pathExists(filePath)) {
-      const workbook = XLSX.readFile(filePath);
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-      externalItems = rows.map(row => {
-        const val = row && row[0];
-        return val ? String(val).trim() : '';
-      }).filter(Boolean);
-      console.log(`Loaded ${externalItems.length} items from external list.`);
-    }
-  } catch (err) {
-    console.error('Failed to load external list', err);
-  }
-}
 
 // 数据存储
 async function loadStore() {
-  await loadExternalList();
   await fs.ensureDir(DATA_DIR);
   if (!(await fs.pathExists(DATA_FILE))) {
     await fs.writeJson(DATA_FILE, defaultStore(), { spaces: 2 });
@@ -208,7 +185,7 @@ function findById(id) {
 function buildNodeLabel(node) {
   if (!node) return '';
   const f = node.fields || {};
-  return node.name || f.title || f.name || f.common || f.commonName || f.statement || '';
+  return node.name || f.title || f.name || f.common || f.commonName || f.statement || f.aliases || '';
 }
 
 // 查找引用指定目标ID的节点
@@ -279,7 +256,7 @@ function simplify(node) {
   } else if (node.type === 'E') {
     displayName = fields.statement || node.name || node.title || (node.explanation?.slice(0, 16) || '');
   } else if (node.type === 'S') {
-    displayName = fields.commonName || fields.statement || node.name || node.title || node.extra?.introduction || (node.explanation?.slice(0, 16) || '');
+    displayName = fields.commonName || fields.statement || fields.aliases || node.name || node.title || node.extra?.introduction || (node.explanation?.slice(0, 16) || '');
   } else if (node.type === 'L') {
     const subKey = fields.sub || node.fields?.sub || node.extra?.sub;
     if (subKey === 'yunbu') {
@@ -370,6 +347,7 @@ function fuzzySearch(items, q) {
     { name: 'fields.common', weight: 0.8 },
     { name: 'fields.commonName', weight: 0.9 },
     { name: 'fields.statement', weight: 0.8 },
+    { name: 'fields.aliases', weight: 0.8 },
     { name: 'fields.otherStatement', weight: 0.8 },
     { name: 'fields.otherStatements', weight: 0.8 },
     { name: 'fields.otherNames', weight: 0.7 },
@@ -675,19 +653,6 @@ app.get('/api/search', (req, res) => {
   const { q, type } = req.query;
   const items = allItems(type);
   const results = fuzzySearch(items, q).map(simplify).slice(0, 50);
-  if (q && q.trim()) {
-    const query = q.trim().toLowerCase();
-    const externalMatches = externalItems.filter(item => item.toLowerCase().includes(query));
-    const limitedExternal = externalMatches.slice(0, 10).map(name => ({
-      id: '总表',
-      type: 'EXTERNAL',
-      name: name,
-      creator: '系统导入',
-      createdAt: '',
-      isExternal: true
-    }));
-    results.push(...limitedExternal);
-  }
   res.json({ query: q || '', results });
 });
 

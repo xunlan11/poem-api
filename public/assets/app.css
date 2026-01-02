@@ -107,6 +107,26 @@ body {
 	flex-wrap: wrap;
 }
 
+.home-pending .row-head {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	gap: 12px;
+}
+
+.home-pending .row-head .row-title {
+	justify-self: start;
+}
+
+.home-pending .row-head .pagination-bar {
+	justify-self: center;
+	margin-top: 0;
+}
+
+.home-pending .row-head #myPendingSummary {
+	justify-self: end;
+}
+
 .row-title {
 	font-weight: 600;
 	margin: 0;
@@ -292,6 +312,10 @@ body {
 	margin-top: 12px;
 }
 
+.row-actions .pagination-bar {
+	margin-top: 0;
+}
+
 .pagination-bar .btn {
 	padding: 4px 10px;
 }
@@ -307,6 +331,24 @@ body {
 	gap: 4px;
 	font-size: 14px;
 	color: var(--muted);
+}
+
+.pagination-input {
+	width: 64px;
+	padding: 4px 6px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.pagination-input {
+	appearance: textfield;
+}
+
+.pagination-input::-webkit-outer-spin-button,
+.pagination-input::-webkit-inner-spin-button {
+	appearance: none;
+	margin: 0;
 }
 
 .pagination-input {
@@ -326,8 +368,7 @@ body {
 .poem-readonly .del-row,
 .poem-readonly .move-btn,
 .poem-readonly .check-dup-btn,
-.poem-readonly #lock-body,
-.poem-readonly #unlock-body {
+.poem-readonly #body-lock-toggle {
 	display: none !important;
 }
 
@@ -337,23 +378,50 @@ body {
 
 .body-area textarea,
 .body-area .body-render {
-	padding-bottom: 32px;
+	padding-bottom: 0;
+	font-size: 16px;
+	line-height: 1.6;
 }
 
 .body-render {
 	min-height: 48px;
 }
 
+.body-head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	justify-content: space-between;
+	margin-bottom: 4px;
+}
+
+.body-head-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-left: auto;
+	flex-wrap: wrap;
+}
+
+.body-lock-controls {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.preface-row input {
+	font-size: 14px;
+	padding: 8px 10px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+}
+
 .body-word-count {
-	position: absolute;
-	right: 12px;
-	bottom: 10px;
 	font-size: 12px;
 	color: var(--muted);
 	background: rgba(255, 255, 255, 0.9);
 	padding: 2px 10px;
 	border-radius: 999px;
-	pointer-events: none;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
@@ -641,6 +709,21 @@ body {
 	display: block;
 }
 
+.nature-row {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.nature-intro {
+	flex: 1 1 280px;
+}
+
+.nature-image-field {
+	flex: 0 0 240px;
+}
+
 .image-actions {
 	display: flex;
 	align-items: center;
@@ -664,9 +747,11 @@ body {
 }
 
 .image-note {
-	font-size: 12px;
+	font-size: 10px;
+	line-height: 1.2;
 	margin-bottom: 8px;
 	display: block;
+	padding-top: 8px;
 }
 
 #formContainer.poem-readonly .nature-image-field .image-actions,

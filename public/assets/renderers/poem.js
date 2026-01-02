@@ -68,13 +68,22 @@
       </div>
       <div id="sub2-row" class="field" style="display:none;margin-top:8px"><label>曲牌</label><input id="f-sub2" type="text" value="${escapeHtml(sub2)}"></div>
       <div id="rhyme-row" class="field" style="display:none;margin-top:8px"><label>韵部</label><input id="f-rhyme" type="text" value="${escapeHtml(rhyme)}"></div>
-      <div class="field"><label>正文</label>
-        <div class="body-area">
-          <textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden;padding-bottom:32px">${escapeHtml(body)}</textarea>
-          <div id="f-body-render" class="body-render" style="padding:8px 8px 32px 8px;border:1px solid #ddd;border-radius:6px;margin-top:8px;background:#fff;display:none"></div>
-          <div id="body-word-count" class="body-word-count" aria-live="polite"></div>
+      <div class="field">
+        <div class="field-row body-head">
+          <label style="margin-bottom:0">正文</label>
+          <div class="body-head-actions">
+            <div id="body-word-count" class="body-word-count" aria-live="polite"></div>
+            <button id="preface-toggle" class="btn small" type="button">序（关闭）</button>
+            <div id="bodyLockControls" class="body-lock-controls"><button id="body-lock-toggle" class="btn small">🔒 锁定</button></div>
+          </div>
         </div>
-        <div id="bodyLockControls" class="body-lock-controls" style="margin-top:8px"><button id="lock-body" class="btn small">🔒 锁定</button> <button id="unlock-body" class="btn small">✏️ 编辑</button></div>
+        <div id="preface-row" class="preface-row" style="display:none; margin-bottom:8px;">
+          <input id="f-preface" type="text" data-link-field="extra.preface" style="width:100%;">
+        </div>
+        <div class="body-area">
+          <textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden;">${escapeHtml(body)}</textarea>
+          <div id="f-body-render" class="body-render" style="padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:8px;background:#fff;display:none"></div>
+        </div>
         <div id="annotation-area" class="muted" style="margin-top:8px"></div>
       </div>
       <div class="field"><label>译文</label><textarea id="f-translation" rows="1" data-link-field="extra.translation" data-autosize-min="32" style="width:100%;resize:none;overflow:hidden">${escapeHtml(translation)}</textarea></div>
@@ -114,8 +123,10 @@
         renderInlinePairs(cl, commentArr, 'source', 'content', '出处', '内容', commentRenderOpts);
       });
     }
-    const lockBtn = formContainer.querySelector('#lock-body');
-    const unlockBtn = formContainer.querySelector('#unlock-body');
+    const lockBtn = formContainer.querySelector('#body-lock-toggle');
+    const prefaceToggle = formContainer.querySelector('#preface-toggle');
+    const prefaceRow = formContainer.querySelector('#preface-row');
+    const prefaceInput = formContainer.querySelector('#f-preface');
     const textarea = formContainer.querySelector('#f-body');
     const annoArea = formContainer.querySelector('#annotation-area');
     const annotationModule = typeof annotationsFactory === 'function'
@@ -128,7 +139,6 @@
         textarea,
         annoArea,
         lockBtn,
-        unlockBtn,
         escapeHtml,
         autosizeTextarea,
         registerEditableWatcher,
@@ -154,6 +164,24 @@
     const initialAnnotations = Array.isArray(node?.annotations) ? node.annotations : [];
     if (annotationModule && typeof annotationModule.setAnnotations === 'function') {
       annotationModule.setAnnotations(initialAnnotations);
+    }
+
+    // 初始化与切换序输入框
+    const prefaceValue = node ? (node.extra?.preface || '') : '';
+    if (prefaceInput) prefaceInput.value = prefaceValue;
+    function updatePrefaceVisibility(show) {
+      if (!prefaceRow || !prefaceToggle) return;
+      prefaceRow.style.display = show ? 'block' : 'none';
+      prefaceToggle.textContent = show ? '序（开启）' : '序（关闭）';
+      if (!show && prefaceInput) prefaceInput.value = '';
+    }
+    const shouldShowPreface = !!(prefaceValue && prefaceValue.trim());
+    updatePrefaceVisibility(shouldShowPreface);
+    if (prefaceToggle) {
+      prefaceToggle.addEventListener('click', () => {
+        const isOpen = prefaceToggle.textContent.includes('开启');
+        updatePrefaceVisibility(!isOpen);
+      });
     }
     const initialLinks = Array.isArray(node?.links) ? node.links.map(normalizeLink).filter(Boolean) : [];
     replaceLinks(initialLinks);

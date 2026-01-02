@@ -12,9 +12,9 @@
   const nodeIdEl = document.getElementById('nodeId');
   // 链接按钮
   const linkBtn = document.getElementById('linkBtn');
-  // 编辑按钮
+  // 编辑/保存切换按钮
   const editBtn = document.getElementById('editBtn');
-  // 保存按钮
+  // 旧保存按钮（隐藏）
   const saveBtn = document.getElementById('saveBtn');
   // 审核按钮
   const reviewBtn = document.getElementById('reviewBtn');
@@ -191,10 +191,12 @@
   // 刷新动作按钮的函数
   function refreshActionButtons() {
     const editable = !!state.editable;
-    if (editBtn) editBtn.disabled = editable || saveInFlight;
+    if (editBtn) {
+      editBtn.textContent = saveInFlight ? '保存中' : (editable ? '保存' : '编辑');
+      editBtn.disabled = saveInFlight;
+    }
     if (saveBtn) {
-      saveBtn.disabled = !editable || saveInFlight;
-      saveBtn.textContent = saveInFlight ? '保存中' : '保存';
+      saveBtn.style.display = 'none';
     }
     if (reviewBtn) reviewBtn.disabled = !editable || saveInFlight;
     if (selfCheckBtn) selfCheckBtn.disabled = !editable || saveInFlight;
@@ -377,27 +379,17 @@
     } else {
       listHtml = '<div class="list-group">';
       results.forEach(item => {
-        const isExternal = !!item.isExternal;
         const leftText = `${item.id} | ${escapeHtml(item.name || item.title)}`;
         const rightParts = [];
         if (item.creator) rightParts.push(item.creator);
         if (item.createdAt) rightParts.push(item.createdAt.slice(0, 10));
         const rightText = rightParts.join(' | ');
-        if (isExternal) {
-          listHtml += `
-            <div class="result-item" style="background:#fff7ed;border-color:#ffedd5;margin-bottom:6px;padding:6px 8px;border:1px solid #ffedd5;border-radius:6px;">
-              <div style="font-weight:500;color:#c2410c">${leftText}</div>
-              <div style="font-size:13px;color:#9a3412">该条目存在于构建总表中</div>
-            </div>
-          `;
-        } else {
-          listHtml += `
-            <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
-              <div style="font-weight:500">${leftText}</div>
-              <div style="font-size:13px;color:#64748b">${escapeHtml(rightText)}</div>
-            </a>
-          `;
-        }
+        listHtml += `
+          <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
+            <div style="font-weight:500">${leftText}</div>
+            <div style="font-size:13px;color:#64748b">${escapeHtml(rightText)}</div>
+          </a>
+        `;
       });
       listHtml += '</div>';
     }
@@ -652,6 +644,7 @@
       replaceLinks([]);
       isOwner = true;
       if (linkBtn) linkBtn.style.display = 'inline-block';
+      if (selfCheckBtn) selfCheckBtn.style.display = 'inline-block';
       setEditable(true);
     }
     else {
@@ -665,8 +658,9 @@
       isOwner = (node.meta?.createdById && node.meta.createdById === me?.id) || (node.meta?.createdBy && (node.meta.createdBy === (me?.real_name || me?.username)));
       const canEditAll = me && (me.role === 'reviewer' || me.role === 'admin');
       editBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
-      saveBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
+      saveBtn.style.display = 'none';
       if (linkBtn) linkBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
+      if (selfCheckBtn) selfCheckBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       reviewBtn.style.display = 'none';
     }
     setCommonMeta(state.node);
@@ -839,8 +833,17 @@
     };
 
     setLinkingImmediateSave(requestImmediateSave);
-    editBtn.onclick = () => setEditable(true);
-    saveBtn.onclick = async () => { await saveNode(); };
+    if (editBtn) {
+      editBtn.onclick = async () => {
+        if (saveInFlight) return;
+        if (!state.editable) {
+          setEditable(true);
+        } else {
+          await saveNode();
+        }
+      };
+    }
+    if (saveBtn) saveBtn.style.display = 'none';
 
     // 附加确认导航的函数
     function attachConfirmNavigation(el, target) {

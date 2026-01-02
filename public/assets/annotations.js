@@ -3,7 +3,6 @@
   const root = global;
   if (!root) return;
   root.PoemEditor = root.PoemEditor || {};
-  // 初始化注释功能的主函数
   root.PoemEditor.initAnnotations = function initAnnotations(options = {}) {
     const documentRef = options.document || root.document;
     const windowRef = options.window || root;
@@ -12,8 +11,7 @@
     const formContainer = options.formContainer || documentRef?.getElementById?.('formContainer') || null;
     const textarea = options.textarea || formContainer?.querySelector?.('#f-body') || null;
     const annoArea = options.annoArea || formContainer?.querySelector?.('#annotation-area') || null;
-    const lockBtn = options.lockBtn || formContainer?.querySelector?.('#lock-body') || null;
-    const unlockBtn = options.unlockBtn || formContainer?.querySelector?.('#unlock-body') || null;
+    const lockBtn = options.lockBtn || formContainer?.querySelector?.('#body-lock-toggle') || null;
     const escapeHtml = typeof options.escapeHtml === 'function' ? options.escapeHtml : (value => String(value || ''));
     const autosizeTextarea = typeof options.autosizeTextarea === 'function' ? options.autosizeTextarea : (() => { });
     const registerEditableWatcher = typeof options.registerEditableWatcher === 'function' ? options.registerEditableWatcher : (() => () => { });
@@ -34,32 +32,29 @@
     const MAX_VISIBLE = (typeof options.maxVisible === 'number' && options.maxVisible > 0) ? options.maxVisible : 5;
     const renderContainerId = options.renderContainerId || 'f-body-render';
     const wordCountEl = options.wordCountEl || formContainer?.querySelector?.('#body-word-count') || null;
-    let wordCountMode = 'body';
     let annotationFieldMap = new Map();
     let annotations = [];
 
-    // 统计文本长度（忽略符号）的函数
+    // 统计文本长度（忽略符号）
     const countTextLength = (text) => {
       if (!text) return 0;
       const normalized = text.replace(/[^\p{L}\p{N}]/gu, '');
       return normalized.length;
     };
 
-    // 渲染字数显示的函数
-    const renderWordCount = (count, mode = 'body') => {
+    // 渲染字数显示
+    const renderWordCount = (count) => {
       if (!wordCountEl) return;
-      wordCountMode = mode === 'selection' ? 'selection' : 'body';
-      const prefix = wordCountMode === 'selection' ? '选中' : '共';
-      wordCountEl.textContent = `${prefix}${count}字`;
+      wordCountEl.textContent = `正文${count}字`;
     };
 
-    // 根据正文内容刷新字数的函数
+    // 刷新字数
     const updateWordCountFromBody = () => {
       if (!textarea) return;
-      renderWordCount(countTextLength(textarea.value || ''), 'body');
+      renderWordCount(countTextLength(textarea.value || ''));
     };
 
-    // 清理注释列表的函数
+    // 清理注释列表
     function sanitizeAnnotations(list) {
       if (!Array.isArray(list)) return [];
       return list.filter(Boolean).map(item => {
@@ -77,7 +72,7 @@
       });
     }
 
-    // 确保注释有唯一键的函数
+    // 确保注释有唯一键
     function ensureAnnotationKey(annotation) {
       if (!annotation || typeof annotation !== 'object') return '';
       if (typeof annotation.linkKey === 'string' && annotation.linkKey) return annotation.linkKey;
@@ -94,13 +89,13 @@
       return annotation.linkKey;
     }
 
-    // 获取注释字段键的函数
+    // 获取注释字段键
     function getAnnotationFieldKey(annotation) {
       const key = ensureAnnotationKey(annotation);
       return key ? `annotations.${key}.note` : '';
     }
 
-    // 计算注释深度的函数
+    // 计算注释深度
     function computeDepths(list) {
       if (!Array.isArray(list) || list.length === 0) return [];
       const events = [];
@@ -130,7 +125,7 @@
       return depths;
     }
 
-    // 渲染注释列表的函数
+    // 渲染注释列表
     function renderAnnotations() {
       if (!annoArea) return;
       annotationFieldMap = new Map();
@@ -263,7 +258,7 @@
       if (renderDiv) renderAnnotatedBody();
     }
 
-    // 查找或创建渲染容器的函数
+    // 查找或创建渲染容器
     function findOrCreateRenderContainer() {
       if (!formContainer) return null;
       let renderDiv = formContainer.querySelector(`#${renderContainerId}`);
@@ -285,7 +280,7 @@
       return renderDiv;
     }
 
-    // 渲染带注释的正文的函数
+    // 渲染注释正文
     function renderAnnotatedBody() {
       if (!textarea || !formContainer) return null;
       const text = textarea.value || '';
@@ -391,11 +386,11 @@
         if (tipParts.length) sp.title = tipParts.join('\n');
       });
       ensureAnnotatedBodyHandlers(renderDiv);
-      if (wordCountMode !== 'selection') updateWordCountFromBody();
+      updateWordCountFromBody();
       return renderDiv;
     }
 
-    // 确保带注释正文的事件处理器的函数
+    // 注释正文的事件处理器
     function ensureAnnotatedBodyHandlers(renderDiv) {
       if (!renderDiv) return;
       if (!renderDiv.__clickDelegationAttached) {
@@ -412,7 +407,7 @@
       }
     }
 
-    // 带注释正文点击处理器的函数
+    // 注释正文点击处理器
     function annotatedBodyClickHandler(event) {
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
@@ -426,7 +421,6 @@
         }
         return;
       }
-      if (wordCountMode === 'selection') updateWordCountFromBody();
       const sel = windowRef.getSelection ? windowRef.getSelection() : null;
       if (sel && !sel.isCollapsed) return;
       if (renderDiv.__lastSelectionAt && (Date.now() - renderDiv.__lastSelectionAt) < 600) {
@@ -439,7 +433,7 @@
       if (idx >= 0) showAnnotationEditor(annotations[idx], idx);
     }
 
-    // 带注释正文右键菜单处理器的函数
+    // 注释正文右键处理器
     function annotatedBodyContextMenuHandler(event) {
       const renderDiv = event.currentTarget;
       const span = event.target.closest('span[data-pos]');
@@ -469,7 +463,7 @@
       }
     }
 
-    // 处理带注释正文选择的函数
+    // 注释正文选择
     function handleAnnotatedSelection() {
       if (!state.editable || !textarea) return;
       const renderDiv = this;
@@ -485,7 +479,6 @@
       const ePos = parseInt(endSpan.getAttribute('data-pos') || 0, 10) + eOffset;
       if (Number.isNaN(sPos) || Number.isNaN(ePos) || ePos <= sPos) return;
       const selText = textarea.value.slice(sPos, ePos);
-      renderWordCount(countTextLength(selText), 'selection');
       if (isLinkBrushActive()) {
         sel.removeAllRanges();
         renderDiv.__lastSelectionAt = Date.now();
@@ -497,7 +490,7 @@
       }
     }
 
-    // 为内容文本重新索引注释的函数
+    // 为文本重新索引注释
     function reindexAnnotationsForContentText(text) {
       if (!Array.isArray(annotations) || !annotations.length) return false;
       const body = typeof text === 'string' ? text : '';
@@ -527,7 +520,7 @@
       return changed;
     }
 
-    // 处理文本区域输入的函数
+    // 处理文本区域输入
     function handleTextareaInput() {
       if (!textarea) return;
       reindexFieldLinks('content');
@@ -542,7 +535,7 @@
       }
     }
 
-    // 显示注释编辑器的函数
+    // 显示注释编辑器
     function showAnnotationEditor(annotation, index) {
       if (!annoArea || !state.editable) return;
       annoArea.querySelectorAll('.anno-editor').forEach(ed => ed.remove());
@@ -564,7 +557,6 @@
       leftTop.style.wordBreak = 'break-word';
       const leftText = annotation.text || '';
       leftTop.textContent = leftText;
-      // 根据内容行数和实际渲染高度自适应左侧预览高度
       try {
         const adjust = () => {
           try {
@@ -576,7 +568,6 @@
             leftTop.style.height = `${desired}px`;
           } catch (e) { /* noop */ }
         };
-        // 在下一帧测量，确保已插入 DOM 时计算正确
         requestAnimationFrame(adjust);
       } catch (e) { /* noop */ }
       const rightTop = documentRef.createElement('div');
@@ -606,8 +597,8 @@
       annoArea.prepend(editor);
       const noteInputEl = editor.querySelector('.anno-input');
       if (noteInputEl) {
-        const snippetLines = Math.max(1, (annotation.text || '').split(/\r?\n/).length);
-        const preferredMin = Math.min(200, Math.max(24, snippetLines * 24));
+        const noteLines = Math.max(1, (annotation.note || '').split(/\r?\n/).length);
+        const preferredMin = Math.min(200, Math.max(24, noteLines * 24));
         noteInputEl.dataset.autosizeMin = String(preferredMin);
         autosizeTextarea(noteInputEl);
         noteInputEl.addEventListener('input', () => autosizeTextarea(noteInputEl));
@@ -640,7 +631,14 @@
       });
     }
 
-    // 锁定正文的函数
+    // 锁定正文
+    function setLockButtonState(isLocked, canToggle = true) {
+      if (!lockBtn) return;
+      lockBtn.textContent = isLocked ? '✏️ 编辑' : '🔒 锁定';
+      lockBtn.dataset.locked = isLocked ? 'true' : 'false';
+      lockBtn.disabled = !canToggle;
+    }
+
     function lockBody() {
       if (!textarea) return;
       textarea.readOnly = true;
@@ -648,39 +646,41 @@
       const rv = renderAnnotatedBody();
       if (rv) rv.style.display = 'block';
       updateWordCountFromBody();
-      if (lockBtn) lockBtn.disabled = true;
-      if (unlockBtn) unlockBtn.disabled = state.editable ? false : true;
+      setLockButtonState(true, !!state.editable);
     }
 
-    // 解锁正文的函数
+    // 解锁正文
     function unlockBody() {
       if (!textarea) return;
       if (isLinkBrushActive()) {
         return;
       }
       textarea.readOnly = false;
-      if (lockBtn) lockBtn.disabled = state.editable ? false : true;
-      if (unlockBtn) unlockBtn.disabled = true;
+      setLockButtonState(false, !!state.editable);
       textarea.style.display = '';
       try { autosizeTextarea(textarea); } catch (e) { }
       const rv = formContainer ? formContainer.querySelector(`#${renderContainerId}`) : null;
       if (rv) rv.style.display = 'none';
       updateWordCountFromBody();
     }
-
-    if (lockBtn) lockBtn.addEventListener('click', lockBody);
-    if (unlockBtn) {
-      unlockBtn.addEventListener('click', unlockBody);
-      unlockBtn.disabled = true;
+    if (lockBtn) {
+      lockBtn.addEventListener('click', () => {
+        if (!textarea) return;
+        const isLocked = lockBtn.dataset.locked === 'true' || textarea.readOnly;
+        if (!state.editable && isLocked) return;
+        if (isLocked) {
+          unlockBody();
+        } else {
+          lockBody();
+        }
+      });
     }
-
     registerLinkBrushHandler(active => {
       if (!lockBtn || !textarea) return;
       if (active) {
         lockBody();
       }
     });
-
     registerEditableWatcher(editable => {
       if (!editable) {
         lockBody();
@@ -748,7 +748,7 @@
 
     updateWordCountFromBody();
 
-    // 设置注释列表的函数
+    // 设置注释列表
     function setAnnotations(nextList) {
       annotations = sanitizeAnnotations(nextList);
       showAllAnnotations = false;
@@ -756,21 +756,16 @@
       renderAnnotatedBody();
     }
 
-    // 获取注释列表的函数
+    // 获取注释列表
     function getAnnotations() {
       return annotations.map(item => ({ ...item }));
     }
 
     return {
-      // 设置注释列表的方法
       setAnnotations,
-      // 获取注释列表的方法
       getAnnotations,
-      // 渲染带注释正文的方法
       renderAnnotatedBody,
-      // 锁定正文的方法
       lockBody,
-      // 解锁正文的方法
       unlockBody,
     };
   };

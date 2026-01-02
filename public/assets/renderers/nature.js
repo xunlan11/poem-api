@@ -20,6 +20,7 @@
     const scientificName = node ? node.fields?.scientificName || '' : '';
     const family = node ? node.fields?.family || '' : '';
     const genus = node ? node.fields?.genus || '' : '';
+    const aliases = node ? node.fields?.aliases || '' : '';
     let imagePath = node ? (node.extra?.image || '') : '';
     const basePath = typeof Poem.base === 'function' ? Poem.base() : '';
     const toImageSrc = (path) => path ? `${basePath}${path}` : '';
@@ -28,31 +29,34 @@
     let examples = node ? node.fields?.examples || [] : [];
     if (!Array.isArray(examples) || examples.length === 0) examples = [{ 出处: '', 内容: '' }];
     formContainer.innerHTML = `
-      <div class="grid-2">
+      <div class="grid-3">
         <div class="field"><label>通用名</label>
           <div class="field-row"><input id="f-common-name" type="text" data-link-field="fields.commonName" value="${escapeHtml(commonName)}"><button type="button" class="btn small check-dup-btn">查重</button></div>
         </div>
         <div class="field"><label>表述</label><input id="f-statement" type="text" data-link-field="fields.statement" value="${escapeHtml(statement)}"></div>
+        <div class="field"><label>别称</label><input id="f-aliases" type="text" data-link-field="fields.aliases" value="${escapeHtml(aliases)}"></div>
       </div>
       <div class="grid-3">
         <div class="field"><label>学名</label><input id="f-scientific-name" type="text" data-link-field="fields.scientificName" class="skip-self-check" value="${escapeHtml(scientificName)}"></div>
         <div class="field"><label>科</label><input id="f-family" type="text" data-link-field="fields.family" value="${escapeHtml(family)}"></div>
         <div class="field"><label>属</label><input id="f-genus" type="text" data-link-field="fields.genus" value="${escapeHtml(genus)}"></div>
       </div>
-      <div class="field"><label>介绍</label><textarea id="f-introduction" rows="1" data-link-field="extra.introduction" style="width:100%;resize:none;overflow:hidden">${escapeHtml(introduction)}</textarea></div>
-      <div class="field"><label>意象</label><textarea id="f-same-imagery" rows="1" data-link-field="extra.sameImagery" style="width:100%;resize:none;overflow:hidden">${escapeHtml(sameImagery)}</textarea></div>
-      <div class="field nature-image-field">
-        <div class="label-row">
-          <label>图片</label>
-          <div class="image-actions">
-            <button id="uploadNatureImage" type="button" class="btn small">上传图片</button>
-            <button id="clearNatureImage" type="button" class="btn small" ${imagePath ? '' : 'disabled'}>移除</button>
-          </div>
+      <div class="nature-row">
+        <div class="nature-intro">
+          <div class="field"><label>介绍</label><textarea id="f-introduction" rows="1" data-link-field="extra.introduction" style="width:100%;resize:none;overflow:hidden">${escapeHtml(introduction)}</textarea></div>
+          <div class="field"><label>意象</label><textarea id="f-same-imagery" rows="1" data-link-field="extra.sameImagery" style="width:100%;resize:none;overflow:hidden">${escapeHtml(sameImagery)}</textarea></div>
         </div>
-        <div class="image-note muted">备注：支持 PNG/JPG/WebP/GIF，最大 5MB</div>
-        <div id="natureImageBlock" class="image-upload-block">
-          <div id="natureImagePreview" class="image-preview">${imagePath ? `<img data-src="${escapeHtml(toImageSrc(imagePath))}" alt="图片预览" loading="lazy">` : '<div class="muted">暂无图片</div>'}</div>
-          <input id="natureImageInput" type="file" accept="image/*" style="display:none">
+        <div class="field nature-image-field">
+          <div class="label-row">
+            <label>图片</label><div class="image-note muted">PNG/JPG/WebP/GIF<br>最大 5MB</div>
+            <div class="image-actions">
+              <button id="natureImageAction" type="button" class="btn small">${imagePath ? '移除' : '上传'}</button>
+            </div>
+          </div>
+          <div id="natureImageBlock" class="image-upload-block">
+            <div id="natureImagePreview" class="image-preview">${imagePath ? `<img data-src="${escapeHtml(toImageSrc(imagePath))}" alt="图片预览" loading="lazy">` : '<div class="muted">暂无图片</div>'}</div>
+            <input id="natureImageInput" type="file" accept="image/*" style="display:none">
+          </div>
         </div>
       </div>
       <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
@@ -63,7 +67,8 @@
       checkDupBtn.addEventListener('click', () => {
         const commonVal = (formContainer.querySelector('#f-common-name').value || '').trim();
         const stmtVal = (formContainer.querySelector('#f-statement').value || '').trim();
-        const q = [commonVal, stmtVal].filter(Boolean).join(' ');
+        const aliasVal = (formContainer.querySelector('#f-aliases').value || '').trim();
+        const q = [commonVal, stmtVal, aliasVal].filter(Boolean).join(' ');
         context.checkDuplicate(q, 'S');
       });
     }
@@ -71,8 +76,7 @@
     const sameImageryInput = formContainer.querySelector('#f-same-imagery');
     const imageBlock = formContainer.querySelector('#natureImageBlock');
     const imagePreview = formContainer.querySelector('#natureImagePreview');
-    const uploadBtn = formContainer.querySelector('#uploadNatureImage');
-    const clearBtn = formContainer.querySelector('#clearNatureImage');
+    const imageActionBtn = formContainer.querySelector('#natureImageAction');
     const fileInput = formContainer.querySelector('#natureImageInput');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
@@ -123,35 +127,32 @@
       } else {
         imagePreview.innerHTML = '<div class="muted">暂无图片</div>';
       }
-      if (clearBtn) clearBtn.disabled = !imagePath || !state.editable;
     }
     updateImagePreview();
 
     // 确保可编辑状态的函数
     function ensureEditableStates() {
-      const allowUpload = !!state.editable;
-      if (uploadBtn) {
-        uploadBtn.disabled = !allowUpload;
-      }
-      if (clearBtn) clearBtn.disabled = !state.editable || !imagePath;
+      if (!imageActionBtn) return;
+      imageActionBtn.disabled = !state.editable;
+      imageActionBtn.textContent = imagePath ? '移除' : '上传';
     }
     ensureEditableStates();
-    uploadBtn && uploadBtn.addEventListener('click', () => {
+    imageActionBtn && imageActionBtn.addEventListener('click', () => {
       if (!state.editable) return;
+      if (imagePath) {
+        imagePath = '';
+        if (state.node) {
+          state.node.extra = state.node.extra || {};
+          state.node.extra.image = '';
+        }
+        updateImagePreview();
+        ensureEditableStates();
+        return;
+      }
       if (fileInput) {
         fileInput.value = '';
         fileInput.click();
       }
-    });
-    clearBtn && clearBtn.addEventListener('click', () => {
-      if (!state.editable) return;
-      imagePath = '';
-      if (state.node) {
-        state.node.extra = state.node.extra || {};
-        state.node.extra.image = '';
-      }
-      updateImagePreview();
-      ensureEditableStates();
     });
     fileInput && fileInput.addEventListener('change', () => {
       const file = fileInput.files && fileInput.files[0];
@@ -169,9 +170,9 @@
       if (!state.editable) {
         return;
       }
-      if (uploadBtn) {
-        uploadBtn.disabled = true;
-        uploadBtn.textContent = '上传中...';
+      if (imageActionBtn) {
+        imageActionBtn.disabled = true;
+        imageActionBtn.textContent = '上传中...';
       }
       try {
         const formData = new FormData();
@@ -199,9 +200,6 @@
         console.error(err);
         Poem.toast?.(err.message || '上传失败');
       } finally {
-        if (uploadBtn) {
-          uploadBtn.textContent = '上传图片';
-        }
         ensureEditableStates();
       }
     }
@@ -214,6 +212,7 @@
         scientificName: (formContainer.querySelector('#f-scientific-name') || {}).value || '',
         family: (formContainer.querySelector('#f-family') || {}).value || '',
         genus: (formContainer.querySelector('#f-genus') || {}).value || '',
+        aliases: (formContainer.querySelector('#f-aliases') || {}).value || '',
         examples: examplesEl ? Array.from(examplesEl.querySelectorAll('.ordered-item')).map(div => {
           const inputs = div.querySelectorAll('input');
           return { 出处: inputs[0]?.value || '', 内容: inputs[1]?.value || '' };
