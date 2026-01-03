@@ -12,7 +12,7 @@
   <header class="topbar">
     <h1>用户管理</h1>
     <div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
-    <a href="./" class="link">返回首页</a>
+    <a href="./" class="link">首页</a>
   </header>
   <main class="container">
     <section class="section-card">
@@ -103,15 +103,15 @@
           actions = '<span class="text-muted">超级管理员</span>';
         } else {
           if (u.role === 'user') {
-            actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
-            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>审核员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>管理员</button> `;
           } else if (u.role === 'reviewer') {
-            actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
-            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>设为管理员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='user'>整理员</button> `;
+            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>管理员</button> `;
           } else if (u.role === 'admin') {
             if (u.id !== me.id) {
-              actions += `<button class='btn small' data-id='${u.id}' data-act='user'>设为整理员</button> `;
-              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>设为审核员</button> `;
+              actions += `<button class='btn small' data-id='${u.id}' data-act='user'>整理员</button> `;
+              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>审核员</button> `;
             } else {
               actions += '<span class="text-muted">当前用户</span>';
             }

@@ -12,7 +12,7 @@
   <header class="topbar">
     <h1>登录</h1>
     <div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
-    <a href="./" class="link">返回首页</a>
+    <a href="./" class="link">首页</a>
   </header>
   <main class="container">
     <section class="section-card">
@@ -21,10 +21,9 @@
         <div class="field"><label>用户名</label><input id="username"></div>
         <div class="field"><label>密码</label><input id="password" type="password"></div>
       </div>
-      <label class="small" style="display:flex;align-items:center;gap:6px;margin-top:8px"><input id="rememberMe"
-          type="checkbox" style="width:auto"> 记住账号密码</label>
       <div class="actions">
-        <button id="loginBtn" class="btn primary">登录</button>
+        <button id="loginBtn" class="btn small">登录</button>
+        <label class="small" style="display:flex;align-items:center;gap:6px;margin:0"><input id="rememberMe" type="checkbox" style="width:auto"> 记住账号密码</label>
       </div>
       <div id="error" class="error-text"></div>
     </section>

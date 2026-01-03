@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { pinyin } = require('pinyin-pro');
 const multer = require('multer');
+const crypto = require('crypto');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
@@ -22,6 +23,9 @@ const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'nodes.json');
 const USER_FILE = path.join(DATA_DIR, 'users.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const FP_CACHE_TTL = 10 * 1000;
+let clientFpCache = { hash: '', fileCount: 0, generatedAt: 0 };
 fs.ensureDirSync(UPLOAD_DIR);
 
 // 清理节点ID
@@ -80,6 +84,47 @@ async function deleteNodeImageByPath(nodeId, imagePath) {
   } catch (err) {
     console.error('Failed to remove node image', filePath, err);
   }
+}
+
+// 指纹计算相关
+function shouldSkipFingerprint(relPath) {
+  const parts = (relPath || '').split(path.sep);
+  if (!parts.length) return true;
+  const top = parts[0];
+  // 忽略上传目录避免频繁刷新
+  if (top === 'uploads') return true;
+  return false;
+}
+
+async function computeClientFingerprint() {
+  const entries = [];
+  const walk = async (dir, relBase = '') => {
+    const names = await fs.readdir(dir);
+    for (const name of names) {
+      const abs = path.join(dir, name);
+      const rel = relBase ? path.posix.join(relBase, name) : name;
+      if (shouldSkipFingerprint(rel)) continue;
+      const stat = await fs.stat(abs);
+      if (stat.isDirectory()) {
+        await walk(abs, rel);
+      } else {
+        entries.push(`${rel}:${stat.size}:${stat.mtimeMs}`);
+      }
+    }
+  };
+  await walk(PUBLIC_DIR);
+  entries.sort();
+  const hash = crypto.createHash('sha1').update(entries.join('|')).digest('hex');
+  return { hash, fileCount: entries.length, generatedAt: Date.now() };
+}
+
+async function getClientFingerprint() {
+  if (clientFpCache.hash && Date.now() - clientFpCache.generatedAt < FP_CACHE_TTL) {
+    return clientFpCache;
+  }
+  const fp = await computeClientFingerprint();
+  clientFpCache = fp;
+  return fp;
 }
 
 // Multer上传
@@ -654,6 +699,17 @@ app.get('/api/search', (req, res) => {
   const items = allItems(type);
   const results = fuzzySearch(items, q).map(simplify).slice(0, 50);
   res.json({ query: q || '', results });
+});
+
+// 前端指纹，用于自动刷新旧版本页面
+app.get('/api/client-fingerprint', async (req, res) => {
+  try {
+    const fp = await getClientFingerprint();
+    res.json(fp);
+  } catch (err) {
+    console.error('fingerprint compute failed', err);
+    res.status(500).json({ error: 'Failed to compute fingerprint' });
+  }
 });
 
 // Logo文件路由

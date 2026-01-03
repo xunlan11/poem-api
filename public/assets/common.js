@@ -21,6 +21,12 @@
   const ME_CACHE_TTL = 5 * 60 * 1000; 
   // 用户Promise
   let mePromise = null;
+  // 客户端指纹
+  const CLIENT_FP_KEY = 'poem_client_fp_v1';
+  const CLIENT_FP_ENDPOINT = '/api/client-fingerprint';
+  const CLIENT_FP_INTERVAL = 0;
+  let clientFpTimer = null;
+  let clientFpStarted = false;
 
   // 读取用户缓存的函数
   function readMeCache() {
@@ -55,6 +61,58 @@
     try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
     if (typeof window !== 'undefined') {
       delete window.__poem_me;
+    }
+  }
+
+  function readClientFingerprint() {
+    try { return sessionStorage.getItem(CLIENT_FP_KEY) || ''; } catch (err) { return ''; }
+  }
+
+  function writeClientFingerprint(value) {
+    try {
+      if (value) {
+        sessionStorage.setItem(CLIENT_FP_KEY, value);
+      } else {
+        sessionStorage.removeItem(CLIENT_FP_KEY);
+      }
+    } catch (err) { }
+  }
+
+  async function checkClientFingerprintOnce(options) {
+    const opts = options || {};
+    try {
+      const payload = await Poem.api(CLIENT_FP_ENDPOINT);
+      const serverHash = payload && payload.hash ? String(payload.hash) : '';
+      if (!serverHash) return false;
+      const current = readClientFingerprint();
+      if (current && current !== serverHash) {
+        if (!opts.silent && typeof Poem.toast === 'function') {
+          Poem.toast('检测到新版本，正在刷新...');
+        }
+        writeClientFingerprint(serverHash);
+        setTimeout(() => { window.location.reload(); }, 500);
+        return true;
+      }
+      writeClientFingerprint(serverHash);
+      return false;
+    } catch (err) {
+      if (!opts.silent) console.warn('fingerprint check failed', err);
+      return false;
+    }
+  }
+
+  function startAutoUpdateCheck(options) {
+    if (clientFpStarted) return;
+    clientFpStarted = true;
+    const rawInterval = (options && typeof options.interval === 'number') ? options.interval : CLIENT_FP_INTERVAL;
+    const interval = Number.isFinite(rawInterval) ? rawInterval : 0;
+    const initialDelay = Math.max(0, (options && options.initialDelay) || 500);
+    const silent = !!(options && options.silent);
+    const runCheck = () => { checkClientFingerprintOnce({ silent }).catch(() => { }); };
+    setTimeout(runCheck, initialDelay);
+    // 默认不做轮询，避免编辑过程中被强制刷新导致内容丢失
+    if (interval > 0) {
+      clientFpTimer = setInterval(runCheck, interval);
     }
   }
 
@@ -247,6 +305,8 @@
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
     fuzzySearch: createFuzzySearch(),
     ensureSearchDeps,
+    checkClientFingerprintOnce,
+    startAutoUpdateCheck,
     // 重新加载页面的函数
     reloadNow() { window.location.reload(); },
     clearMeCache,
@@ -261,7 +321,7 @@
       const card = document.createElement('div');
       card.className = 'modal-card';
       card.innerHTML = `
-        <div class="modal-header"><div>选择要链接的节点</div><button class="btn" id="closeModal">关闭</button></div>
+        <div class="modal-header"><div>要链接的节点</div><button class="btn small" id="closeModal">关闭</button></div>
         <div class="modal-body">
           <div style="display:flex; gap:8px;">
             <select id="lpType">
@@ -274,7 +334,7 @@
               <option value="L">格律（L）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
-            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn" style="margin-left:auto;background:#14532d;border-color:#14532d;color:#ecfdf5;">标记为空置</button>` : ''}
+            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small" style="margin-left:auto;background:#14532d;border-color:#14532d;color:#ecfdf5;">标记为空置</button>` : ''}
           </div>
           ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:13px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
           <div id="lpResults" style="margin-top:8px;"></div>
@@ -317,9 +377,9 @@
           pager.style.gap = '8px';
           pager.style.alignItems = 'center';
           pager.style.marginTop = '8px';
-          const prev = document.createElement('button'); prev.className = 'btn'; prev.textContent = '上一页'; prev.disabled = currentPage <= 0;
+          const prev = document.createElement('button'); prev.className = 'btn small'; prev.textContent = '上一页'; prev.disabled = currentPage <= 0;
           const info = document.createElement('span'); info.className = 'small'; info.textContent = `第 ${currentPage + 1} / ${totalPages} 页`;
-          const next = document.createElement('button'); next.className = 'btn'; next.textContent = '下一页'; next.disabled = currentPage >= totalPages - 1;
+          const next = document.createElement('button'); next.className = 'btn small'; next.textContent = '下一页'; next.disabled = currentPage >= totalPages - 1;
           prev.addEventListener('click', () => { if (!prev.disabled) run(currentPage - 1); });
           next.addEventListener('click', () => { if (!next.disabled) run(currentPage + 1); });
           pager.appendChild(prev); pager.appendChild(info); pager.appendChild(next);
@@ -472,4 +532,33 @@
       return close;
     }
   };
+
+  if (typeof window !== 'undefined') {
+    const bootAutoUpdate = () => {
+      try {
+        const pathname = String(location && location.pathname ? location.pathname : '');
+        const isEditorPage = /\/editor\.html$/.test(pathname);
+        // 非编辑页：定时检查，避免“只有一个页面刷新，其他打开的页面不更新”
+        // 编辑页：不做轮询，减少强制刷新导致内容丢失的风险
+        const interval = isEditorPage ? 0 : 30 * 1000;
+        Poem.startAutoUpdateCheck({ initialDelay: 500, interval, silent: false });
+
+        // 非编辑页：切回前台时也检查一次（多标签页更容易及时拿到更新）
+        if (!isEditorPage && typeof document !== 'undefined') {
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              Poem.checkClientFingerprintOnce({ silent: true }).catch(() => { });
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('auto update init failed', err);
+      }
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootAutoUpdate, { once: true });
+    } else {
+      bootAutoUpdate();
+    }
+  }
 })();

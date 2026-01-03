@@ -13,7 +13,7 @@
   // 分页
   const pendingPagination = document.getElementById('myPendingPagination');
   // 待审核状态
-  const pendingState = { items: [], page: 1 };
+  const pendingState = { items: [], page: 1, canDelete: false };
   // 审核状态映射
   const REVIEW_STATUS_CLASS = {
     pending: 'status-pending',
@@ -127,6 +127,35 @@
     return item.reviewStatusLabel || (item.reviewStatus === 'pending' ? '未审核' : (item.reviewStatus === 'rejected' ? '未通过' : ''));
   }
 
+  // 查询引用并格式化提示（与列表页保持一致）
+  async function fetchReferences(nodeId) {
+    if (!nodeId) return null;
+    try {
+      return await Poem.api(`/api/nodes/references/${nodeId}`);
+    } catch (err) {
+      console.error('查询引用失败', err);
+      return null;
+    }
+  }
+
+  function buildReferenceMessage(id, payload, maxItems = 5) {
+    const list = Array.isArray(payload?.data) ? payload.data : [];
+    const total = typeof payload?.total === 'number' ? payload.total : list.length;
+    if (!list.length) return `删除 ${id} ？`;
+    const lines = list.slice(0, maxItems).map(r => {
+      const name = r.label || '';
+      const count = r.linkCount ? `（链接${r.linkCount}处）` : '';
+      return `- ${r.id}${name ? ' ' + name : ''}${count}`;
+    });
+    const extra = total > lines.length ? `... 共 ${total} 个引用` : '';
+    return `以下节点引用了 ${id}：\n${lines.join('\n')}${extra ? `\n${extra}` : ''}\n\n继续删除并将这些链接置为空置吗？`;
+  }
+
+  async function clearLinksToNode(targetId) {
+    if (!targetId) return { ok: false };
+    return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
+  }
+
   // 渲染待审核表格
   function renderPendingTable() {
     if (!pendingBody || !pendingPagination) return;
@@ -152,6 +181,7 @@
       const duration = item.reviewDuration ?? '';
       const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || formatStatusLabel(item), REVIEW_STATUS_CLASS);
       const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
+      const deleteButtonHtml = pendingState.canDelete ? `<button data-act="delete" data-id="${escapeHtml(item.id)}" class="btn danger small">删除</button>` : '';
       return `<tr>
         <td>${idLabel}</td>
         <td><div class="name-cell">${name}</div></td>
@@ -161,7 +191,7 @@
         <td>${duration}</td>
         <td>${reviewStatusHtml}</td>
         <td>${repairStatusHtml}</td>
-        <td class="actions-cell"><div class="row-actions"><a class="btn small" href="editor.html?id=${encodeURIComponent(item.id)}">打开</a></div></td>
+        <td class="actions-cell"><div class="row-actions"><a class="btn small" href="editor.html?id=${encodeURIComponent(item.id)}">打开</a>${deleteButtonHtml}</div></td>
       </tr>`;
     }).join('');
     if (totalPages <= 1) {
@@ -211,6 +241,7 @@
         pendingSection.style.display = 'none';
         return;
       }
+      pendingState.canDelete = (me.role === 'reviewer' || me.role === 'admin');
       if (pendingSummary) pendingSummary.textContent = '加载中';
       const variants = normalizeUserNames(me);
       const all = await fetchAllNodes();
@@ -242,6 +273,39 @@
     }
   }
 
+  // 待审核列表：删除按钮事件委托
+  if (pendingBody) {
+    pendingBody.addEventListener('click', async (event) => {
+      const target = event.target;
+      const btn = target && target.closest ? target.closest('button[data-act="delete"]') : null;
+      if (!btn) return;
+      const id = btn.dataset.id;
+      if (!pendingState.canDelete) {
+        Poem.toast('权限不足');
+        return;
+      }
+      const references = await fetchReferences(id);
+      const hasRefs = references && Array.isArray(references.data) && references.data.length > 0;
+      const ok = confirm(hasRefs ? buildReferenceMessage(id, references) : `删除 ${id} ？`);
+      if (!ok) return;
+      try {
+        if (hasRefs) {
+          await clearLinksToNode(id);
+        }
+        await Poem.api(`/api/nodes/${encodeURIComponent(id)}`, { method: 'DELETE' });
+        Poem.toast('删除成功');
+        pendingState.items = pendingState.items.filter(item => item && item.id !== id);
+        const totalPages = Math.max(1, Math.ceil(pendingState.items.length / PENDING_PAGE_SIZE));
+        pendingState.page = Math.min(pendingState.page, totalPages);
+        if (pendingSummary) pendingSummary.textContent = pendingState.items.length ? `共 ${pendingState.items.length} 条` : '暂无';
+        renderPendingTable();
+      } catch (err) {
+        console.error(err);
+        Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
+      }
+    });
+  }
+
   initPendingList();
 
   // 初始化用户栏
@@ -253,7 +317,7 @@
       const me = await Poem.me();
       if (me) {
         const roleLabel = ROLE_LABELS[me.role] || me.role || '';
-        bar.innerHTML = `${me.real_name || me.username}（${roleLabel}）｜<a class="link" id="logout">退出</a>`;
+        bar.innerHTML = `${me.real_name || me.username}（${roleLabel}）<button type="button" class="btn small" id="logout">退出</button>`;
         const logout = document.getElementById('logout');
         if (logout) {
           logout.onclick = async () => {
@@ -269,7 +333,7 @@
         }
         if (me.role === 'admin') adminEntry.style.display = 'block';
       } else {
-        bar.innerHTML = `<a class="link" href="login.html">登录</a>`;
+        bar.innerHTML = `<a class="btn small" href="login.html">登录</a>`;
       }
     } catch (e) {
       bar.textContent = '';

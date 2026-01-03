@@ -84,7 +84,7 @@
   function createModal(titleText) {
     const modal = document.createElement('div'); modal.className = 'modal';
     const card = document.createElement('div'); card.className = 'modal-card';
-    card.innerHTML = `<div class="modal-header"><div>${titleText}</div><button class="btn" id="closeModal">关闭</button></div><div class="modal-body"></div>`;
+    card.innerHTML = `<div class="modal-header"><div>${titleText}</div><button class="btn small" id="closeModal">关闭</button></div><div class="modal-body"></div>`;
     modal.appendChild(card); document.body.appendChild(modal);
     const close = () => modal.remove();
     card.querySelector('#closeModal').onclick = close;
@@ -142,9 +142,9 @@
         </select>
       </label>
       <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
-        <button id="fltOk" class="btn primary">确定</button>
-        <button id="fltClear" class="btn">清除</button>
-        <button id="fltCancel" class="btn">取消</button>
+        <button id="fltOk" class="btn primary small">确定</button>
+        <button id="fltClear" class="btn small">清除</button>
+        <button id="fltCancel" class="btn small">取消</button>
       </div>
     </div>`;
     const startEl = body.querySelector('#fltStart');
@@ -618,12 +618,28 @@
   }
   // 导出数据模态框
   function showExportModal() {
-    const { modal, card, close } = createModal('导出：填写期数');
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    const card = document.createElement('div');
+    card.className = 'modal-card';
+    card.innerHTML = `
+      <div class="modal-body"></div>
+    `;
+    modal.appendChild(card);
+    document.body.appendChild(modal);
+    const close = () => modal.remove();
     const body = card.querySelector('.modal-body');
-    body.innerHTML = `<div style="display:flex;gap:8px;flex-direction:column;align-items:flex-start">
-      <label>第几期（数字）：<input id="exportSession" type="number" min="1" value="1" style="width:120px"></label>
-      <div style="margin-top:8px"><button id="exportOk" class="btn primary">导出</button> <button id="exportCancel" class="btn">取消</button></div>
-    </div>`;
+    body.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:260px">
+        <span>导出：第</span>
+        <input id="exportSession" type="number" min="1" value="1" style="width:120px">
+        <span>期</span>
+        <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button id="exportOk" class="btn primary small">导出</button>
+          <button id="exportCancel" class="btn small">取消</button>
+        </span>
+      </div>
+    `;
     const sessionEl = body.querySelector('#exportSession');
     body.querySelector('#exportOk').onclick = async () => {
       const session = (sessionEl.value || '1').toString();

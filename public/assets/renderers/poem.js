@@ -78,7 +78,7 @@
           </div>
         </div>
         <div id="preface-row" class="preface-row" style="display:none; margin-bottom:8px;">
-          <input id="f-preface" type="text" data-link-field="extra.preface" style="width:100%;">
+          <textarea id="f-preface" rows="1" data-link-field="extra.preface" data-autosize-min="32" style="width:100%;resize:none;overflow:hidden"></textarea>
         </div>
         <div class="body-area">
           <textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden;">${escapeHtml(body)}</textarea>
@@ -94,7 +94,7 @@
     `;
     initializeLinkFields(formContainer);
     // 自动调整大小
-    utils.bindAutoResize(formContainer, ['#f-translation', '#f-background'], context);
+    utils.bindAutoResize(formContainer, ['#f-preface', '#f-translation', '#f-background'], context);
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');
     if (checkDupBtn && context.checkDuplicate) {
       checkDupBtn.addEventListener('click', () => {
@@ -129,6 +129,19 @@
     const prefaceInput = formContainer.querySelector('#f-preface');
     const textarea = formContainer.querySelector('#f-body');
     const annoArea = formContainer.querySelector('#annotation-area');
+
+    function isBodyLocked() {
+      const byTextarea = !!(textarea && textarea.readOnly);
+      const byDataset = !!(lockBtn && lockBtn.dataset && lockBtn.dataset.locked === 'true');
+      return byTextarea || byDataset;
+    }
+
+    function syncPrefaceToggleAvailability() {
+      if (!prefaceToggle) return;
+      const locked = isBodyLocked();
+      prefaceToggle.disabled = locked;
+      prefaceToggle.title = locked ? '正文锁定时不可切换序' : '';
+    }
     const annotationModule = typeof annotationsFactory === 'function'
       ? annotationsFactory({
         document: documentRef,
@@ -136,6 +149,11 @@
         Poem: PoemRef,
         state,
         formContainer,
+        bodyFieldKey: 'content',
+        prefaceFieldKey: 'extra.preface',
+        prefaceTextarea: prefaceInput,
+        prefaceRow,
+        prefaceRenderContainerId: 'f-preface-render',
         textarea,
         annoArea,
         lockBtn,
@@ -173,7 +191,11 @@
       if (!prefaceRow || !prefaceToggle) return;
       prefaceRow.style.display = show ? 'block' : 'none';
       prefaceToggle.textContent = show ? '序（开启）' : '序（关闭）';
-      if (!show && prefaceInput) prefaceInput.value = '';
+      if (!show && prefaceInput) {
+        prefaceInput.value = '';
+        try { prefaceInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { }
+      }
+      try { if (annotationModule && typeof annotationModule.syncLock === 'function') annotationModule.syncLock(); } catch (e) { }
     }
     const shouldShowPreface = !!(prefaceValue && prefaceValue.trim());
     updatePrefaceVisibility(shouldShowPreface);
@@ -183,6 +205,25 @@
         updatePrefaceVisibility(!isOpen);
       });
     }
+
+    // 序开关：仅在正文处于编辑（未锁定）状态时可按
+    syncPrefaceToggleAvailability();
+    if (lockBtn) {
+      lockBtn.addEventListener('click', () => {
+        setTimeout(syncPrefaceToggleAvailability, 0);
+      });
+    }
+    try {
+      registerEditableWatcher(() => syncPrefaceToggleAvailability());
+    } catch (e) { }
+    try {
+      registerLinkBrushHandler(() => syncPrefaceToggleAvailability());
+    } catch (e) { }
+
+    // 首次渲染时同步锁定（确保序在锁定态显示渲染框）
+    try { if (annotationModule && typeof annotationModule.syncLock === 'function') annotationModule.syncLock(); } catch (e) { }
+    // syncLock 可能会改变锁定状态，需再次同步序按钮可用性
+    syncPrefaceToggleAvailability();
     const initialLinks = Array.isArray(node?.links) ? node.links.map(normalizeLink).filter(Boolean) : [];
     replaceLinks(initialLinks);
     const formSelect = formContainer.querySelector('#f-form');
@@ -265,6 +306,7 @@
           placeholder: !!l.placeholder,
         })),
         extra: {
+          preface: (formContainer.querySelector('#f-preface')?.value) || '',
           translation: formContainer.querySelector('#f-translation').value,
           background: formContainer.querySelector('#f-background').value,
           evaluation: commentsPayload,
