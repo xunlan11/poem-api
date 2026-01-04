@@ -66,13 +66,16 @@
           <div id="form-opts"></div>
         </div>
       </div>
-      <div id="sub2-row" class="field" style="display:none;margin-top:8px"><label>曲牌</label><input id="f-sub2" type="text" value="${escapeHtml(sub2)}"></div>
-      <div id="rhyme-row" class="field" style="display:none;margin-top:8px"><label>韵部</label><input id="f-rhyme" type="text" value="${escapeHtml(rhyme)}"></div>
+      <div id="sub2-row" class="field" style="display:none"><label>曲牌</label><input id="f-sub2" type="text" value="${escapeHtml(sub2)}"></div>
+      <div id="rhyme-row" class="field" style="display:none"><label>韵部</label><input id="f-rhyme" type="text" value="${escapeHtml(rhyme)}"></div>
       <div class="field">
         <div class="field-row body-head">
-          <label style="margin-bottom:0">正文</label>
-          <div class="body-head-actions">
+          <div class="body-head-left">
+            <label style="margin-bottom:0">正文</label>
+            <div id="preface-word-count" class="body-word-count" aria-live="polite" style="display:none"></div>
             <div id="body-word-count" class="body-word-count" aria-live="polite"></div>
+          </div>
+          <div class="body-head-actions">
             <button id="preface-toggle" class="btn small" type="button">序（关闭）</button>
             <div id="bodyLockControls" class="body-lock-controls"><button id="body-lock-toggle" class="btn small">🔒 锁定</button></div>
           </div>
@@ -82,7 +85,7 @@
         </div>
         <div class="body-area">
           <textarea id="f-body" rows="1" data-link-field="content" data-self-check-anchor="bodyLockControls" style="width:100%;resize:none;overflow:hidden;">${escapeHtml(body)}</textarea>
-          <div id="f-body-render" class="body-render" style="padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:8px;background:#fff;display:none"></div>
+          <div id="f-body-render" class="body-render" style="padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:0;background:#fff;display:none"></div>
         </div>
         <div id="annotation-area" class="muted" style="margin-top:8px"></div>
       </div>
@@ -191,10 +194,13 @@
       if (!prefaceRow || !prefaceToggle) return;
       prefaceRow.style.display = show ? 'block' : 'none';
       prefaceToggle.textContent = show ? '序（开启）' : '序（关闭）';
+      prefaceToggle.classList.remove('danger');
       if (!show && prefaceInput) {
         prefaceInput.value = '';
         try { prefaceInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { }
       }
+      // 仅切换显示状态时也需要刷新“序/正文”字数显示
+      try { if (prefaceInput) prefaceInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { }
       try { if (annotationModule && typeof annotationModule.syncLock === 'function') annotationModule.syncLock(); } catch (e) { }
     }
     const shouldShowPreface = !!(prefaceValue && prefaceValue.trim());

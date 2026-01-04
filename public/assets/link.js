@@ -319,6 +319,14 @@
       if (!span) return;
       if (formContainer && !formContainer.contains(span)) return;
       if (state.editable) return;
+
+      const canEditNode = state && state.canEditNode !== undefined ? !!state.canEditNode : true;
+      if (!canEditNode) {
+        event.preventDefault();
+        try { if (Poem && typeof Poem.toast === 'function') Poem.toast('无权限'); } catch (e) { }
+        return;
+      }
+
       const linkIdx = parseInt(span.getAttribute('data-link-index') || '-1', 10);
       if (Number.isNaN(linkIdx) || linkIdx < 0 || !links[linkIdx]) return;
       event.preventDefault();

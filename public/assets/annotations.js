@@ -37,26 +37,54 @@
     const renderContainerId = options.renderContainerId || 'f-body-render';
     const prefaceRenderContainerId = options.prefaceRenderContainerId || 'f-preface-render';
     const wordCountEl = options.wordCountEl || formContainer?.querySelector?.('#body-word-count') || null;
+    const prefaceWordCountEl = options.prefaceWordCountEl || formContainer?.querySelector?.('#preface-word-count') || null;
     let annotationFieldMap = new Map();
     let annotations = [];
 
     // 统计文本长度（忽略符号）
-    const countTextLength = (text) => {
-      if (!text) return 0;
-      const normalized = text.replace(/[^\p{L}\p{N}]/gu, '');
-      return normalized.length;
+    const countTextLength = (() => {
+      let useUnicodeProps = false;
+      try {
+        // 旧浏览器不支持 \p{..} 会直接抛异常
+        // eslint-disable-next-line no-new
+        new RegExp('[^\\p{L}\\p{N}]', 'u');
+        useUnicodeProps = true;
+      } catch (e) {
+        useUnicodeProps = false;
+      }
+      return (text) => {
+        if (!text) return 0;
+        if (useUnicodeProps) {
+          const normalized = text.replace(/[^\p{L}\p{N}]/gu, '');
+          return normalized.length;
+        }
+        // 回退：仅保留中日韩统一表意文字 + 英数字
+        const normalized = String(text).replace(/[^0-9A-Za-z\u4E00-\u9FFF]/g, '');
+        return normalized.length;
+      };
+    })();
+
+    function isPrefaceEnabled() {
+      if (!prefaceRow) return false;
+      // renderers/poem.js 通过 display 控制序开关
+      const disp = (prefaceRow.style && typeof prefaceRow.style.display === 'string') ? prefaceRow.style.display : '';
+      return disp !== 'none';
+    }
+
+    // 渲染字数显示（序/正文分开）
+    const renderWordCounts = (bodyCount, prefaceCount) => {
+      if (wordCountEl) wordCountEl.textContent = `正文${bodyCount}字`;
+      if (!prefaceWordCountEl) return;
+      const showPreface = isPrefaceEnabled();
+      prefaceWordCountEl.style.display = showPreface ? '' : 'none';
+      if (showPreface) prefaceWordCountEl.textContent = `序${prefaceCount}字`;
     };
 
-    // 渲染字数显示
-    const renderWordCount = (count) => {
-      if (!wordCountEl) return;
-      wordCountEl.textContent = `正文${count}字`;
-    };
-
-    // 刷新字数
+    // 刷新字数（保留原函数名，便于复用已有调用点）
     const updateWordCountFromBody = () => {
-      if (!textarea) return;
-      renderWordCount(countTextLength(textarea.value || ''));
+      const bodyCount = textarea ? countTextLength(textarea.value || '') : 0;
+      const prefaceCount = prefaceTextarea ? countTextLength(prefaceTextarea.value || '') : 0;
+      renderWordCounts(bodyCount, prefaceCount);
     };
 
     // 清理注释列表
@@ -183,7 +211,7 @@
         if (a.note) row.title = a.note;
         const delBtn = documentRef.createElement('button');
         delBtn.type = 'button';
-        delBtn.className = 'btn small del-anno';
+        delBtn.className = 'btn danger small del-anno';
         delBtn.textContent = '删除';
         delBtn.disabled = !state.editable;
         delBtn.addEventListener('click', () => {
@@ -648,6 +676,14 @@
       const span = event.target.closest('span[data-pos]');
       if (!span || !renderDiv.contains(span)) return;
       if (state.editable && textarea && !textarea.readOnly) return;
+
+      const canEditNode = state && state.canEditNode !== undefined ? !!state.canEditNode : true;
+      if (!canEditNode) {
+        event.preventDefault();
+        try { if (Poem && typeof Poem.toast === 'function') Poem.toast('无权限'); } catch (e) { }
+        return;
+      }
+
       const sig = span.getAttribute('data-anno') || '';
       if (!sig) return;
       const indices = sig.split(',').map(s => parseInt(s, 10)).filter(n => !Number.isNaN(n) && n >= 0);
@@ -678,6 +714,14 @@
       const span = event.target.closest('span[data-pos]');
       if (!span || !renderDiv.contains(span)) return;
       if (state.editable && prefaceTextarea && !prefaceTextarea.readOnly) return;
+
+      const canEditNode = state && state.canEditNode !== undefined ? !!state.canEditNode : true;
+      if (!canEditNode) {
+        event.preventDefault();
+        try { if (Poem && typeof Poem.toast === 'function') Poem.toast('无权限'); } catch (e) { }
+        return;
+      }
+
       const sig = span.getAttribute('data-anno') || '';
       if (!sig) return;
       const indices = sig.split(',').map(s => parseInt(s, 10)).filter(n => !Number.isNaN(n) && n >= 0);
@@ -810,6 +854,7 @@
       if (!prefaceTextarea) return;
       reindexFieldLinks(prefaceFieldKey);
       const textValue = prefaceTextarea.value || '';
+      updateWordCountFromBody();
       if (reindexAnnotationsForFieldText(prefaceFieldKey, textValue)) {
         renderAnnotations();
         const renderDiv = formContainer ? formContainer.querySelector(`#${prefaceRenderContainerId}`) : null;
@@ -868,7 +913,7 @@
       keep.textContent = '保留';
       const del = documentRef.createElement('button');
       del.type = 'button';
-      del.className = 'btn small';
+      del.className = 'btn danger small';
       del.textContent = '删除';
       btnCell.appendChild(keep);
       btnCell.appendChild(del);

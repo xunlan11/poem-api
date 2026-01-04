@@ -26,6 +26,8 @@ const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const FP_CACHE_TTL = 10 * 1000;
 let clientFpCache = { hash: '', fileCount: 0, generatedAt: 0 };
+const USER_ARCHIVE_STATS_TTL = 10 * 1000;
+let userArchiveStatsCache = { generatedAt: 0, stats: null };
 fs.ensureDirSync(UPLOAD_DIR);
 
 // 清理节点ID
@@ -160,6 +162,27 @@ const defaultStore = () => ({
 let store = defaultStore();
 let users = [];
 
+function stripDeprecatedUserFields(user) {
+  if (!user || typeof user !== 'object') return false;
+  let changed = false;
+  for (const key of ['status', 'updated_at', 'last_login_at']) {
+    if (Object.prototype.hasOwnProperty.call(user, key)) {
+      delete user[key];
+      changed = true;
+    }
+  }
+  return changed;
+}
+
+function normalizeUsersInPlace(userList) {
+  if (!Array.isArray(userList)) return false;
+  let changed = false;
+  for (const u of userList) {
+    if (stripDeprecatedUserFields(u)) changed = true;
+  }
+  return changed;
+}
+
 // 数据存储
 async function loadStore() {
   await fs.ensureDir(DATA_DIR);
@@ -179,6 +202,11 @@ async function loadStore() {
     await fs.writeJson(USER_FILE, [admin], { spaces: 2 });
   }
   users = await fs.readJson(USER_FILE);
+
+  // 兼容历史遗留字段：新版本不再统计/更新，启动时自动清理并落盘
+  if (normalizeUsersInPlace(users)) {
+    await saveUsers();
+  }
 }
 
 // 保存数据
@@ -786,6 +814,36 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+function computeUserArchiveStats() {
+  const stats = {};
+  for (const type of TYPES) {
+    const items = store[type]?.items || {};
+    for (const node of Object.values(items)) {
+      if (!node || (node.extra?.reviewStatus || '') !== 'archived') continue;
+      const uid = String(node.meta?.createdById || '').trim();
+      if (!uid) continue;
+      if (!stats[uid]) stats[uid] = { count: 0, duration: 0 };
+      stats[uid].count += 1;
+      const raw = node.extra?.reviewDuration;
+      const dur = parseFloat(String(raw ?? '').trim());
+      if (!Number.isNaN(dur) && Number.isFinite(dur)) {
+        stats[uid].duration += dur;
+      }
+    }
+  }
+  return stats;
+}
+
+function getUserArchiveStatsCached() {
+  const now = Date.now();
+  if (userArchiveStatsCache.stats && (now - userArchiveStatsCache.generatedAt) < USER_ARCHIVE_STATS_TTL) {
+    return userArchiveStatsCache;
+  }
+  const stats = computeUserArchiveStats();
+  userArchiveStatsCache = { generatedAt: now, stats };
+  return userArchiveStatsCache;
+}
+
 function requireReviewerOrAdmin(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   if (req.user.role === 'reviewer' || req.user.role === 'admin') return next();
@@ -848,6 +906,12 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
 // 获取用户列表路由（管理员）
 app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
+});
+
+// 用户归档统计（管理员）：按创建者统计已归档节点总数与总时长
+app.get('/api/users/archive-stats', requireAuth, requireAdmin, (req, res) => {
+  const payload = getUserArchiveStatsCached();
+  res.json(payload);
 });
 
 // 生成下一用户ID

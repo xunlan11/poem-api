@@ -99,6 +99,19 @@
   // 筛选模态框
   function showFilterModal() {
     const { modal, card, close } = createModal('筛选');
+    const header = card.querySelector('.modal-header');
+    const closeBtn = card.querySelector('#closeModal');
+    if (closeBtn) closeBtn.remove();
+    if (header) {
+      const headerActions = document.createElement('div');
+      headerActions.className = 'modal-header-actions';
+      headerActions.innerHTML = `
+        <button id="fltOk" class="btn primary small">确定</button>
+        <button id="fltClear" class="btn danger small">清除</button>
+        <button id="fltCancel" class="btn small">取消</button>
+      `;
+      header.appendChild(headerActions);
+    }
     const body = card.querySelector('.modal-body');
     body.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:column;min-width:260px">
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">节点类别
@@ -115,37 +128,38 @@
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">创建日期
         <div style="display:flex;gap:12px;width:100%;flex-wrap:wrap">
           <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
-            <span>开始日期</span>
+            <span>开始</span>
             <input id="fltStart" type="date" style="flex:1;min-width:120px">
           </label>
           <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
-            <span>结束日期</span>
+            <span>结束</span>
             <input id="fltEnd" type="date" style="flex:1;min-width:120px">
           </label>
         </div>
       </label>
-      <label style="display:flex;flex-direction:column;gap:4px;width:100%">审核状态
-        <select id="fltStatus">
-          <option value="">全部</option>
-          <option value="unarchived">未归档</option>
-          <option value="pending">未审核</option>
-          <option value="rejected">未通过</option>
-          <option value="approved">通过</option>
-          <option value="archived">归档</option>
-        </select>
+      <label style="display:flex;flex-direction:column;gap:4px;width:100%">状态
+        <div style="display:flex;gap:12px;width:100%;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
+            <span>审核</span>
+            <select id="fltStatus" style="flex:1;min-width:120px">
+              <option value="">全部</option>
+              <option value="unarchived">未归档</option>
+              <option value="pending">未审核</option>
+              <option value="rejected">未通过</option>
+              <option value="approved">通过</option>
+              <option value="archived">归档</option>
+            </select>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px;opacity:0.6" id="repairFilterLabel">
+            <span>返修</span>
+            <select id="fltRepair" disabled style="flex:1;min-width:120px">
+              <option value="">全部</option>
+              <option value="unfinished">未完成</option>
+              <option value="finished">完成</option>
+            </select>
+          </label>
+        </div>
       </label>
-      <label style="display:flex;flex-direction:column;gap:4px;width:100%;opacity:0.6" id="repairFilterLabel">返修状态
-        <select id="fltRepair" disabled>
-          <option value="">全部</option>
-          <option value="unfinished">未完成</option>
-          <option value="finished">完成</option>
-        </select>
-      </label>
-      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
-        <button id="fltOk" class="btn primary small">确定</button>
-        <button id="fltClear" class="btn small">清除</button>
-        <button id="fltCancel" class="btn small">取消</button>
-      </div>
     </div>`;
     const startEl = body.querySelector('#fltStart');
     const endEl = body.querySelector('#fltEnd');
@@ -169,7 +183,7 @@
     };
     syncRepairState();
     statusEl.addEventListener('change', syncRepairState);
-    body.querySelector('#fltOk').onclick = () => {
+    card.querySelector('#fltOk').onclick = () => {
       dateFilter.start = startEl.value || null;
       dateFilter.end = endEl.value || null;
       typeFilter = typeEl.value || '';
@@ -179,7 +193,7 @@
       search();
       Poem.toast('筛选已应用');
     };
-    body.querySelector('#fltClear').onclick = () => {
+    card.querySelector('#fltClear').onclick = () => {
       startEl.value = '';
       endEl.value = '';
       typeEl.value = '';
@@ -194,7 +208,7 @@
       search();
       Poem.toast('筛选已清除');
     };
-    body.querySelector('#fltCancel').onclick = () => { close(); };
+    card.querySelector('#fltCancel').onclick = () => { close(); };
   }
   // 归档
   const archiveBtn = document.getElementById('archiveBtn');
@@ -630,11 +644,11 @@
     const close = () => modal.remove();
     const body = card.querySelector('.modal-body');
     body.innerHTML = `
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:260px">
-        <span>导出：第</span>
-        <input id="exportSession" type="number" min="1" value="1" style="width:120px">
-        <span>期</span>
-        <span style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <div class="export-session-row">
+        <span class="export-session-text">导出第</span>
+        <input id="exportSession" class="pagination-input export-session-input" type="number" min="1" value="1">
+        <span class="export-session-text">期</span>
+        <span class="export-session-actions">
           <button id="exportOk" class="btn primary small">导出</button>
           <button id="exportCancel" class="btn small">取消</button>
         </span>

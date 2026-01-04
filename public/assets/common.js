@@ -334,7 +334,7 @@
               <option value="L">格律（L）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
-            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small" style="margin-left:auto;background:#14532d;border-color:#14532d;color:#ecfdf5;">标记为空置</button>` : ''}
+            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small link-mode" style="margin-left:auto;">空置</button>` : ''}
           </div>
           ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:13px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
           <div id="lpResults" style="margin-top:8px;"></div>
@@ -345,12 +345,79 @@
       const close = () => modal.remove();
       card.querySelector('#closeModal').onclick = close;
       const PAGE_LIMIT = 5;
+      let lpCurrentPage = 0;
+      let lpTotalPages = 1;
+
+      function renderLinkPickerPagination(container) {
+        if (!container) return;
+        if (lpTotalPages <= 1) return;
+        const paginationEl = document.createElement('div');
+        paginationEl.className = 'pagination-bar';
+        // 该分页条需要出现在结果顶部，不需要额外上边距
+        paginationEl.style.marginTop = '0';
+
+        const goToPage = (targetPageOneBased) => {
+          const target = parseInt(targetPageOneBased, 10);
+          if (Number.isNaN(target)) return;
+          const clamped = Math.max(1, Math.min(target, lpTotalPages));
+          run(clamped - 1);
+        };
+
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'btn small';
+        prevBtn.type = 'button';
+        prevBtn.textContent = '◀';
+        prevBtn.disabled = lpCurrentPage <= 0;
+        prevBtn.addEventListener('click', () => {
+          if (lpCurrentPage > 0) run(lpCurrentPage - 1);
+        });
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn small';
+        nextBtn.type = 'button';
+        nextBtn.textContent = '▶';
+        nextBtn.disabled = lpCurrentPage >= lpTotalPages - 1;
+        nextBtn.addEventListener('click', () => {
+          if (lpCurrentPage < lpTotalPages - 1) run(lpCurrentPage + 1);
+        });
+
+        const info = document.createElement('span');
+        info.className = 'pagination-info';
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'pagination-input';
+        input.min = '1';
+        input.max = String(lpTotalPages);
+        input.value = String(lpCurrentPage + 1);
+        input.title = '按回车跳转';
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            goToPage(input.value);
+          }
+        });
+        input.addEventListener('blur', () => {
+          input.value = String(lpCurrentPage + 1);
+        });
+        info.textContent = '第 ';
+        info.appendChild(input);
+        const totalSpan = document.createElement('span');
+        totalSpan.textContent = ` / ${lpTotalPages} 页`;
+        info.appendChild(totalSpan);
+
+        paginationEl.appendChild(prevBtn);
+        paginationEl.appendChild(info);
+        paginationEl.appendChild(nextBtn);
+        container.appendChild(paginationEl);
+      }
+
       async function run(page = 0) {
         const type = card.querySelector('#lpType').value;
         const q = card.querySelector('#lpSearch').value;
         const off = Math.max(0, parseInt(page, 10) || 0) * PAGE_LIMIT;
         const { data, pagination } = await Poem.api(`/api/nodes?${type ? `type=${type}&` : ''}${q ? `search=${encodeURIComponent(q)}&` : ''}limit=${PAGE_LIMIT}&offset=${off}`);
         const list = document.createElement('div');
+        list.style.marginTop = '8px';
         data.forEach(item => {
           const div = document.createElement('div');
           div.className = 'result-item';
@@ -365,26 +432,13 @@
         });
         const container = card.querySelector('#lpResults');
         container.innerHTML = '';
-        container.appendChild(list);
         const total = (pagination && typeof pagination.total === 'number') ? pagination.total : (Array.isArray(data) ? data.length : 0);
         const currentOffset = (pagination && typeof pagination.offset === 'number') ? pagination.offset : off;
         const limit = (pagination && typeof pagination.limit === 'number') ? pagination.limit : PAGE_LIMIT;
-        const currentPage = Math.floor(currentOffset / limit);
-        const totalPages = Math.max(1, Math.ceil(total / limit));
-        if (totalPages > 1) {
-          const pager = document.createElement('div');
-          pager.style.display = 'flex';
-          pager.style.gap = '8px';
-          pager.style.alignItems = 'center';
-          pager.style.marginTop = '8px';
-          const prev = document.createElement('button'); prev.className = 'btn small'; prev.textContent = '上一页'; prev.disabled = currentPage <= 0;
-          const info = document.createElement('span'); info.className = 'small'; info.textContent = `第 ${currentPage + 1} / ${totalPages} 页`;
-          const next = document.createElement('button'); next.className = 'btn small'; next.textContent = '下一页'; next.disabled = currentPage >= totalPages - 1;
-          prev.addEventListener('click', () => { if (!prev.disabled) run(currentPage - 1); });
-          next.addEventListener('click', () => { if (!next.disabled) run(currentPage + 1); });
-          pager.appendChild(prev); pager.appendChild(info); pager.appendChild(next);
-          container.appendChild(pager);
-        }
+        lpCurrentPage = Math.max(0, Math.floor(currentOffset / limit));
+        lpTotalPages = Math.max(1, Math.ceil(total / limit));
+        renderLinkPickerPagination(container);
+        container.appendChild(list);
       }
       const searchInput = card.querySelector('#lpSearch');
       const typeSelect = card.querySelector('#lpType');
@@ -470,7 +524,7 @@
       const card = document.createElement('div');
       card.className = 'modal-card';
       card.innerHTML = `
-        <div class="modal-header"><div>选择要创建的类别</div><button class="btn" id="closeTypePicker">关闭</button></div>
+        <div class="modal-header"><div>要创建的类别</div><button class="btn" id="closeTypePicker">关闭</button></div>
         <div class="modal-body type-picker-grid"></div>
       `;
       modal.appendChild(card);

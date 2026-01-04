@@ -65,7 +65,9 @@
       const countEl = document.getElementById('userCount');
       const PAGE_SIZE = 15;
       const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
-      const ROLE_CLASSES = { user: 'role-user', reviewer: 'role-reviewer', admin: 'role-admin' };
+      // 角色标签配色：复用节点类别 ID 的背景色
+      // 管理员 -> 鸟兽草木（S）；审核员 -> 典故（E）；整理员 -> 诗词（W）
+      const ROLE_CLASSES = { user: 'type-tag type-W', reviewer: 'type-tag type-E', admin: 'type-tag type-S' };
       let allUsers = [];
       let filteredUsers = [];
       let currentPage = 1;
@@ -122,7 +124,7 @@
         }
         const roleLabel = ROLE_LABELS[u.role] || u.role || '';
         const roleClass = ROLE_CLASSES[u.role] || '';
-        const roleHtml = `<td><span class="role-badge ${roleClass}">${roleLabel}</span></td>`;
+        const roleHtml = `<td><span class="${roleClass}">${roleLabel}</span></td>`;
         tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
         return tr;
       }

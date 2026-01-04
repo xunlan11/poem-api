@@ -11,6 +11,7 @@
 	--card: #ffffff;
 	--border: #e2e8f0;
 	--danger: #dc2626;
+	--topbar-h: 56px;
 }
 
 * {
@@ -30,7 +31,8 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 12px 16px;
+	height: var(--topbar-h);
+	padding: 0 16px;
 	border-bottom: 1px solid var(--border);
 	background: #ffffff;
 	position: sticky;
@@ -38,16 +40,22 @@ body {
 	z-index: 10;
 }
 
+.topbar .actions {
+	margin-top: 0;
+	height: 100%;
+	align-items: center;
+}
+
 .topbar h1 {
 	font-size: 18px;
 	margin: 0;
 }
 
-.topbar { position: relative; }
 .topbar-center {
 	position: absolute;
 	left: 50%;
-	transform: translateX(-50%);
+	top: 50%;
+	transform: translate(-50%, -50%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -64,6 +72,16 @@ body {
 	padding: 16px;
 	max-width: 1080px;
 	margin: 0 auto;
+}
+
+/* 编辑器：统一节点表单各块之间的间距（标题与上一条内容的距离） */
+#formContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+#formContainer > * + * {
+	margin-top: 12px;
 }
 
 .home-grid {
@@ -173,6 +191,14 @@ body {
 	color: #fff;
 }
 
+/* 自检 / 查重：统一为深蓝主色 */
+#selfCheckBtn,
+.btn.check-dup-btn {
+	background: var(--primary);
+	border-color: var(--primary);
+	color: #fff;
+}
+
 .btn.link-mode {
 	background: #22c55e;
 	border-color: #16a34a;
@@ -209,6 +235,7 @@ body {
 
 .result-item {
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	padding: 6px 8px;
 	border: 1px solid var(--border);
@@ -240,6 +267,10 @@ body {
 	border-collapse: collapse;
 }
 
+.table.user-table {
+	table-layout: fixed;
+}
+
 .table th,
 .table td {
 	border-bottom: 1px solid var(--border);
@@ -269,7 +300,7 @@ body {
 }
 
 .user-table col.col-id {
-	width: 12%;
+	width: 14%;
 }
 
 .user-table col.col-username {
@@ -277,11 +308,11 @@ body {
 }
 
 .user-table col.col-role {
-	width: 12%;
+	width: 16%;
 }
 
 .user-table col.col-realname {
-	width: 18%;
+	width: 16%;
 }
 
 .user-table col.col-student {
@@ -289,7 +320,7 @@ body {
 }
 
 .user-table col.col-actions {
-	width: 22%;
+	width: 18%;
 }
 
 .list-count {
@@ -372,6 +403,7 @@ body {
 .poem-readonly .del-row,
 .poem-readonly .move-btn,
 .poem-readonly .check-dup-btn,
+.poem-readonly #preface-toggle,
 .poem-readonly #body-lock-toggle {
 	display: none !important;
 }
@@ -397,6 +429,13 @@ body {
 	gap: 12px;
 	justify-content: space-between;
 	margin-bottom: 4px;
+}
+
+.body-head-left {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
 }
 
 .body-head-actions {
@@ -560,6 +599,9 @@ body {
 }
 
 .variant-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
 	border: 1px solid var(--border);
 	border-radius: 8px;
 	padding: 12px;
@@ -571,7 +613,21 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 8px;
+}
+
+/* 词曲谱：例词/平仄锁定与编辑态，贴近诗词“正文”的观感 */
+.variant-card textarea[data-field="sample"],
+.variant-card textarea[data-field="pingze"] {
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.variant-card .locked-text {
+	border-style: solid;
+	background: #ffffff;
+	margin-top: 0;
+	font-size: 16px;
+	line-height: 1.6;
 }
 
 .variant-lock-controls {
@@ -584,11 +640,14 @@ body {
 	min-width: 0;
 }
 
-.pingze-label {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	flex-wrap: wrap;
+/* 词曲谱：标题行右侧控件对齐 */
+.label-row .variant-lock-controls {
+	margin-top: 0;
+	margin-left: auto;
+}
+
+.variant-pingze-field .pingze-mark-buttons {
+	margin-left: auto;
 }
 
 .pingze-legend {
@@ -637,10 +696,26 @@ body {
 	flex-wrap: wrap;
 }
 
+/* 平仄模式按钮：用图例配色作为填充色 */
+.pingze-mark-buttons .btn[data-mode="variable"] {
+	background: transparent;
+	border-style: dashed;
+}
+
+.pingze-mark-buttons .btn[data-mode="fixed"] {
+	background: #dbeafe;
+	border-color: #bfdbfe;
+	color: #1d4ed8;
+}
+
+.pingze-mark-buttons .btn[data-mode="rhyme"] {
+	background: #dcfce7;
+	border-color: #bbf7d0;
+	color: #047857;
+}
+
 .pingze-mark-buttons .btn.active {
-	background: var(--primary);
-	border-color: var(--primary);
-	color: #fff;
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
 }
 
 .pingze-mark-status {
@@ -1241,31 +1316,6 @@ body {
 	flex-shrink: 0;
 }
 
-.role-badge {
-	display: inline-block;
-	padding: 4px 10px;
-	border-radius: 999px;
-	font-size: 12px;
-	font-weight: 400;
-	font-family: inherit;
-}
-
-.role-user {
-	background: #bfdbfe;
-	color: #1e3a8a;
-}
-
-.role-reviewer {
-	background: #fde68a;
-	color: #92400e;
-}
-
-.role-admin {
-	background: #fecaca;
-	color: #991b1b;
-}
-
-
 .relation-grid.pair-grid .relation-inline .pair-label {
 	flex: 0 0 16ch;
 	width: 16ch;
@@ -1339,8 +1389,8 @@ body {
 }
 
 .form-subtype-row #f-form {
-	flex: 0 0 220px;
-	min-width: 200px;
+	flex: 0 0 33.3333%;
+	min-width: 0;
 }
 
 .form-subtype-row #form-opts {
@@ -1349,7 +1399,7 @@ body {
 	align-items: flex-end;
 	justify-content: flex-start;
 	gap: var(--subtype-gap);
-	flex: 1 1 calc(100% - 260px);
+	flex: 1 1 0;
 	min-width: 0;
 	overflow: hidden;
 }
@@ -1361,7 +1411,7 @@ body {
 	gap: 12px;
 	flex: 1 1 0;
 	min-width: 0;
-	max-width: 320px;
+	max-width: none;
 	white-space: nowrap;
 }
 
@@ -1441,21 +1491,51 @@ body {
 	align-items: center;
 }
 
+.modal-header-actions {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
 .modal-body {
 	margin-top: 8px;
+}
+
+.export-session-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	min-width: 260px;
+}
+
+.export-session-text {
+	display: inline-flex;
+	align-items: center;
+}
+
+.export-session-actions {
+	margin-left: auto;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.export-session-input {
+	width: 120px;
 }
 
 .note-list {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
-	margin-top: 8px
+	gap: 8px;
+	margin-top: 8px;
 }
 
 .note-item {
 	display: flex;
 	gap: 6px;
-	margin-bottom: 6px;
+	margin-bottom: 0;
 	align-items: center
 }
 

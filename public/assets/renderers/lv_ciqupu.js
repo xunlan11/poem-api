@@ -47,6 +47,7 @@
     const formContainer = context.formContainer;
     if (!formContainer) return null;
     const node = context.node || {};
+    const documentRef = context.document || root.document;
     let editable = context.state ? !!context.state.editable : true;
     // 从上下文获取辅助函数
     const registerEditableWatcher = typeof context.registerEditableWatcher === 'function' ? context.registerEditableWatcher : () => () => { };
@@ -105,7 +106,10 @@
         <div class="field"><label>宫调</label><input id="lv-gongdiao" type="text" data-link-field="fields.gongdiao" value="${escapeHtml(gongdiao)}"></div>
       </div>
       <div class="field">
-        <label>共 <span id="lv-variant-count">${variants.length}</span> 体 <button type="button" class="btn small" id="lv-add-variant">新增变体</button></label>
+        <div class="label-row">
+          <label>共 <span id="lv-variant-count">${variants.length}</span> 体</label>
+          <button type="button" class="btn small" id="lv-add-variant">新增变体</button>
+        </div>
         <div id="lv-variant-list" class="variant-list"></div>
       </div>
     `;
@@ -205,36 +209,32 @@
           <div class="field"><label>起源</label><textarea rows="1" data-autosize-min="32" data-field="origin" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.origin || '')}</textarea></div>
           <div class="grid-2">
             <div class="field variant-sample-field">
-              <label>例词</label>
+              <div class="label-row">
+                <label>例词</label>
+                <div class="body-lock-controls variant-lock-controls">
+                  <button type="button" class="btn small" data-act="toggle-lock">🔒 锁定</button>
+                </div>
+              </div>
               <div class="input-wrapper sample-input-wrapper">
                 <textarea rows="1" data-autosize-min="32" data-field="sample" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.sample || '')}</textarea>
               </div>
               <div class="locked-text sample-lock-view" style="display:none"></div>
-              <div class="body-lock-controls variant-lock-controls">
-                <button type="button" class="btn small" data-act="lock">🔒 锁定</button>
-                <button type="button" class="btn small" data-act="unlock">✏️ 编辑</button>
-              </div>
+              <div class="self-check-anchor" id="ciqupu-sample-anchor-${index}"></div>
             </div>
             <div class="field variant-pingze-field">
-              <label class="pingze-label">
-                平仄
-                <span class="pingze-legend">
-                  <span><span class="legend-swatch legend-swatch-variable"></span>可变</span>
-                  <span><span class="legend-swatch legend-swatch-fixed"></span>固定</span>
-                  <span><span class="legend-swatch legend-swatch-rhyme"></span>韵脚</span>
-                </span>
-              </label>
-              <div class="input-wrapper pingze-input-wrapper">
-                <textarea rows="1" data-autosize-min="32" data-field="pingze" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.pingze || '')}</textarea>
-              </div>
-              <div class="locked-text pingze-lock-view" style="display:none"></div>
-              <div class="pingze-mark-toolbar">
+              <div class="label-row">
+                <label>平仄</label>
                 <div class="pingze-mark-buttons">
                   <button type="button" class="btn small" data-mode="variable">可变</button>
                   <button type="button" class="btn small" data-mode="fixed">固定</button>
                   <button type="button" class="btn small" data-mode="rhyme">韵脚</button>
                 </div>
               </div>
+              <div class="input-wrapper pingze-input-wrapper">
+                <textarea rows="1" data-autosize-min="32" data-field="pingze" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.pingze || '')}</textarea>
+              </div>
+              <div class="locked-text pingze-lock-view" style="display:none"></div>
+              <div class="self-check-anchor" id="ciqupu-pingze-anchor-${index}"></div>
             </div>
           </div>
         `;
@@ -273,22 +273,25 @@
         });
         const sampleTextarea = wrapper.querySelector('textarea[data-field="sample"]');
         const pingzeTextarea = wrapper.querySelector('textarea[data-field="pingze"]');
+        try {
+          if (sampleTextarea && sampleTextarea.dataset) sampleTextarea.dataset.selfCheckAnchor = `ciqupu-sample-anchor-${index}`;
+          if (pingzeTextarea && pingzeTextarea.dataset) pingzeTextarea.dataset.selfCheckAnchor = `ciqupu-pingze-anchor-${index}`;
+        } catch (e) { }
         const sampleInputWrapper = wrapper.querySelector('.sample-input-wrapper');
         const pingzeInputWrapper = wrapper.querySelector('.pingze-input-wrapper');
         const lockControls = wrapper.querySelector('.variant-lock-controls');
-        const lockBtn = lockControls?.querySelector('[data-act="lock"]');
-        const unlockBtn = lockControls?.querySelector('[data-act="unlock"]');
+        const toggleLockBtn = lockControls?.querySelector('[data-act="toggle-lock"]');
         const sampleLockView = wrapper.querySelector('.sample-lock-view');
         const pingzeLockView = wrapper.querySelector('.pingze-lock-view');
         const pingzeMarkButtons = Array.from(wrapper.querySelectorAll('.pingze-mark-buttons .btn'));
         const pingzeMarkStatus = wrapper.querySelector('.pingze-mark-status');
         const pingzeMarkToolbar = wrapper.querySelector('.pingze-mark-toolbar');
+        const pingzeMarkButtonsWrap = wrapper.querySelector('.pingze-mark-buttons');
         if (lockControls) {
           lockControls.style.display = editable ? '' : 'none';
         }
-        if (pingzeMarkToolbar) {
-          pingzeMarkToolbar.style.display = editable ? '' : 'none';
-        }
+        if (pingzeMarkToolbar) pingzeMarkToolbar.style.display = 'none';
+        if (pingzeMarkButtonsWrap) pingzeMarkButtonsWrap.style.display = editable ? '' : 'none';
         // 高亮匹配字符的函数
         const highlightMatches = (charIdx) => {
           const apply = (view) => {
@@ -394,21 +397,16 @@
           } else {
             highlightMatches(null);
           }
-          if (lockBtn) lockBtn.disabled = !editable || locked;
-          if (unlockBtn) unlockBtn.disabled = !editable || !locked;
+          if (toggleLockBtn) {
+            toggleLockBtn.disabled = !editable;
+            toggleLockBtn.textContent = locked ? '✏️ 编辑' : '🔒 锁定';
+          }
           updateMarkControls();
         };
-        if (lockBtn) {
-          lockBtn.addEventListener('click', () => {
-            if (!editable || lockStates[index]) return;
-            lockStates[index] = true;
-            applyLockState();
-          });
-        }
-        if (unlockBtn) {
-          unlockBtn.addEventListener('click', () => {
-            if (!editable || !lockStates[index]) return;
-            lockStates[index] = false;
+        if (toggleLockBtn) {
+          toggleLockBtn.addEventListener('click', () => {
+            if (!editable) return;
+            lockStates[index] = !lockStates[index];
             applyLockState();
           });
         }
@@ -417,6 +415,40 @@
       initializeLinkFields(variantListEl);
     }
     renderVariants();
+
+    // 自检自动修正可能会修改隐藏的 textarea 值；锁定视图需同步刷新
+    try {
+      if (formContainer.__ciqupuSelfcheckHandler && documentRef?.removeEventListener) {
+        documentRef.removeEventListener('poem:selfcheck:after', formContainer.__ciqupuSelfcheckHandler);
+      }
+    } catch (e) { }
+    const handleSelfCheckAfter = () => {
+      try {
+        const cards = Array.from(variantListEl.querySelectorAll('.variant-card'));
+        cards.forEach((card, idx) => {
+          const isLocked = !!lockStates[idx] || !editable;
+          if (!isLocked) return;
+          const sampleTextarea = card.querySelector('textarea[data-field="sample"]');
+          const pingzeTextarea = card.querySelector('textarea[data-field="pingze"]');
+          const sampleLockView = card.querySelector('.sample-lock-view');
+          const pingzeLockView = card.querySelector('.pingze-lock-view');
+          if (sampleLockView && sampleTextarea) {
+            renderLockedText(sampleTextarea.value || '', sampleLockView);
+          }
+          if (pingzeLockView && pingzeTextarea) {
+            const marks = normalizePingzeMarksForText(pingzeTextarea.value || '', variants[idx]?.pingzeMarks);
+            if (variants[idx]) variants[idx].pingzeMarks = marks;
+            renderLockedText(pingzeTextarea.value || '', pingzeLockView, { marks, classMap: MARK_CLASS_MAP });
+          }
+        });
+      } catch (e) { }
+    };
+    try {
+      if (documentRef?.addEventListener) {
+        documentRef.addEventListener('poem:selfcheck:after', handleSelfCheckAfter);
+        formContainer.__ciqupuSelfcheckHandler = handleSelfCheckAfter;
+      }
+    } catch (e) { }
 
     // 同步添加按钮显示状态的函数
     function syncAddButton() {

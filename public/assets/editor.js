@@ -242,6 +242,23 @@
       .filter(Boolean);
   }
 
+  // 修复“添加”按钮误触：当按钮被放在 label 内时，点击 label 的空白区域会触发按钮默认激活
+  function installAddRowLabelGuard() {
+    if (!formContainer) return;
+    if (formContainer.dataset.addRowLabelGuardInstalled === '1') return;
+    formContainer.dataset.addRowLabelGuardInstalled = '1';
+    formContainer.addEventListener('click', (e) => {
+      const target = e.target;
+      const label = target && target.closest ? target.closest('label') : null;
+      if (!label) return;
+      const addBtn = label.querySelector && label.querySelector('button.add-row');
+      if (!addBtn) return;
+      if (target.closest && target.closest('button.add-row')) return;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+  }
+
   // 渲染内联对的函数
   function renderInlinePairs(container, list, key1, key2, label1, label2, options) {
     if (!container) return;
@@ -331,7 +348,7 @@
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.textContent = '删除';
-        delBtn.className = 'btn small del-row';
+        delBtn.className = 'btn danger small del-row';
         delBtn.addEventListener('click', () => removeEntry(index));
         delWrap.appendChild(delBtn);
         wrapper.appendChild(delWrap);
@@ -366,6 +383,16 @@
     return unique.length ? unique : [normalized];
   }
 
+  // 查重匹配：忽略括号及括号内内容，但展示时保留原文
+  function stripBracketedContent(raw) {
+    const s = typeof raw === 'string' ? raw : String(raw || '');
+    return s
+      // 中文全角括号
+      .replace(/（[^）]*）/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   // 显示重复模态框的函数
   function showDuplicateModal(results, query) {
     removeExistingDuplicateModal();
@@ -395,7 +422,7 @@
     }
     card.innerHTML = `
       <div class="modal-header">
-        <div>查重结果: "${escapeHtml(query)}"</div>
+        <div>查重："${escapeHtml(query)}"</div>
         <button class="btn" id="closeDupModal">关闭</button>
       </div>
       <div class="modal-body" style="max-height:60vh;overflow-y:auto">
@@ -411,7 +438,8 @@
 
   // 检查重复的函数
   async function checkDuplicate(query, type) {
-    const queries = buildDuplicateQueries(query);
+    const displayQueries = buildDuplicateQueries(query);
+    const queries = buildDuplicateQueries(stripBracketedContent(query));
     if (!queries.length) {
       Poem.toast('请先输入内容');
       return;
@@ -427,7 +455,7 @@
         });
       });
       const filtered = Array.from(merged.values()).filter(r => r.id !== currentId);
-      const displayQuery = queries.join('、');
+      const displayQuery = displayQueries.length ? displayQueries.join('、') : queries.join('、');
       showDuplicateModal(filtered, displayQuery);
     } catch (err) {
       console.error(err);
@@ -643,6 +671,7 @@
       };
       replaceLinks([]);
       isOwner = true;
+      state.canEditNode = true;
       if (linkBtn) linkBtn.style.display = 'inline-block';
       if (selfCheckBtn) selfCheckBtn.style.display = 'inline-block';
       setEditable(true);
@@ -657,6 +686,7 @@
       // 仅所有者或审核者/管理员可编辑
       isOwner = (node.meta?.createdById && node.meta.createdById === me?.id) || (node.meta?.createdBy && (node.meta.createdBy === (me?.real_name || me?.username)));
       const canEditAll = me && (me.role === 'reviewer' || me.role === 'admin');
+      state.canEditNode = !!(isOwner || canEditAll);
       editBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       saveBtn.style.display = 'none';
       if (linkBtn) linkBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
@@ -727,6 +757,7 @@
     } else {
       formContainer.innerHTML = '<div class="section-card">未知类型</div>';
     }
+    installAddRowLabelGuard();
     setEditable(isNew ? true : false);
 
     // 保存节点的函数

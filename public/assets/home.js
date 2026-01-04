@@ -317,7 +317,7 @@
       const me = await Poem.me();
       if (me) {
         const roleLabel = ROLE_LABELS[me.role] || me.role || '';
-        bar.innerHTML = `${me.real_name || me.username}（${roleLabel}）<button type="button" class="btn small" id="logout">退出</button>`;
+        bar.innerHTML = `${me.real_name || me.username}（${roleLabel}）<button type="button" class="btn danger small" id="logout">退出</button>`;
         const logout = document.getElementById('logout');
         if (logout) {
           logout.onclick = async () => {
