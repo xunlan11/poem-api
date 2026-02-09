@@ -6,15 +6,6 @@
     { key: 'yunbu', label: '韵部（L）' },
     { key: 'ciqupu', label: '词曲谱（L）' },
   ];
-  // 搜索脚本列表
-  const SEARCH_SCRIPTS = {
-    fuse: 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0',
-    pinyin: 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js'
-  };
-  // 已加载脚本映射
-  const loadedScripts = new Map();
-  // 全局脚本缓存
-  const globalScriptCache = typeof window !== 'undefined' ? (window.__poemScriptCache = window.__poemScriptCache || {}) : {};
   // 用户缓存键
   const ME_CACHE_KEY = 'poem_me_cache_v1';
   // 用户缓存TTL
@@ -116,122 +107,6 @@
     }
   }
 
-  // 一次性加载脚本的函数
-  function loadScriptOnce(src) {
-    if (!src) return Promise.resolve();
-    if (loadedScripts.has(src)) return loadedScripts.get(src);
-    if (globalScriptCache[src] === 'loaded') return Promise.resolve();
-    if (globalScriptCache[src] && typeof globalScriptCache[src].then === 'function') return globalScriptCache[src];
-    const promise = new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      script.onload = () => resolve();
-      script.onerror = (err) => {
-        loadedScripts.delete(src);
-        delete globalScriptCache[src];
-        reject(err || new Error(`Failed to load script: ${src}`));
-      };
-      document.head.appendChild(script);
-    });
-    loadedScripts.set(src, promise);
-    globalScriptCache[src] = promise;
-    promise.then(() => { globalScriptCache[src] = 'loaded'; }).catch(() => { });
-    return promise;
-  }
-
-  // 确保搜索依赖的函数
-  async function ensureSearchDeps() {
-    const tasks = [];
-    if (typeof window !== 'undefined') {
-      if (!window.Fuse) tasks.push(loadScriptOnce(SEARCH_SCRIPTS.fuse));
-      if (!window.PinyinPro) tasks.push(loadScriptOnce(SEARCH_SCRIPTS.pinyin));
-    }
-    if (tasks.length) {
-      try {
-        await Promise.all(tasks);
-      } catch (err) {
-        console.error('加载搜索依赖失败', err);
-      }
-    }
-  }
-  // 构建搜索令牌的函数
-  function buildSearchTokens(text) {
-    if (!text) return [];
-    const str = String(text);
-    const trimmed = str.trim().toLowerCase();
-    if (!trimmed) return [str];
-    const tokens = new Set([str, trimmed]);
-    try {
-      if (window.PinyinPro && typeof window.PinyinPro.pinyin === 'function') {
-        const full = window.PinyinPro.pinyin(str, { toneType: 'none', v: true, nonZh: 'consecutive', type: 'array' }) || [];
-        if (Array.isArray(full) && full.length) {
-          const joined = full.join('');
-          const spaced = full.join(' ');
-          if (joined) tokens.add(joined.toLowerCase());
-          if (spaced) tokens.add(spaced.toLowerCase());
-          if (full.every(s => s && s.length)) tokens.add(full.map(s => s[0]).join('').toLowerCase());
-        }
-      }
-    } catch (e) { }
-    return Array.from(tokens);
-  }
-
-  // 创建模糊搜索的函数
-  function createFuzzySearch() {
-    const fuseCache = new Map();
-    function ensureFuse(list) {
-      const key = list ? list.length : 0;
-      if (fuseCache.has(key)) return fuseCache.get(key);
-      const enriched = (list || []).map(item => {
-        const copy = { ...item };
-        const tokens = new Set();
-        const pushTokens = value => {
-          buildSearchTokens(value).forEach(tok => tokens.add(tok));
-        };
-        const fields = [
-          item.id,
-          item.name,
-          item.creator,
-          item.otherStatement,
-          item.extra?.explanation,
-          item.extra?.introduction,
-          item.fields?.title,
-          item.fields?.name,
-          item.fields?.common,
-          item.fields?.commonName,
-          item.fields?.statement,
-          item.fields?.scientificName,
-          Array.isArray(item.fields?.otherStatements) ? item.fields.otherStatements.join(' ') : item.fields?.otherStatements,
-        ];
-        fields.forEach(pushTokens);
-        copy.__tokens = Array.from(tokens);
-        return copy;
-      });
-      const fuse = new window.Fuse(enriched, {
-        keys: [
-          { name: 'id', weight: 0.4 },
-          { name: 'name', weight: 0.6 },
-          { name: 'creator', weight: 0.3 },
-          { name: '__tokens', weight: 0.8 }
-        ],
-        threshold: 0.45,
-        ignoreLocation: true,
-        distance: 200,
-        minMatchCharLength: 1
-      });
-      fuseCache.set(key, fuse);
-      return fuse;
-    }
-    return function (list, query) {
-      if (!query || !query.trim()) return list;
-      if (!window.Fuse) return list;
-      const fuse = ensureFuse(list);
-      try {
-        return fuse.search(query).map(r => r.item);
-      } catch (e) { return list; }
-    };
-  }
 
   window.Poem = {
     TYPES,
@@ -303,12 +178,8 @@
     },
     // 显示提示消息的函数
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
-    fuzzySearch: createFuzzySearch(),
-    ensureSearchDeps,
     checkClientFingerprintOnce,
     startAutoUpdateCheck,
-    // 重新加载页面的函数
-    reloadNow() { window.location.reload(); },
     clearMeCache,
     // 打开链接选择器的函数
     openLinkPicker(onPick, options) {

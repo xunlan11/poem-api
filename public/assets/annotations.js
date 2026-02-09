@@ -33,7 +33,6 @@
     const syncLinksToState = options.linking && typeof options.linking.syncLinksToState === 'function' ? options.linking.syncLinksToState : (() => { });
     const replaceLinks = options.linking && typeof options.linking.replaceLinks === 'function' ? options.linking.replaceLinks : (() => { });
     const links = options.linking && Array.isArray(options.linking.links) ? options.linking.links : [];
-    const MAX_VISIBLE = (typeof options.maxVisible === 'number' && options.maxVisible > 0) ? options.maxVisible : 5;
     const renderContainerId = options.renderContainerId || 'f-body-render';
     const prefaceRenderContainerId = options.prefaceRenderContainerId || 'f-preface-render';
     const wordCountEl = options.wordCountEl || formContainer?.querySelector?.('#body-word-count') || null;

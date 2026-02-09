@@ -44,8 +44,6 @@
       </table>
     </section>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.20.1/dist/pinyin-pro.min.js"></script>
   <script src="assets/common.js"></script>
   <script>
     (async function () {
@@ -103,24 +101,10 @@
         let actions = '';
         if (u.id === 'u_1') {
           actions = '<span class="text-muted">超级管理员</span>';
+        } else if (u.id === me.id) {
+          actions = '<span class="text-muted">当前用户</span>';
         } else {
-          if (u.role === 'user') {
-            actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>审核员</button> `;
-            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>管理员</button> `;
-          } else if (u.role === 'reviewer') {
-            actions += `<button class='btn small' data-id='${u.id}' data-act='user'>整理员</button> `;
-            actions += `<button class='btn small' data-id='${u.id}' data-act='admin'>管理员</button> `;
-          } else if (u.role === 'admin') {
-            if (u.id !== me.id) {
-              actions += `<button class='btn small' data-id='${u.id}' data-act='user'>整理员</button> `;
-              actions += `<button class='btn small' data-id='${u.id}' data-act='reviewer'>审核员</button> `;
-            } else {
-              actions += '<span class="text-muted">当前用户</span>';
-            }
-          }
-          if (u.id !== 'u_1' && u.id !== me.id) {
-            actions += ` <button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
-          }
+          actions = `<button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
         }
         const roleLabel = ROLE_LABELS[u.role] || u.role || '';
         const roleClass = ROLE_CLASSES[u.role] || '';
@@ -240,15 +224,10 @@
         const user = allUsers.find(u => u.id === id);
         if (!user) return;
         let confirmMsg = '';
-        if (act === 'admin') confirmMsg = `将用户 ${user.username} 设为管理员？`;
-        else if (act === 'reviewer') confirmMsg = `将用户 ${user.username} 设为审核员？`;
-        else if (act === 'user') confirmMsg = `将用户 ${user.username} 设为整理员？`;
-        else if (act === 'delete') confirmMsg = `删除用户 ${user.username} ？`;
+        if (act === 'delete') confirmMsg = `删除用户 ${user.username} ？`;
         if (confirmMsg && !confirm(confirmMsg)) return;
         try {
-          if (['user', 'reviewer', 'admin'].includes(act)) {
-            await Poem.api(`/api/users/${id}/role`, { method: 'PUT', body: JSON.stringify({ role: act }) });
-          } else if (act === 'delete') {
+          if (act === 'delete') {
             await Poem.api(`/api/users/${id}`, { method: 'DELETE' });
           }
           await refreshUsers();

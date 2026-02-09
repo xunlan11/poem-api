@@ -447,12 +447,6 @@
     const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
     return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
   }
-  // 从ID中提取数字
-  function idNumber(id) {
-    if (!id || typeof id !== 'string') return 0;
-    const num = parseInt(id.slice(1), 10);
-    return Number.isNaN(num) ? 0 : num;
-  }
   // 渲染状态标签
   function renderStatusTag(status, label, classMap) {
     if (!label) return '';

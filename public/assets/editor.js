@@ -114,13 +114,7 @@
     const nodeId = state.node.id;
     editingLockId = nodeId;
     editingLockActive = true;
-    Poem.api('/api/editing/start', { method: 'POST', body: JSON.stringify({ id: nodeId }) })
-      .then(res => {
-        if (res && res.ok === false && res.owner && res.owner.id && res.owner.id !== currentUser?.id) {
-          Poem.toast(`当前节点正在被 ${res.owner.name || '他人'} 编辑`);
-        }
-      })
-      .catch(() => { });
+    Poem.api('/api/editing/start', { method: 'POST', body: JSON.stringify({ id: nodeId }) }).catch(() => { });
     if (!editingLockTimer) {
       editingLockTimer = setInterval(() => {
         if (!editingLockActive || !editingLockId) return;

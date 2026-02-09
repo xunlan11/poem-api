@@ -30,8 +30,6 @@ const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const FP_CACHE_TTL = 10 * 1000;
 let clientFpCache = { hash: '', fileCount: 0, generatedAt: 0 };
-const USER_ARCHIVE_STATS_TTL = 10 * 1000;
-let userArchiveStatsCache = { generatedAt: 0, stats: null };
 const EDITING_TTL = 45 * 1000;
 const editingLocks = new Map();
 fs.ensureDirSync(UPLOAD_DIR);
@@ -587,17 +585,6 @@ app.get('/health', (req, res) => {
   res.type('text/plain').send('healthy');
 });
 
-// 统计信息路由
-app.get('/api/stats', (req, res) => {
-  const stats = { total: 0, by_type: {} };
-  for (const t of TYPES) {
-    const count = Object.keys(store[t].items).length;
-    stats.by_type[t] = count;
-    stats.total += count;
-  }
-  res.json(stats);
-});
-
 // 节点列表路由
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
@@ -879,29 +866,6 @@ app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'
   }
 });
 
-// 上传图片路由
-app.post('/api/upload/image', requireAuth, requireProfile, upload.single('image'), async (req, res) => {
-  try {
-    if (!req.file) return res.status(400).json({ error: 'Missing file' });
-    let filename = req.file.filename;
-    let filePath = req.file.path || path.join(UPLOAD_DIR, filename);
-    const nodeId = sanitizeNodeId(req.body?.nodeId);
-    if (nodeId) {
-      const desiredName = `node_${nodeId}${safeExtname(req.file.originalname || filename)}`;
-      if (desiredName !== filename) {
-        const targetPath = path.join(UPLOAD_DIR, desiredName);
-        await fs.move(filePath, targetPath, { overwrite: true });
-        filename = desiredName;
-        filePath = targetPath;
-      }
-    }
-    res.json({ ok: true, path: `/uploads/${filename}` });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message || 'Upload failed' });
-  }
-});
-
 // 搜索路由
 app.get('/api/search', (req, res) => {
   const { q, type } = req.query;
@@ -995,35 +959,6 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-function computeUserArchiveStats() {
-  const stats = {};
-  for (const type of TYPES) {
-    const items = store[type]?.items || {};
-    for (const node of Object.values(items)) {
-      if (!node || (node.extra?.reviewStatus || '') !== 'archived') continue;
-      const uid = String(node.meta?.createdById || '').trim();
-      if (!uid) continue;
-      if (!stats[uid]) stats[uid] = { count: 0, duration: 0 };
-      stats[uid].count += 1;
-      const raw = node.extra?.reviewDuration;
-      const dur = parseFloat(String(raw ?? '').trim());
-      if (!Number.isNaN(dur) && Number.isFinite(dur)) {
-        stats[uid].duration += dur;
-      }
-    }
-  }
-  return stats;
-}
-
-function getUserArchiveStatsCached() {
-  const now = Date.now();
-  if (userArchiveStatsCache.stats && (now - userArchiveStatsCache.generatedAt) < USER_ARCHIVE_STATS_TTL) {
-    return userArchiveStatsCache;
-  }
-  const stats = computeUserArchiveStats();
-  userArchiveStatsCache = { generatedAt: now, stats };
-  return userArchiveStatsCache;
-}
 
 function requireReviewerOrAdmin(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
@@ -1090,10 +1025,6 @@ app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
 });
 
 // 用户归档统计（管理员）：按创建者统计已归档节点总数与总时长
-app.get('/api/users/archive-stats', requireAuth, requireAdmin, (req, res) => {
-  const payload = getUserArchiveStatsCached();
-  res.json(payload);
-});
 
 // 生成下一用户ID
 function nextUserId() {
