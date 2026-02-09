@@ -94,11 +94,32 @@
   const filterBtn = document.getElementById('filterBtn');
   let dateFilter = { start: null, end: null };
   let typeFilter = '';
-  let reviewFilter = '';
+  let reviewFilter = [];
   let repairFilter = '';
+  const REVIEW_STATUS_VALUES = ['pending', 'rejected', 'approved', 'archived'];
+  function normalizeReviewFilter(list) {
+    if (!Array.isArray(list)) return [];
+    const filtered = list.map(item => String(item || '').trim().toLowerCase()).filter(Boolean);
+    const unique = Array.from(new Set(filtered));
+    return unique.filter(item => REVIEW_STATUS_VALUES.includes(item));
+  }
+  function parseReviewFilter(raw) {
+    const trimmed = String(raw || '').trim().toLowerCase();
+    if (!trimmed) return REVIEW_STATUS_VALUES.slice();
+    if (trimmed === 'none') return [];
+    const normalized = normalizeReviewFilter(trimmed.split(',').map(s => s.trim()));
+    return normalized.length ? normalized : REVIEW_STATUS_VALUES.slice();
+  }
+  function getReviewFilterParam(list) {
+    if (!Array.isArray(list)) return '';
+    if (!list.length) return 'none';
+    if (list.length === REVIEW_STATUS_VALUES.length) return '';
+    return list.join(',');
+  }
   // 筛选模态框
   function showFilterModal() {
     const { modal, card, close } = createModal('筛选');
+    card.classList.add('modal-card-filter');
     const header = card.querySelector('.modal-header');
     const closeBtn = card.querySelector('#closeModal');
     if (closeBtn) closeBtn.remove();
@@ -139,56 +160,70 @@
       </label>
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">状态
         <div style="display:flex;gap:12px;width:100%;flex-wrap:wrap">
-          <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
+          <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px">
             <span>审核</span>
-            <select id="fltStatus" style="flex:1;min-width:120px">
-              <option value="">全部</option>
-              <option value="unarchived">未归档</option>
-              <option value="pending">未审核</option>
-              <option value="rejected">未通过</option>
-              <option value="approved">通过</option>
-              <option value="archived">归档</option>
-            </select>
-          </label>
-          <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px;opacity:0.6" id="repairFilterLabel">
+            <div id="fltStatus" class="filter-status-row" style="display:flex;gap:8px 12px">
+              <label class="status-tag status-pending"><input type="checkbox" value="pending"> 未审核</label>
+              <label class="status-tag status-rejected"><input type="checkbox" value="rejected"> 未通过</label>
+              <label class="status-tag status-approved"><input type="checkbox" value="approved"> 通过</label>
+              <label class="status-tag status-archived"><input type="checkbox" value="archived"> 归档</label>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px;opacity:0.6" id="repairFilterLabel">
             <span>返修</span>
-            <select id="fltRepair" disabled style="flex:1;min-width:120px">
-              <option value="">全部</option>
-              <option value="unfinished">未完成</option>
-              <option value="finished">完成</option>
-            </select>
-          </label>
+            <div id="fltRepair" style="display:flex;flex-wrap:wrap;gap:8px 12px">
+              <label class="status-tag status-rejected"><input type="radio" name="fltRepair" value="unfinished"> 未完成</label>
+              <label class="status-tag status-approved"><input type="radio" name="fltRepair" value="finished"> 完成</label>
+            </div>
+          </div>
         </div>
       </label>
     </div>`;
     const startEl = body.querySelector('#fltStart');
     const endEl = body.querySelector('#fltEnd');
     const typeEl = body.querySelector('#fltType');
-    const statusEl = body.querySelector('#fltStatus');
-    const repairEl = body.querySelector('#fltRepair');
+    const statusWrap = body.querySelector('#fltStatus');
+    const repairWrap = body.querySelector('#fltRepair');
     const repairLabel = body.querySelector('#repairFilterLabel');
     startEl.value = dateFilter.start || '';
     endEl.value = dateFilter.end || '';
     const defaultTypeValue = typeFilter || ((type && type !== 'A') ? type : '');
     typeEl.value = defaultTypeValue;
-    statusEl.value = reviewFilter || '';
-    repairEl.value = repairFilter || '';
+    const statusChecks = Array.from(statusWrap.querySelectorAll('input[type="checkbox"]'));
+    const repairRadios = Array.from(repairWrap.querySelectorAll('input[type="radio"]'));
+    const initialReview = Array.isArray(reviewFilter) ? reviewFilter : REVIEW_STATUS_VALUES.slice();
+    statusChecks.forEach(input => {
+      input.checked = initialReview.includes(input.value);
+    });
+    repairRadios.forEach(input => {
+      input.checked = (input.value || '') === (repairFilter || '');
+    });
+    if (!repairRadios.some(input => input.checked)) {
+      const defaultRadio = repairRadios.find(input => input.value === 'unfinished');
+      if (defaultRadio) defaultRadio.checked = true;
+    }
+    const getSelectedStatuses = () => statusChecks.filter(input => input.checked).map(input => input.value);
     const syncRepairState = () => {
-      const active = statusEl.value === 'rejected';
-      repairEl.disabled = !active;
+      const selected = getSelectedStatuses();
+      const active = selected.includes('rejected');
+      repairRadios.forEach(input => { input.disabled = !active; });
       repairLabel.style.opacity = active ? '1' : '0.6';
       if (!active) {
-        repairEl.value = '';
+        repairRadios.forEach(input => { input.checked = false; });
+      } else if (!repairRadios.some(input => input.checked)) {
+        const defaultRadio = repairRadios.find(input => input.value === 'unfinished');
+        if (defaultRadio) defaultRadio.checked = true;
       }
     };
     syncRepairState();
-    statusEl.addEventListener('change', syncRepairState);
+    statusWrap.addEventListener('change', syncRepairState);
     card.querySelector('#fltOk').onclick = () => {
       dateFilter.start = startEl.value || null;
       dateFilter.end = endEl.value || null;
       typeFilter = typeEl.value || '';
-      reviewFilter = statusEl.value || '';
-      repairFilter = reviewFilter === 'rejected' ? (repairEl.value || '') : '';
+      reviewFilter = normalizeReviewFilter(getSelectedStatuses());
+      const selectedRepair = repairRadios.find(input => input.checked);
+      repairFilter = reviewFilter.includes('rejected') ? (selectedRepair ? selectedRepair.value : '') : '';
       close();
       search();
       Poem.toast('筛选已应用');
@@ -197,13 +232,14 @@
       startEl.value = '';
       endEl.value = '';
       typeEl.value = '';
-      statusEl.value = '';
-      repairEl.value = '';
+      statusChecks.forEach(input => { input.checked = true; });
+      repairRadios.forEach(input => { input.checked = (input.value === 'unfinished'); });
       dateFilter.start = null;
       dateFilter.end = null;
       typeFilter = '';
-      reviewFilter = '';
+      reviewFilter = REVIEW_STATUS_VALUES.slice();
       repairFilter = '';
+      syncRepairState();
       close();
       search();
       Poem.toast('筛选已清除');
@@ -258,8 +294,8 @@
     end: initialEnd ? initialEnd : null
   };
   typeFilter = Poem.qs('ft') || '';
-  reviewFilter = Poem.qs('rs') || '';
-  repairFilter = reviewFilter === 'rejected' ? (Poem.qs('rr') || '') : '';
+  reviewFilter = parseReviewFilter(Poem.qs('rs') || '');
+  repairFilter = reviewFilter.includes('rejected') ? (Poem.qs('rr') || '') : '';
   // 搜索函数
   async function search(options) {
     try {
@@ -313,14 +349,14 @@
     else url.searchParams.delete('de');
     if (typeFilter) url.searchParams.set('ft', typeFilter);
     else url.searchParams.delete('ft');
-    if (reviewFilter) {
-      url.searchParams.set('rs', reviewFilter);
-      if (reviewFilter === 'rejected' && repairFilter) url.searchParams.set('rr', repairFilter);
-      else url.searchParams.delete('rr');
+    const reviewParam = getReviewFilterParam(reviewFilter);
+    if (reviewParam) {
+      url.searchParams.set('rs', reviewParam);
     } else {
       url.searchParams.delete('rs');
-      url.searchParams.delete('rr');
     }
+    if (reviewFilter.includes('rejected') && repairFilter) url.searchParams.set('rr', repairFilter);
+    else url.searchParams.delete('rr');
     if (currentPage > 1) url.searchParams.set('page', String(currentPage));
     else url.searchParams.delete('page');
     history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
@@ -340,8 +376,9 @@
     if (dateFilter.start) params.set('ds', dateFilter.start);
     if (dateFilter.end) params.set('de', dateFilter.end);
     if (typeFilter) params.set('ft', typeFilter);
-    if (reviewFilter) params.set('rs', reviewFilter);
-    if (reviewFilter === 'rejected' && repairFilter) params.set('rr', repairFilter);
+    const reviewParam = getReviewFilterParam(reviewFilter);
+    if (reviewParam) params.set('rs', reviewParam);
+    if (reviewFilter.includes('rejected') && repairFilter) params.set('rr', repairFilter);
     return params;
   }
   // 构建页面查询参数

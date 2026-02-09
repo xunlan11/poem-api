@@ -488,7 +488,7 @@ app.get('/api/stats', (req, res) => {
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
   const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
-  const reviewStatus = String(req.query.reviewStatus || req.query.rs || '').trim().toLowerCase();
+  const reviewStatusRaw = String(req.query.reviewStatus || req.query.rs || '').trim().toLowerCase();
   const repairStatus = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
   const startRaw = String(req.query.startDate || req.query.start || req.query.ds || '').trim();
   const endRaw = String(req.query.endDate || req.query.end || req.query.de || '').trim();
@@ -516,18 +516,32 @@ app.get('/api/nodes', (req, res) => {
       return true;
     });
   }
-  const filterUnarchived = reviewStatus === 'unarchived';
+  const filterUnarchived = reviewStatusRaw === 'unarchived' || reviewStatusRaw.includes('unarchived');
+  const reviewNoneSelected = reviewStatusRaw === 'none';
   const allowedStatuses = new Set(['pending', 'rejected', 'approved', 'archived', 'final']);
-  const normalizedReview = allowedStatuses.has(reviewStatus) ? reviewStatus : '';
+  let normalizedReviews = [];
+  if (reviewStatusRaw && !filterUnarchived && !reviewNoneSelected) {
+    normalizedReviews = reviewStatusRaw
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean)
+      .filter(item => allowedStatuses.has(item));
+  }
   if (filterUnarchived) {
     filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') !== 'archived');
-  } else if (normalizedReview) {
-    filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') === normalizedReview);
+  } else if (reviewNoneSelected) {
+    filtered = [];
+  } else if (normalizedReviews.length) {
+    filtered = filtered.filter(item => normalizedReviews.includes(item?.extra?.reviewStatus || ''));
   }
   const allowedRepair = new Set(['unfinished', 'finished']);
-  const normalizedRepair = normalizedReview === 'rejected' && allowedRepair.has(repairStatus) ? repairStatus : '';
+  const normalizedRepair = normalizedReviews.includes('rejected') && allowedRepair.has(repairStatus) ? repairStatus : '';
   if (normalizedRepair) {
-    filtered = filtered.filter(item => (item?.extra?.repairStatus || '') === normalizedRepair);
+    filtered = filtered.filter(item => {
+      const status = item?.extra?.reviewStatus || '';
+      if (status !== 'rejected') return true;
+      return (item?.extra?.repairStatus || '') === normalizedRepair;
+    });
   }
   const searched = fuzzySearch(filtered, search);
   const off = Math.max(parseInt(offset) || 0, 0);

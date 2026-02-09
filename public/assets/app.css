@@ -1485,6 +1485,14 @@ body {
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+.modal-card-filter {
+	width: 760px;
+}
+
+.filter-status-row {
+	flex-wrap: nowrap;
+}
+
 .modal-header {
 	display: flex;
 	justify-content: space-between;

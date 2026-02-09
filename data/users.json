@@ -6,10 +6,7 @@
     "role": "admin",
     "real_name": "管理员",
     "student_id": "",
-    "status": "active",
     "created_at": "2025-10-29T05:34:39.115Z",
-    "updated_at": "2025-11-02T10:46:39.435Z",
-    "last_login_at": "2025-12-02T12:34:32.046Z",
     "profile_completed": false
   },
   {
@@ -19,10 +16,7 @@
     "role": "admin",
     "real_name": "张恒硕",
     "student_id": "2212266",
-    "status": "active",
     "created_at": "2025-11-03T12:00:33.143Z",
-    "updated_at": "2025-11-03T12:00:51.320Z",
-    "last_login_at": "2025-12-04T05:47:37.918Z",
     "profile_completed": true
   },
   {
@@ -32,10 +26,7 @@
     "role": "reviewer",
     "real_name": "陈思润",
     "student_id": "2510572",
-    "status": "active",
     "created_at": "2025-11-05T13:43:39.468Z",
-    "updated_at": "2025-11-05T13:46:33.827Z",
-    "last_login_at": "2025-12-02T10:48:08.309Z",
     "profile_completed": true
   },
   {
@@ -45,10 +36,7 @@
     "role": "admin",
     "real_name": "张欣阳",
     "student_id": "2413707",
-    "status": "active",
     "created_at": "2025-11-05T13:44:26.177Z",
-    "updated_at": "2025-11-05T13:45:01.368Z",
-    "last_login_at": "2025-12-04T03:00:27.713Z",
     "profile_completed": true
   },
   {
@@ -58,10 +46,7 @@
     "role": "reviewer",
     "real_name": "张玥涵",
     "student_id": "2510697",
-    "status": "active",
     "created_at": "2025-11-05T14:31:12.806Z",
-    "updated_at": "2025-11-05T14:32:02.131Z",
-    "last_login_at": "2025-12-02T03:26:01.851Z",
     "profile_completed": true
   },
   {
@@ -71,10 +56,7 @@
     "role": "admin",
     "real_name": "尹均衡",
     "student_id": "2211841",
-    "status": "active",
     "created_at": "2025-11-05T14:35:04.556Z",
-    "updated_at": "2025-11-05T14:36:32.649Z",
-    "last_login_at": "2025-11-21T12:33:11.386Z",
     "profile_completed": true
   },
   {
@@ -84,10 +66,7 @@
     "role": "reviewer",
     "real_name": "高嘉欣",
     "student_id": "2314079",
-    "status": "active",
     "created_at": "2025-11-05T14:35:20.607Z",
-    "updated_at": "2025-11-05T14:36:30.877Z",
-    "last_login_at": "2025-11-05T14:35:20.607Z",
     "profile_completed": true
   },
   {
@@ -97,10 +76,7 @@
     "role": "reviewer",
     "real_name": "李静杰",
     "student_id": "2410075",
-    "status": "active",
     "created_at": "2025-11-07T03:30:50.736Z",
-    "updated_at": "2025-11-07T06:10:52.681Z",
-    "last_login_at": "2025-11-11T05:55:33.865Z",
     "profile_completed": true
   },
   {
@@ -110,10 +86,7 @@
     "role": "user",
     "real_name": "王思睿",
     "student_id": "2510554",
-    "status": "active",
     "created_at": "2025-11-07T10:18:26.335Z",
-    "updated_at": "2025-11-07T10:18:37.502Z",
-    "last_login_at": "2025-12-01T12:48:55.329Z",
     "profile_completed": true
   },
   {
@@ -123,10 +96,7 @@
     "role": "user",
     "real_name": "梁晗韫",
     "student_id": "2512331",
-    "status": "active",
     "created_at": "2025-11-07T10:22:35.773Z",
-    "updated_at": "2025-11-07T10:22:53.351Z",
-    "last_login_at": "2025-11-30T08:57:00.250Z",
     "profile_completed": true
   },
   {
@@ -136,10 +106,7 @@
     "role": "user",
     "real_name": "周星橙",
     "student_id": "2511334",
-    "status": "active",
     "created_at": "2025-11-07T11:17:20.433Z",
-    "updated_at": "2025-11-07T11:17:30.265Z",
-    "last_login_at": "2025-12-01T02:07:51.652Z",
     "profile_completed": true
   },
   {
@@ -149,10 +116,7 @@
     "role": "reviewer",
     "real_name": "杨烨亭",
     "student_id": "2511420",
-    "status": "active",
     "created_at": "2025-11-07T11:46:11.680Z",
-    "updated_at": "2025-11-11T04:24:28.082Z",
-    "last_login_at": "2025-12-03T10:40:00.003Z",
     "profile_completed": true
   },
   {
@@ -162,10 +126,7 @@
     "role": "user",
     "real_name": "王伟铭",
     "student_id": "2510545",
-    "status": "active",
     "created_at": "2025-11-07T11:49:16.674Z",
-    "updated_at": "2025-11-07T11:49:55.193Z",
-    "last_login_at": "2025-12-03T14:23:51.597Z",
     "profile_completed": true
   },
   {
@@ -175,10 +136,7 @@
     "role": "user",
     "real_name": "刘崇轩",
     "student_id": "2312801",
-    "status": "active",
     "created_at": "2025-11-07T13:04:15.889Z",
-    "updated_at": "2025-11-07T13:04:39.960Z",
-    "last_login_at": "2025-12-03T12:59:03.975Z",
     "profile_completed": true
   },
   {
@@ -188,10 +146,7 @@
     "role": "user",
     "real_name": "盛皓然",
     "student_id": "2211223",
-    "status": "active",
     "created_at": "2025-11-08T02:06:55.032Z",
-    "updated_at": "2025-11-08T02:07:02.065Z",
-    "last_login_at": "2025-11-08T02:06:55.032Z",
     "profile_completed": true
   },
   {
@@ -201,10 +156,7 @@
     "role": "user",
     "real_name": "郭睿彤",
     "student_id": "2512436",
-    "status": "active",
     "created_at": "2025-11-08T02:25:11.762Z",
-    "updated_at": "2025-11-08T02:25:26.056Z",
-    "last_login_at": "2025-11-30T01:57:52.436Z",
     "profile_completed": true
   },
   {
@@ -214,10 +166,7 @@
     "role": "user",
     "real_name": "严静怡",
     "student_id": "2511372",
-    "status": "active",
     "created_at": "2025-11-08T05:25:42.811Z",
-    "updated_at": "2025-11-08T05:25:59.859Z",
-    "last_login_at": "2025-11-08T05:25:42.811Z",
     "profile_completed": true
   },
   {
@@ -227,10 +176,7 @@
     "role": "user",
     "real_name": "王童瑶",
     "student_id": "2513209",
-    "status": "active",
     "created_at": "2025-11-08T07:19:06.513Z",
-    "updated_at": "2025-11-08T07:19:15.861Z",
-    "last_login_at": "2025-11-17T13:57:09.289Z",
     "profile_completed": true
   },
   {
@@ -240,10 +186,7 @@
     "role": "user",
     "real_name": "严浩文",
     "student_id": "2212772",
-    "status": "active",
     "created_at": "2025-11-08T09:16:50.875Z",
-    "updated_at": "2025-11-08T09:17:06.228Z",
-    "last_login_at": "2025-11-08T09:16:50.875Z",
     "profile_completed": true
   },
   {
@@ -253,10 +196,7 @@
     "role": "user",
     "real_name": "亢乐天",
     "student_id": "2410968",
-    "status": "active",
     "created_at": "2025-11-08T09:20:49.262Z",
-    "updated_at": "2025-11-08T09:20:58.185Z",
-    "last_login_at": "2025-11-17T07:19:48.059Z",
     "profile_completed": true
   },
   {
@@ -266,10 +206,7 @@
     "role": "user",
     "real_name": "彭钧",
     "student_id": "2510045",
-    "status": "active",
     "created_at": "2025-11-08T09:24:15.188Z",
-    "updated_at": "2025-11-08T09:24:34.681Z",
-    "last_login_at": "2025-12-04T02:57:08.108Z",
     "profile_completed": true
   },
   {
@@ -279,10 +216,7 @@
     "role": "user",
     "real_name": "程嘉乐",
     "student_id": "2513904",
-    "status": "active",
     "created_at": "2025-11-08T13:29:40.989Z",
-    "updated_at": "2025-11-08T13:29:51.875Z",
-    "last_login_at": "2025-11-17T12:35:15.734Z",
     "profile_completed": true
   },
   {
@@ -292,10 +226,7 @@
     "role": "user",
     "real_name": "王浩宇",
     "student_id": "2411736",
-    "status": "active",
     "created_at": "2025-11-09T03:33:35.060Z",
-    "updated_at": "2025-11-09T03:33:43.344Z",
-    "last_login_at": "2025-12-01T15:00:06.923Z",
     "profile_completed": true
   },
   {
@@ -305,10 +236,7 @@
     "role": "user",
     "real_name": "桂江源",
     "student_id": "2413438",
-    "status": "active",
     "created_at": "2025-11-09T04:29:07.660Z",
-    "updated_at": "2025-11-09T04:29:25.201Z",
-    "last_login_at": "2025-11-12T05:28:35.656Z",
     "profile_completed": true
   },
   {
@@ -318,10 +246,7 @@
     "role": "user",
     "real_name": "田佩聪",
     "student_id": "2210754",
-    "status": "active",
     "created_at": "2025-11-09T11:51:42.514Z",
-    "updated_at": "2025-11-09T11:51:55.864Z",
-    "last_login_at": "2025-11-10T07:16:40.089Z",
     "profile_completed": true
   },
   {
@@ -331,10 +256,7 @@
     "role": "user",
     "real_name": "黄鑫媛",
     "student_id": "2313250",
-    "status": "active",
     "created_at": "2025-11-11T00:37:10.948Z",
-    "updated_at": "2025-11-11T00:37:42.907Z",
-    "last_login_at": "2025-11-22T17:19:23.539Z",
     "profile_completed": true
   },
   {
@@ -344,10 +266,7 @@
     "role": "user",
     "real_name": "葛一铭",
     "student_id": "2512708",
-    "status": "active",
     "created_at": "2025-11-11T04:18:37.559Z",
-    "updated_at": "2025-11-11T04:19:03.993Z",
-    "last_login_at": "2025-11-11T04:18:37.559Z",
     "profile_completed": true
   },
   {
@@ -357,10 +276,7 @@
     "role": "reviewer",
     "real_name": "焦天瑜",
     "student_id": "2511158",
-    "status": "active",
     "created_at": "2025-11-11T04:22:22.057Z",
-    "updated_at": "2025-11-11T04:22:52.634Z",
-    "last_login_at": "2025-12-02T13:30:06.305Z",
     "profile_completed": true
   },
   {
@@ -370,10 +286,7 @@
     "role": "reviewer",
     "real_name": "申允",
     "student_id": "2511017",
-    "status": "active",
     "created_at": "2025-11-11T04:24:55.968Z",
-    "updated_at": "2025-11-11T04:36:21.573Z",
-    "last_login_at": "2025-12-03T02:20:05.359Z",
     "profile_completed": true
   },
   {
@@ -383,10 +296,7 @@
     "role": "reviewer",
     "real_name": "杨谦",
     "student_id": "2120250642",
-    "status": "active",
     "created_at": "2025-11-11T04:29:43.645Z",
-    "updated_at": "2025-11-11T04:36:12.688Z",
-    "last_login_at": "2025-11-28T00:58:48.961Z",
     "profile_completed": true
   },
   {
@@ -396,10 +306,7 @@
     "role": "reviewer",
     "real_name": "王也姝",
     "student_id": "2513815",
-    "status": "active",
     "created_at": "2025-11-11T04:32:25.453Z",
-    "updated_at": "2025-11-11T04:32:47.195Z",
-    "last_login_at": "2025-12-04T03:30:26.439Z",
     "profile_completed": true
   },
   {
@@ -409,10 +316,7 @@
     "role": "reviewer",
     "real_name": "杨宇舒",
     "student_id": "2413647",
-    "status": "active",
     "created_at": "2025-11-11T04:48:22.630Z",
-    "updated_at": "2025-11-26T16:00:41.484Z",
-    "last_login_at": "2025-12-01T02:53:50.956Z",
     "profile_completed": true
   },
   {
@@ -422,10 +326,7 @@
     "role": "user",
     "real_name": "郭睿彤",
     "student_id": "2512436",
-    "status": "active",
     "created_at": "2025-11-11T05:07:08.957Z",
-    "updated_at": "2025-11-11T05:07:18.694Z",
-    "last_login_at": "2025-11-11T05:07:08.957Z",
     "profile_completed": true
   },
   {
@@ -435,10 +336,7 @@
     "role": "reviewer",
     "real_name": "于泽浩",
     "student_id": "2313635",
-    "status": "active",
     "created_at": "2025-11-11T05:07:44.529Z",
-    "updated_at": "2025-11-11T05:08:53.759Z",
-    "last_login_at": "2025-11-12T11:34:22.520Z",
     "profile_completed": true
   },
   {
@@ -448,10 +346,7 @@
     "role": "user",
     "real_name": "王泓睿",
     "student_id": "2511217",
-    "status": "active",
     "created_at": "2025-11-11T05:53:48.559Z",
-    "updated_at": "2025-11-11T05:53:59.246Z",
-    "last_login_at": "2025-12-03T14:12:26.077Z",
     "profile_completed": true
   },
   {
@@ -461,10 +356,7 @@
     "role": "user",
     "real_name": "郭欣然",
     "student_id": "2512529",
-    "status": "active",
     "created_at": "2025-11-11T08:38:52.467Z",
-    "updated_at": "2025-11-11T08:39:09.075Z",
-    "last_login_at": "2025-12-03T10:23:14.843Z",
     "profile_completed": true
   },
   {
@@ -474,10 +366,7 @@
     "role": "user",
     "real_name": "席宁远",
     "student_id": "2411154",
-    "status": "active",
     "created_at": "2025-11-11T10:32:21.619Z",
-    "updated_at": "2025-11-11T10:32:31.529Z",
-    "last_login_at": "2025-12-04T00:00:08.003Z",
     "profile_completed": true
   },
   {
@@ -487,10 +376,7 @@
     "role": "user",
     "real_name": "张栩宁",
     "student_id": "2411168",
-    "status": "active",
     "created_at": "2025-11-11T13:26:24.873Z",
-    "updated_at": "2025-11-11T13:27:45.231Z",
-    "last_login_at": "2025-11-28T10:04:58.506Z",
     "profile_completed": true
   },
   {
@@ -500,10 +386,7 @@
     "role": "user",
     "real_name": "郝梓博",
     "student_id": "2510813",
-    "status": "active",
     "created_at": "2025-11-12T01:27:54.381Z",
-    "updated_at": "2025-11-12T01:30:07.553Z",
-    "last_login_at": "2025-11-12T01:27:54.381Z",
     "profile_completed": true
   },
   {
@@ -513,10 +396,7 @@
     "role": "admin",
     "real_name": "张涛",
     "student_id": "2211449",
-    "status": "active",
     "created_at": "2025-11-12T13:27:02.445Z",
-    "updated_at": "2025-11-17T06:59:27.300Z",
-    "last_login_at": "2025-11-26T05:53:52.419Z",
     "profile_completed": true
   },
   {
@@ -526,10 +406,7 @@
     "role": "user",
     "real_name": "李恒通",
     "student_id": "2120242147",
-    "status": "active",
     "created_at": "2025-11-15T09:38:36.576Z",
-    "updated_at": "2025-11-15T09:38:53.679Z",
-    "last_login_at": "2025-12-01T08:27:42.895Z",
     "profile_completed": true
   },
   {
@@ -539,10 +416,7 @@
     "role": "user",
     "real_name": "盛皓然",
     "student_id": "2211223",
-    "status": "active",
     "created_at": "2025-11-16T13:56:05.863Z",
-    "updated_at": "2025-11-16T13:56:14.145Z",
-    "last_login_at": "2025-11-18T03:39:44.188Z",
     "profile_completed": true
   },
   {
@@ -552,10 +426,7 @@
     "role": "user",
     "real_name": "姚玥",
     "student_id": "2512569",
-    "status": "active",
     "created_at": "2025-11-17T03:35:33.894Z",
-    "updated_at": "2025-11-17T03:35:41.160Z",
-    "last_login_at": "2025-11-17T03:35:33.894Z",
     "profile_completed": true
   },
   {
@@ -565,10 +436,7 @@
     "role": "user",
     "real_name": "许佳茗",
     "student_id": "2120252153",
-    "status": "active",
     "created_at": "2025-11-17T09:26:58.593Z",
-    "updated_at": "2025-11-17T09:27:24.971Z",
-    "last_login_at": "2025-11-17T09:30:45.935Z",
     "profile_completed": true
   },
   {
@@ -578,10 +446,7 @@
     "role": "user",
     "real_name": "郑顺起",
     "student_id": "1120251424",
-    "status": "active",
     "created_at": "2025-11-17T09:49:28.194Z",
-    "updated_at": "2025-11-17T09:49:45.356Z",
-    "last_login_at": "2025-11-17T10:08:58.355Z",
     "profile_completed": true
   },
   {
@@ -591,10 +456,7 @@
     "role": "user",
     "real_name": "范姝文",
     "student_id": "2511072",
-    "status": "active",
     "created_at": "2025-11-17T12:00:00.676Z",
-    "updated_at": "2025-11-17T12:00:14.257Z",
-    "last_login_at": "2025-11-17T12:00:00.676Z",
     "profile_completed": true
   },
   {
@@ -604,10 +466,7 @@
     "role": "user",
     "real_name": "蒋莉",
     "student_id": "2511070",
-    "status": "active",
     "created_at": "2025-11-17T12:06:09.970Z",
-    "updated_at": "2025-11-17T12:06:22.234Z",
-    "last_login_at": "2025-11-17T12:06:09.970Z",
     "profile_completed": true
   },
   {
@@ -617,10 +476,7 @@
     "role": "user",
     "real_name": "王怡淼",
     "student_id": "2310614",
-    "status": "active",
     "created_at": "2025-11-17T12:08:37.420Z",
-    "updated_at": "2025-11-17T12:08:44.684Z",
-    "last_login_at": "2025-11-17T12:08:37.420Z",
     "profile_completed": true
   },
   {
@@ -630,10 +486,7 @@
     "role": "user",
     "real_name": "吕文昕",
     "student_id": "2120252121",
-    "status": "active",
     "created_at": "2025-11-17T13:37:42.865Z",
-    "updated_at": "2025-11-17T13:38:00.429Z",
-    "last_login_at": "2025-11-17T13:37:42.865Z",
     "profile_completed": true
   },
   {
@@ -643,10 +496,7 @@
     "role": "user",
     "real_name": "乔麟舒",
     "student_id": "2312979",
-    "status": "active",
     "created_at": "2025-11-20T06:07:50.705Z",
-    "updated_at": "2025-11-20T06:08:04.966Z",
-    "last_login_at": "2025-11-20T06:07:50.705Z",
     "profile_completed": true
   },
   {
@@ -656,10 +506,7 @@
     "role": "user",
     "real_name": "蒋汶彤",
     "student_id": "2510664",
-    "status": "active",
     "created_at": "2025-11-21T00:45:47.640Z",
-    "updated_at": "2025-11-21T00:45:53.373Z",
-    "last_login_at": "2025-12-02T06:02:38.160Z",
     "profile_completed": true
   },
   {
@@ -669,10 +516,7 @@
     "role": "user",
     "real_name": "吴悠然",
     "student_id": "2511238",
-    "status": "active",
     "created_at": "2025-11-21T06:20:44.909Z",
-    "updated_at": "2025-11-21T06:21:24.280Z",
-    "last_login_at": "2025-11-22T21:18:11.248Z",
     "profile_completed": true
   },
   {
@@ -682,10 +526,7 @@
     "role": "user",
     "real_name": "贺昭雄",
     "student_id": "2411779",
-    "status": "active",
     "created_at": "2025-11-22T03:03:38.241Z",
-    "updated_at": "2025-11-22T03:03:57.596Z",
-    "last_login_at": "2025-12-01T07:08:06.755Z",
     "profile_completed": true
   },
   {
@@ -695,10 +536,7 @@
     "role": "user",
     "real_name": "高伟",
     "student_id": "2410064",
-    "status": "active",
     "created_at": "2025-11-22T03:22:12.048Z",
-    "updated_at": "2025-11-22T03:22:26.242Z",
-    "last_login_at": "2025-11-25T02:07:54.781Z",
     "profile_completed": true
   },
   {
@@ -708,10 +546,7 @@
     "role": "user",
     "real_name": "况志强",
     "student_id": "2212870",
-    "status": "active",
     "created_at": "2025-11-22T07:10:00.264Z",
-    "updated_at": "2025-11-22T07:10:09.802Z",
-    "last_login_at": "2025-12-03T14:47:15.118Z",
     "profile_completed": true
   },
   {
@@ -721,10 +556,7 @@
     "role": "user",
     "real_name": "张若瑜",
     "student_id": "2510679",
-    "status": "active",
     "created_at": "2025-11-23T12:56:10.687Z",
-    "updated_at": "2025-11-23T12:56:37.184Z",
-    "last_login_at": "2025-11-23T12:56:10.687Z",
     "profile_completed": true
   },
   {
@@ -734,10 +566,7 @@
     "role": "user",
     "real_name": "张弘卓",
     "student_id": "2414101",
-    "status": "active",
     "created_at": "2025-11-24T02:05:53.946Z",
-    "updated_at": "2025-11-24T02:06:01.042Z",
-    "last_login_at": "2025-11-24T02:05:53.946Z",
     "profile_completed": true
   },
   {
@@ -747,10 +576,7 @@
     "role": "user",
     "real_name": "李欣悦",
     "student_id": "2411666",
-    "status": "active",
     "created_at": "2025-11-24T03:02:01.562Z",
-    "updated_at": "2025-11-24T03:02:24.734Z",
-    "last_login_at": "2025-11-30T15:21:04.158Z",
     "profile_completed": true
   },
   {
@@ -760,10 +586,7 @@
     "role": "user",
     "real_name": "古媛斤",
     "student_id": "2512905",
-    "status": "active",
     "created_at": "2025-11-27T05:29:44.057Z",
-    "updated_at": "2025-11-27T05:29:56.108Z",
-    "last_login_at": "2025-11-27T05:29:44.057Z",
     "profile_completed": true
   },
   {
@@ -773,10 +596,7 @@
     "role": "user",
     "real_name": "路航",
     "student_id": "2412416",
-    "status": "active",
     "created_at": "2025-11-27T13:33:17.807Z",
-    "updated_at": "2025-11-27T13:39:24.101Z",
-    "last_login_at": "2025-11-27T13:33:17.807Z",
     "profile_completed": true
   },
   {
@@ -786,10 +606,7 @@
     "role": "user",
     "real_name": "庄乐园",
     "student_id": "2511830",
-    "status": "active",
     "created_at": "2025-11-30T12:37:31.238Z",
-    "updated_at": "2025-11-30T12:38:01.800Z",
-    "last_login_at": "2025-11-30T12:37:31.238Z",
     "profile_completed": true
   },
   {
@@ -799,10 +616,7 @@
     "role": "user",
     "real_name": "高铠炜",
     "student_id": "2120250671",
-    "status": "active",
     "created_at": "2025-12-02T09:04:33.898Z",
-    "updated_at": "2025-12-02T09:04:58.936Z",
-    "last_login_at": "2025-12-04T04:57:39.768Z",
     "profile_completed": true
   },
   {
@@ -813,7 +627,6 @@
     "real_name": "李艺恒",
     "student_id": "2511360",
     "created_at": "2025-12-04T06:45:11.377Z",
-    "updated_at": "2025-12-04T06:46:26.042Z",
     "profile_completed": true
   },
   {
@@ -824,7 +637,6 @@
     "real_name": "王怡希",
     "student_id": "2510005",
     "created_at": "2025-12-06T08:09:53.009Z",
-    "updated_at": "2025-12-06T08:10:01.536Z",
     "profile_completed": true
   },
   {
@@ -835,7 +647,6 @@
     "real_name": "张潇禾",
     "student_id": "2510367",
     "created_at": "2025-12-07T10:52:25.452Z",
-    "updated_at": "2025-12-07T10:53:23.189Z",
     "profile_completed": true
   },
   {

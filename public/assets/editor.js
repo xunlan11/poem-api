@@ -45,6 +45,31 @@
   // 当前用户
   let currentUser = null;
 
+  function sanitizeDurationValue(raw) {
+    const cleaned = String(raw || '').replace(/[^\d.]/g, '');
+    const dotIndex = cleaned.indexOf('.');
+    if (dotIndex === -1) return cleaned;
+    const integerPart = cleaned.slice(0, dotIndex);
+    const decimals = cleaned.slice(dotIndex + 1).replace(/\./g, '');
+    const decimalPart = decimals.slice(0, 1);
+    return `${integerPart}.${decimalPart}`;
+  }
+
+  function bindDurationSanitizer(input) {
+    if (!input) return;
+    input.addEventListener('input', () => {
+      const next = sanitizeDurationValue(input.value);
+      if (next !== input.value) input.value = next;
+    });
+    input.addEventListener('blur', () => {
+      const next = sanitizeDurationValue(input.value);
+      if (next !== input.value) input.value = next;
+    });
+  }
+
+  bindDurationSanitizer(expectedDurationInput);
+  bindDurationSanitizer(reviewDurationInput);
+
   // 格式化审核者显示的函数
   function formatReviewerDisplay(user) {
     if (!user) return '';
@@ -870,6 +895,10 @@
         if (!state.editable) {
           setEditable(true);
         } else {
+          try {
+            const hasIssues = runSelfCheck();
+            if (hasIssues) return;
+          } catch (err) { }
           await saveNode();
         }
       };

@@ -673,16 +673,29 @@
     
     // 非法符号
     const ILLEGAL_SYMBOLS = [
-      { char: '「', label: '「' },
-      { char: '」', label: '」' },
-      { char: '『', label: '『' },
-      { char: '』', label: '』' },
-      { char: '【', label: '【' },
-      { char: '】', label: '' },
-      { char: '〔', label: '〔' },
-      { char: '〕', label: '〕' },
-      { char: '{', label: '{' },
-      { char: '}', label: '}' }
+      { char: '[', label: '[' }, { char: '［', label: '［' },
+      { char: ']', label: ']' }, { char: '］', label: '］' },
+      { char: '{', label: '{' }, { char: '｛', label: '｛' }, 
+      { char: '}', label: '}' }, { char: '｝', label: '｝' }, 
+      { char: '「', label: '「' }, { char: '」', label: '」' },
+      { char: '『', label: '『' }, { char: '』', label: '』' },
+      { char: '【', label: '【' }, { char: '】', label: '】' },
+      { char: '〔', label: '〔' }, { char: '〕', label: '〕' },
+      { char: '@', label: '@' }, { char: '＠', label: '＠' },
+      { char: '#', label: '#' }, { char: '＃', label: '＃' }, 
+      { char: '$', label: '$' }, { char: '＄', label: '＄' }, 
+      { char: '%', label: '%' }, { char: '％', label: '％' }, 
+      { char: '^', label: '^' }, { char: '＾', label: '＾' },
+      { char: '&', label: '&' }, { char: '＆', label: '＆' },
+      { char: '*', label: '*' }, { char: '＊', label: '＊' },
+      { char: '+', label: '+' }, { char: '＋', label: '＋' },
+      { char: '-', label: '-' }, { char: '－', label: '－' },
+      { char: '|', label: '|' }, { char: '｜', label: '｜' },
+      { char: '/', label: '/' }, { char: '／', label: '／' },
+      { char: '\\', label: '\\' }, { char: '＼', label: '＼' },
+      { char: '`', label: '`' }, { char: '｀', label: '｀' },
+      { char: '_', label: '_' }, { char: '＿', label: '＿' },
+      { char: '~', label: '~' }, { char: '～', label: '～' }
     ];
     const ILLEGAL_SYMBOL_LOOKUP = ILLEGAL_SYMBOLS.reduce((acc, item) => {
       acc[item.char] = item;
@@ -778,6 +791,34 @@
       return issues;
     }
 
+    // 必选下拉项检查
+    function checkRequiredSelect(el, labelOverride) {
+      if (!el || el.tagName !== 'SELECT') return 0;
+      const value = typeof el.value === 'string' ? el.value.trim() : '';
+      if (value) return 0;
+      const label = labelOverride || getFieldLabel(el) || '该选项';
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-required"><div class="self-check-inline-note">请先选择${escapeHtml(label)}。</div></div>`;
+      queueSelfCheckMessage(el, 'manual', { category: '必选项', count: 1, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return 1;
+    }
+
+    // 时长范围检查（0~12，最多一位小数）
+    function checkDurationRange(el, labelOverride) {
+      if (!el) return 0;
+      const raw = typeof el.value === 'string' ? el.value.trim() : '';
+      if (!raw) return 0;
+      const formatOk = /^\d+(?:\.\d)?$/.test(raw);
+      const numeric = Number(raw);
+      const rangeOk = Number.isFinite(numeric) && numeric >= 0 && numeric <= 12;
+      if (formatOk && rangeOk) return 0;
+      const label = labelOverride || getFieldLabel(el) || '时长';
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-required"><div class="self-check-inline-note">超出区间0~12。</div></div>`;
+      queueSelfCheckMessage(el, 'manual', { category: '时长', count: 1, detail });
+      el.classList.add(SELF_CHECK_FIELD_CLASS);
+      return 1;
+    }
+
     // 运行自检
     function runSelfCheck() {
       clearSelfCheckIndicators();
@@ -804,6 +845,7 @@
       let illegalSymbolIssues = 0;
       let bookTitleIssues = 0;
       let ciqupuLengthIssues = 0;
+      let selectIssues = 0;
       fields.forEach(el => {
         if (!el || el.classList.contains('skip-self-check')) return;
         if (!el || typeof el.value !== 'string') return;
@@ -822,6 +864,24 @@
           punctuationIssues += checkTextareaParagraphEnds(el);
         }
       });
+      const formSelect = documentRef?.getElementById?.('f-form');
+      if (formSelect) {
+        selectIssues += checkRequiredSelect(formSelect, '体例');
+      }
+      const subSelect = documentRef?.getElementById?.('f-sub');
+      if (subSelect && subSelect.tagName === 'SELECT') {
+        const formValue = formSelect && typeof formSelect.value === 'string' ? formSelect.value : '';
+        if (['古体', '近体', '散曲'].includes(formValue)) {
+          selectIssues += checkRequiredSelect(subSelect, '子类');
+        }
+      }
+      const durationTargets = [
+        documentRef?.getElementById?.('metaExpectedDuration'),
+        documentRef?.getElementById?.('metaReviewDuration')
+      ];
+      durationTargets.forEach(el => {
+        selectIssues += checkDurationRange(el);
+      });
       const bookTitleTargets = [
         documentRef?.getElementById?.('f-source'),
         documentRef?.getElementById?.('f-works'),
@@ -837,10 +897,11 @@
       try {
         documentRef?.dispatchEvent?.(new CustomEvent('poem:selfcheck:after', { bubbles: false }));
       } catch (e) { }
-      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairLevelIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues;
+      const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairLevelIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues || selectIssues;
       if (Poem && typeof Poem.toast === 'function') {
         Poem.toast(hasIssues ? '请及时修改' : '未发现问题');
       }
+      return !!hasIssues;
     }
     return { runSelfCheck, clearSelfCheckIndicators };
   };

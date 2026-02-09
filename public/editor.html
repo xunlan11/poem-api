@@ -27,7 +27,10 @@
   <main class="container">
     <div id="formContainer"></div>
     <section class="common-meta">
-      <h2>通用信息</h2>
+      <h2 style="display:flex; align-items:center; gap:8px;">
+        <span>通用信息</span>
+        <small class="muted" style="margin-left:auto;">如有问题，请优先保存，并立即反馈</small>
+      </h2>
       <div class="grid-3">
         <div class="field">
           <label>创建者</label>
@@ -40,7 +43,7 @@
         <div class="field">
           <label>期望时长</label>
           <div style="display:flex;align-items:center;gap:8px">
-            <input id="metaExpectedDuration" type="text" style="flex:1;" disabled>
+            <input id="metaExpectedDuration" type="number" inputmode="decimal" step="0.5" style="flex:1;" disabled>
             <span style="white-space:nowrap;margin-left:auto">单位</span>
             <button id="metaAcceptExpected" type="button" class="btn"
               style="white-space:nowrap;padding:4px 10px;font-size:13px;">认可期望</button>
@@ -58,7 +61,7 @@
         </div>
         <div class="field">
           <label>时长</label>
-          <div style="display:flex;align-items:center;gap:8px"><input id="metaReviewDuration" type="text"
+                <div style="display:flex;align-items:center;gap:8px"><input id="metaReviewDuration" type="number" inputmode="decimal" step="0.5"
               style="flex:1;" disabled><span style="white-space:nowrap;margin-left:auto">单位</span></div>
         </div>
       </div>
