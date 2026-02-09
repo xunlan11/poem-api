@@ -215,6 +215,17 @@ body {
 	color: #15803d;
 }
 
+.btn.editing {
+	background: #22c55e;
+	border-color: #16a34a;
+	color: #fff;
+}
+
+.btn.editing:disabled {
+	opacity: 1;
+	cursor: not-allowed;
+}
+
 .btn:disabled {
 	opacity: .6;
 	cursor: not-allowed;

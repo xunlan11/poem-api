@@ -1,5 +1,6 @@
 // 服务器
 const express = require('express');
+const http = require('http');
 const path = require('path');
 const fs = require('fs-extra');
 const morgan = require('morgan');
@@ -10,11 +11,14 @@ const jwt = require('jsonwebtoken');
 const { pinyin } = require('pinyin-pro');
 const multer = require('multer');
 const crypto = require('crypto');
+const WebSocket = require('ws');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.POEM_JWT_SECRET || 'poem-secret-please-change';
 const COOKIE_NAME = 'poem_token';
 const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'lax' };
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server, path: '/ws' });
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('combined'));
 app.use(cookieParser());
@@ -28,6 +32,8 @@ const FP_CACHE_TTL = 10 * 1000;
 let clientFpCache = { hash: '', fileCount: 0, generatedAt: 0 };
 const USER_ARCHIVE_STATS_TTL = 10 * 1000;
 let userArchiveStatsCache = { generatedAt: 0, stats: null };
+const EDITING_TTL = 45 * 1000;
+const editingLocks = new Map();
 fs.ensureDirSync(UPLOAD_DIR);
 
 // 清理节点ID
@@ -37,6 +43,114 @@ function sanitizeNodeId(rawId) {
   const safe = cleaned.replace(/[^A-Z0-9]/g, '');
   return safe;
 }
+
+function cleanupEditingLocks(now = Date.now()) {
+  const expired = [];
+  for (const [id, lock] of editingLocks.entries()) {
+    if (!lock || lock.expiresAt <= now) {
+      editingLocks.delete(id);
+      expired.push(id);
+    }
+  }
+  return expired;
+}
+
+function getEditingLock(id, now = Date.now()) {
+  cleanupEditingLocks(now);
+  return editingLocks.get(id) || null;
+}
+
+function setEditingLock(id, user, now = Date.now()) {
+  const lock = {
+    id,
+    userId: user.id,
+    userName: formatUserDisplayName(user),
+    updatedAt: now,
+    expiresAt: now + EDITING_TTL
+  };
+  editingLocks.set(id, lock);
+  return lock;
+}
+
+function parseCookies(header) {
+  const out = {};
+  if (!header) return out;
+  header.split(';').forEach(part => {
+    const idx = part.indexOf('=');
+    if (idx < 0) return;
+    const key = part.slice(0, idx).trim();
+    const val = part.slice(idx + 1).trim();
+    if (key) out[key] = decodeURIComponent(val);
+  });
+  return out;
+}
+
+function authenticateWs(req) {
+  try {
+    const cookies = parseCookies(req.headers.cookie || '');
+    const token = cookies[COOKIE_NAME];
+    if (!token) return null;
+    const payload = jwt.verify(token, JWT_SECRET);
+    const user = findUserById(payload.uid);
+    if (!user) return null;
+    return { id: user.id, username: user.username, role: user.role, real_name: user.real_name, student_id: user.student_id };
+  } catch (e) {
+    return null;
+  }
+}
+
+function sendWs(ws, payload) {
+  if (!ws || ws.readyState !== WebSocket.OPEN) return;
+  try { ws.send(JSON.stringify(payload)); } catch (e) { }
+}
+
+function buildEditingSnapshot(ids, now = Date.now()) {
+  cleanupEditingLocks(now);
+  const data = {};
+  ids.forEach(id => {
+    const lock = editingLocks.get(id);
+    if (lock && lock.expiresAt > now) {
+      data[id] = { userId: lock.userId, updatedAt: lock.updatedAt, expiresAt: lock.expiresAt };
+    }
+  });
+  return data;
+}
+
+function broadcastEditingUpdate(id, lock) {
+  wss.clients.forEach(ws => {
+    if (ws.readyState !== WebSocket.OPEN) return;
+    const subs = ws.subscribedIds;
+    if (subs && subs.size && !subs.has(id)) return;
+    sendWs(ws, { type: 'editing:update', id, lock });
+  });
+}
+
+wss.on('connection', (ws, req) => {
+  const user = authenticateWs(req);
+  if (!user) {
+    ws.close(1008, 'Unauthorized');
+    return;
+  }
+  ws.user = user;
+  ws.subscribedIds = new Set();
+  ws.on('message', (raw) => {
+    let msg = null;
+    try { msg = JSON.parse(String(raw || '')); } catch (e) { return; }
+    if (!msg || typeof msg.type !== 'string') return;
+    if (msg.type === 'editing:subscribe') {
+      const list = Array.isArray(msg.ids) ? msg.ids : [];
+      const ids = list.map(sanitizeNodeId).filter(Boolean).slice(0, 200);
+      ws.subscribedIds = new Set(ids);
+      const data = buildEditingSnapshot(ids);
+      sendWs(ws, { type: 'editing:snapshot', data });
+    }
+  });
+});
+
+setInterval(() => {
+  const expired = cleanupEditingLocks();
+  expired.forEach(id => broadcastEditingUpdate(id, null));
+}, 5000);
 
 // 安全获取文件扩展名
 function safeExtname(filename) {
@@ -562,6 +676,59 @@ app.get('/api/nodes', (req, res) => {
   res.json({ data: page, pagination: { total: ordered.length, limit: lim, offset: off } });
 });
 
+// 编辑中状态
+app.get('/api/editing/status', requireAuth, (req, res) => {
+  const raw = typeof req.query?.ids === 'string' ? req.query.ids.trim() : '';
+  if (!raw) return res.json({ ok: true, data: {} });
+  const now = Date.now();
+  cleanupEditingLocks(now);
+  const data = {};
+  raw.split(',').map(s => sanitizeNodeId(s)).filter(Boolean).forEach(id => {
+    const lock = editingLocks.get(id);
+    if (lock && lock.expiresAt > now) {
+      data[id] = { userId: lock.userId, updatedAt: lock.updatedAt, expiresAt: lock.expiresAt };
+    }
+  });
+  res.json({ ok: true, data });
+});
+
+app.post('/api/editing/start', requireAuth, (req, res) => {
+  const id = sanitizeNodeId(req.body?.id);
+  if (!id) return res.status(400).json({ error: 'Missing id' });
+  const now = Date.now();
+  const existing = getEditingLock(id, now);
+  if (existing && existing.userId !== req.user.id && existing.expiresAt > now) {
+    return res.json({ ok: false, owner: { id: existing.userId }, expiresAt: existing.expiresAt });
+  }
+  const lock = setEditingLock(id, req.user, now);
+  broadcastEditingUpdate(id, { userId: lock.userId, updatedAt: lock.updatedAt, expiresAt: lock.expiresAt });
+  return res.json({ ok: true, owner: { id: lock.userId }, expiresAt: lock.expiresAt });
+});
+
+app.post('/api/editing/heartbeat', requireAuth, (req, res) => {
+  const id = sanitizeNodeId(req.body?.id);
+  if (!id) return res.status(400).json({ error: 'Missing id' });
+  const now = Date.now();
+  const existing = getEditingLock(id, now);
+  if (existing && existing.userId !== req.user.id && existing.expiresAt > now) {
+    return res.json({ ok: false, owner: { id: existing.userId }, expiresAt: existing.expiresAt });
+  }
+  const lock = setEditingLock(id, req.user, now);
+  return res.json({ ok: true, owner: { id: lock.userId }, expiresAt: lock.expiresAt });
+});
+
+app.post('/api/editing/stop', requireAuth, (req, res) => {
+  const id = sanitizeNodeId(req.body?.id);
+  if (!id) return res.status(400).json({ error: 'Missing id' });
+  const now = Date.now();
+  const existing = getEditingLock(id, now);
+  if (existing && (existing.userId === req.user.id || req.user.role === 'admin')) {
+    editingLocks.delete(id);
+    broadcastEditingUpdate(id, null);
+  }
+  res.json({ ok: true });
+});
+
 // 单节点路由
 app.get('/api/node/:id', (req, res) => {
   const node = findById(req.params.id);
@@ -775,7 +942,7 @@ app.get('/', (req, res) => {
 
 // 初始化存储并启动服务器
 loadStore().then(() => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Poem API running at http://localhost:${PORT}/`);
   });
 }).catch(err => {

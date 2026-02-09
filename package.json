@@ -20,7 +20,8 @@
     "morgan": "^1.10.0",
     "multer": "^2.0.2",
     "node-fetch": "^2.7.0",
-    "pinyin-pro": "^3.27.0"
+    "pinyin-pro": "^3.27.0",
+    "ws": "^8.16.0"
   },
   "engines": {
     "node": ">=16"

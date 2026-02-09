@@ -44,6 +44,10 @@
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
   // 当前用户
   let currentUser = null;
+  const EDITING_PING_INTERVAL = 15000;
+  let editingLockActive = false;
+  let editingLockTimer = null;
+  let editingLockId = '';
 
   function sanitizeDurationValue(raw) {
     const cleaned = String(raw || '').replace(/[^\d.]/g, '');
@@ -89,6 +93,61 @@
   function escapeHtml(s) {
     return String(s || '').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   }
+
+  function sendEditingStopBeacon(id) {
+    if (!id) return;
+    const payload = JSON.stringify({ id });
+    const url = `${Poem.base()}/api/editing/stop`;
+    if (navigator.sendBeacon) {
+      const blob = new Blob([payload], { type: 'application/json' });
+      navigator.sendBeacon(url, blob);
+      return;
+    }
+    fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, credentials: 'same-origin', keepalive: true }).catch(() => { });
+  }
+
+
+
+  function startEditingLock() {
+    if (isNew || !state.node || !state.node.id) return;
+    if (!state.canEditNode) return;
+    const nodeId = state.node.id;
+    editingLockId = nodeId;
+    editingLockActive = true;
+    Poem.api('/api/editing/start', { method: 'POST', body: JSON.stringify({ id: nodeId }) })
+      .then(res => {
+        if (res && res.ok === false && res.owner && res.owner.id && res.owner.id !== currentUser?.id) {
+          Poem.toast(`当前节点正在被 ${res.owner.name || '他人'} 编辑`);
+        }
+      })
+      .catch(() => { });
+    if (!editingLockTimer) {
+      editingLockTimer = setInterval(() => {
+        if (!editingLockActive || !editingLockId) return;
+        Poem.api('/api/editing/heartbeat', { method: 'POST', body: JSON.stringify({ id: editingLockId }) }).catch(() => { });
+      }, EDITING_PING_INTERVAL);
+    }
+  }
+
+  function stopEditingLock(options) {
+    if (!editingLockId) return;
+    const id = editingLockId;
+    editingLockActive = false;
+    editingLockId = '';
+    if (editingLockTimer) {
+      clearInterval(editingLockTimer);
+      editingLockTimer = null;
+    }
+    if (options && options.beacon) {
+      sendEditingStopBeacon(id);
+      return;
+    }
+    Poem.api('/api/editing/stop', { method: 'POST', body: JSON.stringify({ id }) }).catch(() => { });
+  }
+
+  window.addEventListener('beforeunload', () => {
+    if (editingLockActive && editingLockId) stopEditingLock({ beacon: true });
+  });
 
   const selfCheckFactory = window.PoemEditor && window.PoemEditor.initSelfCheck;
   const selfCheckModule = typeof selfCheckFactory === 'function'
@@ -188,6 +247,7 @@
       refreshActionButtons();
       return;
     }
+    const wasEditable = !!state.editable;
     state.editable = editable;
     if (formContainer) {
       formContainer.classList.toggle('poem-readonly', !editable);
@@ -211,6 +271,10 @@
     });
     try { applyMetaPermissions(); } catch (e) { }
     refreshActionButtons();
+    if (!isNew && state.node && state.node.id) {
+      if (editable && !wasEditable) startEditingLock();
+      if (!editable && wasEditable) stopEditingLock();
+    }
   }
 
   // 刷新动作按钮的函数
@@ -893,7 +957,19 @@
       editBtn.onclick = async () => {
         if (saveInFlight) return;
         if (!state.editable) {
-          setEditable(true);
+          if (!state.node || !state.node.id) return;
+          try {
+            const res = await Poem.api('/api/editing/start', { method: 'POST', body: JSON.stringify({ id: state.node.id }) });
+            if (res && res.ok === false) {
+              const goHome = confirm('当前有人正在编辑该节点，将返回首页。');
+              if (goHome) location.href = './';
+              return;
+            }
+            setEditable(true);
+          } catch (err) {
+            console.error(err);
+            Poem.toast('无法进入编辑');
+          }
         } else {
           try {
             const hasIssues = runSelfCheck();

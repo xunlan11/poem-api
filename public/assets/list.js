@@ -24,6 +24,13 @@
   // 删除权限
   const me = await Poem.me();
   const canDelete = me && (me.role === 'reviewer' || me.role === 'admin');
+  const EDITING_POLL_INTERVAL = 10000;
+  let editingStatusMap = new Map();
+  let editingPollTimer = null;
+  let editingFetchPromise = null;
+  let editingSocket = null;
+  let editingSocketReady = false;
+  let editingSocketPendingIds = [];
   // 分页
   const paginationEl = document.getElementById('pagination');
   const PAGE_SIZE = 15;
@@ -543,6 +550,182 @@
     return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
   }
 
+  function getEditingInfo(id) {
+    if (!id) return null;
+    return editingStatusMap.get(id) || null;
+  }
+
+  function isEditingByOther(info) {
+    if (!info) return false;
+    const meId = me && me.id ? me.id : '';
+    if (!meId) return true;
+    return info.userId && info.userId !== meId;
+  }
+
+  async function fetchEditingStatus(ids) {
+    if (editingSocketReady) return;
+    if (!me) return;
+    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+    if (!list.length) {
+      editingStatusMap = new Map();
+      applyEditingStatusToRows();
+      return;
+    }
+    if (editingFetchPromise) return editingFetchPromise;
+    editingFetchPromise = (async () => {
+      try {
+        const query = encodeURIComponent(list.join(','));
+        const payload = await Poem.api(`/api/editing/status?ids=${query}`);
+        const data = payload && payload.data ? payload.data : {};
+        const nextMap = new Map();
+        Object.keys(data).forEach(id => {
+          nextMap.set(id, data[id]);
+        });
+        editingStatusMap = nextMap;
+        applyEditingStatusToRows();
+      } catch (err) {
+        console.warn('fetch editing status failed', err);
+      } finally {
+        editingFetchPromise = null;
+      }
+    })();
+    return editingFetchPromise;
+  }
+
+  function startEditingPoller() {
+    if (!me || editingPollTimer) return;
+    editingPollTimer = setInterval(() => {
+      const ids = Array.isArray(currentItems) ? currentItems.map(item => item.id).filter(Boolean) : [];
+      if (!ids.length) return;
+      fetchEditingStatus(ids).catch(() => { });
+    }, EDITING_POLL_INTERVAL);
+  }
+
+  function stopEditingPoller() {
+    if (editingPollTimer) {
+      clearInterval(editingPollTimer);
+      editingPollTimer = null;
+    }
+  }
+
+  function buildWsUrl() {
+    const scheme = location.protocol === 'https:' ? 'wss' : 'ws';
+    return `${scheme}://${location.host}${Poem.base()}/ws`;
+  }
+
+  function handleEditingMessage(message) {
+    if (!message || typeof message.type !== 'string') return;
+    if (message.type === 'editing:snapshot') {
+      const data = message.data || {};
+      const nextMap = new Map();
+      Object.keys(data).forEach(id => nextMap.set(id, data[id]));
+      editingStatusMap = nextMap;
+      applyEditingStatusToRows();
+      return;
+    }
+    if (message.type === 'editing:update') {
+      const id = message.id || '';
+      if (!id) return;
+      if (message.lock) editingStatusMap.set(id, message.lock);
+      else editingStatusMap.delete(id);
+      applyEditingStatusToRows();
+    }
+  }
+
+  function sendEditingSubscribe(ids) {
+    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+    if (!editingSocketReady || !editingSocket) {
+      editingSocketPendingIds = list;
+      return;
+    }
+    editingSocket.send(JSON.stringify({ type: 'editing:subscribe', ids: list }));
+  }
+
+  function initEditingSocket() {
+    if (!me) return;
+    if (editingSocket && (editingSocket.readyState === WebSocket.OPEN || editingSocket.readyState === WebSocket.CONNECTING)) return;
+    editingSocket = new WebSocket(buildWsUrl());
+    editingSocketReady = false;
+    editingSocket.onopen = () => {
+      editingSocketReady = true;
+      stopEditingPoller();
+      if (editingSocketPendingIds.length) {
+        sendEditingSubscribe(editingSocketPendingIds);
+        editingSocketPendingIds = [];
+      }
+    };
+    editingSocket.onmessage = (event) => {
+      try { handleEditingMessage(JSON.parse(event.data)); } catch (e) { }
+    };
+    editingSocket.onclose = () => {
+      editingSocketReady = false;
+      startEditingPoller();
+    };
+    editingSocket.onerror = () => {
+      editingSocketReady = false;
+    };
+  }
+
+  function bindActionButtons(container) {
+    if (!container) return;
+    container.querySelectorAll('button[data-act]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const act = btn.dataset.act;
+        const id = btn.dataset.id;
+        if (act === 'open') {
+          const targetUrl = btn.dataset.url || (() => {
+            const encoded = encodeURIComponent(id || '');
+            const currentQuery = getEncodedReturnQuery();
+            return currentQuery ? `editor.html?id=${encoded}&return=${currentQuery}` : `editor.html?id=${encoded}`;
+          })();
+          location.href = targetUrl;
+          return;
+        }
+        if (act === 'delete') {
+          if (!canDelete) { Poem.toast('权限不足'); return; }
+          const references = await fetchReferences(id);
+          const hasRefs = references && Array.isArray(references.data) && references.data.length > 0;
+          const ok = confirm(hasRefs ? buildReferenceMessage(id, references) : `删除 ${id} ？`);
+          if (!ok) return;
+          try {
+            if (hasRefs) {
+              await clearLinksToNode(id);
+            }
+            await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
+            Poem.toast('删除成功');
+            await search({ keepPage: true });
+            return;
+          } catch (err) {
+            console.error(err);
+            Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
+          }
+        }
+      });
+    });
+  }
+
+  function updateRowActions(tr) {
+    if (!tr) return;
+    const id = tr.dataset.id || '';
+    const editorHref = tr.dataset.editorHref || '';
+    const actionsCell = tr.querySelector('.actions-cell');
+    if (!actionsCell) return;
+    const editingInfo = getEditingInfo(id);
+    if (isEditingByOther(editingInfo)) {
+      actionsCell.innerHTML = `<div class="row-actions"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
+      return;
+    }
+    const editorHrefEsc = escapeHtml(editorHref);
+    const deleteButtonHtml = canDelete ? `<button data-act="delete" data-id="${id}" class="btn danger small">删除</button>` : '';
+    actionsCell.innerHTML = `<div class="row-actions"><button data-act="open" data-id="${id}" data-url="${editorHrefEsc}" class="btn small">打开</button>${deleteButtonHtml}</div>`;
+    bindActionButtons(actionsCell);
+  }
+
+  function applyEditingStatusToRows() {
+    if (!tbody) return;
+    tbody.querySelectorAll('tr[data-id]').forEach(tr => updateRowActions(tr));
+  }
+
   // 渲染当前页面
   function renderCurrentPage() {
     const rows = Array.isArray(currentItems) ? currentItems : [];
@@ -565,9 +748,9 @@
       const idLabel = typeCls ? `<span class="type-tag ${typeCls}">${idText}</span>` : idText;
       const encodedId = encodeURIComponent(item.id || '');
       const editorHref = currentQueryEncoded ? `editor.html?id=${encodedId}&return=${currentQueryEncoded}` : `editor.html?id=${encodedId}`;
-      const editorHrefEsc = escapeHtml(editorHref);
       const tr = document.createElement('tr');
-      const deleteButtonHtml = canDelete ? `<button data-act="delete" data-id="${item.id}" class="btn danger small">删除</button>` : '';
+      tr.dataset.id = item.id || '';
+      tr.dataset.editorHref = editorHref;
       tr.innerHTML = `
         <td>${idLabel}</td>
         <td><div class="name-cell">${item.name || ''}</div></td>
@@ -577,47 +760,20 @@
         <td>${durationDisplay}</td>
         <td>${reviewStatusHtml}</td>
         <td>${repairStatusHtml}</td>
-        <td class="actions-cell"><div class="row-actions"><button data-act="open" data-id="${item.id}" data-url="${editorHrefEsc}" class="btn small">打开</button>
-        ${deleteButtonHtml}</div></td>
+        <td class="actions-cell"></td>
       `;
-      tr.querySelectorAll('button[data-act]').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const act = btn.dataset.act;
-          const id = btn.dataset.id;
-          if (act === 'open') {
-            const targetUrl = btn.dataset.url || (() => {
-              const encoded = encodeURIComponent(id || '');
-              const currentQuery = getEncodedReturnQuery();
-              return currentQuery ? `editor.html?id=${encoded}&return=${currentQuery}` : `editor.html?id=${encoded}`;
-            })();
-            location.href = targetUrl;
-            return;
-          }
-          if (act === 'delete') {
-            if (!canDelete) { Poem.toast('权限不足'); return; }
-            const references = await fetchReferences(id);
-            const hasRefs = references && Array.isArray(references.data) && references.data.length > 0;
-            const ok = confirm(hasRefs ? buildReferenceMessage(id, references) : `删除 ${id} ？`);
-            if (!ok) return;
-            try {
-              if (hasRefs) {
-                await clearLinksToNode(id);
-              }
-              await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
-              Poem.toast('删除成功');
-              await search({ keepPage: true });
-              return;
-            } catch (err) {
-              console.error(err);
-              Poem.toast('删除失败：' + (err && err.error ? err.error : '服务器错误'));
-            }
-          }
-        });
-      });
+      updateRowActions(tr);
       tbody.appendChild(tr);
     });
     updateCountDisplay(total);
     renderPagination(total, totalPages);
+    const ids = pageItems.map(item => item.id).filter(Boolean);
+    initEditingSocket();
+    sendEditingSubscribe(ids);
+    if (!editingSocketReady) {
+      startEditingPoller();
+      fetchEditingStatus(ids).catch(() => { });
+    }
   }
   // 导出（汇总，审核者/管理员）
   const exportDurationBtn = document.getElementById('exportDurationBtn');

@@ -689,7 +689,6 @@
       { char: '&', label: '&' }, { char: '＆', label: '＆' },
       { char: '*', label: '*' }, { char: '＊', label: '＊' },
       { char: '+', label: '+' }, { char: '＋', label: '＋' },
-      { char: '-', label: '-' }, { char: '－', label: '－' },
       { char: '|', label: '|' }, { char: '｜', label: '｜' },
       { char: '/', label: '/' }, { char: '／', label: '／' },
       { char: '\\', label: '\\' }, { char: '＼', label: '＼' },

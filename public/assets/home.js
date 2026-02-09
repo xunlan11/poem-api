@@ -14,6 +14,13 @@
   const pendingPagination = document.getElementById('myPendingPagination');
   // 待审核状态
   const pendingState = { items: [], page: 1, canDelete: false };
+  const EDITING_POLL_INTERVAL = 10000;
+  let editingStatusMap = new Map();
+  let editingPollTimer = null;
+  let editingFetchPromise = null;
+  let editingSocket = null;
+  let editingSocketReady = false;
+  let editingSocketPendingIds = [];
   // 审核状态映射
   const REVIEW_STATUS_CLASS = {
     pending: 'status-pending',
@@ -156,6 +163,141 @@
     return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
   }
 
+  function getEditingInfo(id) {
+    if (!id) return null;
+    return editingStatusMap.get(id) || null;
+  }
+
+  function isEditingByOther(info) {
+    if (!info) return false;
+    const meId = pendingState.meId || '';
+    if (!meId) return true;
+    return info.userId && info.userId !== meId;
+  }
+
+  async function fetchEditingStatus(ids) {
+    if (editingSocketReady) return;
+    if (!pendingState.meId) return;
+    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+    if (!list.length) {
+      editingStatusMap = new Map();
+      applyPendingEditingStatusToRows();
+      return;
+    }
+    if (editingFetchPromise) return editingFetchPromise;
+    editingFetchPromise = (async () => {
+      try {
+        const query = encodeURIComponent(list.join(','));
+        const payload = await Poem.api(`/api/editing/status?ids=${query}`);
+        const data = payload && payload.data ? payload.data : {};
+        const nextMap = new Map();
+        Object.keys(data).forEach(id => nextMap.set(id, data[id]));
+        editingStatusMap = nextMap;
+        applyPendingEditingStatusToRows();
+      } catch (err) {
+        console.warn('fetch editing status failed', err);
+      } finally {
+        editingFetchPromise = null;
+      }
+    })();
+    return editingFetchPromise;
+  }
+
+  function startEditingPoller() {
+    if (!pendingState.meId || editingPollTimer) return;
+    editingPollTimer = setInterval(() => {
+      const pageItems = Array.isArray(pendingState.pageItems) ? pendingState.pageItems : [];
+      const ids = pageItems.map(item => item.id).filter(Boolean);
+      if (!ids.length) return;
+      fetchEditingStatus(ids).catch(() => { });
+    }, EDITING_POLL_INTERVAL);
+  }
+
+  function stopEditingPoller() {
+    if (editingPollTimer) {
+      clearInterval(editingPollTimer);
+      editingPollTimer = null;
+    }
+  }
+
+  function buildWsUrl() {
+    const scheme = location.protocol === 'https:' ? 'wss' : 'ws';
+    return `${scheme}://${location.host}${Poem.base()}/ws`;
+  }
+
+  function handleEditingMessage(message) {
+    if (!message || typeof message.type !== 'string') return;
+    if (message.type === 'editing:snapshot') {
+      const data = message.data || {};
+      const nextMap = new Map();
+      Object.keys(data).forEach(id => nextMap.set(id, data[id]));
+      editingStatusMap = nextMap;
+      applyPendingEditingStatusToRows();
+      return;
+    }
+    if (message.type === 'editing:update') {
+      const id = message.id || '';
+      if (!id) return;
+      if (message.lock) editingStatusMap.set(id, message.lock);
+      else editingStatusMap.delete(id);
+      applyPendingEditingStatusToRows();
+    }
+  }
+
+  function sendEditingSubscribe(ids) {
+    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+    if (!editingSocketReady || !editingSocket) {
+      editingSocketPendingIds = list;
+      return;
+    }
+    editingSocket.send(JSON.stringify({ type: 'editing:subscribe', ids: list }));
+  }
+
+  function initEditingSocket() {
+    if (!pendingState.meId) return;
+    if (editingSocket && (editingSocket.readyState === WebSocket.OPEN || editingSocket.readyState === WebSocket.CONNECTING)) return;
+    editingSocket = new WebSocket(buildWsUrl());
+    editingSocketReady = false;
+    editingSocket.onopen = () => {
+      editingSocketReady = true;
+      stopEditingPoller();
+      if (editingSocketPendingIds.length) {
+        sendEditingSubscribe(editingSocketPendingIds);
+        editingSocketPendingIds = [];
+      }
+    };
+    editingSocket.onmessage = (event) => {
+      try { handleEditingMessage(JSON.parse(event.data)); } catch (e) { }
+    };
+    editingSocket.onclose = () => {
+      editingSocketReady = false;
+      startEditingPoller();
+    };
+    editingSocket.onerror = () => {
+      editingSocketReady = false;
+    };
+  }
+
+  function updatePendingRowActions(tr) {
+    if (!tr) return;
+    const id = tr.dataset.id || '';
+    const editorHref = tr.dataset.editorHref || '';
+    const actionsCell = tr.querySelector('.actions-cell');
+    if (!actionsCell) return;
+    const editingInfo = getEditingInfo(id);
+    if (isEditingByOther(editingInfo)) {
+      actionsCell.innerHTML = `<div class="row-actions"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
+      return;
+    }
+    const deleteButtonHtml = pendingState.canDelete ? `<button data-act="delete" data-id="${escapeHtml(id)}" class="btn danger small">删除</button>` : '';
+    actionsCell.innerHTML = `<div class="row-actions"><a class="btn small" href="${escapeHtml(editorHref)}">打开</a>${deleteButtonHtml}</div>`;
+  }
+
+  function applyPendingEditingStatusToRows() {
+    if (!pendingBody) return;
+    pendingBody.querySelectorAll('tr[data-id]').forEach(tr => updatePendingRowActions(tr));
+  }
+
   // 渲染待审核表格
   function renderPendingTable() {
     if (!pendingBody || !pendingPagination) return;
@@ -171,6 +313,7 @@
     pendingState.page = page;
     const start = (page - 1) * PENDING_PAGE_SIZE;
     const pageItems = pendingState.items.slice(start, start + PENDING_PAGE_SIZE);
+    pendingState.pageItems = pageItems;
     pendingBody.innerHTML = pageItems.map(item => {
       const typeCls = item.type ? `type-${item.type}` : '';
       const idLabel = typeCls ? `<span class="type-tag ${typeCls}">${item.id}</span>` : item.id;
@@ -181,8 +324,8 @@
       const duration = item.reviewDuration ?? '';
       const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || formatStatusLabel(item), REVIEW_STATUS_CLASS);
       const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
-      const deleteButtonHtml = pendingState.canDelete ? `<button data-act="delete" data-id="${escapeHtml(item.id)}" class="btn danger small">删除</button>` : '';
-      return `<tr>
+      const editorHref = `editor.html?id=${encodeURIComponent(item.id)}`;
+      return `<tr data-id="${escapeHtml(item.id)}" data-editor-href="${escapeHtml(editorHref)}">
         <td>${idLabel}</td>
         <td><div class="name-cell">${name}</div></td>
         <td>${creator}</td>
@@ -191,9 +334,16 @@
         <td>${duration}</td>
         <td>${reviewStatusHtml}</td>
         <td>${repairStatusHtml}</td>
-        <td class="actions-cell"><div class="row-actions"><a class="btn small" href="editor.html?id=${encodeURIComponent(item.id)}">打开</a>${deleteButtonHtml}</div></td>
+        <td class="actions-cell"></td>
       </tr>`;
     }).join('');
+    applyPendingEditingStatusToRows();
+    initEditingSocket();
+    sendEditingSubscribe(pageItems.map(item => item.id));
+    if (!editingSocketReady) {
+      startEditingPoller();
+      fetchEditingStatus(pageItems.map(item => item.id)).catch(() => { });
+    }
     if (totalPages <= 1) {
       pendingPagination.innerHTML = '';
       pendingPagination.style.display = 'none';
@@ -241,6 +391,7 @@
         pendingSection.style.display = 'none';
         return;
       }
+      pendingState.meId = me.id;
       pendingState.canDelete = (me.role === 'reviewer' || me.role === 'admin');
       if (pendingSummary) pendingSummary.textContent = '加载中';
       const variants = normalizeUserNames(me);
