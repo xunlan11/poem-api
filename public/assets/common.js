@@ -12,6 +12,17 @@
     { key: 'yunbu', label: '韵部' },
     { key: 'ciqupu', label: '词曲谱' },
   ];
+  const REVIEW_STATUS_CLASS = {
+    pending: 'status-pending',
+    rejected: 'status-rejected',
+    approved: 'status-approved',
+    archived: 'status-archived',
+    final: 'status-final'
+  };
+  const REPAIR_STATUS_CLASS = {
+    unfinished: 'status-rejected',
+    finished: 'status-approved'
+  };
   // 用户缓存键
   const ME_CACHE_KEY = 'poem_me_cache_v1';
   // 用户缓存TTL
@@ -118,6 +129,8 @@
     TYPES,
     ERYA_SUB_TYPES,
     LV_SUB_TYPES,
+    REVIEW_STATUS_CLASS,
+    REPAIR_STATUS_CLASS,
     // 获取查询字符串参数的函数
     qs(name) { const p = new URLSearchParams(location.search); return p.get(name); },
     // 获取今天的日期字符串的函数
@@ -185,9 +198,186 @@
     },
     // 显示提示消息的函数
     toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 3000); },
+    escapeHtml(str) {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+      return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
+    },
+    renderStatusTag(status, label, classMap) {
+      if (!label) return '';
+      const cls = (classMap && classMap[status]) ? classMap[status] : 'status-default';
+      return `<span class="status-tag ${cls}">${Poem.escapeHtml(label)}</span>`;
+    },
     checkClientFingerprintOnce,
     startAutoUpdateCheck,
     clearMeCache,
+    // 查询引用并格式化提示
+    async fetchReferences(nodeId) {
+      if (!nodeId) return null;
+      try {
+        return await Poem.api(`/api/nodes/references/${nodeId}`);
+      } catch (err) {
+        console.error('查询引用失败', err);
+        return null;
+      }
+    },
+    buildReferenceMessage(id, payload, maxItems = 5) {
+      const list = Array.isArray(payload?.data) ? payload.data : [];
+      const total = typeof payload?.total === 'number' ? payload.total : list.length;
+      if (!list.length) return `删除 ${id} ？`;
+      const lines = list.slice(0, maxItems).map(r => {
+        const name = r.label || '';
+        const count = r.linkCount ? `（链接${r.linkCount}处）` : '';
+        return `- ${r.id}${name ? ' ' + name : ''}${count}`;
+      });
+      const extra = total > lines.length ? `... 共 ${total} 个引用` : '';
+      return `以下节点引用了 ${id}：\n${lines.join('\n')}${extra ? `\n${extra}` : ''}\n\n继续删除并将这些链接置为空置吗？`;
+    },
+    async clearLinksToNode(targetId) {
+      if (!targetId) return { ok: false };
+      return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
+    },
+    createEditingPresence(options) {
+      const opts = options || {};
+      const pollInterval = typeof opts.pollInterval === 'number' ? opts.pollInterval : 10000;
+      const onUpdate = typeof opts.onUpdate === 'function' ? opts.onUpdate : () => { };
+      const meId = opts.meId || '';
+      let currentIds = [];
+      let editingMap = new Map();
+      let pollTimer = null;
+      let fetchPromise = null;
+      let socket = null;
+      let socketReady = false;
+      let pendingIds = [];
+
+      const applyMap = (nextMap) => {
+        editingMap = nextMap;
+        onUpdate(editingMap);
+      };
+
+      const getInfo = (id) => {
+        if (!id) return null;
+        return editingMap.get(id) || null;
+      };
+
+      const isEditingByOther = (info) => {
+        if (!info) return false;
+        if (!meId) return true;
+        return info.userId && info.userId !== meId;
+      };
+
+      const buildWsUrl = () => {
+        const scheme = location.protocol === 'https:' ? 'wss' : 'ws';
+        return `${scheme}://${location.host}${Poem.base()}/ws`;
+      };
+
+      const handleMessage = (message) => {
+        if (!message || typeof message.type !== 'string') return;
+        if (message.type === 'editing:snapshot') {
+          const data = message.data || {};
+          const nextMap = new Map();
+          Object.keys(data).forEach(id => nextMap.set(id, data[id]));
+          applyMap(nextMap);
+          return;
+        }
+        if (message.type === 'editing:update') {
+          const id = message.id || '';
+          if (!id) return;
+          if (message.lock) editingMap.set(id, message.lock);
+          else editingMap.delete(id);
+          onUpdate(editingMap);
+        }
+      };
+
+      const sendSubscribe = (ids) => {
+        const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+        if (!socketReady || !socket) {
+          pendingIds = list;
+          return;
+        }
+        socket.send(JSON.stringify({ type: 'editing:subscribe', ids: list }));
+      };
+
+      const initSocket = () => {
+        if (!meId || typeof WebSocket === 'undefined') return;
+        if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) return;
+        socket = new WebSocket(buildWsUrl());
+        socketReady = false;
+        socket.onopen = () => {
+          socketReady = true;
+          stopPoller();
+          const list = pendingIds.length ? pendingIds : currentIds;
+          if (list.length) sendSubscribe(list);
+        };
+        socket.onmessage = (event) => {
+          try { handleMessage(JSON.parse(event.data)); } catch (e) { }
+        };
+        socket.onclose = () => {
+          socketReady = false;
+          startPoller();
+        };
+        socket.onerror = () => {
+          socketReady = false;
+        };
+      };
+
+      const fetchStatus = async (ids) => {
+        if (socketReady || !meId) return;
+        const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+        if (!list.length) {
+          applyMap(new Map());
+          return;
+        }
+        if (fetchPromise) return fetchPromise;
+        fetchPromise = (async () => {
+          try {
+            const query = encodeURIComponent(list.join(','));
+            const payload = await Poem.api(`/api/editing/status?ids=${query}`);
+            const data = payload && payload.data ? payload.data : {};
+            const nextMap = new Map();
+            Object.keys(data).forEach(id => nextMap.set(id, data[id]));
+            applyMap(nextMap);
+          } catch (err) {
+            console.warn('fetch editing status failed', err);
+          } finally {
+            fetchPromise = null;
+          }
+        })();
+        return fetchPromise;
+      };
+
+      const startPoller = () => {
+        if (!meId || pollTimer) return;
+        pollTimer = setInterval(() => {
+          if (!currentIds.length) return;
+          fetchStatus(currentIds).catch(() => { });
+        }, pollInterval);
+      };
+
+      const stopPoller = () => {
+        if (pollTimer) {
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+      };
+
+      const sync = (ids) => {
+        const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
+        currentIds = list;
+        if (!list.length) {
+          pendingIds = [];
+          applyMap(new Map());
+          return;
+        }
+        initSocket();
+        sendSubscribe(list);
+        if (!socketReady) {
+          startPoller();
+          fetchStatus(list).catch(() => { });
+        }
+      };
+
+      return { sync, getInfo, isEditingByOther };
+    },
     // 打开链接选择器的函数
     openLinkPicker(onPick, options) {
       const opts = options || {};

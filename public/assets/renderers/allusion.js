@@ -12,7 +12,6 @@
     const initializeLinkFields = context.initializeLinkFields || (() => { });
     const renderInlinePairs = context.renderInlinePairs || (() => { });
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const isNew = !!context.isNew;
     const statement = node ? node.fields?.statement || '' : '';
     const otherStatement = node ? (node.fields?.otherStatement || (Array.isArray(node.fields?.otherStatements) ? node.fields.otherStatements[0] : '')) : '';
@@ -35,7 +34,7 @@
       <div class="field"><label>用法</label><textarea id="f-usage" rows="1" data-link-field="extra.usage" style="width:100%;resize:none;overflow:hidden">${escapeHtml(usage)}</textarea></div>
       <div class="field"><label>出处</label><textarea id="f-origin" rows="1" data-link-field="extra.origin" style="width:100%;resize:none;overflow:hidden">${escapeHtml(origin)}</textarea></div>
       <div class="field"><label>涉及人物</label><input id="f-persons" type="text" data-link-field="fields.persons" value="${escapeHtml(personsText)}"></div>
-      <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
+      ${utils.renderNoteListField({ label: '示例', addId: 'addEx', listId: 'examples' })}
     `;
     initializeLinkFields(formContainer);
     // 查重
@@ -48,22 +47,16 @@
         context.checkDuplicate(q, 'E');
       });
     }
-    const usageInput = formContainer.querySelector('#f-usage');
     const personsInput = formContainer.querySelector('#f-persons');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
-    // 示例列表
-    const renderExamplesWrapper = () => renderInlinePairs(examplesEl, examples, '出处', '内容', '出处', '内容', {
-      containerClass: 'note-list',
-      wrapperClass: 'ordered-item note-item',
-      inputClass1: 'c-source',
-      inputClass2: 'c-content',
+    utils.bindExampleList({
+      examplesEl,
+      addExBtn,
+      renderInlinePairs,
       linkFieldPrefix: 'fields.examples',
-      onChange: (arr) => { },
-      paragraphCheck2: true,
+      examplesList: examples
     });
-    renderExamplesWrapper();
-    addExBtn && addExBtn.addEventListener('click', () => { examples.push({ 出处: '', 内容: '' }); renderExamplesWrapper(); });
     // 自动调整大小
     try { utils.bindAutoResize(formContainer, ['#f-explanation', '#f-usage', '#f-origin'], context); } catch (err) { }
 

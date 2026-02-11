@@ -12,7 +12,6 @@
     const initializeLinkFields = context.initializeLinkFields || (() => { });
     const renderInlinePairs = context.renderInlinePairs || (() => { });
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const isNew = !!context.isNew;
     const common = node ? node.fields?.common || '' : '';
     const name = node ? node.fields?.name || node.fields?.title || '' : '';
@@ -64,10 +63,10 @@
         <div class="field"><label>代表作</label><input id="f-repWorks" type="text" data-link-field="fields.repWorks" value="${escapeHtml(repWorksText)}"></div>
         <div class="field"><label>文集</label><input id="f-anthos" type="text" data-link-field="fields.anthos" value="${escapeHtml(anthosText)}"></div>
       </div>  
-      <div class="field"><label>大事年表 <button id="addChrono" class="btn small add-row">添加</button></label><div id="chrono" class="note-list"></div></div>
+      ${utils.renderNoteListField({ label: '大事年表', addId: 'addChrono', listId: 'chrono' })}
       <div class="field"><label>成就与影响</label><textarea id="f-achievements" rows="1" data-link-field="extra.achievements" style="width:100%;resize:none;overflow:hidden">${escapeHtml(achievements)}</textarea></div>
-      <div class="field"><label>评价 <button id="addEval" class="btn small add-row">添加</button></label><div id="evalList" class="note-list"></div></div>
-      <div class="field"><label>相关典故 <button id="addE" class="btn small add-row">添加</button></label><div id="relatedE" class="note-list"></div></div>
+      ${utils.renderNoteListField({ label: '评价', addId: 'addEval', listId: 'evalList' })}
+      ${utils.renderNoteListField({ label: '相关典故', addId: 'addE', listId: 'relatedE' })}
     `;
     initializeLinkFields(formContainer);
     const checkDupBtn = formContainer.querySelector('.check-dup-btn');

@@ -6,12 +6,6 @@
   // 子类型
   const SUB_KEY = 'ciqupu'; 
   const SUB_LABEL = '词曲谱'; 
-  // 平仄标记模式的标签
-  const MARK_MODE_LABELS = {
-    variable: '可变',
-    fixed: '固定',
-    rhyme: '韵脚'
-  }; // 平仄标记模式标签映射
   // 标记类型的CSS类映射
   const MARK_CLASS_MAP = {
     fixed: 'locked-char--fixed',
@@ -52,7 +46,6 @@
     // 从上下文获取辅助函数
     const registerEditableWatcher = typeof context.registerEditableWatcher === 'function' ? context.registerEditableWatcher : () => () => { };
     const escapeHtml = context.escapeHtml || (s => String(s || ''));
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const initializeLinkFields = context.initializeLinkFields || (() => { });
     // 提取节点字段数据
     const title = node.fields?.title || '';
@@ -147,7 +140,6 @@
       variant.pingzeMarks = normalized;
       return normalized;
     };
-    const getModeLabel = (mode) => MARK_MODE_LABELS[mode] || MARK_MODE_LABELS[DEFAULT_MARK_MODE];
 
     // 渲染锁定文本的函数
     function renderLockedText(text, target, options) {
@@ -284,13 +276,10 @@
         const sampleLockView = wrapper.querySelector('.sample-lock-view');
         const pingzeLockView = wrapper.querySelector('.pingze-lock-view');
         const pingzeMarkButtons = Array.from(wrapper.querySelectorAll('.pingze-mark-buttons .btn'));
-        const pingzeMarkStatus = wrapper.querySelector('.pingze-mark-status');
-        const pingzeMarkToolbar = wrapper.querySelector('.pingze-mark-toolbar');
         const pingzeMarkButtonsWrap = wrapper.querySelector('.pingze-mark-buttons');
         if (lockControls) {
           lockControls.style.display = editable ? '' : 'none';
         }
-        if (pingzeMarkToolbar) pingzeMarkToolbar.style.display = 'none';
         if (pingzeMarkButtonsWrap) pingzeMarkButtonsWrap.style.display = editable ? '' : 'none';
         // 高亮匹配字符的函数
         const highlightMatches = (charIdx) => {

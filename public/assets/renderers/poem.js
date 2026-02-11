@@ -37,7 +37,6 @@
     const author = node ? node.fields?.author || '' : '';
     const source = node ? node.fields?.origin || '' : '';
     const form = node ? node.fields?.form || '' : '';
-    const sub = node ? node.fields?.sub || '' : '';
     const sub2 = node ? node.fields?.sub2 || '' : '';
     const rhyme = node ? node.fields?.rhyme || '' : '';
     const body = node ? node.content || '' : '';
@@ -91,9 +90,7 @@
       </div>
       <div class="field"><label>译文</label><textarea id="f-translation" rows="1" data-link-field="extra.translation" data-autosize-min="32" style="width:100%;resize:none;overflow:hidden">${escapeHtml(translation)}</textarea></div>
       <div class="field"><label>创作背景</label><textarea id="f-background" rows="1" data-link-field="extra.background" data-autosize-min="32" style="width:100%;resize:none;overflow:hidden">${escapeHtml(background)}</textarea></div>
-      <div class="field"><label>评价 <button class="btn small add-row" id="add-comment">添加</button></label>
-        <div id="comment-list" class="note-list"></div>
-      </div>
+      ${utils.renderNoteListField({ label: '评价', addId: 'add-comment', listId: 'comment-list' })}
     `;
     initializeLinkFields(formContainer);
     // 自动调整大小

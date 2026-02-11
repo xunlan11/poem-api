@@ -1025,8 +1025,6 @@ app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
 });
 
-// 用户归档统计（管理员）：按创建者统计已归档节点总数与总时长
-
 // 生成下一用户ID
 function nextUserId() {
   const used = new Set(users.map(u => {

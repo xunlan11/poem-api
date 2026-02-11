@@ -12,7 +12,6 @@
     const initializeLinkFields = context.initializeLinkFields || (() => { });
     const renderInlinePairs = context.renderInlinePairs || (() => { });
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const isNew = !!context.isNew;
     const statement = node ? node.fields?.statement || '' : '';
     const otherStatement = node ? (node.fields?.otherStatement || (Array.isArray(node.fields?.otherStatements) ? node.fields.otherStatements[0] : '')) : '';
@@ -31,7 +30,7 @@
       </div> 
       <div class="field"><label>介绍</label><textarea id="f-introduction" rows="1" data-link-field="extra.introduction" style="width:100%;resize:none;overflow:hidden">${escapeHtml(introduction)}</textarea></div>
       <div class="field"><label>涉及主体</label><input id="f-persons" type="text" data-link-field="fields.persons" value="${escapeHtml(personsText)}"></div>
-      <div class="field"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
+      ${utils.renderNoteListField({ label: '示例', addId: 'addEx', listId: 'examples' })}
     `;
     initializeLinkFields(formContainer);
     // 查重
@@ -47,18 +46,13 @@
     const personsInput = formContainer.querySelector('#f-persons');
     const examplesEl = formContainer.querySelector('#examples');
     const addExBtn = formContainer.querySelector('#addEx');
-    // 示例列表
-    const renderExamplesWrapper = () => renderInlinePairs(examplesEl, examples, '出处', '内容', '出处', '内容', {
-      containerClass: 'note-list',
-      wrapperClass: 'ordered-item note-item',
-      inputClass1: 'c-source',
-      inputClass2: 'c-content',
+    utils.bindExampleList({
+      examplesEl,
+      addExBtn,
+      renderInlinePairs,
       linkFieldPrefix: 'fields.examples',
-      onChange: (arr) => { },
-      paragraphCheck2: true,
+      examplesList: examples
     });
-    renderExamplesWrapper();
-    addExBtn && addExBtn.addEventListener('click', () => { examples.push({ 出处: '', 内容: '' }); renderExamplesWrapper(); });
     // 自动调整大小
     try { utils.bindAutoResize(formContainer, ['#f-introduction'], context); } catch (err) { }
 

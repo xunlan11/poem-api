@@ -26,12 +26,11 @@
   const me = await Poem.me();
   const canDelete = me && (me.role === 'reviewer' || me.role === 'admin');
   const EDITING_POLL_INTERVAL = 10000;
-  let editingStatusMap = new Map();
-  let editingPollTimer = null;
-  let editingFetchPromise = null;
-  let editingSocket = null;
-  let editingSocketReady = false;
-  let editingSocketPendingIds = [];
+  const editingPresence = Poem.createEditingPresence({
+    meId: me && me.id ? me.id : '',
+    pollInterval: EDITING_POLL_INTERVAL,
+    onUpdate: () => { applyEditingStatusToRows(); }
+  });
   // 分页
   const paginationEl = document.getElementById('pagination');
   const PAGE_SIZE = 15;
@@ -438,30 +437,7 @@
     if (searchTimer) clearTimeout(searchTimer);
     searchTimer = setTimeout(() => { search(); }, 200);
   }
-  // 审核状态CSS类映射
-  const REVIEW_STATUS_CLASS = {
-    pending: 'status-pending',
-    rejected: 'status-rejected',
-    approved: 'status-approved',
-    archived: 'status-archived',
-    final: 'status-final'
-  };
-  // 返修状态CSS类映射
-  const REPAIR_STATUS_CLASS = {
-    unfinished: 'status-rejected',
-    finished: 'status-approved'
-  };
-  // HTML转义函数
-  function escapeHtml(str) {
-    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-    return String(str || '').replace(/[&<>"']/g, c => map[c] || c);
-  }
-  // 渲染状态标签
-  function renderStatusTag(status, label, classMap) {
-    if (!label) return '';
-    const cls = classMap[status] || 'status-default';
-    return `<span class="status-tag ${cls}">${escapeHtml(label)}</span>`;
-  }
+  const { REVIEW_STATUS_CLASS, REPAIR_STATUS_CLASS } = Poem;
   // 跳转到指定页面
   function goToPage(page) {
     const totalPages = totalCount ? Math.ceil(totalCount / PAGE_SIZE) : 1;
@@ -524,149 +500,13 @@
     paginationEl.appendChild(nextBtn);
   }
 
-  // 查询引用并格式化提示
-  async function fetchReferences(nodeId) {
-    if (!nodeId) return null;
-    try {
-      return await Poem.api(`/api/nodes/references/${nodeId}`);
-    } catch (err) {
-      console.error('查询引用失败', err);
-      return null;
-    }
-  }
-
-  function buildReferenceMessage(id, payload, maxItems = 5) {
-    const list = Array.isArray(payload?.data) ? payload.data : [];
-    const total = typeof payload?.total === 'number' ? payload.total : list.length;
-    if (!list.length) return `删除 ${id} ？`;
-    const lines = list.slice(0, maxItems).map(r => {
-      const name = r.label || '';
-      const count = r.linkCount ? `（链接${r.linkCount}处）` : '';
-      return `- ${r.id}${name ? ' ' + name : ''}${count}`;
-    });
-    const extra = total > lines.length ? `... 共 ${total} 个引用` : '';
-    return `以下节点引用了 ${id}：\n${lines.join('\n')}${extra ? `\n${extra}` : ''}\n\n继续删除并将这些链接置为空置吗？`;
-  }
-
-  async function clearLinksToNode(targetId) {
-    if (!targetId) return { ok: false };
-    return Poem.api('/api/nodes/clear-links', { method: 'POST', body: JSON.stringify({ targetId }) });
-  }
-
   function getEditingInfo(id) {
     if (!id) return null;
-    return editingStatusMap.get(id) || null;
+    return editingPresence.getInfo(id);
   }
 
   function isEditingByOther(info) {
-    if (!info) return false;
-    const meId = me && me.id ? me.id : '';
-    if (!meId) return true;
-    return info.userId && info.userId !== meId;
-  }
-
-  async function fetchEditingStatus(ids) {
-    if (editingSocketReady) return;
-    if (!me) return;
-    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
-    if (!list.length) {
-      editingStatusMap = new Map();
-      applyEditingStatusToRows();
-      return;
-    }
-    if (editingFetchPromise) return editingFetchPromise;
-    editingFetchPromise = (async () => {
-      try {
-        const query = encodeURIComponent(list.join(','));
-        const payload = await Poem.api(`/api/editing/status?ids=${query}`);
-        const data = payload && payload.data ? payload.data : {};
-        const nextMap = new Map();
-        Object.keys(data).forEach(id => {
-          nextMap.set(id, data[id]);
-        });
-        editingStatusMap = nextMap;
-        applyEditingStatusToRows();
-      } catch (err) {
-        console.warn('fetch editing status failed', err);
-      } finally {
-        editingFetchPromise = null;
-      }
-    })();
-    return editingFetchPromise;
-  }
-
-  function startEditingPoller() {
-    if (!me || editingPollTimer) return;
-    editingPollTimer = setInterval(() => {
-      const ids = Array.isArray(currentItems) ? currentItems.map(item => item.id).filter(Boolean) : [];
-      if (!ids.length) return;
-      fetchEditingStatus(ids).catch(() => { });
-    }, EDITING_POLL_INTERVAL);
-  }
-
-  function stopEditingPoller() {
-    if (editingPollTimer) {
-      clearInterval(editingPollTimer);
-      editingPollTimer = null;
-    }
-  }
-
-  function buildWsUrl() {
-    const scheme = location.protocol === 'https:' ? 'wss' : 'ws';
-    return `${scheme}://${location.host}${Poem.base()}/ws`;
-  }
-
-  function handleEditingMessage(message) {
-    if (!message || typeof message.type !== 'string') return;
-    if (message.type === 'editing:snapshot') {
-      const data = message.data || {};
-      const nextMap = new Map();
-      Object.keys(data).forEach(id => nextMap.set(id, data[id]));
-      editingStatusMap = nextMap;
-      applyEditingStatusToRows();
-      return;
-    }
-    if (message.type === 'editing:update') {
-      const id = message.id || '';
-      if (!id) return;
-      if (message.lock) editingStatusMap.set(id, message.lock);
-      else editingStatusMap.delete(id);
-      applyEditingStatusToRows();
-    }
-  }
-
-  function sendEditingSubscribe(ids) {
-    const list = Array.isArray(ids) ? ids.filter(Boolean) : [];
-    if (!editingSocketReady || !editingSocket) {
-      editingSocketPendingIds = list;
-      return;
-    }
-    editingSocket.send(JSON.stringify({ type: 'editing:subscribe', ids: list }));
-  }
-
-  function initEditingSocket() {
-    if (!me) return;
-    if (editingSocket && (editingSocket.readyState === WebSocket.OPEN || editingSocket.readyState === WebSocket.CONNECTING)) return;
-    editingSocket = new WebSocket(buildWsUrl());
-    editingSocketReady = false;
-    editingSocket.onopen = () => {
-      editingSocketReady = true;
-      stopEditingPoller();
-      if (editingSocketPendingIds.length) {
-        sendEditingSubscribe(editingSocketPendingIds);
-        editingSocketPendingIds = [];
-      }
-    };
-    editingSocket.onmessage = (event) => {
-      try { handleEditingMessage(JSON.parse(event.data)); } catch (e) { }
-    };
-    editingSocket.onclose = () => {
-      editingSocketReady = false;
-      startEditingPoller();
-    };
-    editingSocket.onerror = () => {
-      editingSocketReady = false;
-    };
+    return editingPresence.isEditingByOther(info);
   }
 
   function bindActionButtons(container) {
@@ -686,13 +526,13 @@
         }
         if (act === 'delete') {
           if (!canDelete) { Poem.toast('权限不足'); return; }
-          const references = await fetchReferences(id);
+          const references = await Poem.fetchReferences(id);
           const hasRefs = references && Array.isArray(references.data) && references.data.length > 0;
-          const ok = confirm(hasRefs ? buildReferenceMessage(id, references) : `删除 ${id} ？`);
+          const ok = confirm(hasRefs ? Poem.buildReferenceMessage(id, references) : `删除 ${id} ？`);
           if (!ok) return;
           try {
             if (hasRefs) {
-              await clearLinksToNode(id);
+              await Poem.clearLinksToNode(id);
             }
             await Poem.api(`/api/nodes/${id}`, { method: 'DELETE' });
             Poem.toast('删除成功');
@@ -718,7 +558,7 @@
       actionsCell.innerHTML = `<div class="row-actions"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
       return;
     }
-    const editorHrefEsc = escapeHtml(editorHref);
+    const editorHrefEsc = Poem.escapeHtml(editorHref);
     const deleteButtonHtml = canDelete ? `<button data-act="delete" data-id="${id}" class="btn danger small">删除</button>` : '';
     actionsCell.innerHTML = `<div class="row-actions"><button data-act="open" data-id="${id}" data-url="${editorHrefEsc}" class="btn small">打开</button>${deleteButtonHtml}</div>`;
     bindActionButtons(actionsCell);
@@ -744,10 +584,10 @@
     pageItems.forEach(item => {
       const reviewerDisplay = item.reviewer || '';
       const durationDisplay = item.reviewDuration ?? '';
-      const reviewStatusHtml = renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
-      const repairStatusHtml = item.reviewStatus === 'rejected' ? renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
+      const reviewStatusHtml = Poem.renderStatusTag(item.reviewStatus || '', item.reviewStatusLabel || '', REVIEW_STATUS_CLASS);
+      const repairStatusHtml = item.reviewStatus === 'rejected' ? Poem.renderStatusTag(item.repairStatus || '', item.repairStatusLabel || '', REPAIR_STATUS_CLASS) : '';
       const typeCls = item.type ? `type-${item.type}` : '';
-      const idText = escapeHtml(item.id || '');
+      const idText = Poem.escapeHtml(item.id || '');
       const idLabel = typeCls ? `<span class="type-tag ${typeCls}">${idText}</span>` : idText;
       const encodedId = encodeURIComponent(item.id || '');
       const editorHref = currentQueryEncoded ? `editor.html?id=${encodedId}&return=${currentQueryEncoded}` : `editor.html?id=${encodedId}`;
@@ -771,12 +611,7 @@
     updateCountDisplay(total);
     renderPagination(total, totalPages);
     const ids = pageItems.map(item => item.id).filter(Boolean);
-    initEditingSocket();
-    sendEditingSubscribe(ids);
-    if (!editingSocketReady) {
-      startEditingPoller();
-      fetchEditingStatus(ids).catch(() => { });
-    }
+    editingPresence.sync(ids);
   }
   // 导出（汇总，审核者/管理员）
   const exportDurationBtn = document.getElementById('exportDurationBtn');

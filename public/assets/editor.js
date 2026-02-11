@@ -14,10 +14,6 @@
   const linkBtn = document.getElementById('linkBtn');
   // 编辑/保存切换按钮
   const editBtn = document.getElementById('editBtn');
-  // 旧保存按钮（隐藏）
-  const saveBtn = document.getElementById('saveBtn');
-  // 审核按钮
-  const reviewBtn = document.getElementById('reviewBtn');
   // 自检按钮
   const selfCheckBtn = document.getElementById('selfCheckBtn');
   // 返回列表按钮
@@ -278,10 +274,7 @@
       editBtn.textContent = saveInFlight ? '保存中' : (editable ? '保存' : '编辑');
       editBtn.disabled = saveInFlight;
     }
-    if (saveBtn) {
-      saveBtn.style.display = 'none';
-    }
-    if (reviewBtn) reviewBtn.disabled = !editable || saveInFlight;
+    // 无审核按钮
     if (selfCheckBtn) selfCheckBtn.disabled = !editable || saveInFlight;
     if (linkBtn) linkBtn.disabled = editable;
   }
@@ -771,10 +764,8 @@
       const canEditAll = me && (me.role === 'reviewer' || me.role === 'admin');
       state.canEditNode = !!(isOwner || canEditAll);
       editBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
-      saveBtn.style.display = 'none';
       if (linkBtn) linkBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       if (selfCheckBtn) selfCheckBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
-      reviewBtn.style.display = 'none';
     }
     setCommonMeta(state.node);
     // 点击审核字段自动填充
@@ -973,7 +964,6 @@
         }
       };
     }
-    if (saveBtn) saveBtn.style.display = 'none';
 
     // 附加确认导航的函数
     function attachConfirmNavigation(el, target) {

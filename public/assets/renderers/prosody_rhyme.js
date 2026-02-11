@@ -13,7 +13,6 @@
     if (!formContainer) return null;
     const node = context.node || {};
     const escapeHtml = context.escapeHtml || (s => String(s || ''));
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const splitMultilineText = context.splitMultilineText || (raw => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
     const initializeLinkFields = context.initializeLinkFields || (() => { });
     const rhymeName = node.fields?.title || node.fields?.rhymeGroup || '';

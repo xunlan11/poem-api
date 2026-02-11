@@ -10,7 +10,6 @@
     const node = context.node || null;
     const escapeHtml = context.escapeHtml || (s => String(s || ''));
     const initializeLinkFields = context.initializeLinkFields || (() => { });
-    const autosizeTextarea = context.autosizeTextarea || (() => { });
     const splitMultilineText = context.splitMultilineText || ((raw) => raw ? raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean) : []);
     const renderInlinePairs = context.renderInlinePairs || (() => { });
     const isNew = !!context.isNew;
@@ -31,9 +30,7 @@
         <div class="field"><label>概述</label><textarea id="f-overview" rows="1" data-link-field="extra.overview" style="width:100%;resize:none;overflow:hidden">${escapeHtml(overview)}</textarea></div>
         <div class="field"><label>包含作品</label><input id="f-works" type="text" data-link-field="fields.works" value="${escapeHtml(worksText)}"></div>
         <div class="field"><label>创作背景</label><textarea id="f-background" rows="1" data-link-field="extra.background" style="width:100%;resize:none;overflow:hidden">${escapeHtml(background)}</textarea></div>
-        <div class="field"><label>评价 <button id="addEval" class="btn small add-row">添加</button></label>
-          <div id="evalList" class="note-list"></div>
-        </div>
+        ${utils.renderNoteListField({ label: '评价', addId: 'addEval', listId: 'evalList' })}
       `;
     initializeLinkFields(formContainer);
     // 查重
@@ -52,7 +49,7 @@
     // 评价列表
     const renderEvalsWrapper = () => {renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);};
     renderEvalsWrapper();
-    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); try { if (typeof addLinkButtons === 'function') addLinkButtons(); } catch (e) { } });
+    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); });
     // 自动调整大小
     try { utils.bindAutoResize(formContainer, [overviewEl, '#f-background'], context); } catch (err) { }
 
