@@ -1,7 +1,7 @@
 // 首页
 (function () {
   // 类型标签映射
-  const TYPE_LABELS = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律' };
+  const TYPE_LABELS = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '尔雅', L: '格律' };
   // 页面大小
   const PENDING_PAGE_SIZE = 8;
   // 部分
@@ -77,6 +77,15 @@
           return;
         }
         const encodedType = encodeURIComponent(type);
+        if (type === 'S' && typeof Poem.openEryaSubtypePicker === 'function') {
+          Poem.openEryaSubtypePicker({
+            onSelect(subKey) {
+              const subParam = subKey ? `&sub=${encodeURIComponent(subKey)}` : '';
+              location.href = `editor.html?type=${encodedType}&new=1${subParam}`;
+            }
+          });
+          return;
+        }
         if (type === 'L' && typeof Poem.openLvSubtypePicker === 'function') {
           Poem.openLvSubtypePicker({
             onSelect(subKey) {

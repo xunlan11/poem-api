@@ -538,6 +538,7 @@ function fuzzySearch(items, q) {
     { name: 'fields.otherNames', weight: 0.7 },
     { name: 'fields.scientificName', weight: 0.6 },
     { name: 'extra.explanation', weight: 0.6 },
+    { name: 'extra.correspond', weight: 0.8 },
     { name: 'extra.introduction', weight: 0.6 },
     { name: 'fields.title', weight: 0.6 },
     { name: 'fields.name', weight: 0.6 },

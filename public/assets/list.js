@@ -2,14 +2,15 @@
 (async function () {
   // 类型与标题
   const type = Poem.qs('type') || '';
+  const rootType = type.startsWith('S_') ? 'S' : (type.startsWith('L_') ? 'L' : type);
   const title = document.getElementById('listTitle');
-  const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '鸟兽草木（S）', L: '格律（L）', A: '汇总' };
+  const TITLE_MAP = { W: '诗词（W）', G: '文集（G）', C: '人物（C）', E: '典故（E）', S: '尔雅（S）', L: '格律（L）', A: '汇总' };
   title.textContent = type ? (TITLE_MAP[type] || '列表') : '全部';
   // 表格
   const tbody = document.getElementById('listBody');
   // 名称列标题
   try {
-    const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '鸟兽草木', L: '格律', A: '名称' };
+    const NAME_MAP = { W: '诗词', G: '文集', C: '人物', E: '典故', S: '尔雅', L: '格律', A: '名称' };
     const nameHeader = document.getElementById('colNameHeader');
     if (nameHeader) nameHeader.textContent = type && NAME_MAP[type] ? NAME_MAP[type] : '名称';
   } catch (e) { }
@@ -43,7 +44,7 @@
   const isAggregatedList = !type || type === 'A';
   if (createBtn) {
     createBtn.textContent = '新建';
-    const shouldShowCreate = isAggregatedList || CREATABLE.includes(type);
+    const shouldShowCreate = isAggregatedList || CREATABLE.includes(rootType);
     if (!shouldShowCreate) {
       createBtn.style.display = 'none';
       createBtn.onclick = null;
@@ -75,7 +76,15 @@
           }
           return;
         }
-        if (type === 'L' && typeof Poem.openLvSubtypePicker === 'function') {
+        if (rootType === 'S' && typeof Poem.openEryaSubtypePicker === 'function') {
+          Poem.openEryaSubtypePicker({
+            onSelect(subKey) {
+              redirectToEditor('S', subKey);
+            }
+          });
+          return;
+        }
+        if (rootType === 'L' && typeof Poem.openLvSubtypePicker === 'function') {
           Poem.openLvSubtypePicker({
             onSelect(subKey) {
               redirectToEditor('L', subKey);
@@ -83,7 +92,7 @@
           });
           return;
         }
-        redirectToEditor(type);
+        redirectToEditor(rootType || type);
       };
     }
   }
@@ -149,7 +158,7 @@
           <option value="G">文集（G）</option>
           <option value="C">人物（C）</option>
           <option value="E">典故（E）</option>
-          <option value="S">鸟兽草木（S）</option>
+          <option value="S">尔雅（S）</option>
           <option value="L">格律（L）</option>
         </select>
       </label>

@@ -2,9 +2,15 @@
 (function () {
   // 节点类型
   const TYPES = ['W', 'G', 'C', 'E', 'S', 'L'];
+  const ERYA_SUB_TYPES = [
+    { key: 'niaoshoucao', label: '鸟兽草木' },
+    { key: 'qiankunfengwu', label: '乾坤风物' },
+    { key: 'jinshisizhu', label: '金石丝竹' },
+    { key: 'hecheng', label: '合称' },
+  ];
   const LV_SUB_TYPES = [
-    { key: 'yunbu', label: '韵部（L）' },
-    { key: 'ciqupu', label: '词曲谱（L）' },
+    { key: 'yunbu', label: '韵部' },
+    { key: 'ciqupu', label: '词曲谱' },
   ];
   // 用户缓存键
   const ME_CACHE_KEY = 'poem_me_cache_v1';
@@ -110,6 +116,7 @@
 
   window.Poem = {
     TYPES,
+    ERYA_SUB_TYPES,
     LV_SUB_TYPES,
     // 获取查询字符串参数的函数
     qs(name) { const p = new URLSearchParams(location.search); return p.get(name); },
@@ -201,7 +208,7 @@
               <option value="G">文集（G）</option>
               <option value="C">人物（C）</option>
               <option value="E">典故（E）</option>
-              <option value="S">鸟兽草木（S）</option>
+              <option value="S">尔雅（S）</option>
               <option value="L">格律（L）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
@@ -343,6 +350,38 @@
         }
       }
     },
+    // 打开尔雅子类型选择器的函数
+    openEryaSubtypePicker(options) {
+      const opts = options || {};
+      const subs = Array.isArray(ERYA_SUB_TYPES) && ERYA_SUB_TYPES.length ? ERYA_SUB_TYPES : [];
+      if (!subs.length) return () => { };
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      const card = document.createElement('div');
+      card.className = 'modal-card';
+      card.innerHTML = `
+        <div class="modal-header"><div>选择尔雅子类</div><button class="btn" id="closeEryaPicker">关闭</button></div>
+        <div class="modal-body lv-subtype-picker"></div>
+      `;
+      modal.appendChild(card);
+      document.body.appendChild(modal);
+      const close = () => modal.remove();
+      card.querySelector('#closeEryaPicker').onclick = close;
+      const body = card.querySelector('.modal-body');
+      subs.forEach(sub => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn lv-subtype-btn';
+        btn.textContent = sub.label;
+        btn.title = sub.description || '';
+        btn.addEventListener('click', () => {
+          close();
+          try { if (typeof opts.onSelect === 'function') opts.onSelect(sub.key, sub); } catch (e) { }
+        });
+        body.appendChild(btn);
+      });
+      return close;
+    },
     // 打开格律子类型选择器的函数
     openLvSubtypePicker(options) {
       const opts = options || {};
@@ -379,16 +418,17 @@
     openTypePicker(options) {
       const opts = options || {};
       const baseEntries = [
-        { type: 'W', label: '诗词（W）' },
-        { type: 'G', label: '文集（G）' },
-        { type: 'C', label: '人物（C）' },
-        { type: 'E', label: '典故（E）' },
-        { type: 'S', label: '鸟兽草木（S）' },
+        { type: 'W', label: '诗词' },
+        { type: 'G', label: '文集' },
+        { type: 'C', label: '人物' },
+        { type: 'E', label: '典故' },
+        { type: 'S', label: '尔雅' },
       ];
       const entryMap = baseEntries.reduce((acc, entry) => {
         acc[entry.type] = entry;
         return acc;
       }, {});
+      const eryaSubs = Array.isArray(ERYA_SUB_TYPES) ? ERYA_SUB_TYPES : [];
       const lvSubs = Array.isArray(LV_SUB_TYPES) ? LV_SUB_TYPES : [];
       const modal = document.createElement('div');
       modal.className = 'modal';
@@ -424,6 +464,22 @@
         cell.appendChild(buildButton(entry));
         grid.appendChild(cell);
       };
+      const addEryaCell = () => {
+        const cell = document.createElement('div');
+        cell.className = 'type-picker-cell type-picker-cell--erya';
+        if (eryaSubs.length) {
+          const subWrapper = document.createElement('div');
+          subWrapper.className = 'type-picker-lv-buttons';
+          eryaSubs.forEach(sub => {
+            const subBtn = buildButton({ type: 'S', sub: sub.key, label: sub.label, description: sub.description || '' });
+            subWrapper.appendChild(subBtn);
+          });
+          cell.appendChild(subWrapper);
+        } else {
+          cell.appendChild(buildButton({ type: 'S', label: '尔雅' }));
+        }
+        grid.appendChild(cell);
+      };
       const addLvCell = () => {
         const cell = document.createElement('div');
         cell.className = 'type-picker-cell type-picker-cell--lv';
@@ -436,18 +492,20 @@
           });
           cell.appendChild(subWrapper);
         } else {
-          cell.appendChild(buildButton({ type: 'L', label: '格律（L）' }));
+          cell.appendChild(buildButton({ type: 'L', label: '格律' }));
         }
         grid.appendChild(cell);
       };
       const ROWS = [
         ['W', 'G'],
         ['C', 'E'],
-        ['S', 'L_GROUP']
+        ['S_GROUP', 'L_GROUP']
       ];
       ROWS.forEach(row => {
         row.forEach(token => {
-          if (token === 'L_GROUP') {
+          if (token === 'S_GROUP') {
+            addEryaCell();
+          } else if (token === 'L_GROUP') {
             addLvCell();
           } else {
             addCellWithEntry(entryMap[token]);
