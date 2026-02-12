@@ -402,7 +402,7 @@
               <option value="L">格律（L）</option>
             </select>
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
-            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small link-mode" style="margin-left:auto;">空置</button>` : ''}
+            ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small success" style="margin-left:auto;">空置</button>` : ''}
           </div>
           ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:13px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
           <div id="lpResults" style="margin-top:8px;"></div>

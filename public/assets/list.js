@@ -110,25 +110,26 @@
   let dateFilter = { start: null, end: null };
   let typeFilter = '';
   let reviewFilter = [];
-  let repairFilter = '';
+  let repairFilter = [];
   const REVIEW_STATUS_VALUES = ['pending', 'rejected', 'approved', 'archived'];
-  function normalizeReviewFilter(list) {
+  const REPAIR_STATUS_VALUES = ['unfinished', 'finished'];
+  function normalizeFilter(list, allowed) {
     if (!Array.isArray(list)) return [];
     const filtered = list.map(item => String(item || '').trim().toLowerCase()).filter(Boolean);
     const unique = Array.from(new Set(filtered));
-    return unique.filter(item => REVIEW_STATUS_VALUES.includes(item));
+    return unique.filter(item => allowed.includes(item));
   }
-  function parseReviewFilter(raw) {
+  function parseFilter(raw, allowed, defaultValues) {
     const trimmed = String(raw || '').trim().toLowerCase();
-    if (!trimmed) return REVIEW_STATUS_VALUES.slice();
+    if (!trimmed) return defaultValues.slice();
     if (trimmed === 'none') return [];
-    const normalized = normalizeReviewFilter(trimmed.split(',').map(s => s.trim()));
-    return normalized.length ? normalized : REVIEW_STATUS_VALUES.slice();
+    const normalized = normalizeFilter(trimmed.split(',').map(s => s.trim()), allowed);
+    return normalized.length ? normalized : defaultValues.slice();
   }
-  function getReviewFilterParam(list) {
+  function getFilterParam(list, allowed) {
     if (!Array.isArray(list)) return '';
     if (!list.length) return 'none';
-    if (list.length === REVIEW_STATUS_VALUES.length) return '';
+    if (list.length === allowed.length) return '';
     return list.join(',');
   }
   // 筛选模态框
@@ -187,8 +188,8 @@
           <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px;opacity:0.6" id="repairFilterLabel">
             <span>返修</span>
             <div id="fltRepair" style="display:flex;flex-wrap:wrap;gap:8px 12px">
-              <label class="status-tag status-rejected"><input type="radio" name="fltRepair" value="unfinished"> 未完成</label>
-              <label class="status-tag status-approved"><input type="radio" name="fltRepair" value="finished"> 完成</label>
+              <label class="status-tag status-rejected"><input type="checkbox" value="unfinished"> 未完成</label>
+              <label class="status-tag status-approved"><input type="checkbox" value="finished"> 完成</label>
             </div>
           </div>
         </div>
@@ -205,40 +206,53 @@
     const defaultTypeValue = typeFilter || ((type && type !== 'A') ? type : '');
     typeEl.value = defaultTypeValue;
     const statusChecks = Array.from(statusWrap.querySelectorAll('input[type="checkbox"]'));
-    const repairRadios = Array.from(repairWrap.querySelectorAll('input[type="radio"]'));
+    const repairChecks = Array.from(repairWrap.querySelectorAll('input[type="checkbox"]'));
     const initialReview = Array.isArray(reviewFilter) ? reviewFilter : REVIEW_STATUS_VALUES.slice();
     statusChecks.forEach(input => {
       input.checked = initialReview.includes(input.value);
     });
-    repairRadios.forEach(input => {
-      input.checked = (input.value || '') === (repairFilter || '');
+    const initialRepair = Array.isArray(repairFilter) && repairFilter.length
+      ? repairFilter
+      : REPAIR_STATUS_VALUES.slice();
+    repairChecks.forEach(input => {
+      input.checked = initialRepair.includes(input.value);
     });
-    if (!repairRadios.some(input => input.checked)) {
-      const defaultRadio = repairRadios.find(input => input.value === 'unfinished');
-      if (defaultRadio) defaultRadio.checked = true;
-    }
     const getSelectedStatuses = () => statusChecks.filter(input => input.checked).map(input => input.value);
+    const getSelectedRepairs = () => repairChecks.filter(input => input.checked).map(input => input.value);
     const syncRepairState = () => {
       const selected = getSelectedStatuses();
       const active = selected.includes('rejected');
-      repairRadios.forEach(input => { input.disabled = !active; });
+      repairChecks.forEach(input => { input.disabled = !active; });
       repairLabel.style.opacity = active ? '1' : '0.6';
       if (!active) {
-        repairRadios.forEach(input => { input.checked = false; });
-      } else if (!repairRadios.some(input => input.checked)) {
-        const defaultRadio = repairRadios.find(input => input.value === 'unfinished');
-        if (defaultRadio) defaultRadio.checked = true;
+        repairChecks.forEach(input => { input.checked = false; });
+      } else if (!repairChecks.some(input => input.checked)) {
+        repairChecks.forEach(input => { input.checked = true; });
       }
     };
+    const enforceAtLeastOne = (checks, isActive, event) => {
+      if (!isActive()) return;
+      if (checks.some(input => input.checked)) return;
+      const target = event && event.target && event.target.type === 'checkbox' ? event.target : null;
+      if (target) target.checked = true;
+    };
     syncRepairState();
-    statusWrap.addEventListener('change', syncRepairState);
+    statusWrap.addEventListener('change', (event) => {
+      enforceAtLeastOne(statusChecks, () => true, event);
+      syncRepairState();
+    });
+    repairWrap.addEventListener('change', (event) => {
+      enforceAtLeastOne(repairChecks, () => getSelectedStatuses().includes('rejected'), event);
+    });
     card.querySelector('#fltOk').onclick = () => {
       dateFilter.start = startEl.value || null;
       dateFilter.end = endEl.value || null;
       typeFilter = typeEl.value || '';
-      reviewFilter = normalizeReviewFilter(getSelectedStatuses());
-      const selectedRepair = repairRadios.find(input => input.checked);
-      repairFilter = reviewFilter.includes('rejected') ? (selectedRepair ? selectedRepair.value : '') : '';
+      reviewFilter = normalizeFilter(getSelectedStatuses(), REVIEW_STATUS_VALUES);
+      const selectedRepair = getSelectedRepairs();
+      repairFilter = reviewFilter.includes('rejected')
+        ? normalizeFilter(selectedRepair, REPAIR_STATUS_VALUES)
+        : [];
       close();
       search();
       Poem.toast('筛选已应用');
@@ -248,12 +262,12 @@
       endEl.value = '';
       typeEl.value = '';
       statusChecks.forEach(input => { input.checked = true; });
-      repairRadios.forEach(input => { input.checked = (input.value === 'unfinished'); });
+      repairChecks.forEach(input => { input.checked = true; });
       dateFilter.start = null;
       dateFilter.end = null;
       typeFilter = '';
       reviewFilter = REVIEW_STATUS_VALUES.slice();
-      repairFilter = '';
+      repairFilter = REPAIR_STATUS_VALUES.slice();
       syncRepairState();
       close();
       search();
@@ -309,8 +323,10 @@
     end: initialEnd ? initialEnd : null
   };
   typeFilter = Poem.qs('ft') || '';
-  reviewFilter = parseReviewFilter(Poem.qs('rs') || '');
-  repairFilter = reviewFilter.includes('rejected') ? (Poem.qs('rr') || '') : '';
+  reviewFilter = parseFilter(Poem.qs('rs') || '', REVIEW_STATUS_VALUES, REVIEW_STATUS_VALUES);
+  repairFilter = reviewFilter.includes('rejected')
+    ? parseFilter(Poem.qs('rr') || '', REPAIR_STATUS_VALUES, REPAIR_STATUS_VALUES)
+    : [];
   // 搜索函数
   async function search(options) {
     try {
@@ -364,13 +380,14 @@
     else url.searchParams.delete('de');
     if (typeFilter) url.searchParams.set('ft', typeFilter);
     else url.searchParams.delete('ft');
-    const reviewParam = getReviewFilterParam(reviewFilter);
+    const reviewParam = getFilterParam(reviewFilter, REVIEW_STATUS_VALUES);
     if (reviewParam) {
       url.searchParams.set('rs', reviewParam);
     } else {
       url.searchParams.delete('rs');
     }
-    if (reviewFilter.includes('rejected') && repairFilter) url.searchParams.set('rr', repairFilter);
+    const repairParam = getFilterParam(repairFilter, REPAIR_STATUS_VALUES);
+    if (reviewFilter.includes('rejected') && repairParam) url.searchParams.set('rr', repairParam);
     else url.searchParams.delete('rr');
     if (currentPage > 1) url.searchParams.set('page', String(currentPage));
     else url.searchParams.delete('page');
@@ -391,9 +408,10 @@
     if (dateFilter.start) params.set('ds', dateFilter.start);
     if (dateFilter.end) params.set('de', dateFilter.end);
     if (typeFilter) params.set('ft', typeFilter);
-    const reviewParam = getReviewFilterParam(reviewFilter);
+    const reviewParam = getFilterParam(reviewFilter, REVIEW_STATUS_VALUES);
     if (reviewParam) params.set('rs', reviewParam);
-    if (reviewFilter.includes('rejected') && repairFilter) params.set('rr', repairFilter);
+    const repairParam = getFilterParam(repairFilter, REPAIR_STATUS_VALUES);
+    if (reviewFilter.includes('rejected') && repairParam) params.set('rr', repairParam);
     return params;
   }
   // 构建页面查询参数
@@ -555,12 +573,12 @@
     if (!actionsCell) return;
     const editingInfo = getEditingInfo(id);
     if (isEditingByOther(editingInfo)) {
-      actionsCell.innerHTML = `<div class="row-actions"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
+      actionsCell.innerHTML = `<div class="actions-row"><button class="btn success small" disabled title="编辑中">编辑中</button></div>`;
       return;
     }
     const editorHrefEsc = Poem.escapeHtml(editorHref);
     const deleteButtonHtml = canDelete ? `<button data-act="delete" data-id="${id}" class="btn danger small">删除</button>` : '';
-    actionsCell.innerHTML = `<div class="row-actions"><button data-act="open" data-id="${id}" data-url="${editorHrefEsc}" class="btn small">打开</button>${deleteButtonHtml}</div>`;
+    actionsCell.innerHTML = `<div class="actions-row"><button data-act="open" data-id="${id}" data-url="${editorHrefEsc}" class="btn small">打开</button>${deleteButtonHtml}</div>`;
     bindActionButtons(actionsCell);
   }
 

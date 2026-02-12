@@ -871,13 +871,14 @@
       editor.className = 'anno-editor';
       editor.style.display = 'grid';
       editor.style.gridTemplateColumns = '1fr 1fr auto';
-      editor.style.gridTemplateRows = 'auto auto';
+      editor.style.alignItems = 'start';
       editor.style.gap = '8px';
       editor.style.padding = '8px';
       editor.style.border = '1px solid #ddd';
       editor.style.background = '#fff';
       editor.style.marginBottom = '8px';
       const leftTop = documentRef.createElement('div');
+      leftTop.style.alignSelf = 'start';
       leftTop.style.padding = '6px';
       leftTop.style.border = '1px solid #f0f0f0';
       leftTop.style.overflow = 'hidden';
@@ -889,10 +890,9 @@
         const adjust = () => {
           try {
             const cs = windowRef.getComputedStyle ? windowRef.getComputedStyle(leftTop) : null;
-            const lineH = cs ? (parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) || 20) : 20;
             const raw = leftTop.scrollHeight + 2;
             const cap = (windowRef.innerHeight || 800);
-            const desired = Math.min(Math.max(raw, lineH + 6), cap);
+            const desired = Math.min(raw, cap);
             leftTop.style.height = `${desired}px`;
           } catch (e) { /* noop */ }
         };
@@ -906,6 +906,7 @@
       btnCell.style.flexDirection = 'row';
       btnCell.style.gap = '8px';
       btnCell.style.alignItems = 'center';
+      btnCell.style.alignSelf = 'center';
       const keep = documentRef.createElement('button');
       keep.type = 'button';
       keep.className = 'btn small';
@@ -916,12 +917,9 @@
       del.textContent = '删除';
       btnCell.appendChild(keep);
       btnCell.appendChild(del);
-      const spacer = documentRef.createElement('div');
-      spacer.style.gridColumn = '1 / 3';
       editor.appendChild(leftTop);
       editor.appendChild(rightTop);
       editor.appendChild(btnCell);
-      editor.appendChild(spacer);
       annoArea.prepend(editor);
       const noteInputEl = editor.querySelector('.anno-input');
       if (noteInputEl) {

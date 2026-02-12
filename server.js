@@ -591,7 +591,7 @@ app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
   const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
   const reviewStatusRaw = String(req.query.reviewStatus || req.query.rs || '').trim().toLowerCase();
-  const repairStatus = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
+  const repairStatusRaw = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
   const startRaw = String(req.query.startDate || req.query.start || req.query.ds || '').trim();
   const endRaw = String(req.query.endDate || req.query.end || req.query.de || '').trim();
   const parseDate = (value) => {
@@ -637,12 +637,19 @@ app.get('/api/nodes', (req, res) => {
     filtered = filtered.filter(item => normalizedReviews.includes(item?.extra?.reviewStatus || ''));
   }
   const allowedRepair = new Set(['unfinished', 'finished']);
-  const normalizedRepair = normalizedReviews.includes('rejected') && allowedRepair.has(repairStatus) ? repairStatus : '';
-  if (normalizedRepair) {
+  let normalizedRepair = [];
+  if (repairStatusRaw && repairStatusRaw !== 'none') {
+    normalizedRepair = repairStatusRaw
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean)
+      .filter(item => allowedRepair.has(item));
+  }
+  if (normalizedReviews.includes('rejected') && normalizedRepair.length && normalizedRepair.length < allowedRepair.size) {
     filtered = filtered.filter(item => {
       const status = item?.extra?.reviewStatus || '';
       if (status !== 'rejected') return true;
-      return (item?.extra?.repairStatus || '') === normalizedRepair;
+      return normalizedRepair.includes(item?.extra?.repairStatus || '');
     });
   }
   const searched = fuzzySearch(filtered, search);

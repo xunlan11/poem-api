@@ -15,77 +15,82 @@
     <div id="userBar" class="small"></div>
   </header>
   <main class="container">
-    <div id="adminEntry" class="section-card" style="display:none;">
-      <a href="admin.html" class="link">用户管理</a>
+    <div class="entry-row">
+      <div id="adminEntry" class="card entry-card" style="display:none;">
+        <a href="admin.html" class="link">用户管理</a>
+      </div>
+      <div id="tutorialEntry" class="card entry-card">
+        <a href="tutorial.html" class="link">使用教程</a>
+      </div>
     </div>
     <div class="home-grid">
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">诗词（W）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">诗词（W）</div>
+          <div class="actions-row">
             <button data-type="W" class="btn small add">新建</button>
             <button data-type="W" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">文集（G）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">文集（G）</div>
+          <div class="actions-row">
             <button data-type="G" class="btn small add">新建</button>
             <button data-type="G" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">人物（C）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">人物（C）</div>
+          <div class="actions-row">
             <button data-type="C" class="btn small add">新建</button>
             <button data-type="C" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">典故（E）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">典故（E）</div>
+          <div class="actions-row">
             <button data-type="E" class="btn small add">新建</button>
             <button data-type="E" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">尔雅（S）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">尔雅（S）</div>
+          <div class="actions-row">
             <button data-type="S" class="btn small add">新建</button>
             <button data-type="S" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card">
-        <div class="row-head">
-          <div class="row-title">格律（L）</div>
-          <div class="row-actions">
+      <section class="card home-card">
+        <div class="card-head">
+          <div class="card-title">格律（L）</div>
+          <div class="actions-row">
             <button data-type="L" class="btn small add">新建</button>
             <button data-type="L" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
-      <section class="row home-card home-card-full">
-        <div class="row-head">
-          <div class="row-title">汇总</div>
-          <div class="row-actions">
+      <section class="card home-card home-card-full">
+        <div class="card-head">
+          <div class="card-title">汇总</div>
+          <div class="actions-row">
             <button data-type="A" class="btn small add">新建</button>
             <button data-type="A" class="btn small view">浏览</button>
           </div>
         </div>
       </section>
     </div>
-    <section class="row home-pending" id="myPendingSection">
-      <div class="row-head">
-        <div class="row-title">需关注条目</div>
+    <section class="card home-pending" id="myPendingSection">
+      <div class="card-head">
+        <div class="card-title">需关注条目</div>
         <div id="myPendingPagination" class="pagination-bar"></div>
         <span id="myPendingSummary" class="small muted">加载中</span>
       </div>
