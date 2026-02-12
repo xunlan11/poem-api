@@ -191,7 +191,10 @@
       const renderList = annotated;
       annoArea.textContent = '';
       annoArea.style.display = '';
-      annoArea.appendChild(documentRef.createTextNode('注释：'));
+      const title = documentRef.createElement('span');
+      title.className = 'anno-title';
+      title.textContent = '注释：';
+      annoArea.appendChild(title);
       const list = documentRef.createElement('div');
       list.className = 'anno-list';
       annoArea.appendChild(list);

@@ -98,18 +98,25 @@
 
       function renderRow(u) {
         const tr = document.createElement('tr');
+        const roleOptions = ['user', 'reviewer', 'admin'];
         let actions = '';
         if (u.id === 'u_1') {
           actions = '<span class="text-muted">超级管理员</span>';
         } else if (u.id === me.id) {
           actions = '<span class="text-muted">当前用户</span>';
         } else {
-          actions = `<button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
+          const otherRoles = roleOptions.filter(r => r !== u.role);
+          const roleButtons = otherRoles.map(r => {
+            const label = ROLE_LABELS[r] || r;
+            return `<button class='btn small' data-id='${u.id}' data-act='role' data-role='${r}'>${label}</button>`;
+          }).join('');
+          actions = `${roleButtons}<button class='btn small danger' data-id='${u.id}' data-act='delete'>删除</button>`;
         }
         const roleLabel = ROLE_LABELS[u.role] || u.role || '';
         const roleClass = ROLE_CLASSES[u.role] || '';
         const roleHtml = `<td><span class="${roleClass}">${roleLabel}</span></td>`;
-        tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td><td>${actions}</td>`;
+        const actionsHtml = `<td class="actions-cell"><div class="actions-row">${actions}</div></td>`;
+        tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td>${roleHtml}<td>${u.real_name || ''}</td><td>${u.student_id || ''}</td>${actionsHtml}`;
         return tr;
       }
 
@@ -221,14 +228,22 @@
       tb.addEventListener('click', async (e) => {
         const btn = e.target.closest('button'); if (!btn) return;
         const id = btn.getAttribute('data-id'); const act = btn.getAttribute('data-act');
+        const targetRole = btn.getAttribute('data-role') || '';
         const user = allUsers.find(u => u.id === id);
         if (!user) return;
         let confirmMsg = '';
         if (act === 'delete') confirmMsg = `删除用户 ${user.username} ？`;
+        if (act === 'role') {
+          const label = ROLE_LABELS[targetRole] || targetRole;
+          confirmMsg = `将用户 ${user.username} 设置为 ${label} ？`;
+        }
         if (confirmMsg && !confirm(confirmMsg)) return;
         try {
           if (act === 'delete') {
             await Poem.api(`/api/users/${id}`, { method: 'DELETE' });
+          }
+          if (act === 'role') {
+            await Poem.api(`/api/users/${id}/role`, { method: 'PATCH', body: JSON.stringify({ role: targetRole }) });
           }
           await refreshUsers();
           Poem.toast('操作成功');

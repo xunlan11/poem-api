@@ -129,11 +129,11 @@
     if (!actionsCell) return;
     const editingInfo = getEditingInfo(id);
     if (isEditingByOther(editingInfo)) {
-      actionsCell.innerHTML = `<div class="row-actions"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
+      actionsCell.innerHTML = `<div class="actions-row"><button class="btn editing small" disabled title="编辑中">编辑中</button></div>`;
       return;
     }
     const deleteButtonHtml = pendingState.canDelete ? `<button data-act="delete" data-id="${Poem.escapeHtml(id)}" class="btn danger small">删除</button>` : '';
-    actionsCell.innerHTML = `<div class="row-actions"><a class="btn small" href="${Poem.escapeHtml(editorHref)}">打开</a>${deleteButtonHtml}</div>`;
+    actionsCell.innerHTML = `<div class="actions-row"><a class="btn small" href="${Poem.escapeHtml(editorHref)}">打开</a>${deleteButtonHtml}</div>`;
   }
 
   function applyPendingEditingStatusToRows() {

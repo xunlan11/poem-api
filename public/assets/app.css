@@ -11,6 +11,15 @@
 
 * {
 	box-sizing: border-box;
+	font-weight: 600;
+}
+
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-weight: inherit;
 }
 
 html,
@@ -19,7 +28,8 @@ body {
 	padding: 0;
 	background: var(--bg);
 	color: var(--fg);
-	font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+	font-family: "KaiTi", "STKaiti", "Songti SC", "Noto Serif SC", serif;
+	font-weight: 600;
 }
 
 .topbar {
@@ -110,6 +120,68 @@ body {
 .card {
 	background: var(--card);
 	padding: 12px;
+	border-radius: 8px;
+	margin-bottom: 12px;
+	border: 1px solid var(--border);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+
+.tutorial-body {
+	--tutorial-ink: #1f2937;
+	--tutorial-accent: #d97706;
+	background: var(--bg);
+	color: var(--tutorial-ink);
+}
+
+.tutorial-page {
+	position: relative;
+	padding: 20px 16px 32px;
+}
+
+.tutorial-grid {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 12px;
+}
+
+.tutorial-card {
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	border-radius: 12px;
+	padding: 16px;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+	backdrop-filter: blur(4px);
+}
+
+.tutorial-row {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.tutorial-title {
+	font-size: 18px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+.tutorial-divider {
+	color: var(--tutorial-accent);
+	font-weight: 600;
+}
+
+.tutorial-detail {
+	font-size: 14px;
+	color: #6b7280;
+}
+
+
+.section-card {
+	background: var(--card);
+	padding: 16px;
 	border-radius: 8px;
 	margin-bottom: 12px;
 	border: 1px solid var(--border);
@@ -928,7 +1000,6 @@ body {
 	border: 1px solid var(--border);
 	background: #ffffff;
 	color: var(--fg);
-	font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
 .entry-row {
@@ -1737,6 +1808,10 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 4px
+}
+
+.anno-title {
+	font-size: 16px;
 }
 
 .anno-note-display.empty {

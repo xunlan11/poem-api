@@ -792,7 +792,7 @@
       const value = typeof el.value === 'string' ? el.value.trim() : '';
       if (value) return 0;
       const label = labelOverride || getFieldLabel(el) || '该选项';
-      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-required"><div class="self-check-inline-note">请先选择${escapeHtml(label)}。</div></div>`;
+      const detail = `<div class="self-check-detail-block ${SELF_CHECK_MESSAGE_CLASS} self-check-required"><div class="self-check-inline-note">请选择${escapeHtml(label)}。</div></div>`;
       queueSelfCheckMessage(el, 'manual', { category: '必选项', count: 1, detail });
       el.classList.add(SELF_CHECK_FIELD_CLASS);
       return 1;
@@ -869,6 +869,14 @@
         if (['古体', '近体', '散曲'].includes(formValue)) {
           selectIssues += checkRequiredSelect(subSelect, '子类');
         }
+      }
+      const materialSelect = documentRef?.getElementById?.('f-material');
+      if (materialSelect && materialSelect.tagName === 'SELECT') {
+        selectIssues += checkRequiredSelect(materialSelect, '八音');
+      }
+      const rhymeBookSelect = documentRef?.getElementById?.('lv-book');
+      if (rhymeBookSelect && rhymeBookSelect.tagName === 'SELECT') {
+        selectIssues += checkRequiredSelect(rhymeBookSelect, '韵书');
       }
       const durationTargets = [
         documentRef?.getElementById?.('metaExpectedDuration'),

@@ -1032,6 +1032,22 @@ app.get('/api/users', requireAuth, requireAdmin, (req, res) => {
   res.json(users.map(u => ({ id: u.id, username: u.username, role: u.role, real_name: u.real_name, student_id: u.student_id, created_at: u.created_at, profile_completed: !!u.profile_completed })));
 });
 
+// 更新用户角色路由（管理员）
+async function updateUserRole(req, res) {
+  const u = findUserById(req.params.id);
+  if (!u) return res.status(404).json({ error: 'User not found' });
+  if (u.id === 'u_1') return res.status(403).json({ error: 'Cannot change super admin role' });
+  const { role } = req.body || {};
+  const allowed = new Set(['user', 'reviewer', 'admin']);
+  if (!role || !allowed.has(role)) return res.status(400).json({ error: 'Invalid role' });
+  u.role = role;
+  await saveUsers();
+  res.json({ ok: true });
+}
+
+app.patch('/api/users/:id/role', requireAuth, requireAdmin, updateUserRole);
+app.post('/api/users/:id/role', requireAuth, requireAdmin, updateUserRole);
+
 // 生成下一用户ID
 function nextUserId() {
   const used = new Set(users.map(u => {
