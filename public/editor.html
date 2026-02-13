@@ -11,7 +11,10 @@
 <body>
   <header class="topbar">
     <div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
-    <div class="id" id="nodeId"></div>
+    <div class="id id-with-sample">
+      <span id="nodeId"></span>
+      <button id="sampleBtn" class="btn">样例</button>
+    </div>
     <div class="actions">
       <button id="editBtn" class="btn">编辑</button>
       <button id="selfCheckBtn" class="btn">自检</button>
@@ -44,7 +47,7 @@
             <input id="metaExpectedDuration" type="number" inputmode="decimal" step="0.5" style="flex:1;" disabled>
             <span style="white-space:nowrap;margin-left:auto">单位</span>
             <button id="metaAcceptExpected" type="button" class="btn"
-              style="white-space:nowrap;padding:4px 10px;font-size:13px;">认可期望</button>
+              style="white-space:nowrap;padding:4px 10px;font-size:16px;">认可期望</button>
           </div>
         </div>
       </div>

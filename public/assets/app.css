@@ -20,6 +20,12 @@ select,
 textarea {
 	font-family: inherit;
 	font-weight: inherit;
+	font-size: 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+	font-size: 16px;
 }
 
 html,
@@ -30,6 +36,14 @@ body {
 	color: var(--fg);
 	font-family: "KaiTi", "STKaiti", "Songti SC", "Noto Serif SC", serif;
 	font-weight: 600;
+}
+
+html[data-global-font='heiti'] body {
+	font-family: "SimHei", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+
+html[data-global-bold='normal'] * {
+	font-weight: 400 !important;
 }
 
 .topbar {
@@ -79,7 +93,6 @@ body {
 	margin: 0 auto;
 }
 
-/* 编辑器：统一节点表单各块之间的间距（标题与上一条内容的距离） */
 #formContainer {
 	display: flex;
 	flex-direction: column;
@@ -127,7 +140,7 @@ body {
 }
 
 .tutorial-body {
-	--tutorial-ink: #1f2937;
+	--tutorial-ink: #000000;
 	--tutorial-accent: #d97706;
 	background: var(--bg);
 	color: var(--tutorial-ink);
@@ -174,10 +187,21 @@ body {
 }
 
 .tutorial-detail {
-	font-size: 14px;
-	color: #6b7280;
+	font-size: 16px;
+	color: #000000;
 }
 
+.font-option .font-option-text {
+	font-weight: 600;
+}
+
+.font-option-kaiti .font-option-text {
+	font-family: "KaiTi", "STKaiti", "Songti SC", "Noto Serif SC", serif;
+}
+
+.font-option-heiti .font-option-text {
+	font-family: "SimHei", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+}
 
 .section-card {
 	background: var(--card);
@@ -257,8 +281,8 @@ body {
 	color: #fff;
 }
 
-/* 自检 / 查重：统一为深蓝主色 */
 #selfCheckBtn,
+.id-with-sample #sampleBtn,
 .btn.check-dup-btn {
 	background: var(--primary);
 	border-color: var(--primary);
@@ -372,7 +396,7 @@ body {
 }
 
 .user-table col.col-username {
-	width: 18%;
+	width: 16%;
 }
 
 .user-table col.col-role {
@@ -384,15 +408,15 @@ body {
 }
 
 .user-table col.col-student {
-	width: 18%;
+	width: 16%;
 }
 
 .user-table col.col-actions {
-	width: 18%;
+	width: 20%;
 }
 
 .list-count {
-	font-size: 14px;
+	font-size: 16px;
 	color: var(--muted);
 	white-space: nowrap;
 	padding: 4px 0;
@@ -424,7 +448,7 @@ body {
 }
 
 .pagination-info {
-	font-size: 14px;
+	font-size: 16px;
 	color: var(--muted);
 }
 
@@ -434,7 +458,7 @@ body {
 	padding: 4px 6px;
 	border: 1px solid var(--border);
 	border-radius: 6px;
-	font-size: 14px;
+	font-size: 16px;
 	background: #ffffff;
 	color: var(--fg);
 }
@@ -474,6 +498,10 @@ body {
 	min-height: 48px;
 }
 
+#f-preface-render {
+	min-height: 0;
+}
+
 .body-head {
 	display: flex;
 	align-items: center;
@@ -504,14 +532,14 @@ body {
 }
 
 .preface-row input {
-	font-size: 14px;
+	font-size: 16px;
 	padding: 8px 10px;
 	border: 1px solid var(--border);
 	border-radius: 6px;
 }
 
 .body-word-count {
-	font-size: 12px;
+	font-size: 16px;
 	color: var(--muted);
 	background: rgba(255, 255, 255, 0.9);
 	padding: 2px 10px;
@@ -523,7 +551,7 @@ body {
 	display: inline-block;
 	padding: 4px 10px;
 	border-radius: 999px;
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 600;
 	color: #0f172a;
 }
@@ -587,6 +615,10 @@ body {
 .type-picker-btn {
 	width: 100%;
 	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 
 .type-picker-cell--lv {
@@ -602,7 +634,7 @@ body {
 }
 
 .type-picker-btn--sub {
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .type-picker-btn[data-type='W'] {
@@ -666,7 +698,6 @@ body {
 	align-items: center;
 }
 
-/* 词曲谱：例词/平仄锁定与编辑态，贴近诗词“正文”的观感 */
 .variant-card textarea[data-field="sample"],
 .variant-card textarea[data-field="pingze"] {
 	font-size: 16px;
@@ -691,7 +722,6 @@ body {
 	min-width: 0;
 }
 
-/* 词曲谱：标题行右侧控件对齐 */
 .label-row .variant-lock-controls {
 	margin-top: 0;
 	margin-left: auto;
@@ -708,7 +738,6 @@ body {
 	flex-wrap: wrap;
 }
 
-/* 平仄模式按钮：用图例配色作为填充色 */
 .pingze-mark-buttons .btn[data-mode="variable"] {
 	background: transparent;
 	border-style: dashed;
@@ -833,7 +862,7 @@ body {
 }
 
 .image-note {
-	font-size: 10px;
+	font-size: 16px;
 	line-height: 1.2;
 	margin-bottom: 8px;
 	display: block;
@@ -851,7 +880,7 @@ body {
 	gap: 4px;
 	padding: 2px 10px;
 	border-radius: 999px;
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.4;
 	background: #e2e8f0;
 	color: #475569;
@@ -913,6 +942,13 @@ body {
 #metaReviewStatus .status-tag,
 #metaRepairStatus .status-tag {
 	margin-left: 0;
+}
+
+#metaReviewStatus .status-tag,
+#metaRepairStatus .status-tag,
+#fltStatus .status-tag,
+#fltRepair .status-tag {
+	font-size: 12px;
 }
 
 .name-cell {
@@ -1090,7 +1126,7 @@ body {
 .muted,
 .small,
 .text-muted {
-	font-size: 12px;
+	font-size: 16px;
 	color: var(--muted);
 }
 
@@ -1101,6 +1137,12 @@ body {
 
 .id {
 	font-weight: 700;
+}
+
+.id-with-sample {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 }
 
 .actions {
@@ -1120,7 +1162,7 @@ body {
 
 .btn.small {
 	padding: 4px 8px;
-	font-size: 12px;
+	font-size: 16px;
 }
 
 .btn.danger {
@@ -1135,7 +1177,7 @@ body {
 
 .error-text {
 	color: var(--danger);
-	font-size: 12px;
+	font-size: 16px;
 	margin-top: 6px;
 }
 
@@ -1342,7 +1384,6 @@ body {
 		grid-template-columns: 1fr;
 		padding: 0;
 	}
-
 	.relation-grid.pair-grid::before {
 		display: none;
 	}
@@ -1411,7 +1452,6 @@ body {
 		flex-direction: column;
 		align-items: stretch;
 	}
-
 	.form-subtype-row>*,
 	.form-subtype-row #f-form,
 	.form-subtype-row #form-opts,
@@ -1421,7 +1461,6 @@ body {
 		min-width: 0;
 		max-width: none;
 	}
-
 	.form-subtype {
 		justify-content: flex-start;
 		white-space: normal;
@@ -1584,7 +1623,7 @@ body {
 }
 
 .self-check-group-summary {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.5;
 	padding: 6px 8px;
 	border-radius: 6px;
@@ -1617,7 +1656,7 @@ body {
 }
 
 .self-check-issue-label {
-	font-size: 12px;
+	font-size: 16px;
 	font-weight: 600;
 }
 
@@ -1651,7 +1690,7 @@ body {
 
 
 .self-check-inline-snippet {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.5;
 	font-family: inherit;
 	background: transparent;
@@ -1662,7 +1701,7 @@ body {
 
 .self-check-inline-note {
 	margin-top: 4px;
-	font-size: 12px;
+	font-size: 16px;
 	color: #94a3b8;
 }
 
@@ -1680,7 +1719,7 @@ body {
 	border: none;
 	background: transparent;
 	color: inherit;
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.5;
 }
 
@@ -1699,14 +1738,14 @@ body {
 
 .self-check-space-char[data-space-type="tab"] {
 	padding: 0 2px;
-	font-size: 11px;
+	font-size: 16px;
 }
 
 .self-check-space-char[data-space-type="blank-line"] {
 	display: inline-flex;
 	align-items: center;
 	padding: 0 4px;
-	font-size: 11px;
+	font-size: 16px;
 	text-transform: none;
 }
 
@@ -1718,7 +1757,7 @@ body {
 }
 
 .self-check-pair-item {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.4;
 }
 
@@ -1746,7 +1785,7 @@ body {
 }
 
 .self-check-illegal-item {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.5;
 	padding: 0;
 	border-radius: 0;
@@ -1768,10 +1807,9 @@ body {
 }
 
 .self-check-punct-item {
-	font-size: 12px;
+	font-size: 16px;
 	line-height: 1.4;
 }
-
 
 .annotation {
 	background: rgba(255, 230, 150, 0.6)
@@ -1840,8 +1878,6 @@ body {
 	font-size: 16px;
 	line-height: 1.6;
 }
-
- 
 
 #f-body-render span {
 	display: inline

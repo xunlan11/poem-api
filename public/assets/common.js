@@ -23,6 +23,8 @@
     unfinished: 'status-rejected',
     finished: 'status-approved'
   };
+  const GLOBAL_FONT_KEY = 'poem_global_font_v1';
+  const GLOBAL_BOLD_KEY = 'poem_global_bold_v1';
   // 用户缓存键
   const ME_CACHE_KEY = 'poem_me_cache_v1';
   // 用户缓存TTL
@@ -35,6 +37,76 @@
   const CLIENT_FP_INTERVAL = 0;
   let clientFpTimer = null;
   let clientFpStarted = false;
+
+  function normalizeGlobalFont(value) {
+    const raw = String(value || '').trim().toLowerCase();
+    if (raw === 'heiti') return 'heiti';
+    if (raw === 'kaiti' || raw === 'current') return 'kaiti';
+    return 'kaiti';
+  }
+
+  function readGlobalFontPreference() {
+    try {
+      return normalizeGlobalFont(localStorage.getItem(GLOBAL_FONT_KEY));
+    } catch (err) {
+      return 'kaiti';
+    }
+  }
+
+  function applyGlobalFontPreference(value) {
+    if (typeof document === 'undefined') return;
+    const pref = normalizeGlobalFont(value || readGlobalFontPreference());
+    if (pref === 'heiti') {
+      document.documentElement.setAttribute('data-global-font', 'heiti');
+    } else {
+      document.documentElement.removeAttribute('data-global-font');
+    }
+  }
+
+  function setGlobalFontPreference(value) {
+    const pref = normalizeGlobalFont(value);
+    try {
+      localStorage.setItem(GLOBAL_FONT_KEY, pref);
+    } catch (err) { }
+    applyGlobalFontPreference(pref);
+    return pref;
+  }
+
+  function normalizeGlobalBold(value) {
+    const raw = String(value || '').trim().toLowerCase();
+    if (raw === 'normal' || raw === 'off' || raw === 'false' || raw === '0') return 'normal';
+    return 'bold';
+  }
+
+  function readGlobalBoldPreference() {
+    try {
+      return normalizeGlobalBold(localStorage.getItem(GLOBAL_BOLD_KEY));
+    } catch (err) {
+      return 'bold';
+    }
+  }
+
+  function applyGlobalBoldPreference(value) {
+    if (typeof document === 'undefined') return;
+    const pref = normalizeGlobalBold(value || readGlobalBoldPreference());
+    if (pref === 'normal') {
+      document.documentElement.setAttribute('data-global-bold', 'normal');
+    } else {
+      document.documentElement.removeAttribute('data-global-bold');
+    }
+  }
+
+  function setGlobalBoldPreference(value) {
+    const pref = normalizeGlobalBold(value);
+    try {
+      localStorage.setItem(GLOBAL_BOLD_KEY, pref);
+    } catch (err) { }
+    applyGlobalBoldPreference(pref);
+    return pref;
+  }
+
+  applyGlobalFontPreference();
+  applyGlobalBoldPreference();
 
   // 读取用户缓存的函数
   function readMeCache() {
@@ -210,6 +282,18 @@
     checkClientFingerprintOnce,
     startAutoUpdateCheck,
     clearMeCache,
+    getGlobalFontPreference() {
+      const pref = readGlobalFontPreference();
+      applyGlobalFontPreference(pref);
+      return pref;
+    },
+    setGlobalFontPreference,
+    getGlobalBoldPreference() {
+      const pref = readGlobalBoldPreference();
+      applyGlobalBoldPreference(pref);
+      return pref;
+    },
+    setGlobalBoldPreference,
     // 查询引用并格式化提示
     async fetchReferences(nodeId) {
       if (!nodeId) return null;
@@ -404,7 +488,7 @@
             <input id="lpSearch" class="search" placeholder="搜索ID/名称/创建者">
             ${allowPlaceholder ? `<button id="lpPlaceholder" class="btn small success" style="margin-left:auto;">空置</button>` : ''}
           </div>
-          ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:13px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
+          ${current ? `<div id="lpCurrent" class="current-link-info" style="margin-top:8px; padding:6px; border:1px dashed var(--border); border-radius:6px; background:#f8fafc; font-size:16px;">当前链接：${current.placeholder ? '<strong>空置</strong>' : `<strong>${escapeHtml(current.targetId || '')}</strong> ${escapeHtml(current.targetName || '')}`}</div>` : ''}
           <div id="lpResults" style="margin-top:8px;"></div>
         </div>
       `;

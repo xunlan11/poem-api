@@ -4,13 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>使用教程</title>
+	<title>教程与设置</title>
 	<link rel="stylesheet" href="assets/app.css">
 </head>
 
 <body class="tutorial-body">
 	<header class="topbar">
-		<h1>使用教程</h1>
+		<h1>教程与设置</h1>
 		<div class="topbar-center"><img src="assets/logo.png" class="topbar-logo" alt="logo" onerror="this.src='/logo.png'"></div>
 		<div class="actions">
 			<a href="index.html" class="link">首页</a>
@@ -50,43 +50,107 @@
 						</ol>
 				</div>
 			</article>
-			<article class="tutorial-card">
-				<div class="tutorial-row">
-					<span class="tutorial-title">样例</span>
-					<span class="tutorial-detail">
+			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+				<article class="tutorial-card">
+					<div class="tutorial-row" style="flex-direction: column; align-items: stretch; gap: 16px;">
+						<span class="tutorial-title">样例</span>
 						<div class="type-picker-grid">
 							<div class="type-picker-cell">
-								<button type="button" class="btn type-picker-btn" data-type="W">诗词</button>
+								<a class="btn type-picker-btn" data-type="W" href="editor.html?id=poem&sample=1">诗词</a>
 							</div>
 							<div class="type-picker-cell">
-								<button type="button" class="btn type-picker-btn" data-type="G">文集</button>
+								<a class="btn type-picker-btn" data-type="G" href="editor.html?id=anthology&sample=1">文集</a>
 							</div>
 							<div class="type-picker-cell">
-								<button type="button" class="btn type-picker-btn" data-type="C">人物</button>
+								<a class="btn type-picker-btn" data-type="C" href="editor.html?id=person&sample=1">人物</a>
 							</div>
 							<div class="type-picker-cell">
-								<button type="button" class="btn type-picker-btn" data-type="E">典故</button>
+								<a class="btn type-picker-btn" data-type="E" href="editor.html?id=allusion&sample=1">典故</a>
 							</div>
 							<div class="type-picker-cell type-picker-cell--erya">
 								<div class="type-picker-lv-buttons">
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="S">鸟兽草木</button>
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="S">乾坤风物</button>
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="S">金石丝竹</button>
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="S">合称</button>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_species&sample=1">鸟兽草木</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_astronomy_geography&sample=1">乾坤风物</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_musical_instrument&sample=1">金石丝竹</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_combined_term&sample=1">合称</a>
 								</div>
 							</div>
 							<div class="type-picker-cell type-picker-cell--lv">
 								<div class="type-picker-lv-buttons">
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="L">韵部</button>
-									<button type="button" class="btn type-picker-btn type-picker-btn--sub" data-type="L">词曲谱</button>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="L" href="editor.html?id=prosody_rhyme&sample=1">韵部</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="L" href="editor.html?id=prosody_musical_score&sample=1">词曲谱</a>
 								</div>
 							</div>
 						</div>
-					</span>
-				</div>
-			</article>
-		</section>
-	</main>
+					</div>
+				</article>
+
+				<article class="tutorial-card">
+					<div class="tutorial-row" style="flex-direction: column; align-items: stretch;">
+						<span class="tutorial-title">设置</span>
+						<div class="tutorial-detail" style="display:flex;flex-direction:column;gap:10px;">
+							<span>全局字体</span>
+							<label class="font-option font-option-kaiti" style="display:flex;align-items:center;gap:8px;">
+								<input type="radio" name="globalFont" value="kaiti">
+								<span class="font-option-text">楷体</span>
+							</label>
+							<label class="font-option font-option-heiti" style="display:flex;align-items:center;gap:8px;">
+								<input type="radio" name="globalFont" value="heiti">
+								<span class="font-option-text">黑体</span>
+							</label>
+							<span style="margin-top:6px;">全局加粗</span>
+							<label style="display:flex;align-items:center;gap:8px;">
+								<input type="radio" name="globalBold" value="bold">
+								<span>加粗</span>
+							</label>
+							<label style="display:flex;align-items:center;gap:8px;">
+								<input type="radio" name="globalBold" value="normal">
+								<span>常规</span>
+							</label>
+						</div>
+					</div>
+				</article>
+			</div>
+	<script src="assets/common.js"></script>
+	<script>
+		(function () {
+			function initGlobalFontSetting() {
+				if (!window.Poem) return;
+				const fontRadios = Array.from(document.querySelectorAll('input[name="globalFont"]'));
+				const boldRadios = Array.from(document.querySelectorAll('input[name="globalBold"]'));
+				if (!fontRadios.length && !boldRadios.length) return;
+				const current = (typeof Poem.getGlobalFontPreference === 'function')
+					? Poem.getGlobalFontPreference()
+					: 'kaiti';
+				fontRadios.forEach(radio => {
+					radio.checked = radio.value === current;
+					radio.addEventListener('change', () => {
+						if (!radio.checked) return;
+						if (typeof Poem.setGlobalFontPreference === 'function') {
+							Poem.setGlobalFontPreference(radio.value);
+						}
+					});
+				});
+				const currentBold = (typeof Poem.getGlobalBoldPreference === 'function')
+					? Poem.getGlobalBoldPreference()
+					: 'bold';
+				boldRadios.forEach(radio => {
+					radio.checked = radio.value === currentBold;
+					radio.addEventListener('change', () => {
+						if (!radio.checked) return;
+						if (typeof Poem.setGlobalBoldPreference === 'function') {
+							Poem.setGlobalBoldPreference(radio.value);
+						}
+					});
+				});
+			}
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initGlobalFontSetting, { once: true });
+			} else {
+				initGlobalFontSetting();
+			}
+		})();
+	</script>
 </body>
 
 </html>

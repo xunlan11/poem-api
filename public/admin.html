@@ -63,8 +63,6 @@
       const countEl = document.getElementById('userCount');
       const PAGE_SIZE = 15;
       const ROLE_LABELS = { user: '整理员', reviewer: '审核员', admin: '管理员' };
-      // 角色标签配色：复用节点类别 ID 的背景色
-      // 管理员 -> 尔雅（S）；审核员 -> 典故（E）；整理员 -> 诗词（W）
       const ROLE_CLASSES = { user: 'type-tag type-W', reviewer: 'type-tag type-E', admin: 'type-tag type-S' };
       let allUsers = [];
       let filteredUsers = [];

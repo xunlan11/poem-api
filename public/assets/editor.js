@@ -4,6 +4,7 @@
   const TYPES = Poem.TYPES;
   // 编辑器ID
   const id = Poem.qs('id');
+  const isSample = Poem.qs('sample') === '1';
   // 是否新建
   let isNew = Poem.qs('new') === '1';
   // 节点类型
@@ -16,6 +17,8 @@
   const editBtn = document.getElementById('editBtn');
   // 自检按钮
   const selfCheckBtn = document.getElementById('selfCheckBtn');
+  // 样例按钮
+  const sampleBtn = document.getElementById('sampleBtn');
   // 返回列表按钮
   const backListBtn = document.getElementById('backListBtn');
   // 返回全部按钮
@@ -44,6 +47,99 @@
   let editingLockActive = false;
   let editingLockTimer = null;
   let editingLockId = '';
+
+  function resolveSampleNodeId(node) {
+    const nodeType = (node && node.type) || type || '';
+    const fields = (node && node.fields) || {};
+    let sub = typeof fields.sub === 'string' ? fields.sub.trim() : '';
+    if (!sub) sub = (Poem.qs('sub') || '').trim();
+
+    if (nodeType === 'W') return 'poem';
+    if (nodeType === 'G') return 'anthology';
+    if (nodeType === 'C') return 'person';
+    if (nodeType === 'E') return 'allusion';
+
+    if (nodeType === 'S') {
+      const map = {
+        niaoshoucao: 'erya_species',
+        qiankunfengwu: 'erya_astronomy_geography',
+        jinshisizhu: 'erya_musical_instrument',
+        hecheng: 'erya_combined_term'
+      };
+      return map[sub] || '';
+    }
+
+    if (nodeType === 'L') {
+      const map = {
+        yunbu: 'prosody_rhyme',
+        ciqupu: 'prosody_musical_score'
+      };
+      return map[sub] || '';
+    }
+
+    return '';
+  }
+
+  function refreshSampleButton(node) {
+    if (!sampleBtn) return;
+    if (isSample) {
+      sampleBtn.style.display = 'none';
+      return;
+    }
+    const sampleId = resolveSampleNodeId(node);
+    sampleBtn.style.display = sampleId ? 'inline-block' : 'none';
+  }
+
+  function resolveSampleCategoryLabel(node) {
+    const n = node || {};
+    const nodeType = n.type || '';
+    const fields = n.fields || {};
+    const sub = typeof fields.sub === 'string' ? fields.sub.trim() : '';
+    const subLabel = typeof fields.subLabel === 'string' ? fields.subLabel.trim() : '';
+
+    if (nodeType === 'S' || nodeType === 'L') {
+      if (subLabel) return subLabel;
+      if (nodeType === 'S') {
+        const map = {
+          niaoshoucao: '鸟兽草木',
+          qiankunfengwu: '乾坤风物',
+          jinshisizhu: '金石丝竹',
+          hecheng: '合称'
+        };
+        if (map[sub]) return map[sub];
+      }
+      if (nodeType === 'L') {
+        const map = {
+          yunbu: '韵部',
+          ciqupu: '词曲谱'
+        };
+        if (map[sub]) return map[sub];
+      }
+    }
+
+    const typeMap = {
+      W: '诗词',
+      G: '文集',
+      C: '人物',
+      E: '典故',
+      S: '尔雅',
+      L: '格律'
+    };
+    return typeMap[nodeType] || '样例';
+  }
+
+  function buildCategoryListTarget(node) {
+    const n = node || {};
+    const nodeType = typeof n.type === 'string' ? n.type.trim() : '';
+    if (!nodeType) return 'list.html';
+    const params = new URLSearchParams();
+    params.set('type', nodeType);
+    const sub = typeof n.fields?.sub === 'string' ? n.fields.sub.trim() : '';
+    if ((nodeType === 'S' || nodeType === 'L') && sub) {
+      params.set('sub', sub);
+    }
+    return `list.html?${params.toString()}`;
+  }
 
   function sanitizeDurationValue(raw) {
     const cleaned = String(raw || '').replace(/[^\d.]/g, '');
@@ -160,6 +256,21 @@
       } catch (err) {
         console.error(err);
         try { Poem.toast('自检失败'); } catch (e) { }
+      }
+    });
+  }
+
+  if (sampleBtn) {
+    sampleBtn.addEventListener('click', () => {
+      const sampleId = resolveSampleNodeId(state.node);
+      if (!sampleId) {
+        try { Poem.toast('当前类别暂无样例'); } catch (e) { }
+        return;
+      }
+      const sampleUrl = `editor.html?id=${encodeURIComponent(sampleId)}&sample=1`;
+      const opened = window.open(sampleUrl, '_blank');
+      if (!opened) {
+        window.location.href = sampleUrl;
       }
     });
   }
@@ -490,7 +601,7 @@
         listHtml += `
           <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
             <div style="font-weight:500">${leftText}</div>
-            <div style="font-size:13px;color:#64748b">${escapeHtml(rightText)}</div>
+            <div style="font-size:16px;color:#64748b">${escapeHtml(rightText)}</div>
           </a>
         `;
       });
@@ -706,7 +817,62 @@
   }
 
   // 初始化编辑器的函数
+  async function fetchSampleNode(sampleId) {
+    if (!sampleId) return null;
+    const payload = await Poem.api('/samples.json');
+    const list = Array.isArray(payload) ? payload : (Array.isArray(payload?.items) ? payload.items : []);
+    const found = list.find(item => item && String(item.id) === String(sampleId));
+    return found || null;
+  }
+
   async function init() {
+    if (isSample) {
+      const commonMeta = document.querySelector('.common-meta');
+      if (commonMeta) commonMeta.style.display = 'none';
+      if (editBtn) editBtn.style.display = 'none';
+      if (selfCheckBtn) selfCheckBtn.style.display = 'none';
+      if (sampleBtn) sampleBtn.style.display = 'none';
+      if (linkBtn) linkBtn.style.display = 'none';
+      let sampleNode = null;
+      try {
+        sampleNode = await fetchSampleNode(id);
+      } catch (e) {
+        console.error('加载样例失败:', e);
+      }
+      if (!sampleNode) {
+        if (nodeIdEl) nodeIdEl.textContent = '样例未找到';
+        formContainer.innerHTML = '<div class="section-card">样例未找到</div>';
+        return;
+      }
+      state.node = {
+        id: String(sampleNode.id || ''),
+        type: sampleNode.type || '',
+        fields: sampleNode.fields || {},
+        extra: sampleNode.extra || {},
+        content: sampleNode.content || '',
+        links: Array.isArray(sampleNode.links) ? sampleNode.links : [],
+        annotations: Array.isArray(sampleNode.annotations) ? sampleNode.annotations : []
+      };
+      if (nodeIdEl) nodeIdEl.textContent = resolveSampleCategoryLabel(state.node);
+      const sampleBackListTarget = buildCategoryListTarget(state.node);
+      if (backListBtn) backListBtn.href = sampleBackListTarget;
+      if (backAllBtn) backAllBtn.href = 'list.html?type=A';
+      replaceLinks([]);
+      isReviewerOrAdmin = false;
+      isAdmin = false;
+      isOwner = false;
+      state.canEditNode = false;
+      const t = state.node.type || '';
+      const rendererFactory = getRendererFactory(t);
+      if (rendererFactory) {
+        rendererFactory(buildRendererContext(state.node, t));
+      } else {
+        formContainer.innerHTML = '<div class="section-card">未知类型</div>';
+      }
+      installAddRowLabelGuard();
+      setEditable(false);
+      return;
+    }
     if (isNew && !TYPES.includes(type)) { Poem.toast('缺少类型参数'); return; }
     let me = await Poem.me();
     currentUser = me;
@@ -750,6 +916,7 @@
       state.canEditNode = true;
       if (linkBtn) linkBtn.style.display = 'inline-block';
       if (selfCheckBtn) selfCheckBtn.style.display = 'inline-block';
+      refreshSampleButton(state.node);
       setEditable(true);
     }
     else {
@@ -766,6 +933,7 @@
       editBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       if (linkBtn) linkBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
       if (selfCheckBtn) selfCheckBtn.style.display = (isOwner || canEditAll) ? 'inline-block' : 'none';
+      refreshSampleButton(state.node);
     }
     setCommonMeta(state.node);
     // 点击审核字段自动填充
@@ -831,6 +999,7 @@
     } else {
       formContainer.innerHTML = '<div class="section-card">未知类型</div>';
     }
+    refreshSampleButton(state.node);
     installAddRowLabelGuard();
     setEditable(isNew ? true : false);
 

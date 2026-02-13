@@ -904,6 +904,21 @@ app.get('/assets/logo.png', async (req, res) => {
   } catch (e) { console.error('logo serve failed', e); return res.status(500).end(); }
 });
 
+// 样本数据服务路由
+app.get('/samples.json', async (req, res) => {
+  try {
+    const samplesPath = path.join(DATA_DIR, 'samples.json');
+    if (await fs.pathExists(samplesPath)) {
+      res.sendFile(samplesPath);
+    } else {
+      res.status(404).json({ error: 'Not found' });
+    }
+  } catch (err) {
+    console.error('Failed to serve samples.json', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
 

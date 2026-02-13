@@ -323,7 +323,7 @@
       }
       renderDiv.classList.add('body-render');
       if (!renderDiv.style.padding) renderDiv.style.padding = '8px';
-      if (!renderDiv.style.paddingBottom) renderDiv.style.paddingBottom = '32px';
+      if (!renderDiv.style.paddingBottom) renderDiv.style.paddingBottom = '8px';
       if (!renderDiv.style.border) renderDiv.style.border = '1px solid #ddd';
       if (!renderDiv.style.borderRadius) renderDiv.style.borderRadius = '6px';
       if (!renderDiv.style.marginTop) renderDiv.style.marginTop = '8px';
@@ -345,7 +345,7 @@
       }
       renderDiv.classList.add('body-render');
       if (!renderDiv.style.padding) renderDiv.style.padding = '8px';
-      if (!renderDiv.style.paddingBottom) renderDiv.style.paddingBottom = '32px';
+      if (!renderDiv.style.paddingBottom) renderDiv.style.paddingBottom = '8px';
       if (!renderDiv.style.border) renderDiv.style.border = '1px solid #ddd';
       if (!renderDiv.style.borderRadius) renderDiv.style.borderRadius = '6px';
       if (!renderDiv.style.marginTop) renderDiv.style.marginTop = '8px';
