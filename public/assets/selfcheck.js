@@ -815,7 +815,9 @@
     }
 
     // 运行自检
-    function runSelfCheck() {
+    function runSelfCheck(runOptions) {
+      const options = runOptions || {};
+      const showPassToast = options.showPassToast !== false;
       clearSelfCheckIndicators();
       const selectors = [
         'input:not([type])',
@@ -902,7 +904,11 @@
       } catch (e) { }
       const hasIssues = spaceIssues || englishIssues || illegalSymbolIssues || pairLevelIssues || pairIssues || punctuationIssues || bookTitleIssues || emptyLineIssues || ciqupuLengthIssues || selectIssues;
       if (Poem && typeof Poem.toast === 'function') {
-        Poem.toast(hasIssues ? '请及时修改' : '未发现问题');
+        if (hasIssues) {
+          Poem.toast('请及时修改');
+        } else if (showPassToast) {
+          Poem.toast('未发现问题');
+        }
       }
       return !!hasIssues;
     }

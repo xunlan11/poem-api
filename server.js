@@ -589,7 +589,8 @@ app.get('/health', (req, res) => {
 // 节点列表路由
 app.get('/api/nodes', (req, res) => {
   const { type, search, limit = '50', offset = '0' } = req.query;
-  const filterType = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
+  const filterTypeRaw = String(req.query.filterType || req.query.ft || '').trim().toUpperCase();
+  const filterSubRaw = String(req.query.filterSub || req.query.fs || '').trim().toLowerCase();
   const reviewStatusRaw = String(req.query.reviewStatus || req.query.rs || '').trim().toLowerCase();
   const repairStatusRaw = String(req.query.repairStatus || req.query.rr || '').trim().toLowerCase();
   const startRaw = String(req.query.startDate || req.query.start || req.query.ds || '').trim();
@@ -605,8 +606,37 @@ app.get('/api/nodes', (req, res) => {
   const endInclusive = typeof endTs === 'number' ? endTs + 86400000 - 1 : null;
   const baseItems = allItems(type);
   let filtered = baseItems;
-  if (filterType && TYPES.includes(filterType)) {
-    filtered = filtered.filter(item => item?.type === filterType);
+  const normalizedTypes = filterTypeRaw && filterTypeRaw !== 'NONE'
+    ? filterTypeRaw
+      .split(',')
+      .map(item => item.trim().toUpperCase())
+      .filter(Boolean)
+      .filter(item => TYPES.includes(item))
+    : [];
+  if (filterTypeRaw === 'NONE') {
+    filtered = [];
+  } else if (normalizedTypes.length && normalizedTypes.length < TYPES.length) {
+    filtered = filtered.filter(item => normalizedTypes.includes(item?.type || ''));
+  }
+  const SUBTYPE_VALUES = {
+    S: ['niaoshoucao', 'qiankunfengwu', 'jinshisizhu', 'hecheng'],
+    L: ['yunbu', 'ciqupu']
+  };
+  const subtypeScopeType = (type === 'S' || type === 'L') ? type : '';
+  const allowedSubtypeList = subtypeScopeType ? (SUBTYPE_VALUES[subtypeScopeType] || []) : [];
+  const allowedSubtypeSet = new Set(allowedSubtypeList);
+  let normalizedSubs = [];
+  if (filterSubRaw && allowedSubtypeList.length && filterSubRaw !== 'none') {
+    normalizedSubs = filterSubRaw
+      .split(',')
+      .map(item => item.trim().toLowerCase())
+      .filter(Boolean)
+      .filter(item => allowedSubtypeSet.has(item));
+  }
+  if (subtypeScopeType && filterSubRaw === 'none') {
+    filtered = [];
+  } else if (subtypeScopeType && normalizedSubs.length && normalizedSubs.length < allowedSubtypeSet.size) {
+    filtered = filtered.filter(item => normalizedSubs.includes(String(item?.fields?.sub || '').trim().toLowerCase()));
   }
   if (startTs || endInclusive) {
     filtered = filtered.filter(item => {
@@ -664,7 +694,9 @@ app.get('/api/nodes', (req, res) => {
       const va = Number.isNaN(da) ? 0 : da;
       const vb = Number.isNaN(db) ? 0 : db;
       if (vb !== va) return vb - va;
-      return idNumber(b.id) - idNumber(a.id);
+      const idDiff = idNumber(b.id) - idNumber(a.id);
+      if (idDiff !== 0) return idDiff;
+      return String(b.id || '').localeCompare(String(a.id || ''));
     });
   }
   const page = ordered.slice(off, off + lim).map(simplify);

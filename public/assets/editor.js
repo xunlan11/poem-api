@@ -589,7 +589,7 @@
     card.className = 'modal-card';
     let listHtml = '';
     if (results.length === 0) {
-      listHtml = '<div style="padding:16px;text-align:center;color:#666">未发现重复项</div>';
+      listHtml = '<div style="padding:16px;text-align:center;color:#000">未发现重复项</div>';
     } else {
       listHtml = '<div class="list-group">';
       results.forEach(item => {
@@ -601,7 +601,7 @@
         listHtml += `
           <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
             <div style="font-weight:500">${leftText}</div>
-            <div style="font-size:16px;color:#64748b">${escapeHtml(rightText)}</div>
+            <div style="font-size:16px;color:#000">${escapeHtml(rightText)}</div>
           </a>
         `;
       });
@@ -1126,7 +1126,7 @@
           }
         } else {
           try {
-            const hasIssues = runSelfCheck();
+            const hasIssues = runSelfCheck({ showPassToast: false });
             if (hasIssues) return;
           } catch (err) { }
           await saveNode();

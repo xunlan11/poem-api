@@ -2,11 +2,13 @@
 	--primary: #2563eb;
 	--bg: #f8fafc;
 	--fg: #0f172a;
-	--muted: #64748b;
+	--muted: #000000;
 	--card: #ffffff;
 	--border: #e2e8f0;
 	--danger: #dc2626;
 	--topbar-h: 56px;
+	--input-pad-y: 8px;
+	--input-pad-x: 8px;
 }
 
 * {
@@ -44,6 +46,11 @@ html[data-global-font='heiti'] body {
 
 html[data-global-bold='normal'] * {
 	font-weight: 400 !important;
+}
+
+i,
+em {
+	font-style: normal;
 }
 
 .topbar {
@@ -483,6 +490,13 @@ html[data-global-bold='normal'] * {
 	display: none !important;
 }
 
+.poem-readonly .body-head-actions #preface-toggle,
+.poem-readonly .body-head-actions #body-lock-toggle {
+	display: inline-flex !important;
+	visibility: hidden;
+	pointer-events: none;
+}
+
 .body-area {
 	position: relative;
 }
@@ -584,6 +598,26 @@ html[data-global-bold='normal'] * {
 .type-L {
 	background: #fee2e2;
 	color: #b91c1c;
+}
+
+#fltType .type-tag {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+#fltType .type-tag input {
+	margin-right: 4px;
+}
+
+#fltSub .type-tag {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+#fltSub .type-tag input {
+	margin-right: 4px;
 }
 
 .lv-subtype-picker {
@@ -948,7 +982,7 @@ html[data-global-bold='normal'] * {
 #metaRepairStatus .status-tag,
 #fltStatus .status-tag,
 #fltRepair .status-tag {
-	font-size: 12px;
+	font-size: 16px;
 }
 
 .name-cell {
@@ -1031,11 +1065,27 @@ html[data-global-bold='normal'] * {
 .field input,
 .field textarea,
 .field select {
-	padding: 8px;
+	padding: var(--input-pad-y) var(--input-pad-x);
 	border-radius: 6px;
 	border: 1px solid var(--border);
 	background: #ffffff;
 	color: var(--fg);
+	line-height: 1.6;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="file"]).read-mode,
+textarea.read-mode,
+select.read-mode,
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="file"])[readonly],
+textarea[readonly],
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="file"]):disabled,
+textarea:disabled,
+select:disabled,
+.link-field-display,
+.locked-text,
+.anno-editor .anno-input {
+	padding-top: var(--input-pad-y);
+	padding-bottom: var(--input-pad-y);
 }
 
 .entry-row {
@@ -1266,6 +1316,7 @@ html[data-global-bold='normal'] * {
 	border: 1px solid var(--border);
 	border-radius: 6px;
 	background: #ffffff;
+	line-height: 1.6;
 	white-space: pre-wrap;
 	word-break: break-word;
 	min-height: 38px;
@@ -1274,7 +1325,7 @@ html[data-global-bold='normal'] * {
 
 .link-field-display.empty {
 	color: var(--muted);
-	font-style: italic;
+	font-style: normal;
 }
 
 .link-field-display .linked-chunk,
@@ -1443,7 +1494,7 @@ html[data-global-bold='normal'] * {
 
 .form-subtype .link-field-display,
 .form-subtype-row .link-field-display {
-	padding: 6px 10px;
+	padding: var(--input-pad-y) 10px;
 	margin: 0;
 }
 
@@ -1499,7 +1550,7 @@ html[data-global-bold='normal'] * {
 }
 
 .modal-card-filter {
-	width: 760px;
+	width: 840px;
 }
 
 .filter-status-row {
@@ -1854,7 +1905,7 @@ html[data-global-bold='normal'] * {
 
 .anno-note-display.empty {
 	color: var(--muted);
-	font-style: italic
+	font-style: normal
 }
 
 #annotation-area .annotation,

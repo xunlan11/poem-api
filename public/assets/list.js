@@ -108,21 +108,24 @@
   // 筛选
   const filterBtn = document.getElementById('filterBtn');
   let dateFilter = { start: null, end: null };
-  let typeFilter = '';
+  let typeFilter = [];
+  const TYPE_FILTER_VALUES = ['W', 'G', 'C', 'E', 'S', 'L'];
+  let subFilter = [];
   let reviewFilter = [];
   let repairFilter = [];
   const REVIEW_STATUS_VALUES = ['pending', 'rejected', 'approved', 'archived'];
   const REPAIR_STATUS_VALUES = ['unfinished', 'finished'];
   function normalizeFilter(list, allowed) {
     if (!Array.isArray(list)) return [];
+    const allowedMap = new Map((Array.isArray(allowed) ? allowed : []).map(item => [String(item || '').trim().toLowerCase(), item]));
     const filtered = list.map(item => String(item || '').trim().toLowerCase()).filter(Boolean);
     const unique = Array.from(new Set(filtered));
-    return unique.filter(item => allowed.includes(item));
+    return unique.map(item => allowedMap.get(item)).filter(Boolean);
   }
   function parseFilter(raw, allowed, defaultValues) {
-    const trimmed = String(raw || '').trim().toLowerCase();
+    const trimmed = String(raw || '').trim();
     if (!trimmed) return defaultValues.slice();
-    if (trimmed === 'none') return [];
+    if (trimmed.toLowerCase() === 'none') return [];
     const normalized = normalizeFilter(trimmed.split(',').map(s => s.trim()), allowed);
     return normalized.length ? normalized : defaultValues.slice();
   }
@@ -131,6 +134,32 @@
     if (!list.length) return 'none';
     if (list.length === allowed.length) return '';
     return list.join(',');
+  }
+  function getDefaultTypeFilter() {
+    if (type && type !== 'A' && TYPE_FILTER_VALUES.includes(rootType)) {
+      return [rootType];
+    }
+    return TYPE_FILTER_VALUES.slice();
+  }
+  function getSubtypeOptions() {
+    if (rootType === 'S') {
+      return Array.isArray(Poem.ERYA_SUB_TYPES) ? Poem.ERYA_SUB_TYPES : [];
+    }
+    if (rootType === 'L') {
+      return Array.isArray(Poem.LV_SUB_TYPES) ? Poem.LV_SUB_TYPES : [];
+    }
+    return [];
+  }
+  function getDefaultSubFilter() {
+    const options = getSubtypeOptions();
+    return options.map(item => item && item.key).filter(Boolean);
+  }
+  function resolveTypeScopeParam() {
+    if (!type || type === 'A') return '';
+    const selectedTypes = normalizeFilter(typeFilter, TYPE_FILTER_VALUES);
+    if (!selectedTypes.length) return type;
+    if (selectedTypes.length === 1 && selectedTypes[0] === rootType) return type;
+    return '';
   }
   // 筛选模态框
   function showFilterModal() {
@@ -150,18 +179,29 @@
       header.appendChild(headerActions);
     }
     const body = card.querySelector('.modal-body');
+    const subtypeOptions = getSubtypeOptions();
+    const subtypeKeys = subtypeOptions.map(item => item && item.key).filter(Boolean);
+    const subtypeTagClass = rootType === 'S' ? 'type-tag type-S' : (rootType === 'L' ? 'type-tag type-L' : 'status-tag status-default');
+    const typeFilterHtml = isAggregatedList
+      ? `<label style="display:flex;flex-direction:column;gap:4px;width:100%">类别
+        <div id="fltType" style="display:flex;flex-wrap:wrap;gap:8px 12px">
+          <label class="type-tag type-W"><input type="checkbox" value="W"> 诗词（W）</label>
+          <label class="type-tag type-G"><input type="checkbox" value="G"> 文集（G）</label>
+          <label class="type-tag type-C"><input type="checkbox" value="C"> 人物（C）</label>
+          <label class="type-tag type-E"><input type="checkbox" value="E"> 典故（E）</label>
+          <label class="type-tag type-S"><input type="checkbox" value="S"> 尔雅（S）</label>
+          <label class="type-tag type-L"><input type="checkbox" value="L"> 格律（L）</label>
+        </div>
+      </label>`
+      : '';
+    const subtypeFilterHtml = !isAggregatedList && subtypeOptions.length
+      ? `<label style="display:flex;flex-direction:column;gap:4px;width:100%">子类
+        <div id="fltSub" style="display:flex;flex-wrap:wrap;gap:8px 12px">${subtypeOptions.map(sub => `<label class="${subtypeTagClass}"><input type="checkbox" value="${Poem.escapeHtml(String(sub.key || ''))}"> ${Poem.escapeHtml(String(sub.label || sub.key || ''))}</label>`).join('')}</div>
+      </label>`
+      : '';
     body.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:column;min-width:260px">
-      <label style="display:flex;flex-direction:column;gap:4px;width:100%">节点类别
-        <select id="fltType">
-          <option value="">全部</option>
-          <option value="W">诗词（W）</option>
-          <option value="G">文集（G）</option>
-          <option value="C">人物（C）</option>
-          <option value="E">典故（E）</option>
-          <option value="S">尔雅（S）</option>
-          <option value="L">格律（L）</option>
-        </select>
-      </label>
+      ${typeFilterHtml}
+      ${subtypeFilterHtml}
       <label style="display:flex;flex-direction:column;gap:4px;width:100%">创建日期
         <div style="display:flex;gap:12px;width:100%;flex-wrap:wrap">
           <label style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
@@ -197,14 +237,27 @@
     </div>`;
     const startEl = body.querySelector('#fltStart');
     const endEl = body.querySelector('#fltEnd');
-    const typeEl = body.querySelector('#fltType');
+    const typeWrap = body.querySelector('#fltType');
+    const subWrap = body.querySelector('#fltSub');
     const statusWrap = body.querySelector('#fltStatus');
     const repairWrap = body.querySelector('#fltRepair');
     const repairLabel = body.querySelector('#repairFilterLabel');
     startEl.value = dateFilter.start || '';
     endEl.value = dateFilter.end || '';
-    const defaultTypeValue = typeFilter || ((type && type !== 'A') ? type : '');
-    typeEl.value = defaultTypeValue;
+    const typeChecks = typeWrap ? Array.from(typeWrap.querySelectorAll('input[type="checkbox"]')) : [];
+    const subChecks = subWrap ? Array.from(subWrap.querySelectorAll('input[type="checkbox"]')) : [];
+    const initialTypes = Array.isArray(typeFilter) && typeFilter.length
+      ? typeFilter
+      : TYPE_FILTER_VALUES.slice();
+    typeChecks.forEach(input => {
+      input.checked = initialTypes.includes(input.value);
+    });
+    const initialSubs = Array.isArray(subFilter) && subFilter.length
+      ? subFilter
+      : subtypeKeys.slice();
+    subChecks.forEach(input => {
+      input.checked = initialSubs.includes(input.value);
+    });
     const statusChecks = Array.from(statusWrap.querySelectorAll('input[type="checkbox"]'));
     const repairChecks = Array.from(repairWrap.querySelectorAll('input[type="checkbox"]'));
     const initialReview = Array.isArray(reviewFilter) ? reviewFilter : REVIEW_STATUS_VALUES.slice();
@@ -219,6 +272,8 @@
     });
     const getSelectedStatuses = () => statusChecks.filter(input => input.checked).map(input => input.value);
     const getSelectedRepairs = () => repairChecks.filter(input => input.checked).map(input => input.value);
+    const getSelectedTypes = () => typeChecks.filter(input => input.checked).map(input => input.value);
+    const getSelectedSubs = () => subChecks.filter(input => input.checked).map(input => input.value);
     const syncRepairState = () => {
       const selected = getSelectedStatuses();
       const active = selected.includes('rejected');
@@ -237,6 +292,16 @@
       if (target) target.checked = true;
     };
     syncRepairState();
+    if (typeWrap) {
+      typeWrap.addEventListener('change', (event) => {
+        enforceAtLeastOne(typeChecks, () => true, event);
+      });
+    }
+    if (subWrap) {
+      subWrap.addEventListener('change', (event) => {
+        enforceAtLeastOne(subChecks, () => true, event);
+      });
+    }
     statusWrap.addEventListener('change', (event) => {
       enforceAtLeastOne(statusChecks, () => true, event);
       syncRepairState();
@@ -247,7 +312,12 @@
     card.querySelector('#fltOk').onclick = () => {
       dateFilter.start = startEl.value || null;
       dateFilter.end = endEl.value || null;
-      typeFilter = typeEl.value || '';
+      if (typeWrap) {
+        typeFilter = normalizeFilter(getSelectedTypes(), TYPE_FILTER_VALUES);
+      }
+      if (subWrap) {
+        subFilter = normalizeFilter(getSelectedSubs(), subtypeKeys);
+      }
       reviewFilter = normalizeFilter(getSelectedStatuses(), REVIEW_STATUS_VALUES);
       const selectedRepair = getSelectedRepairs();
       repairFilter = reviewFilter.includes('rejected')
@@ -260,12 +330,16 @@
     card.querySelector('#fltClear').onclick = () => {
       startEl.value = '';
       endEl.value = '';
-      typeEl.value = '';
+      const resetTypes = getDefaultTypeFilter();
+      typeChecks.forEach(input => { input.checked = resetTypes.includes(input.value); });
+      const resetSubs = subtypeKeys.slice();
+      subChecks.forEach(input => { input.checked = resetSubs.includes(input.value); });
       statusChecks.forEach(input => { input.checked = true; });
       repairChecks.forEach(input => { input.checked = true; });
       dateFilter.start = null;
       dateFilter.end = null;
-      typeFilter = '';
+      typeFilter = resetTypes.slice();
+      subFilter = resetSubs.slice();
       reviewFilter = REVIEW_STATUS_VALUES.slice();
       repairFilter = REPAIR_STATUS_VALUES.slice();
       syncRepairState();
@@ -322,7 +396,16 @@
     start: initialStart ? initialStart : null,
     end: initialEnd ? initialEnd : null
   };
-  typeFilter = Poem.qs('ft') || '';
+  const initialTypeRaw = Poem.qs('ft') || '';
+  typeFilter = initialTypeRaw
+    ? parseFilter(initialTypeRaw, TYPE_FILTER_VALUES, TYPE_FILTER_VALUES)
+    : getDefaultTypeFilter();
+  const subtypeOptions = getSubtypeOptions();
+  const subtypeKeys = subtypeOptions.map(item => item && item.key).filter(Boolean);
+  const initialSubRaw = Poem.qs('fs') || '';
+  subFilter = subtypeKeys.length
+    ? (initialSubRaw ? parseFilter(initialSubRaw, subtypeKeys, subtypeKeys) : subtypeKeys.slice())
+    : [];
   reviewFilter = parseFilter(Poem.qs('rs') || '', REVIEW_STATUS_VALUES, REVIEW_STATUS_VALUES);
   repairFilter = reviewFilter.includes('rejected')
     ? parseFilter(Poem.qs('rr') || '', REPAIR_STATUS_VALUES, REPAIR_STATUS_VALUES)
@@ -378,8 +461,13 @@
     else url.searchParams.delete('ds');
     if (dateFilter.end) url.searchParams.set('de', dateFilter.end);
     else url.searchParams.delete('de');
-    if (typeFilter) url.searchParams.set('ft', typeFilter);
+    const typeParam = getFilterParam(typeFilter, TYPE_FILTER_VALUES);
+    if (typeParam) url.searchParams.set('ft', typeParam);
     else url.searchParams.delete('ft');
+    const subtypeParams = getSubtypeOptions().map(item => item && item.key).filter(Boolean);
+    const subParam = subtypeParams.length ? getFilterParam(subFilter, subtypeParams) : '';
+    if (subParam) url.searchParams.set('fs', subParam);
+    else url.searchParams.delete('fs');
     const reviewParam = getFilterParam(reviewFilter, REVIEW_STATUS_VALUES);
     if (reviewParam) {
       url.searchParams.set('rs', reviewParam);
@@ -402,12 +490,17 @@
   // 构建基础查询参数
   function buildBaseQueryParams() {
     const params = new URLSearchParams();
-    if (type) params.set('type', type);
+    const scopedType = resolveTypeScopeParam();
+    if (scopedType) params.set('type', scopedType);
     const q = (searchInput?.value || '').trim();
     if (q) params.set('search', q);
     if (dateFilter.start) params.set('ds', dateFilter.start);
     if (dateFilter.end) params.set('de', dateFilter.end);
-    if (typeFilter) params.set('ft', typeFilter);
+    const typeParam = getFilterParam(typeFilter, TYPE_FILTER_VALUES);
+    if (typeParam) params.set('ft', typeParam);
+    const subtypeParams = getSubtypeOptions().map(item => item && item.key).filter(Boolean);
+    const subParam = subtypeParams.length ? getFilterParam(subFilter, subtypeParams) : '';
+    if (subParam) params.set('fs', subParam);
     const reviewParam = getFilterParam(reviewFilter, REVIEW_STATUS_VALUES);
     if (reviewParam) params.set('rs', reviewParam);
     const repairParam = getFilterParam(repairFilter, REPAIR_STATUS_VALUES);
