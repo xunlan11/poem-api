@@ -170,7 +170,7 @@ em {
 	background: rgba(255, 255, 255, 0.9);
 	border: 1px solid rgba(226, 232, 240, 0.9);
 	border-radius: 12px;
-	padding: 16px;
+	padding: 11px;
 	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 	backdrop-filter: blur(4px);
 }
@@ -178,8 +178,59 @@ em {
 .tutorial-row {
 	display: flex;
 	align-items: baseline;
-	gap: 10px;
+	gap: 6px;
 	flex-wrap: wrap;
+}
+
+.tutorial-row ol {
+	margin: 4px 0 0;
+	padding-left: 20px;
+}
+
+.tutorial-row li {
+	margin: 2px 0;
+	line-height: 1.45;
+}
+
+.tutorial-row--stack {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 4px;
+}
+
+.tutorial-row--stack .tutorial-title {
+	display: block;
+	line-height: 1.2;
+}
+
+.tutorial-row--stack ol {
+	margin: 2px 0 0;
+}
+
+.tutorial-row--stack li {
+	margin: 1px 0;
+}
+
+.tutorial-bottom-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+	gap: 12px;
+}
+
+.tutorial-links {
+	margin: 4px 0 0;
+	padding-left: 20px;
+}
+
+.tutorial-links a {
+	color: #1d4ed8;
+	text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+	.tutorial-bottom-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
 .tutorial-title {
@@ -626,9 +677,25 @@ em {
 	gap: 12px;
 }
 
+.erya-subtype-picker {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
 .lv-subtype-btn {
 	flex: 1;
 	min-width: 120px;
+}
+
+.erya-subtype-picker .lv-subtype-btn {
+	min-width: 0;
+}
+
+@media (max-width: 640px) {
+	.erya-subtype-picker {
+		grid-template-columns: 1fr;
+	}
 }
 
 .type-picker-grid {

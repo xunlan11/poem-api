@@ -19,38 +19,47 @@
 	<main class="container tutorial-page">
 		<section class="tutorial-grid">
 			<article class="tutorial-card">
-				<div class="tutorial-row">
+				<div class="tutorial-row tutorial-row--stack">
+					<span class="tutorial-title">通用</span>
+						<ol>
+							<li>符号规范：书名号连用。</li>
+							<li>地名：不需要对应现在的地点。</li>
+							<li>时间：以“年号xx年（公元xx年）”的形式，可精确到日期。</li>
+							<li>填写：除通用信息的审核者、审核日期、时长、审核状态外的所有内容，创建者皆可编辑。无法填写的内容空置（列表保留一个空行）。</li>
+						</ol>
+				</div>
+			</article>
+			<article class="tutorial-card">
+				<div class="tutorial-row tutorial-row--stack">
 					<span class="tutorial-title">搜索与筛选</span>
 						<ol>
 							<li>搜索：依据空白提示内容，根据输入实时匹配。支持部分匹配、模糊匹配、拼音缩写匹配。部分节点有补充表述的条目，也作为检索项。</li>
 							<li>筛选：筛选按钮可按节点类别、创建日期（区间）、审核与返修状态（非空多选）进行筛选；搜索可按创建者进行筛选。</li>
 							<li>查重：在输入题目及其他表述后务必立刻进行，如有重复请确认内容一致性。根据所有表述进行搜索，匹配时排除括号及其内容。</li>
 						</ol>
-					</span>
 				</div>
 			</article>
 			<article class="tutorial-card">
-				<div class="tutorial-row">
+				<div class="tutorial-row tutorial-row--stack">
 					<span class="tutorial-title">自检与保存</span>
 						<ol>
 							<li>自检：分为自动修复和人工处理，前者请关注修复合理性，后者请及时修改。</li>
 							<li>保存：新建节点只有保存才会分配序号，保存时会自动调用自检。离开页面前务必保存，如有无法立刻解决的问题，请回避并后续修改。</li>
-							<li>填写：除通用信息的审核者、审核日期、时长、审核状态外的所有内容，创建者皆可编辑。无法填写的内容空置（列表保留一个空行）。</li>
 						</ol>
 				</div>
 			</article>
 			<article class="tutorial-card">
-				<div class="tutorial-row">
+				<div class="tutorial-row tutorial-row--stack">
 					<span class="tutorial-title">链接</span>
 						<ol>
-							<li>链接：在页面只读状态（编辑状态不可见）下，开启链接模式，可选中文本添加链接（自动保存）。有链接节点的为浅绿色，无链接节点暂时空置的为深绿色。</li>
+							<li>链接：只读状态（编辑状态不可见）下开启链接模式，可选中文本添加链接（自动保存）。有链接节点的为浅绿色，空置的为深绿色。</li>
 							<li>快捷操作：右键删除链接。左键在链接开启模式可打开链接窗口，在链接关闭模式可新建页面展示对应节点。</li>
 							<li>删除节点：删除被链接节点会警告，确认后将对应链接空置。</li>
 							<li>其他：编辑有链接内容会删除对应链接，为有链接内容添加新链接会删除旧链接。</li>
 						</ol>
 				</div>
 			</article>
-			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+			<div class="tutorial-bottom-grid">
 				<article class="tutorial-card">
 					<div class="tutorial-row" style="flex-direction: column; align-items: stretch; gap: 16px;">
 						<span class="tutorial-title">样例</span>
@@ -72,6 +81,8 @@
 									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_species&sample=1">鸟兽草木</a>
 									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_astronomy_geography&sample=1">乾坤风物</a>
 									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_musical_instrument&sample=1">金石丝竹</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_time&sample=1">春秋岁时</a>
+									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_govern&sample=1">铨衡衙署</a>
 									<a class="btn type-picker-btn type-picker-btn--sub" data-type="S" href="editor.html?id=erya_combined_term&sample=1">合称</a>
 								</div>
 							</div>
@@ -82,6 +93,20 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</article>
+
+				<article class="tutorial-card">
+					<div class="tutorial-row" style="flex-direction: column; align-items: stretch;">
+						<span class="tutorial-title">推荐搜索渠道</span>
+						<ol class="tutorial-links">
+							<li><a href="https://www.gushiwen.cn/" target="_blank" rel="noopener noreferrer">古文岛（古诗文网）</a></li>
+							<li><a href="https://www.52shici.com/" target="_blank" rel="noopener noreferrer">诗词吾爱</a></li>
+							<li><a href="https://www.guoxuedashi.com/" target="_blank" rel="noopener noreferrer">国学大师</a></li>
+							<li><a href="https://sou-yun.cn/" target="_blank" rel="noopener noreferrer">搜韵</a></li>
+							<li><a href="https://jingdian.ancientbooks.cn/" target="_blank" rel="noopener noreferrer">中华经典古籍库</a></li>
+							<li><a href="https://www.xczim.com/" target="_blank" rel="noopener noreferrer">西窗烛</a></li>
+						</ol>
 					</div>
 				</article>
 

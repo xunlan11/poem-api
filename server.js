@@ -619,7 +619,7 @@ app.get('/api/nodes', (req, res) => {
     filtered = filtered.filter(item => normalizedTypes.includes(item?.type || ''));
   }
   const SUBTYPE_VALUES = {
-    S: ['niaoshoucao', 'qiankunfengwu', 'jinshisizhu', 'hecheng'],
+    S: ['niaoshoucao', 'qiankunfengwu', 'jinshisizhu', 'erya_time', 'erya_govern', 'hecheng'],
     L: ['yunbu', 'ciqupu']
   };
   const subtypeScopeType = (type === 'S' || type === 'L') ? type : '';

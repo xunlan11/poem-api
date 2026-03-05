@@ -6,6 +6,8 @@
     { key: 'niaoshoucao', label: '鸟兽草木' },
     { key: 'qiankunfengwu', label: '乾坤风物' },
     { key: 'jinshisizhu', label: '金石丝竹' },
+    { key: 'erya_time', label: '春秋岁时' },
+    { key: 'erya_govern', label: '铨衡衙署' },
     { key: 'hecheng', label: '合称' },
   ];
   const LV_SUB_TYPES = [
@@ -635,7 +637,7 @@
       card.className = 'modal-card';
       card.innerHTML = `
         <div class="modal-header"><div>选择尔雅子类</div><button class="btn" id="closeEryaPicker">关闭</button></div>
-        <div class="modal-body lv-subtype-picker"></div>
+        <div class="modal-body lv-subtype-picker erya-subtype-picker"></div>
       `;
       modal.appendChild(card);
       document.body.appendChild(modal);
@@ -645,7 +647,8 @@
       subs.forEach(sub => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'btn lv-subtype-btn';
+        btn.className = 'btn type-picker-btn type-picker-btn--sub lv-subtype-btn';
+        btn.dataset.type = 'S';
         btn.textContent = sub.label;
         btn.title = sub.description || '';
         btn.addEventListener('click', () => {
@@ -677,7 +680,8 @@
       subs.forEach(sub => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'btn lv-subtype-btn';
+        btn.className = 'btn type-picker-btn type-picker-btn--sub lv-subtype-btn';
+        btn.dataset.type = 'L';
         btn.textContent = sub.label;
         btn.title = sub.description || '';
         btn.addEventListener('click', () => {

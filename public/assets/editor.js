@@ -64,6 +64,8 @@
         niaoshoucao: 'erya_species',
         qiankunfengwu: 'erya_astronomy_geography',
         jinshisizhu: 'erya_musical_instrument',
+        erya_time: 'erya_time',
+        erya_govern: 'erya_govern',
         hecheng: 'erya_combined_term'
       };
       return map[sub] || '';
@@ -104,6 +106,8 @@
           niaoshoucao: '鸟兽草木',
           qiankunfengwu: '乾坤风物',
           jinshisizhu: '金石丝竹',
+          erya_time: '春秋岁时',
+          erya_govern: '铨衡衙署',
           hecheng: '合称'
         };
         if (map[sub]) return map[sub];

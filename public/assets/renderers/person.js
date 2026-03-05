@@ -35,7 +35,7 @@
       if (!Array.isArray(joint) || joint.length === 0) joint = [{ 合称: '', '其他人物': '' }];
       if (!Array.isArray(relations) || relations.length === 0) relations = [{ 人物: '', 关系: '' }];
       if (!Array.isArray(chrono) || chrono.length === 0) chrono = [{ 纪年: '', 事件: '' }];
-      if (!Array.isArray(evaluation) || evaluation.length === 0) evaluation = [{ 出处: '', 内容: '' }];
+      if (!Array.isArray(evaluation) || evaluation.length === 0) evaluation = [{ source: '', content: '' }];
       if (!Array.isArray(relatedE) || relatedE.length === 0) relatedE = [{ 典故名: '', 内容: '' }];
     }
     formContainer.innerHTML = `
@@ -121,7 +121,7 @@
       wrapperClass: 'ordered-item relation-inline'
     });
     // 渲染评价列表的函数
-    const renderEvalList = () => renderInlinePairs(evalList, evaluation, '出处', '内容', '出处', '内容', {
+    const renderEvalList = () => renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', {
       linkFieldPrefix: 'extra.evaluation',
       onChange: (arr) => { },
       containerClass: 'note-list',
@@ -148,7 +148,7 @@
     addRelBtn && addRelBtn.addEventListener('click', () => { relations.push({ 人物: '', 关系: '' }); renderRelations(); });
     addChronoBtn && addChronoBtn.addEventListener('click', () => { chrono.push({ 纪年: '', 事件: '' }); renderChrono(); });
     addJointBtn && addJointBtn.addEventListener('click', () => { joint.push({ 合称: '', 其他人物: '' }); renderJoint(); });
-    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ 出处: '', 内容: '' }); renderEvalList(); });
+    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalList(); });
     addEBtn && addEBtn.addEventListener('click', () => { relatedE.push({ 典故名: '', 内容: '' }); renderRelated(); });
 
     // 收集表单数据的函数
@@ -175,7 +175,14 @@
         chrono: Array.from(chronoEl.querySelectorAll('.ordered-item')).map(div => { const i = div.querySelectorAll('input'); return { 纪年: i[0].value, 事件: i[1].value }; }),
         relatedE: Array.from(relatedEl.querySelectorAll('.ordered-item')).map(div => { const i = div.querySelectorAll('input'); return { 典故名: i[0].value, 内容: i[1].value }; })
       };
-      const extra = { achievements: (formContainer.querySelector('#f-achievements') || {}).value || '', evaluation: Array.from(evalList.querySelectorAll('.ordered-item')).map(div => { const i = div.querySelectorAll('input'); return { 出处: i[0].value, 内容: i[1].value }; }) };
+      const extra = {
+        achievements: (formContainer.querySelector('#f-achievements') || {}).value || '',
+        evaluation: Array.from(evalList.querySelectorAll('.note-item')).map(div => {
+          const s = div.querySelector('.c-source');
+          const c = div.querySelector('.c-content');
+          return { source: s ? s.value : '', content: c ? c.value : '' };
+        })
+      };
       return { fields, extra };
     }
     return { collect };
