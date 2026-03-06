@@ -19,7 +19,7 @@
     const overview = node ? node.extra?.overview || '' : '';
     const background = node ? node.extra?.background || '' : '';
     let evaluation = node ? node.extra?.evaluation || [] : [];
-    if (isNew && (!Array.isArray(evaluation) || evaluation.length === 0)) evaluation = [{ source: '', content: '' }];
+    if (isNew && (!Array.isArray(evaluation) || evaluation.length === 0)) evaluation = [{ 出处: '', 内容: '' }];
     formContainer.innerHTML = `
         <div class="grid-2">
           <div class="field"><label>文集</label>
@@ -47,9 +47,9 @@
     const addEvalBtn = formContainer.querySelector('#addEval');
     const evalRenderOpts = { wrapperClass: 'ordered-item note-item', inputClass1: 'c-source', inputClass2: 'c-content', linkFieldPrefix: 'extra.evaluation', onChange: (arr) => { }, paragraphCheck2: true };
     // 评价列表
-    const renderEvalsWrapper = () => {renderInlinePairs(evalList, evaluation, 'source', 'content', '出处', '内容', evalRenderOpts);};
+    const renderEvalsWrapper = () => {renderInlinePairs(evalList, evaluation, '出处', '内容', '出处', '内容', evalRenderOpts);};
     renderEvalsWrapper();
-    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ source: '', content: '' }); renderEvalsWrapper(); });
+    addEvalBtn && addEvalBtn.addEventListener('click', () => { evaluation.push({ 出处: '', 内容: '' }); renderEvalsWrapper(); });
     // 自动调整大小
     try { utils.bindAutoResize(formContainer, [overviewEl, '#f-background'], context); } catch (err) { }
 
@@ -60,7 +60,7 @@
       const extra = {
         overview: (overviewEl || {}).value || '',
         background: (formContainer.querySelector('#f-background') || {}).value || '',
-        evaluation: Array.from(evalList.querySelectorAll('.note-item')).map(div => { const s = div.querySelector('.c-source'); const c = div.querySelector('.c-content'); return { source: s ? s.value : '', content: c ? c.value : '' }; })
+        evaluation: Array.from(evalList.querySelectorAll('.note-item')).map(div => { const s = div.querySelector('.c-source'); const c = div.querySelector('.c-content'); return { 出处: s ? s.value : '', 内容: c ? c.value : '' }; })
       };
       return { fields, extra };
     }

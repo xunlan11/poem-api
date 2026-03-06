@@ -183,7 +183,7 @@
     const subtypeKeys = subtypeOptions.map(item => item && item.key).filter(Boolean);
     const subtypeTagClass = rootType === 'S' ? 'type-tag type-S' : (rootType === 'L' ? 'type-tag type-L' : 'status-tag status-default');
     const typeFilterHtml = isAggregatedList
-      ? `<label style="display:flex;flex-direction:column;gap:4px;width:100%">类别
+      ? `<div style="display:flex;flex-direction:column;gap:4px;width:100%"><span>类别</span>
         <div id="fltType" style="display:flex;flex-wrap:wrap;gap:8px 12px">
           <label class="type-tag type-W"><input type="checkbox" value="W"> 诗词（W）</label>
           <label class="type-tag type-G"><input type="checkbox" value="G"> 文集（G）</label>
@@ -192,12 +192,12 @@
           <label class="type-tag type-S"><input type="checkbox" value="S"> 尔雅（S）</label>
           <label class="type-tag type-L"><input type="checkbox" value="L"> 格律（L）</label>
         </div>
-      </label>`
+      </div>`
       : '';
     const subtypeFilterHtml = !isAggregatedList && subtypeOptions.length
-      ? `<label style="display:flex;flex-direction:column;gap:4px;width:100%">子类
+      ? `<div style="display:flex;flex-direction:column;gap:4px;width:100%"><span>子类</span>
         <div id="fltSub" style="display:flex;flex-wrap:wrap;gap:8px 12px">${subtypeOptions.map(sub => `<label class="${subtypeTagClass}"><input type="checkbox" value="${Poem.escapeHtml(String(sub.key || ''))}"> ${Poem.escapeHtml(String(sub.label || sub.key || ''))}</label>`).join('')}</div>
-      </label>`
+      </div>`
       : '';
     body.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:column;min-width:260px">
       ${typeFilterHtml}
@@ -214,7 +214,7 @@
           </label>
         </div>
       </label>
-      <label style="display:flex;flex-direction:column;gap:4px;width:100%">状态
+      <div style="display:flex;flex-direction:column;gap:4px;width:100%"><span>状态</span>
         <div style="display:flex;gap:12px;width:100%;flex-wrap:wrap">
           <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px">
             <span>审核</span>
@@ -233,7 +233,7 @@
             </div>
           </div>
         </div>
-      </label>
+      </div>
     </div>`;
     const startEl = body.querySelector('#fltStart');
     const endEl = body.querySelector('#fltEnd');

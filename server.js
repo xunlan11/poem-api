@@ -461,7 +461,7 @@ function simplify(node) {
     const evals = node.extra && Array.isArray(node.extra.evaluation) ? node.extra.evaluation : [];
     const parts = evals.map(e => {
       if (!e) return '';
-      return String(e.content || e.内容 || e.review_comment || e.comment || e.备注 || '').trim();
+      return String(e.内容 || e.review_comment || e.comment || e.备注 || '').trim();
     }).filter(Boolean);
     if (parts.length) reviewerEntry = parts.join(' / ');
   } catch (e) { }

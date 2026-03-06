@@ -690,7 +690,6 @@
       { char: '\\', label: '\\' }, { char: '＼', label: '＼' },
       { char: '`', label: '`' }, { char: '｀', label: '｀' },
       { char: '_', label: '_' }, { char: '＿', label: '＿' },
-      { char: '~', label: '~' }
     ];
     const ILLEGAL_SYMBOL_LOOKUP = ILLEGAL_SYMBOLS.reduce((acc, item) => {
       acc[item.char] = item;

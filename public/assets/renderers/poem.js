@@ -106,7 +106,7 @@
     }
     const sel = formContainer.querySelector('#f-form'); if (form) sel.value = form;
     const cl = formContainer.querySelector('#comment-list');
-    const commentArr = (comments && comments.length) ? comments : [{ source: '', content: '' }];
+    const commentArr = (comments && comments.length) ? comments : [{ 出处: '', 内容: '' }];
     const commentRenderOpts = {
       wrapperClass: 'ordered-item note-item',
       inputClass1: 'c-source',
@@ -115,12 +115,12 @@
       onChange: () => { },
       paragraphCheck2: true,
     };
-    renderInlinePairs(cl, commentArr, 'source', 'content', '出处', '内容', commentRenderOpts);
+    renderInlinePairs(cl, commentArr, '出处', '内容', '出处', '内容', commentRenderOpts);
     const addCommentBtn = formContainer.querySelector('#add-comment');
     if (addCommentBtn) {
       addCommentBtn.addEventListener('click', () => {
-        commentArr.push({ source: '', content: '' });
-        renderInlinePairs(cl, commentArr, 'source', 'content', '出处', '内容', commentRenderOpts);
+        commentArr.push({ 出处: '', 内容: '' });
+        renderInlinePairs(cl, commentArr, '出处', '内容', '出处', '内容', commentRenderOpts);
       });
     }
     const lockBtn = formContainer.querySelector('#body-lock-toggle');
@@ -278,9 +278,9 @@
     // 收集表单数据的函数
     function collect() {
       const commentsPayload = Array.from(formContainer.querySelectorAll('#comment-list .note-item')).map(n => ({
-        source: n.querySelector('.c-source').value,
-        content: n.querySelector('.c-content').value,
-      })).filter(c => c.source || c.content);
+        出处: n.querySelector('.c-source').value,
+        内容: n.querySelector('.c-content').value,
+      })).filter(c => c.出处 || c.内容);
       const subEl = formContainer.querySelector('#f-sub');
       const sub2El = formContainer.querySelector('#f-sub2');
       const annotationsPayload = (annotationModule && typeof annotationModule.getAnnotations === 'function')

@@ -30,7 +30,7 @@
       </div> 
       <div class="field"><label>介绍</label><textarea id="f-introduction" rows="1" data-link-field="extra.introduction" style="width:100%;resize:none;overflow:hidden">${escapeHtml(introduction)}</textarea></div>
       <div class="field"><label>涉及主体</label><input id="f-persons" type="text" data-link-field="fields.persons" value="${escapeHtml(personsText)}"></div>
-      ${utils.renderNoteListField({ label: '示例', addId: 'addEx', listId: 'examples' })}
+      <div class="field field-sample-gap"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
     `;
     initializeLinkFields(formContainer);
     // 查重

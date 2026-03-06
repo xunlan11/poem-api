@@ -7,7 +7,7 @@
 	--border: #e2e8f0;
 	--danger: #dc2626;
 	--topbar-h: 56px;
-	--input-pad-y: 8px;
+	--input-pad-y: 6px;
 	--input-pad-x: 8px;
 }
 
@@ -1089,6 +1089,10 @@ em {
 	gap: 6px;
 }
 
+.field.field-sample-gap {
+	margin-top: 8px;
+}
+
 .field-row {
 	display: flex;
 	gap: 8px;
@@ -1379,7 +1383,7 @@ select:disabled,
 }
 
 .link-field-display {
-	padding: 8px;
+	padding: var(--input-pad-y) var(--input-pad-x);
 	border: 1px solid var(--border);
 	border-radius: 6px;
 	background: #ffffff;
@@ -1409,7 +1413,7 @@ select:disabled,
 	width: 100%;
 	min-width: 0;
 	max-width: none;
-	padding: 8px 10px;
+	padding: var(--input-pad-y) 10px;
 	margin-right: 0;
 }
 

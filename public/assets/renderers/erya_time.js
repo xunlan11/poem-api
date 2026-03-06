@@ -36,7 +36,7 @@
       <div class="field"><label>介绍</label><textarea id="f-introduction" rows="1" data-link-field="extra.introduction" style="width:100%;resize:none;overflow:hidden">${escapeHtml(introduction)}</textarea></div>
       <div class="field"><label>出处</label><input id="f-source" type="text" data-link-field="fields.source" value="${escapeHtml(sourceText)}"></div>
       <div class="field"><label>意象</label><textarea id="f-same-imagery" rows="1" data-link-field="extra.sameImagery" style="width:100%;resize:none;overflow:hidden">${escapeHtml(sameImagery)}</textarea></div>
-      ${utils.renderNoteListField({ label: '示例', addId: 'addEx', listId: 'examples' })}
+      <div class="field field-sample-gap"><label>示例 <button id="addEx" class="btn small add-row">添加</button></label><div id="examples" class="note-list"></div></div>
     `;
     initializeLinkFields(formContainer);
     // 查重
