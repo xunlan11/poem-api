@@ -604,7 +604,7 @@
         const rightText = rightParts.join(' | ');
         listHtml += `
           <a href="editor.html?id=${item.id}&type=${item.type}" target="_blank" class="result-item" style="text-decoration:none;color:inherit;margin-bottom:6px">
-            <div style="font-weight:500">${leftText}</div>
+            <div>${leftText}</div>
             <div style="font-size:16px;color:#000">${escapeHtml(rightText)}</div>
           </a>
         `;

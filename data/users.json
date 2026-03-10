@@ -718,5 +718,35 @@
     "student_id": "2312770",
     "created_at": "2026-03-05T12:17:23.621Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_73",
+    "username": "2511655",
+    "password_hash": "$2a$10$LucPg4ILq8nmy1qpHTii/.159swIVDSv94seYPSUbxMTJwtfakAzq",
+    "role": "user",
+    "real_name": "李欣恬",
+    "student_id": "2511655",
+    "created_at": "2026-03-08T08:43:49.983Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_74",
+    "username": "龚骞晨",
+    "password_hash": "$2a$10$LR.v8Q5gHJqgspInsaKn3eZMGyck.a34w9VCojACANZEGfm/Y7ApC",
+    "role": "user",
+    "real_name": "龚骞晨",
+    "student_id": "2412563",
+    "created_at": "2026-03-09T02:03:54.521Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_76",
+    "username": "2213977",
+    "password_hash": "$2a$10$vDnpPS0tBdcONw6i6ioefejuL5fn9WRGRqLnt/SbbadUDTcPDOIbG",
+    "role": "user",
+    "real_name": "李适杰",
+    "student_id": "2213977",
+    "created_at": "2026-03-09T11:43:10.200Z",
+    "profile_completed": true
   }
 ]

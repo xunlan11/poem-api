@@ -48,6 +48,22 @@ html[data-global-bold='normal'] * {
 	font-weight: 400 !important;
 }
 
+.global-bold-option-text--bold {
+	font-weight: 700 !important;
+}
+
+.global-bold-option-text--normal {
+	font-weight: 400 !important;
+}
+
+html[data-global-bold='normal'] .global-bold-option-text--bold {
+	font-weight: 700 !important;
+}
+
+html[data-global-bold='normal'] .global-bold-option-text--normal {
+	font-weight: 400 !important;
+}
+
 i,
 em {
 	font-style: normal;
@@ -1642,6 +1658,15 @@ select:disabled,
 
 .modal-body {
 	margin-top: 8px;
+}
+
+.dup-modal #closeDupModal {
+	flex: 0 0 auto;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 72px;
 }
 
 .export-session-row {
