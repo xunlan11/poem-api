@@ -748,5 +748,65 @@
     "student_id": "2213977",
     "created_at": "2026-03-09T11:43:10.200Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_75",
+    "username": "mengjingyan",
+    "password_hash": "$2a$10$vVhw0qbAeJ/8G9/PXnP1jefnQ2NdC0RUhLNjW0kKw7FQ9qR688RQ2",
+    "role": "user",
+    "real_name": "孟京艳",
+    "student_id": "1120240307",
+    "created_at": "2026-03-10T04:28:09.506Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_77",
+    "username": "2120252120",
+    "password_hash": "$2a$10$jd2HPcBnHGy5s7tECdNbIuM8PuHuSeRcVRrr1Ui3bj3wIOm0gDoFa",
+    "role": "user",
+    "real_name": "雷翔雁",
+    "student_id": "2120252120",
+    "created_at": "2026-03-10T08:10:13.602Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_79",
+    "username": "13283235921",
+    "password_hash": "$2a$10$uU7fDczZmWaCLG6jHbRWge6x.pWxVrTJXANXd/MiKUp1Tf.XK9fKe",
+    "role": "user",
+    "real_name": "刘叙增",
+    "student_id": "2120250690",
+    "created_at": "2026-03-11T02:46:07.337Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_78",
+    "username": "刘馨慕",
+    "password_hash": "$2a$10$p70v.9ZFKIjSTleATlCnqOlWwbuIsdw1Qf3vrXIoQOAwt8Hu/aSn6",
+    "role": "user",
+    "real_name": "刘馨慕",
+    "student_id": "2510290",
+    "created_at": "2026-03-12T11:42:53.838Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_80",
+    "username": "2512046",
+    "password_hash": "$2a$10$cWgZR4rE5ee6gGLxX8VjEeoJ9RGdn3BTlJCKqQumoKq71aaSCy9BK",
+    "role": "user",
+    "real_name": "林菲菲",
+    "student_id": "2512046",
+    "created_at": "2026-03-13T01:31:25.968Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_81",
+    "username": "2510697",
+    "password_hash": "$2a$10$ek.3XL0FfsK/.UJyUztYEOL6N0iEOUdXsUwVVBLsZhIJ6nDRpcBIO",
+    "role": "user",
+    "real_name": "张玥涵",
+    "student_id": "2510697",
+    "created_at": "2026-03-13T10:41:26.562Z",
+    "profile_completed": true
   }
 ]
