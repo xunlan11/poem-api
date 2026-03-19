@@ -808,5 +808,25 @@
     "student_id": "2510697",
     "created_at": "2026-03-13T10:41:26.562Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_82",
+    "username": "袁少佳",
+    "password_hash": "$2a$10$1mDusgtcCCDtEnIvUNfbqeEZDBPyhVSrXeASB4xzT6h517u8g0Uz.",
+    "role": "user",
+    "real_name": "袁少佳",
+    "student_id": "2512686",
+    "created_at": "2026-03-16T09:11:25.216Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_83",
+    "username": "2512130",
+    "password_hash": "$2a$10$dLyvYuLia4go9PbeOkrltO5Nd15APH.VrNMd45dTwa57PqwrKqIVK",
+    "role": "user",
+    "real_name": "刘婕",
+    "student_id": "2512130",
+    "created_at": "2026-03-16T10:40:51.999Z",
+    "profile_completed": true
   }
 ]
