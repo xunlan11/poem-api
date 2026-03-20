@@ -140,16 +140,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_15",
-    "username": "2211223",
-    "password_hash": "$2a$10$294I1DLhbFZePskaE7bvKeMkItz4y/kJ8ghgvJt4g0SK1.ytDhcji",
-    "role": "user",
-    "real_name": "盛皓然",
-    "student_id": "2211223",
-    "created_at": "2025-11-08T02:06:55.032Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_16",
     "username": "2512436",
     "password_hash": "$2a$10$C295sFCcZpAn1YpsUbcns.so67MFZ8kOP0msfPlgixae9LWA9EIK6",
@@ -317,16 +307,6 @@
     "real_name": "杨宇舒",
     "student_id": "2413647",
     "created_at": "2025-11-11T04:48:22.630Z",
-    "profile_completed": true
-  },
-  {
-    "id": "u_34",
-    "username": "郭睿彤",
-    "password_hash": "$2a$10$HJXgVQ4B7wgv6lLaJG91Xu8RUc0waiYbbdbxIAIGqHv2oiZMAHuFS",
-    "role": "user",
-    "real_name": "郭睿彤",
-    "student_id": "2512436",
-    "created_at": "2025-11-11T05:07:08.957Z",
     "profile_completed": true
   },
   {
@@ -800,16 +780,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_81",
-    "username": "2510697",
-    "password_hash": "$2a$10$ek.3XL0FfsK/.UJyUztYEOL6N0iEOUdXsUwVVBLsZhIJ6nDRpcBIO",
-    "role": "user",
-    "real_name": "张玥涵",
-    "student_id": "2510697",
-    "created_at": "2026-03-13T10:41:26.562Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_82",
     "username": "袁少佳",
     "password_hash": "$2a$10$1mDusgtcCCDtEnIvUNfbqeEZDBPyhVSrXeASB4xzT6h517u8g0Uz.",
@@ -817,16 +787,6 @@
     "real_name": "袁少佳",
     "student_id": "2512686",
     "created_at": "2026-03-16T09:11:25.216Z",
-    "profile_completed": true
-  },
-  {
-    "id": "u_83",
-    "username": "2512130",
-    "password_hash": "$2a$10$dLyvYuLia4go9PbeOkrltO5Nd15APH.VrNMd45dTwa57PqwrKqIVK",
-    "role": "user",
-    "real_name": "刘婕",
-    "student_id": "2512130",
-    "created_at": "2026-03-16T10:40:51.999Z",
     "profile_completed": true
   }
 ]
