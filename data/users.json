@@ -788,5 +788,55 @@
     "student_id": "2512686",
     "created_at": "2026-03-16T09:11:25.216Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_15",
+    "username": "2510572",
+    "password_hash": "$2a$10$PzP9HGD2WP97eF3OqZa60eKZmxScIymYWiF0n/8gg1ePL2g8QJvFm",
+    "role": "user",
+    "real_name": "陈思润",
+    "student_id": "2510572",
+    "created_at": "2026-03-21T00:15:59.512Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_34",
+    "username": "施金蕊",
+    "password_hash": "$2a$10$4Nu.FUjQNGi4Jq903yfYd.qjSdi6dqhG3etJ5VFS2C3QHP9H9wdB2",
+    "role": "user",
+    "real_name": "施金蕊",
+    "student_id": "2510571",
+    "created_at": "2026-03-21T03:23:49.669Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_81",
+    "username": "2120251122",
+    "password_hash": "$2a$10$kh4xrKJOq83fyxdQUI2uFudYS0YB9wtqG2o/1wh.pPvS47Gri9d/G",
+    "role": "user",
+    "real_name": "吕晨菲",
+    "student_id": "2120251122",
+    "created_at": "2026-03-23T02:20:59.413Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_83",
+    "username": "高速",
+    "password_hash": "$2a$10$fpdQVncll.dDixERr61cN.v0JPYbvDg6LSElJ9dvwidqZcTUheSce",
+    "role": "user",
+    "real_name": "高速",
+    "student_id": "2120251393",
+    "created_at": "2026-03-23T06:23:48.221Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_84",
+    "username": "15529102006",
+    "password_hash": "$2a$10$jtwusc/TZ9.zp6IrR8uxeuBP8Hj7xSuHr41IlCnVkbfkcKPt1aQYS",
+    "role": "user",
+    "real_name": "王艺嘉",
+    "student_id": "2411687",
+    "created_at": "2026-03-23T15:09:19.823Z",
+    "profile_completed": true
   }
 ]
