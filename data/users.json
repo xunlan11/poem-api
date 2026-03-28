@@ -838,5 +838,65 @@
     "student_id": "2411687",
     "created_at": "2026-03-23T15:09:19.823Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_85",
+    "username": "23508636",
+    "password_hash": "$2a$10$uVjKjyP/vSQBdihvYiAJHOudgdg3FhciKa3vrbl5zQ4aAguJQUn9S",
+    "role": "user",
+    "real_name": "许佳茗",
+    "student_id": "2120252153",
+    "created_at": "2026-03-24T05:07:34.791Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_86",
+    "username": "林菲菲",
+    "password_hash": "$2a$10$3c07KOqn0XVEDG.7rjQOCesWp6Wg.RC7tfg8J7fqsMNwStSzpTcxu",
+    "role": "user",
+    "real_name": "林菲菲",
+    "student_id": "2512046",
+    "created_at": "2026-03-25T07:08:55.552Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_87",
+    "username": "傅伯瑜",
+    "password_hash": "$2a$10$R5xD5YGG2l.guNbRNcejVeVLc9KtmBCoT6UCV7uwsxOMXpV0RZrX.",
+    "role": "user",
+    "real_name": "傅伯瑜",
+    "student_id": "2510964",
+    "created_at": "2026-03-26T06:56:38.764Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_88",
+    "username": "周睿宁",
+    "password_hash": "$2a$10$w52v8Q3U2rwbuCWZUweMieqfPhB3QU2lZObKCCmuP5nK9PI0u9EQi",
+    "role": "user",
+    "real_name": "周睿宁",
+    "student_id": "2510573",
+    "created_at": "2026-03-26T13:18:13.617Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_89",
+    "username": "孙与时",
+    "password_hash": "$2a$10$8LvuSSsB0X9p82a0P2YhauBy8C/lu2sniOJtpirlRzGHGAiX.OMYG",
+    "role": "user",
+    "real_name": "孙与时",
+    "student_id": "2120252147",
+    "created_at": "2026-03-27T10:32:34.526Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_90",
+    "username": "15115016810",
+    "password_hash": "$2a$10$1YkViCvz/KGu6wc/7g605OTKtC/sft.MVLjCkbT2zxf5Hb47w7FgS",
+    "role": "user",
+    "real_name": "朱奕",
+    "student_id": "2512148",
+    "created_at": "2026-03-28T02:49:51.192Z",
+    "profile_completed": true
   }
 ]
