@@ -35,10 +35,13 @@
   const reviewedAt = document.getElementById('reviewedAt');
   // 期望时长输入
   const expectedDurationInput = document.getElementById('metaExpectedDuration');
+  // 时长下限输入（只读展示）
+  const durationLowerBoundInput = document.getElementById('metaDurationLowerBound');
   // 审核时长输入
   const reviewDurationInput = document.getElementById('metaReviewDuration');
-  // 接受期望按钮
+  // 接受期望/下限按钮
   const acceptExpectedBtn = document.getElementById('metaAcceptExpected');
+  const acceptLowerBoundBtn = document.getElementById('metaAcceptLowerBound');
   // 返回查询
   const returnQuery = (Poem.qs('return') || '').replace(/^\?/, '');
   // 当前用户
@@ -169,6 +172,71 @@
 
   bindDurationSanitizer(expectedDurationInput);
   bindDurationSanitizer(reviewDurationInput);
+
+  function normalizeLvSubValue(raw) {
+    const sub = String(raw || '').trim().toLowerCase();
+    if (sub === 'yunbu' || sub === '韵部') return 'yunbu';
+    if (sub === 'ciqupu' || sub === '词曲谱') return 'ciqupu';
+    return sub;
+  }
+
+  function getPoemBodyChars() {
+    const bodyEl = formContainer ? formContainer.querySelector('#f-body') : null;
+    if (!bodyEl) return 0;
+    if (typeof bodyEl.__countTextLength === 'function') {
+      return bodyEl.__countTextLength(bodyEl.value || '');
+    }
+    const bodyCountEl = formContainer ? formContainer.querySelector('#body-word-count') : null;
+    const text = bodyCountEl ? String(bodyCountEl.textContent || '') : '';
+    const m = text.match(/正文\s*(\d+)\s*字/);
+    return m ? (parseInt(m[1], 10) || 0) : 0;
+  }
+
+  function formatDurationLowerBoundValue(units) {
+    if (!Number.isFinite(units)) return '';
+    if (Math.abs(units - Math.round(units)) < 1e-9) return String(Math.round(units));
+    return units.toFixed(1);
+  }
+
+  function computeDurationLowerBoundByNode(node) {
+    const nodeType = String(node?.type || type || '').trim();
+    if (!nodeType) return '';
+    if (nodeType === 'W') {
+      const bodyChars = getPoemBodyChars();
+      const units = Math.min(6, 0.5 + (Math.round(bodyChars / 50) * 0.5));
+      return formatDurationLowerBoundValue(units);
+    }
+    if (nodeType === 'C') return '2';
+    if (nodeType === 'G' || nodeType === 'E' || nodeType === 'S') return '1';
+    if (nodeType === 'L') {
+      const sub = normalizeLvSubValue(node?.fields?.sub || node?.fields?.subLabel || '');
+      if (sub === 'ciqupu') return '2';
+      return '1';
+    }
+    return '';
+  }
+
+  function refreshDurationLowerBoundDisplay() {
+    if (!durationLowerBoundInput) return;
+    const value = computeDurationLowerBoundByNode(state && state.node ? state.node : null);
+    durationLowerBoundInput.value = value;
+  }
+
+  function bindDurationLowerBoundRefresh() {
+    if (!formContainer || formContainer.__durationLowerBoundBound) return;
+    const handler = (event) => {
+      const target = event && event.target;
+      if (!target) return;
+      const id = target.id || '';
+      const name = target.name || '';
+      if (id === 'f-body' || id === 'f-form' || id === 'f-sub' || name === 'lvMode') {
+        refreshDurationLowerBoundDisplay();
+      }
+    };
+    formContainer.addEventListener('input', handler);
+    formContainer.addEventListener('change', handler);
+    formContainer.__durationLowerBoundBound = true;
+  }
 
   // 格式化审核者显示的函数
   function formatReviewerDisplay(user) {
@@ -785,6 +853,7 @@
       }
       try { if (typeof applyMetaPermissions === 'function') applyMetaPermissions(); } catch (e) { }
     }));
+    refreshDurationLowerBoundDisplay();
     try { if (typeof applyMetaPermissions === 'function') applyMetaPermissions(); } catch (e) { }
   }
 
@@ -799,7 +868,14 @@
     // 期望时长（创建者）
     const expectedEl = document.getElementById('metaExpectedDuration');
     if (expectedEl) expectedEl.disabled = !(editable && !!isOwner);
-    if (acceptExpectedBtn) acceptExpectedBtn.disabled = !allowReview;
+    if (acceptExpectedBtn) {
+      acceptExpectedBtn.disabled = !allowReview;
+      acceptExpectedBtn.style.display = allowReview ? '' : 'none';
+    }
+    if (acceptLowerBoundBtn) {
+      acceptLowerBoundBtn.disabled = !allowReview;
+      acceptLowerBoundBtn.style.display = allowReview ? '' : 'none';
+    }
     // 审核状态（审核者）
     Array.from(document.querySelectorAll('input[name="metaReviewStatus"]')).forEach(r => { r.disabled = !allowReview; });
     // 返修状态
@@ -870,6 +946,8 @@
       const rendererFactory = getRendererFactory(t);
       if (rendererFactory) {
         rendererFactory(buildRendererContext(state.node, t));
+        bindDurationLowerBoundRefresh();
+        refreshDurationLowerBoundDisplay();
       } else {
         formContainer.innerHTML = '<div class="section-card">未知类型</div>';
       }
@@ -977,6 +1055,25 @@
             };
             acceptExpectedBtn.addEventListener('click', handleAcceptExpected);
           }
+          if (acceptLowerBoundBtn && durationLowerBoundInput && reviewDurationInput) {
+            const handleAcceptLowerBound = () => {
+              if (!state.editable) return;
+              if (acceptLowerBoundBtn.disabled) return;
+              if (!durationLowerBoundInput.value || !durationLowerBoundInput.value.trim()) {
+                try { Poem.toast('时长下限为空'); } catch (err) { }
+                return;
+              }
+              if (reviewDurationInput.disabled) {
+                return;
+              }
+              const nextValue = durationLowerBoundInput.value.trim();
+              if (reviewDurationInput.value !== nextValue) {
+                reviewDurationInput.value = nextValue;
+                try { reviewDurationInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) { }
+              }
+            };
+            acceptLowerBoundBtn.addEventListener('click', handleAcceptLowerBound);
+          }
         } catch (e) { }
         reviewedByEl.addEventListener('click', () => {
           if (reviewedByEl.disabled) return;
@@ -1000,6 +1097,8 @@
     const rendererFactory = getRendererFactory(t);
     if (rendererFactory) {
       renderer = rendererFactory(buildRendererContext(state.node, t));
+      bindDurationLowerBoundRefresh();
+      refreshDurationLowerBoundDisplay();
     } else {
       formContainer.innerHTML = '<div class="section-card">未知类型</div>';
     }
@@ -1012,6 +1111,27 @@
       const options = opts || {};
       const silent = !!options.silent;
       const skipToast = !!options.skipToast;
+
+      // 审核状态为通过/归档时，备注非空要确认是否清空再保存
+      const selectedReviewStatus = (document.querySelector('input[name="metaReviewStatus"]:checked')?.value || '').trim() || ((state.node?.extra?.reviewStatus || '').trim() || 'pending');
+      const remarkInput = document.getElementById('metaRemark');
+      const remarkValue = (remarkInput?.value || '').trim();
+      if (!silent && (selectedReviewStatus === 'approved' || selectedReviewStatus === 'archived') && remarkValue) {
+        const shouldClearRemark = confirm('是否清空备注并保存？');
+        if (!shouldClearRemark) {
+          return false;
+        }
+        if (remarkInput) {
+          remarkInput.value = '';
+          if (typeof autosizeTextarea === 'function') {
+            autosizeTextarea(remarkInput);
+          }
+        }
+        if (!state.node) state.node = {};
+        state.node.extra = state.node.extra || {};
+        state.node.extra.remark = '';
+      }
+
       if (saveInFlight) {
         if (!silent && !skipToast) Poem.toast('保存中，请稍候');
         return currentSavePromise || Promise.resolve(false);

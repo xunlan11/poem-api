@@ -146,7 +146,7 @@
     if (!pendingBody || !pendingPagination) return;
     const total = pendingState.items.length;
     if (!total) {
-      pendingBody.innerHTML = '<tr><td colspan="9" class="text-muted">暂无</td></tr>';
+      pendingBody.innerHTML = '';
       pendingPagination.innerHTML = '';
       pendingPagination.style.display = 'none';
       return;

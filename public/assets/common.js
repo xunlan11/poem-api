@@ -219,8 +219,24 @@
       const url = `${Poem.base()}${path}`;
       const defaults = { headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
       const res = await fetch(url, { ...defaults, ...opts });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = res.headers.get('content-type') || '';
+      if (!res.ok) {
+        let serverMessage = '';
+        try {
+          if (ct.includes('application/json')) {
+            const payload = await res.json();
+            serverMessage = (payload && (payload.error || payload.message)) ? String(payload.error || payload.message) : '';
+          } else {
+            serverMessage = (await res.text() || '').trim();
+          }
+        } catch (err) { }
+        const fallback = `HTTP ${res.status}`;
+        const message = serverMessage || fallback;
+        const error = new Error(message);
+        error.status = res.status;
+        error.error = message;
+        throw error;
+      }
       return ct.includes('application/json') ? res.json() : res.text();
     },
     // 获取当前用户信息的函数

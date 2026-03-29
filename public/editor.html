@@ -32,7 +32,7 @@
         <span>通用信息</span>
         <small class="muted notice" style="margin-left:auto;">如有问题，请优先保存，并立即反馈</small>
       </h2>
-      <div class="grid-3">
+      <div class="grid-4">
         <div class="field">
           <label>创建者</label>
           <input id="createdBy" type="text" disabled />
@@ -42,17 +42,6 @@
           <input id="createdAt" type="text" disabled />
         </div>
         <div class="field">
-          <label>期望时长</label>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input id="metaExpectedDuration" type="number" inputmode="decimal" step="0.5" style="flex:1;" disabled>
-            <span style="white-space:nowrap;margin-left:auto">单位</span>
-            <button id="metaAcceptExpected" type="button" class="btn"
-              style="white-space:nowrap;padding:4px 10px;font-size:16px;">认可期望</button>
-          </div>
-        </div>
-      </div>
-      <div class="grid-3" style="margin-top:8px">
-        <div class="field">
           <label>审核者</label>
           <input id="reviewedBy" type="text" disabled />
         </div>
@@ -60,9 +49,28 @@
           <label>审核日期</label>
           <input id="reviewedAt" type="text" disabled />
         </div>
+      </div>
+      <div class="grid-3" style="margin-top:8px">
+        <div class="field">
+          <label>时长下限</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="metaDurationLowerBound" type="number" inputmode="decimal" step="0.5" style="flex:1;" disabled>
+            <span style="white-space:nowrap">单位</span>
+            <button id="metaAcceptLowerBound" type="button" class="btn" style="white-space:nowrap;padding:4px 10px;font-size:16px;">认可下限</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>期望时长</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="metaExpectedDuration" type="number" inputmode="decimal" step="0.5" style="flex:1;" disabled>
+            <span style="white-space:nowrap">单位</span>
+            <button id="metaAcceptExpected" type="button" class="btn"
+              style="white-space:nowrap;padding:4px 10px;font-size:16px;">认可期望</button>
+          </div>
+        </div>
         <div class="field">
           <label>时长</label>
-                <div style="display:flex;align-items:center;gap:8px"><input id="metaReviewDuration" type="number" inputmode="decimal" step="0.5"
+          <div style="display:flex;align-items:center;gap:8px"><input id="metaReviewDuration" type="number" inputmode="decimal" step="0.5"
               style="flex:1;" disabled><span style="white-space:nowrap;margin-left:auto">单位</span></div>
         </div>
       </div>

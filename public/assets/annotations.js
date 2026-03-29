@@ -63,6 +63,10 @@
       };
     })();
 
+    // 暴露给外部复用，避免重复实现字数统计规则
+    if (textarea) textarea.__countTextLength = countTextLength;
+    if (prefaceTextarea) prefaceTextarea.__countTextLength = countTextLength;
+
     function isPrefaceEnabled() {
       if (!prefaceRow) return false;
       // renderers/poem.js 通过 display 控制序开关

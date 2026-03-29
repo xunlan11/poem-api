@@ -1067,6 +1067,13 @@ app.post('/api/auth/profile', requireAuth, async (req, res) => {
   const u = findUserById(req.user.id);
   if (!u) return res.status(404).json({ error: 'User not found' });
   if (!real_name || !student_id) return res.status(400).json({ error: 'Missing fields' });
+
+  // 防止姓名和学号双重重复造成多个账号冲突
+  const duplicate = users.find(other => other.id !== u.id && String(other.real_name || '').trim() === String(real_name || '').trim() && String(other.student_id || '').trim() === String(student_id || '').trim());
+  if (duplicate) {
+    return res.status(409).json({ error: '当前学号姓名已被注册，如有问题请联系管理员' });
+  }
+
   u.real_name = String(real_name);
   u.student_id = String(student_id);
   u.profile_completed = true;

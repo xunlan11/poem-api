@@ -53,7 +53,15 @@
           await Poem.api('/api/auth/profile', { method: 'POST', body: JSON.stringify({ real_name, student_id }) });
           await Poem.me({ force: true });
           location.href = './';
-        } catch (e) { err.textContent = '保存失败'; }
+        } catch (e) {
+          const message = (e && (e.error || e.message)) ? (e.error || e.message) : '保存失败';
+          if (message === '当前学号姓名已被注册，如有问题请联系管理员') {
+            alert(message);
+            // 保留弹窗提示，不在页面下方重复显示
+            return;
+          }
+          err.textContent = message;
+        }
       };
     })();
   </script>
