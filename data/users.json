@@ -410,16 +410,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_46",
-    "username": "jay123456diivila",
-    "password_hash": "$2a$10$yolXJ6eXYTqrWGW7WX.Zl.P11FWEP9I9Voz//kALFduknLMMhTdf.",
-    "role": "user",
-    "real_name": "许佳茗",
-    "student_id": "2120252153",
-    "created_at": "2025-11-17T09:26:58.593Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_47",
     "username": "理想",
     "password_hash": "$2a$10$1tVZDgVAmfuUjjRcAz0qDuv4PSjsizyWievlNz77uhvCrIny9llzK",
@@ -790,16 +780,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_15",
-    "username": "2510572",
-    "password_hash": "$2a$10$PzP9HGD2WP97eF3OqZa60eKZmxScIymYWiF0n/8gg1ePL2g8QJvFm",
-    "role": "user",
-    "real_name": "陈思润",
-    "student_id": "2510572",
-    "created_at": "2026-03-21T00:15:59.512Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_34",
     "username": "施金蕊",
     "password_hash": "$2a$10$4Nu.FUjQNGi4Jq903yfYd.qjSdi6dqhG3etJ5VFS2C3QHP9H9wdB2",
@@ -850,16 +830,6 @@
     "profile_completed": true
   },
   {
-    "id": "u_86",
-    "username": "林菲菲",
-    "password_hash": "$2a$10$3c07KOqn0XVEDG.7rjQOCesWp6Wg.RC7tfg8J7fqsMNwStSzpTcxu",
-    "role": "user",
-    "real_name": "林菲菲",
-    "student_id": "2512046",
-    "created_at": "2026-03-25T07:08:55.552Z",
-    "profile_completed": true
-  },
-  {
     "id": "u_87",
     "username": "傅伯瑜",
     "password_hash": "$2a$10$R5xD5YGG2l.guNbRNcejVeVLc9KtmBCoT6UCV7uwsxOMXpV0RZrX.",
@@ -897,6 +867,36 @@
     "real_name": "朱奕",
     "student_id": "2512148",
     "created_at": "2026-03-28T02:49:51.192Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_91",
+    "username": "2212779",
+    "password_hash": "$2a$10$7usWKNmxuVQ7ul1AbLoX0.i5iI2HHWEz5N8avOgOA.0bCREVy1BAu",
+    "role": "user",
+    "real_name": "李政昂",
+    "student_id": "2212779",
+    "created_at": "2026-03-29T14:27:51.789Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_92",
+    "username": "flow",
+    "password_hash": "$2a$10$B14IAorfuj6awkczTxts9.sFTHfQF8ws329X78fbCMjFqtQbgkKau",
+    "role": "user",
+    "real_name": "赵宇琅",
+    "student_id": "2514204",
+    "created_at": "2026-03-29T14:47:30.975Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_15",
+    "username": "2511437",
+    "password_hash": "$2a$10$P6ZnBQcHQ.VF8qe2hgMaMuNGd7NNg8iMk1waVSEiVQBqshh377SQC",
+    "role": "user",
+    "real_name": "吴鑫淼",
+    "student_id": "2511437",
+    "created_at": "2026-03-30T14:56:16.420Z",
     "profile_completed": true
   }
 ]
