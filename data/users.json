@@ -783,7 +783,7 @@
     "id": "u_34",
     "username": "施金蕊",
     "password_hash": "$2a$10$4Nu.FUjQNGi4Jq903yfYd.qjSdi6dqhG3etJ5VFS2C3QHP9H9wdB2",
-    "role": "user",
+    "role": "reviewer",
     "real_name": "施金蕊",
     "student_id": "2510571",
     "created_at": "2026-03-21T03:23:49.669Z",
@@ -897,6 +897,46 @@
     "real_name": "吴鑫淼",
     "student_id": "2511437",
     "created_at": "2026-03-30T14:56:16.420Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_46",
+    "username": "lsl",
+    "password_hash": "$2a$10$JWvDDRRKXWgXTy1Yjhmtu.KnkdFCdfeTTgtRuzK2LleCR3Yl3oWkq",
+    "role": "user",
+    "real_name": "罗晟林",
+    "student_id": "1120250187",
+    "created_at": "2026-04-01T08:43:41.172Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_86",
+    "username": "孙鑫环",
+    "password_hash": "$2a$10$plmHCVGyInseTbFWlcrICeTufn7YxfkOpp9.vq/OHaBUDqS04.MCe",
+    "role": "user",
+    "real_name": "孙鑫环",
+    "student_id": "2512342",
+    "created_at": "2026-04-02T09:15:15.172Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_93",
+    "username": "windflowswordsing",
+    "password_hash": "$2a$10$rO.eyMT.W56eTIQPhs9qr.c6anzGWYUMDWEeDmPBgc12CnCoxM6LO",
+    "role": "user",
+    "real_name": "邓钰韬",
+    "student_id": "2513415",
+    "created_at": "2026-04-02T13:43:31.863Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_94",
+    "username": "王瑶露",
+    "password_hash": "$2a$10$/GMkMONrOT1oTXrz.Q5ooeFYkGJ8ddnpHh32WISfblDpGoQ43ByoK",
+    "role": "user",
+    "real_name": "王瑶露",
+    "student_id": "2511916",
+    "created_at": "2026-04-03T08:10:09.793Z",
     "profile_completed": true
   }
 ]
