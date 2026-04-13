@@ -938,5 +938,15 @@
     "student_id": "2511916",
     "created_at": "2026-04-03T08:10:09.793Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_95",
+    "username": "2413534",
+    "password_hash": "$2a$10$D0R9RynUrlIoAyk5fkAWeujiW9S.ya8PVlizG9v3r7rET43hMw1d.",
+    "role": "user",
+    "real_name": "洪辰昊",
+    "student_id": "2413534",
+    "created_at": "2026-04-13T02:56:40.607Z",
+    "profile_completed": true
   }
 ]
