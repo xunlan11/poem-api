@@ -350,7 +350,47 @@
     card.querySelector('#fltCancel').onclick = () => { close(); };
   }
   // 归档
+  const postponeBtn = document.getElementById('postponeBtn');
   const archiveBtn = document.getElementById('archiveBtn');
+  async function handlePostponeAction() {
+    if (!isAdmin || type !== 'A') {
+      Poem.toast('仅管理员可用');
+      return;
+    }
+    const items = await fetchAllMatching();
+    if (!items.length) {
+      alert('当前筛选没有可后移节点。');
+      return;
+    }
+    const hasInvalidStatus = items.some(item => {
+      const status = String(item.reviewStatus || '').trim();
+      return status !== 'pending' && status !== 'rejected';
+    });
+    if (hasInvalidStatus) {
+      alert('筛选错误');
+      return;
+    }
+    if (!confirm(`后移当前 ${items.length} 条记录？`)) return;
+    if (postponeBtn) postponeBtn.disabled = true;
+    if (archiveBtn) archiveBtn.disabled = true;
+    try {
+      const ids = items.map(item => item.id).filter(Boolean);
+      if (!ids.length) {
+        Poem.toast('没有可后移节点');
+        return;
+      }
+      await Poem.api('/api/nodes/postpone', { method: 'POST', body: JSON.stringify({ ids }) });
+      Poem.toast('后移成功');
+      await search({ keepPage: true });
+    } catch (err) {
+      console.error(err);
+      Poem.toast('后移失败');
+    } finally {
+      if (postponeBtn) postponeBtn.disabled = !isAdmin;
+      if (archiveBtn) archiveBtn.disabled = !isAdmin;
+    }
+  }
+
   async function handleArchiveAction() {
     if (!isAdmin || type !== 'A') {
       Poem.toast('仅管理员可用');
@@ -758,6 +798,20 @@
       }
     }
   }
+  if (postponeBtn) {
+    if (type !== 'A') {
+      postponeBtn.style.display = 'none';
+    } else {
+      if (!isAdmin) {
+        postponeBtn.style.display = 'none';
+      } else {
+        postponeBtn.style.display = '';
+        postponeBtn.disabled = false;
+        postponeBtn.title = '';
+        postponeBtn.addEventListener('click', handlePostponeAction);
+      }
+    }
+  }
   if (archiveBtn) {
     if (type !== 'A') {
       archiveBtn.style.display = 'none';
@@ -807,6 +861,20 @@
           Poem.toast('没有可导出的记录');
           return;
         }
+        const parseDisplayUser = (raw) => {
+          const text = String(raw || '').trim();
+          if (!text) return { name: '', sid: '' };
+          const matched = /^\s*(.*?)\s*(?:\((.*?)\))?\s*$/.exec(text);
+          return {
+            name: matched && matched[1] ? String(matched[1]).trim() : text,
+            sid: matched && matched[2] ? String(matched[2]).trim() : ''
+          };
+        };
+        const formatHalfStepCeil = (raw) => {
+          const value = Number.isFinite(raw) ? raw : 0;
+          const nonNegative = Math.max(0, value);
+          return Math.ceil(nonNegative * 2) / 2;
+        };
         // 按创建者聚合
         const map = new Map();
         items.forEach(it => {
@@ -821,15 +889,54 @@
         const outRows = [];
         map.forEach(v => {
           if (!v.creator || String(v.creator).trim() === '') return; // 跳过匿名条目
-          const m = /^\s*(.*?)\s*(?:\((.*?)\))?\s*$/.exec(v.creator || '');
-          const name = m && m[1] ? m[1] : '';
-          const sid = m && m[2] ? m[2] : '';
+          const user = parseDisplayUser(v.creator);
+          const name = user.name;
+          const sid = user.sid;
           const total = v.total || 0;
           const hours = +(total / 3).toFixed(2);
           outRows.push({ 学号: sid, '服务时长（小时）': hours, 活动地点: '线上', 姓名: name, '时长（单位）': total });
         });
+
+        // 按审核者聚合（当前筛选作用域）
+        const reviewerMap = new Map();
+        items.forEach(it => {
+          const reviewer = String(it.reviewer || '').trim();
+          if (!reviewer) return;
+          if (!reviewerMap.has(reviewer)) {
+            reviewerMap.set(reviewer, { reviewer, count: 0 });
+          }
+          reviewerMap.get(reviewer).count += 1;
+        });
+        const reviewerCount = reviewerMap.size;
+        const totalReviewedNodes = Array.from(reviewerMap.values()).reduce((sum, entry) => sum + (entry.count || 0), 0);
+        const averageReviewedCount = reviewerCount > 0 ? (totalReviewedNodes / reviewerCount) : 0;
+        const reviewerRows = [];
+        reviewerMap.forEach(v => {
+          const user = parseDisplayUser(v.reviewer);
+          const reviewed = v.count || 0;
+          const ratio = averageReviewedCount > 0 ? (reviewed / averageReviewedCount) : 0;
+          const ratioPct = `${(ratio * 100).toFixed(2)}%`;
+          const duration = Math.min(2, formatHalfStepCeil(ratio));
+          reviewerRows.push({
+            学号: user.sid,
+            '服务时长（小时）': duration.toFixed(1),
+            活动地点: '线上',
+            姓名: user.name,
+            审核节点数: reviewed,
+            人均占比: ratioPct
+          });
+        });
+        reviewerRows.sort((a, b) => {
+          const countDiff = (b.审核节点数 || 0) - (a.审核节点数 || 0);
+          if (countDiff !== 0) return countDiff;
+          return String(a.姓名 || '').localeCompare(String(b.姓名 || ''), 'zh-CN');
+        });
+
         const ws = XLSX.utils.json_to_sheet(outRows, { header: ['学号', '服务时长（小时）', '活动地点', '姓名', '时长（单位）'] });
-        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '时长统计');
+        const reviewerWs = XLSX.utils.json_to_sheet(reviewerRows, { header: ['学号', '服务时长（小时）', '活动地点', '姓名', '审核节点数', '人均占比'] });
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, '时长统计');
+        XLSX.utils.book_append_sheet(wb, reviewerWs, '时长统计（审核者）');
         const fn = `诗词楹联学会+诗词库构建（第${session}期）+时长认定.xlsx`;
         XLSX.writeFile(wb, fn);
         Poem.toast('导出已完成');

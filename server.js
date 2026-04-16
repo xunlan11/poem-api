@@ -1168,3 +1168,30 @@ app.post('/api/nodes/archive', requireAuth, requireAdmin, async (req, res) => {
     res.status(500).json({ error: 'Failed to archive nodes' });
   }
 });
+
+// 批量后移节点路由（管理员）
+app.post('/api/nodes/postpone', requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const { ids } = req.body || {};
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Missing ids' });
+    }
+    const now = new Date().toISOString();
+    const updatedNodes = [];
+    for (const id of ids) {
+      const node = findById(id);
+      if (!node) continue;
+      if (!node.meta) node.meta = {};
+      node.meta.createdAt = now;
+      updatedNodes.push(node);
+    }
+    if (!updatedNodes.length) {
+      return res.status(404).json({ error: 'No nodes updated' });
+    }
+    await saveStore();
+    res.json({ ok: true, updated: updatedNodes.map(simplify) });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Failed to postpone nodes' });
+  }
+});
