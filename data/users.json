@@ -988,5 +988,15 @@
     "student_id": "2411166",
     "created_at": "2026-04-16T04:00:46.034Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_98",
+    "username": "王禹阳",
+    "password_hash": "$2a$10$UyfU.W07Sfz4I.JWzIzXF.99Kfz3AGxcLMTSw.tkR61yRxC0HMB/a",
+    "role": "user",
+    "real_name": "王禹阳",
+    "student_id": "2510615",
+    "created_at": "2026-04-17T02:23:19.687Z",
+    "profile_completed": true
   }
 ]

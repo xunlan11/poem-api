@@ -932,8 +932,19 @@
           return String(a.姓名 || '').localeCompare(String(b.姓名 || ''), 'zh-CN');
         });
 
-        const ws = XLSX.utils.json_to_sheet(outRows, { header: ['学号', '服务时长（小时）', '活动地点', '姓名', '时长（单位）'] });
-        const reviewerWs = XLSX.utils.json_to_sheet(reviewerRows, { header: ['学号', '服务时长（小时）', '活动地点', '姓名', '审核节点数', '人均占比'] });
+        const durationHeaders = ['学号', '服务时长（小时）', '活动地点', '姓名', '时长（单位）'];
+        const reviewerHeaders = ['学号', '服务时长（小时）', '活动地点', '姓名', '审核节点数', '人均占比'];
+        const ws = XLSX.utils.json_to_sheet(outRows, { header: durationHeaders });
+
+        // 审核者表即使无数据也保留表头，避免部分表格软件丢弃空sheet。
+        const reviewerWs = XLSX.utils.aoa_to_sheet([reviewerHeaders]);
+        if (reviewerRows.length) {
+          XLSX.utils.sheet_add_json(reviewerWs, reviewerRows, {
+            header: reviewerHeaders,
+            skipHeader: true,
+            origin: 'A2'
+          });
+        }
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, '时长统计');
         XLSX.utils.book_append_sheet(wb, reviewerWs, '时长统计（审核者）');
