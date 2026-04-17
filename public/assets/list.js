@@ -907,16 +907,25 @@
           }
           reviewerMap.get(reviewer).count += 1;
         });
-        const reviewerCount = reviewerMap.size;
-        const totalReviewedNodes = Array.from(reviewerMap.values()).reduce((sum, entry) => sum + (entry.count || 0), 0);
-        const averageReviewedCount = reviewerCount > 0 ? (totalReviewedNodes / reviewerCount) : 0;
+        const MIN_VALID_REVIEW_COUNT = 6;
+        const DIRECT_FULL_DURATION_REVIEW_COUNT = 20;
+        const validReviewerEntries = Array.from(reviewerMap.values()).filter(entry => (entry.count || 0) >= MIN_VALID_REVIEW_COUNT);
+        const validReviewerCount = validReviewerEntries.length;
+        const totalReviewedNodes = validReviewerEntries.reduce((sum, entry) => sum + (entry.count || 0), 0);
+        const averageReviewedCount = validReviewerCount > 0 ? (totalReviewedNodes / validReviewerCount) : 0;
         const reviewerRows = [];
         reviewerMap.forEach(v => {
           const user = parseDisplayUser(v.reviewer);
           const reviewed = v.count || 0;
-          const ratio = averageReviewedCount > 0 ? (reviewed / averageReviewedCount) : 0;
+          const isValidReviewer = reviewed >= MIN_VALID_REVIEW_COUNT;
+          const ratio = (isValidReviewer && averageReviewedCount > 0) ? (reviewed / averageReviewedCount) : 0;
           const ratioPct = `${(ratio * 100).toFixed(2)}%`;
-          const duration = Math.min(2, formatHalfStepCeil(ratio));
+          let duration = 0;
+          if (reviewed >= DIRECT_FULL_DURATION_REVIEW_COUNT) {
+            duration = 2;
+          } else if (isValidReviewer) {
+            duration = Math.min(2, formatHalfStepCeil(ratio));
+          }
           reviewerRows.push({
             学号: user.sid,
             '服务时长（小时）': duration.toFixed(1),
