@@ -998,5 +998,15 @@
     "student_id": "2510615",
     "created_at": "2026-04-17T02:23:19.687Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_99",
+    "username": "张琬竺",
+    "password_hash": "$2a$10$/Q.J3YBY5PJQ..gNxAd8Me6.bPOHiH8qJ4ob8Tng7/1A.WpvlOdS.",
+    "role": "user",
+    "real_name": "张琬竺",
+    "student_id": "2510575",
+    "created_at": "2026-04-19T08:29:33.935Z",
+    "profile_completed": true
   }
 ]
