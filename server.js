@@ -1176,7 +1176,7 @@ app.post('/api/nodes/postpone', requireAuth, requireAdmin, async (req, res) => {
     if (!Array.isArray(ids) || ids.length === 0) {
       return res.status(400).json({ error: 'Missing ids' });
     }
-    const now = new Date().toISOString();
+    const now = new Date().toISOString().slice(0, 10);
     const updatedNodes = [];
     for (const id of ids) {
       const node = findById(id);
