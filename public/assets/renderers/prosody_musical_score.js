@@ -50,6 +50,7 @@
     // 提取节点字段数据
     const title = node.fields?.title || '';
     const otherNames = node.fields?.otherNames || '';
+    const overview = node.extra?.overview || '';
     const mode = node.fields?.mode || 'single';
     const gongdiao = node.fields?.gongdiao || '';
 
@@ -62,13 +63,12 @@
     // 标准化变体列表的函数
     function normalizeVariants(list) {
       if (!Array.isArray(list) || !list.length) {
-        return [{ name: '正体', cipai: '', author: '', summary: '', origin: '', sample: '', pingze: '', pingzeMarks: [], locked: false }];
+        return [{ name: '正体', cipai: '', author: '', origin: '', sample: '', pingze: '', pingzeMarks: [], locked: false }];
       }
       return list.map((item, idx) => ({
         name: item?.name || createVariantName(idx),
         cipai: item?.cipai || '',
         author: item?.author || '',
-        summary: item?.summary || '',
         origin: item?.origin || '',
         sample: item?.sample || '',
         pingze: item?.pingze || '',
@@ -98,6 +98,7 @@
         </div>
         <div class="field"><label>宫调</label><input id="lv-gongdiao" type="text" data-link-field="fields.gongdiao" value="${escapeHtml(gongdiao)}"></div>
       </div>
+      <div class="field" style="margin-bottom:12px"><label>概述</label><textarea id="lv-overview" rows="1" data-link-field="extra.overview" style="width:100%;resize:none;overflow:hidden">${escapeHtml(overview)}</textarea></div>
       <div class="field">
         <div class="label-row">
           <label>共 <span id="lv-variant-count">${variants.length}</span> 体</label>
@@ -197,7 +198,6 @@
             <div class="field"><label>词曲谱</label><input type="text" data-field="cipai" value="${escapeHtml(variant.cipai || '')}"></div>
             <div class="field"><label>作者</label><input type="text" data-field="author" value="${escapeHtml(variant.author || '')}"></div>
           </div>
-          <div class="field"><label>概述</label><textarea rows="1" data-autosize-min="32" data-field="summary" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.summary || '')}</textarea></div>
           <div class="field"><label>起源</label><textarea rows="1" data-autosize-min="32" data-field="origin" style="width:100%;resize:none;overflow:hidden">${escapeHtml(variant.origin || '')}</textarea></div>
           <div class="grid-2">
             <div class="field variant-sample-field">
@@ -455,7 +455,6 @@
           name: createVariantName(nextIndex),
           cipai: base.cipai || '',
           author: '',
-          summary: '',
           origin: '',
           sample: '',
           pingze: base.pingze || '',
@@ -496,7 +495,6 @@
           name: label,
           cipai: fetchVal('input[data-field="cipai"]'),
           author: fetchVal('input[data-field="author"]'),
-          summary: fetchVal('textarea[data-field="summary"]'),
           origin: fetchVal('textarea[data-field="origin"]'),
           sample: fetchVal('textarea[data-field="sample"]'),
           pingze: pingzeValue,
@@ -513,7 +511,7 @@
         gongdiao: (formContainer.querySelector('#lv-gongdiao') || {}).value || '',
         variants: collectedVariants,
       };
-      return { fields, extra: {} };
+      return { fields, extra: { overview: (formContainer.querySelector('#lv-overview') || {}).value || '' } };
     }
     return { collect };
   };
