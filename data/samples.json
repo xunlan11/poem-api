@@ -508,7 +508,7 @@
           "origin": "创作原因。",
           "sample": "例词，与平仄逐字对应，需标注韵脚和固定平仄的位置。",
           "pingze": "仄平，仄平仄平仄仄仄，平平仄仄仄平仄则平仄平仄平。",
-          "pingzeMarks": [],
+          "pingzeMarks": "",
           "locked": true
         }
       ]

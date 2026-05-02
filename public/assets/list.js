@@ -150,10 +150,6 @@
     }
     return [];
   }
-  function getDefaultSubFilter() {
-    const options = getSubtypeOptions();
-    return options.map(item => item && item.key).filter(Boolean);
-  }
   function resolveTypeScopeParam() {
     if (!type || type === 'A') return '';
     const selectedTypes = normalizeFilter(typeFilter, TYPE_FILTER_VALUES);

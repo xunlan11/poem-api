@@ -1008,5 +1008,15 @@
     "student_id": "2510575",
     "created_at": "2026-04-19T08:29:33.935Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_102",
+    "username": "蔡松霖",
+    "password_hash": "$2a$10$.UTptFWO.EYDPuZ8zCRcK.rNZ4mam7yojYBS9QjVMWOhGM9j2Wfte",
+    "role": "user",
+    "real_name": "蔡松霖",
+    "student_id": "2515096",
+    "created_at": "2026-04-29T10:35:18.477Z",
+    "profile_completed": true
   }
 ]

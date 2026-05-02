@@ -23,8 +23,8 @@
       { value: 'zhongyuan', label: '中原音韵' },
     ];
     const knownBookValues = new Set(knownBooks.map(b => b.value));
-    const commonChars = Array.isArray(node.fields?.commonChars) ? node.fields.commonChars.join('\n') : (node.fields?.commonChars || node.extra?.commonChars || '');
-    const rareChars = Array.isArray(node.fields?.rareChars) ? node.fields.rareChars.join('\n') : (node.fields?.rareChars || node.extra?.rareChars || '');
+    const commonChars = Array.isArray(node.extra?.commonChars) ? node.extra.commonChars.join('\n') : (node.extra?.commonChars || '');
+    const rareChars = Array.isArray(node.extra?.rareChars) ? node.extra.rareChars.join('\n') : (node.extra?.rareChars || '');
     formContainer.innerHTML = `
       <div class="grid-2">
         <div class="field"><label>韵部</label>
@@ -39,8 +39,8 @@
           </select>
         </div>
       </div>
-      <div class="field"><label>常用字</label><textarea id="lv-common" rows="1" data-autosize-min="32" data-link-field="fields.commonChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(commonChars)}</textarea></div>
-      <div class="field"><label>生僻字</label><textarea id="lv-rare" rows="1" data-autosize-min="32" data-link-field="fields.rareChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(rareChars)}</textarea></div>
+      <div class="field"><label>常用字</label><textarea id="lv-common" rows="1" data-autosize-min="32" data-link-field="extra.commonChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(commonChars)}</textarea></div>
+      <div class="field"><label>生僻字</label><textarea id="lv-rare" rows="1" data-autosize-min="32" data-link-field="extra.rareChars" style="width:100%;resize:none;overflow:hidden">${escapeHtml(rareChars)}</textarea></div>
     `;
     // 绑定自动调整大小
     utils.bindAutoResize(formContainer, ['#lv-common', '#lv-rare'], context);
@@ -65,10 +65,12 @@
         subLabel: SUB_LABEL,
         title: (formContainer.querySelector('#lv-title') || {}).value || '',
         rhymeBook: (bookSelect && typeof bookSelect.value === 'string') ? bookSelect.value : rhymeBook,
+      };
+      const extra = {
         commonChars: splitMultilineText(((formContainer.querySelector('#lv-common') || {}).value || '').replace(/[，,；;]/g, '\n')),
         rareChars: splitMultilineText(((formContainer.querySelector('#lv-rare') || {}).value || '').replace(/[，,；;]/g, '\n')),
       };
-      return { fields, extra: {} };
+      return { fields, extra };
     }
     return { collect };
   };

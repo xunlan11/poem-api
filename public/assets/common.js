@@ -18,8 +18,7 @@
     pending: 'status-pending',
     rejected: 'status-rejected',
     approved: 'status-approved',
-    archived: 'status-archived',
-    final: 'status-final'
+    archived: 'status-archived'
   };
   const REPAIR_STATUS_CLASS = {
     unfinished: 'status-rejected',
@@ -37,13 +36,12 @@
   const CLIENT_FP_KEY = 'poem_client_fp_v1';
   const CLIENT_FP_ENDPOINT = '/api/client-fingerprint';
   const CLIENT_FP_INTERVAL = 0;
-  let clientFpTimer = null;
   let clientFpStarted = false;
 
   function normalizeGlobalFont(value) {
     const raw = String(value || '').trim().toLowerCase();
     if (raw === 'heiti') return 'heiti';
-    if (raw === 'kaiti' || raw === 'current') return 'kaiti';
+    if (raw === 'kaiti') return 'kaiti';
     return 'kaiti';
   }
 
@@ -76,7 +74,8 @@
 
   function normalizeGlobalBold(value) {
     const raw = String(value || '').trim().toLowerCase();
-    if (raw === 'normal' || raw === 'off' || raw === 'false' || raw === '0') return 'normal';
+    if (raw === 'normal') return 'normal';
+    if (raw === 'bold') return 'bold';
     return 'bold';
   }
 
@@ -138,13 +137,6 @@
     } catch (err) { }
   }
 
-  // 清除用户缓存的函数
-  function clearMeCache() {
-    try { sessionStorage.removeItem(ME_CACHE_KEY); } catch (err) { }
-    if (typeof window !== 'undefined') {
-      delete window.__poem_me;
-    }
-  }
 
   function readClientFingerprint() {
     try { return sessionStorage.getItem(CLIENT_FP_KEY) || ''; } catch (err) { return ''; }
@@ -194,7 +186,7 @@
     setTimeout(runCheck, initialDelay);
     // 默认不做轮询，避免编辑过程中被强制刷新导致内容丢失
     if (interval > 0) {
-      clientFpTimer = setInterval(runCheck, interval);
+      setInterval(runCheck, interval);
     }
   }
 
@@ -240,16 +232,11 @@
       return ct.includes('application/json') ? res.json() : res.text();
     },
     // 获取当前用户信息的函数
-    async me(options) {
-      const forceRefresh = !!(options && options.force);
-      if (forceRefresh) {
-        clearMeCache();
-        window.__poem_me = undefined;
-      }
-      if (!forceRefresh && window.__poem_me !== undefined && window.__poem_me !== null) {
+    async me() {
+      if (window.__poem_me !== undefined && window.__poem_me !== null) {
         return window.__poem_me;
       }
-      if (!forceRefresh && window.__poem_me === undefined) {
+      if (window.__poem_me === undefined) {
         const cached = readMeCache();
         if (cached !== undefined) {
           window.__poem_me = cached;
@@ -299,7 +286,6 @@
     },
     checkClientFingerprintOnce,
     startAutoUpdateCheck,
-    clearMeCache,
     getGlobalFontPreference() {
       const pref = readGlobalFontPreference();
       applyGlobalFontPreference(pref);

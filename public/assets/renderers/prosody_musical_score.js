@@ -24,10 +24,35 @@
     return count;
   }
 
+  function decodePingzeMarks(marks) {
+    if (Array.isArray(marks)) return marks;
+    if (typeof marks !== 'string') return [];
+    const decoded = [];
+    for (let i = 0; i < marks.length; i += 1) {
+      const ch = marks[i];
+      if (ch === 'F') decoded.push('fixed');
+      else if (ch === 'R') decoded.push('rhyme');
+      else decoded.push(null);
+    }
+    return decoded;
+  }
+
+  function encodePingzeMarks(marks) {
+    if (!Array.isArray(marks) || !marks.length) return '';
+    let packed = '';
+    for (let i = 0; i < marks.length; i += 1) {
+      const mark = marks[i];
+      if (mark === 'fixed') packed += 'F';
+      else if (mark === 'rhyme') packed += 'R';
+      else packed += '.';
+    }
+    return packed;
+  }
+
   // 标准化平仄标记以匹配文本长度的函数
   function normalizePingzeMarksForText(text, marks) {
     const total = countRenderableChars(text);
-    const source = Array.isArray(marks) ? marks : [];
+    const source = decodePingzeMarks(marks);
     const normalized = [];
     for (let i = 0; i < total; i += 1) {
       normalized[i] = source[i] || null;
@@ -487,6 +512,7 @@
         const label = createVariantName(idx);
         const pingzeValue = fetchVal('textarea[data-field="pingze"]');
         const pingzeMarks = normalizePingzeMarksForText(pingzeValue, variants[idx]?.pingzeMarks);
+        const packedMarks = encodePingzeMarks(pingzeMarks);
         if (variants[idx]) {
           variants[idx].pingzeMarks = pingzeMarks;
           variants[idx].locked = true;
@@ -498,7 +524,7 @@
           origin: fetchVal('textarea[data-field="origin"]'),
           sample: fetchVal('textarea[data-field="sample"]'),
           pingze: pingzeValue,
-          pingzeMarks,
+          pingzeMarks: packedMarks,
           locked: true
         };
       });

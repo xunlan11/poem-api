@@ -648,20 +648,17 @@ app.get('/api/nodes', (req, res) => {
       return true;
     });
   }
-  const filterUnarchived = reviewStatusRaw === 'unarchived' || reviewStatusRaw.includes('unarchived');
   const reviewNoneSelected = reviewStatusRaw === 'none';
-  const allowedStatuses = new Set(['pending', 'rejected', 'approved', 'archived', 'final']);
+  const allowedStatuses = new Set(['pending', 'rejected', 'approved', 'archived']);
   let normalizedReviews = [];
-  if (reviewStatusRaw && !filterUnarchived && !reviewNoneSelected) {
+  if (reviewStatusRaw && !reviewNoneSelected) {
     normalizedReviews = reviewStatusRaw
       .split(',')
       .map(item => item.trim())
       .filter(Boolean)
       .filter(item => allowedStatuses.has(item));
   }
-  if (filterUnarchived) {
-    filtered = filtered.filter(item => (item?.extra?.reviewStatus || '') !== 'archived');
-  } else if (reviewNoneSelected) {
+  if (reviewNoneSelected) {
     filtered = [];
   } else if (normalizedReviews.length) {
     filtered = filtered.filter(item => normalizedReviews.includes(item?.extra?.reviewStatus || ''));
@@ -811,7 +808,7 @@ app.put('/api/node/:id', requireAuth, async (req, res) => {
     const data = req.body || {};
     const requestedReviewStatus = typeof data.extra?.reviewStatus === 'string' ? data.extra.reviewStatus.trim() : '';
     const normalizedReviewStatus = requestedReviewStatus || 'pending';
-    const allowedReviewStatuses = new Set(['pending', 'approved', 'rejected', 'archived', 'final']);
+    const allowedReviewStatuses = new Set(['pending', 'approved', 'rejected', 'archived']);
     const safeReviewStatus = allowedReviewStatuses.has(normalizedReviewStatus) ? normalizedReviewStatus : 'pending';
     const previousImagePath = existing.extra?.image || '';
     const isOwnerId = existing.meta?.createdById && existing.meta.createdById === req.user.id;
