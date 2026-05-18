@@ -1018,5 +1018,75 @@
     "student_id": "2515096",
     "created_at": "2026-04-29T10:35:18.477Z",
     "profile_completed": true
+  },
+  {
+    "id": "u_103",
+    "username": "逯久琛",
+    "password_hash": "$2a$10$f6ZL1jsFE0efRTXx650xKOPm5.KJp3tPqriudAWD0haOPiuQPDtwW",
+    "role": "user",
+    "real_name": "逯久琛",
+    "student_id": "2120250305",
+    "created_at": "2026-05-07T11:26:29.508Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_104",
+    "username": "2282076871",
+    "password_hash": "$2a$10$2W3s.2eq/DuJMjk/KWwVNefeuug6dJBu4mpCRp8dgPADvsoJF8AnG",
+    "role": "user",
+    "real_name": "谭新磊",
+    "student_id": "2120250298",
+    "created_at": "2026-05-09T11:58:07.288Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_105",
+    "username": "棹月",
+    "password_hash": "$2a$10$LENKWb5p66fCv5HONNdTDuMSKwUvm/0aKtp0HPwgvjwGed1AvKfRy",
+    "role": "user",
+    "real_name": "任冠宇",
+    "student_id": "2513550",
+    "created_at": "2026-05-12T14:20:46.177Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_106",
+    "username": "温家华",
+    "password_hash": "$2a$10$w0EUW1mG6LcTKVOj24Qor.GxA3bQ.i6wf4AGHaST04aaPav6CTZdK",
+    "role": "user",
+    "real_name": "温家华",
+    "student_id": "2310650",
+    "created_at": "2026-05-15T09:05:24.911Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_107",
+    "username": "2510685",
+    "password_hash": "$2a$10$SB75b.Fc78X/BO.QBT7xne2gEmby4v0cm5ZKrm2/03MmzV8BVYfdC",
+    "role": "user",
+    "real_name": "周雨瑶",
+    "student_id": "2510685",
+    "created_at": "2026-05-15T09:31:05.957Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_109",
+    "username": "陶力扬",
+    "password_hash": "$2a$10$RRQxe5E5iYqEeWOcFGsfCuR/kBL7We022OABndulTKz4WKdcfErLW",
+    "role": "user",
+    "real_name": "陶力扬",
+    "student_id": "2120250338",
+    "created_at": "2026-05-17T05:40:29.099Z",
+    "profile_completed": true
+  },
+  {
+    "id": "u_110",
+    "username": "leiqi",
+    "password_hash": "$2a$10$yPXRwHI6GDkuJeP0GOKxnu1PLLNqpqWMUU.nA/2x/SPakKJ4LQVfa",
+    "role": "user",
+    "real_name": "雷琪",
+    "student_id": "2120250304",
+    "created_at": "2026-05-17T06:10:19.781Z",
+    "profile_completed": true
   }
 ]
