@@ -950,6 +950,7 @@ app.get('/samples.json', async (req, res) => {
 
 // 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/poem', express.static(path.join(__dirname, 'public')));
 
 // 根路径重定向到index.html
 app.get('/', (req, res) => {
