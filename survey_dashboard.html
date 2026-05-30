@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古诗词 APP / 网站使用体验调研 · 数据可视化</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --card: #ffffff;
+    --card2: #f0f2f8;
+    --border: #e2e6ef;
+    --ink: #1a2035;
+    --muted: #6b7a99;
+    --gold: #c8952a;
+    --jade: #1e9e5e;
+    --crimson: #d63b52;
+    --azure: #2474d4;
+    --lavender: #7c4fd4;
+    --amber: #d4680a;
+    --teal: #0f96a8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: linear-gradient(135deg, #1a2e5a 0%, #2d4080 50%, #1a2e5a 100%);
+    border-bottom: 1px solid #14245a;
+    padding: 32px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: "詩";
+    position: absolute;
+    right: 80px; top: -20px;
+    font-size: 180px;
+    color: rgba(255,255,255,.05);
+    font-weight: 900;
+    pointer-events: none;
+  }
+  .header-title {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffd87a, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+  }
+  .header-sub {
+    margin-top: 8px;
+    color: rgba(255,255,255,.6);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffd87a;
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 4px; }
+
+  /* ── Nav ── */
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    background: #ffffff;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .nav-btn {
+    padding: 14px 20px;
+    color: var(--muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-family: inherit;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all .2s;
+  }
+  .nav-btn:hover { color: var(--ink); background: var(--card2); }
+  .nav-btn.active { color: var(--azure); border-bottom-color: var(--azure); font-weight: 600; }
+
+  /* ── Main ── */
+  .main { padding: 32px 40px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── Grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-12 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+  .grid-21 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent, var(--gold));
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-desc {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  /* ── Insight box ── */
+  .insights {
+    margin-top: 32px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .insights-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--azure);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .insights-title::before { content: "💡"; }
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .insight-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .insight-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .insight-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .insight-text strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+  /* ── Bar horizontal ── */
+  .hbar-list { display: flex; flex-direction: column; gap: 10px; }
+  .hbar-item {}
+  .hbar-top { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+  .hbar-label { color: var(--ink); }
+  .hbar-val { color: var(--azure); font-weight: 600; }
+  .hbar-track { height: 8px; background: rgba(0,0,0,.07); border-radius: 4px; overflow: hidden; }
+  .hbar-fill { height: 100%; border-radius: 4px; transition: width .8s cubic-bezier(.4,0,.2,1); }
+
+  /* ── Donut legend ── */
+  .donut-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Score cards ── */
+  .score-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .score-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .score-num {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .score-lbl { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ── NPS ── */
+  .nps-bar {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 48px;
+    margin-top: 16px;
+  }
+  .nps-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all .3s;
+  }
+  .nps-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: var(--muted); }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-12, .grid-21 { grid-template-columns: 1fr; }
+    .main { padding: 20px; }
+    .header { padding: 20px; }
+    .header-stats { flex-wrap: wrap; gap: 16px; }
+    .header::before { display: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<!--
+  本页面为独立数据可视化仪表盘。
+  不依赖 /poem 路径下的任何 JS、CSS、图片或 API。
+  所有资源均为 CDN 或内嵌。
+-->
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-title">古诗词 APP / 网站使用体验调研</div>
+  <div class="header-sub">数据可视化报告 · 共 138 人参与 · 2026</div>
+  <div class="header-stats">
+    <div class="stat-item">
+      <div class="stat-num">138</div>
+      <div class="stat-label">总参与人数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">84</div>
+      <div class="stat-label">有效填写（曾使用）</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">39.1%</div>
+      <div class="stat-label">从未使用过</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">17</div>
+      <div class="stat-label">调研题目</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="switchSection('overview')">📊 总览</button>
+  <button class="nav-btn" onclick="switchSection('usage')">📱 使用习惯</button>
+  <button class="nav-btn" onclick="switchSection('content')">📖 内容质量</button>
+  <button class="nav-btn" onclick="switchSection('feature')">⚙️ 功能体验</button>
+  <button class="nav-btn" onclick="switchSection('design')">🎨 界面设计</button>
+  <button class="nav-btn" onclick="switchSection('business')">💰 商业模式</button>
+  <button class="nav-btn" onclick="switchSection('expect')">🚀 改进期望</button>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+<!-- ──── 总览 ──── -->
+<section id="overview" class="section active">
+  <div class="grid-2" style="margin-bottom:20px">
+    <!-- Q1 平台使用 -->
+    <div class="card" style="--accent:#c8952a">
+      <div class="card-title">Q1 · 多选 · 138人</div>
+      <div class="card-desc">您使用过哪些古诗词APP/网站？</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c1"></canvas></div>
+    </div>
+    <!-- Q15 最严重问题 -->
+    <div class="card" style="--accent:#d63b52">
+      <div class="card-title">Q15 · 单选 · 84人</div>
+      <div class="card-desc">您认为目前最严重的问题是？</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c15"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:20px">
+    <!-- Q2 使用频率 -->
+    <div class="card" style="--accent:#1e9e5e">
+      <div class="card-title">Q2 · 单选 · 84人</div>
+      <div class="card-desc">使用频率分布</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c2"></canvas></div>
+    </div>
+    <!-- Q17 推荐意愿 NPS -->
+    <div class="card" style="--accent:#2474d4">
+      <div class="card-title">Q17 · 单选 · 84人</div>
+      <div class="card-desc">推荐意愿（类NPS）</div>
+      <div id="nps-container"></div>
+    </div>
+    <!-- Top Pain -->
+    <div class="card" style="--accent:#7c4fd4">
+      <div class="card-title">痛点雷达 · 综合评分</div>
+      <div class="card-desc">六大维度问题指数</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="radar"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insights">
+    <div class="insights-title">核心洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">🏆</div><div class="insight-text"><strong>古诗文网占主导</strong>使用率达 50%，远超其余竞品</div></div>
+      <div class="insight-item"><div class="insight-icon">😴</div><div class="insight-text"><strong>低频使用为主</strong>38.1% 用户"偶尔打开"，活跃度不足</div></div>
+      <div class="insight-item"><div class="insight-icon">⚡</div><div class="insight-text"><strong>功能不完善最痛</strong>39.3% 用户认为功能是最严重问题</div></div>
+      <div class="insight-item"><div class="insight-icon">📢</div><div class="insight-text"><strong>口碑传播存疑</strong>仅 15.5% 用户"一定会"推荐，过半持观望态度</div></div>
+      <div class="insight-item"><div class="insight-icon">💎</div><div class="insight-text"><strong>内容质量需提升</strong>45.2% 用户遇到赏析内容质量差的问题</div></div>
+      <div class="insight-item"><div class="insight-icon">🚫</div><div class="insight-text"><strong>广告体验最差</strong>63.1% 用户遭遇弹窗广告干扰</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 使用习惯 ──── -->
+<section id="usage" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#1e9e5e">
+      <div class="card-title">Q2 · 单选 · 84人</div>
+      <div class="card-desc">使用古诗词APP/网站的频率</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c2b"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#c8952a">
+      <div class="card-title">Q3 · 多选 · 84人</div>
+      <div class="card-desc">主要使用目的是什么？</div>
+      <div class="hbar-list" id="q3-bars"></div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insights-title">使用习惯洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">📚</div><div class="insight-text"><strong>查找诗词为第一需求</strong>73.8% 用户主要用于查找原文/注释/赏析，工具属性显著</div></div>
+      <div class="insight-item"><div class="insight-icon">❤️</div><div class="insight-text"><strong>兴趣驱动位居第二</strong>65.5% 出于兴趣爱好，说明情感连接是留存关键</div></div>
+      <div class="insight-item"><div class="insight-icon">🎓</div><div class="insight-text"><strong>学习场景不可忽视</strong>54.8% 用于系统学习/备考，教育场景值得深度布局</div></div>
+      <div class="insight-item"><div class="insight-icon">📅</div><div class="insight-text"><strong>使用频率偏低</strong>仅约14% 每天使用，产品亟需提升日活粘性</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 内容质量 ──── -->
+<section id="content" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#d63b52">
+      <div class="card-title">Q4 · 多选 · 84人</div>
+      <div class="card-desc">遇到过哪些内容错误问题？</div>
+      <div class="hbar-list" id="q4-bars"></div>
+    </div>
+    <div class="card" style="--accent:#d4680a">
+      <div class="card-title">Q5 · 多选 · 84人</div>
+      <div class="card-desc">内容覆盖存在哪些问题？</div>
+      <div class="hbar-list" id="q5-bars"></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#7c4fd4">
+      <div class="card-title">Q4 内容错误分布</div>
+      <div class="card-desc">各类内容错误遭遇率对比</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c4"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#0f96a8">
+      <div class="card-title">Q5 内容覆盖缺失分布</div>
+      <div class="card-desc">用户反映的内容覆盖短板</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c5"></canvas></div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insights-title">内容质量洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">📝</div><div class="insight-text"><strong>赏析质量是最大槽点</strong>45.2% 用户遭遇赏析内容质量差，超过原文错别字</div></div>
+      <div class="insight-item"><div class="insight-icon">🔍</div><div class="insight-text"><strong>冷门诗词亟待补全</strong>77.4% 用户指出冷门诗词收录不全，需求强烈</div></div>
+      <div class="insight-item"><div class="insight-icon">🌏</div><div class="insight-text"><strong>历史文化联系薄弱</strong>45.2% 缺乏相关历史文化知识，内容生态割裂</div></div>
+      <div class="insight-item"><div class="insight-icon">🔄</div><div class="insight-text"><strong>版本问题被忽视</strong>52.4% 认为同一诗词不同版本未标注，专业性不足</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 功能体验 ──── -->
+<section id="feature" class="section">
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card" style="--accent:#2474d4">
+      <div class="card-title">Q7 · 多选 · 84人</div>
+      <div class="card-desc">搜索功能痛点</div>
+      <div class="hbar-list" id="q7-bars"></div>
+    </div>
+    <div class="card" style="--accent:#1e9e5e">
+      <div class="card-title">Q8 · 多选 · 84人</div>
+      <div class="card-desc">背诵功能痛点</div>
+      <div class="hbar-list" id="q8-bars"></div>
+    </div>
+    <div class="card" style="--accent:#7c4fd4">
+      <div class="card-title">Q9 · 多选 · 84人</div>
+      <div class="card-desc">创作功能痛点</div>
+      <div class="hbar-list" id="q9-bars"></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#d63b52">
+      <div class="card-title">Q10 · 多选 · 84人</div>
+      <div class="card-desc">技术问题遭遇率</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="c10"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#d4680a">
+      <div class="card-title">功能完善度评估</div>
+      <div class="card-desc">搜索 · 背诵 · 创作三大功能</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="feature-radar"></canvas></div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insights-title">功能体验洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">🔎</div><div class="insight-text"><strong>模糊搜索缺失最痛</strong>65.5% 用户反映不支持模糊搜索，基础功能待补齐</div></div>
+      <div class="insight-item"><div class="insight-icon">📖</div><div class="insight-text"><strong>背诵功能有待丰富</strong>40.5% 用户无背诵功能，39.3% 认为模式单一</div></div>
+      <div class="insight-item"><div class="insight-icon">✍️</div><div class="insight-text"><strong>创作工具严重缺位</strong>44.1% 缺乏韵书查询，36.9% 完全没有创作功能</div></div>
+      <div class="insight-item"><div class="insight-icon">⚡</div><div class="insight-text"><strong>离线与加载均需优化</strong>各38.1% 用户遭遇加载慢和离线功能不好用的问题</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 界面设计 ──── -->
+<section id="design" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#c8952a">
+      <div class="card-title">Q11 · 多选 · 84人</div>
+      <div class="card-desc">界面设计存在哪些问题？</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c11"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#0f96a8">
+      <div class="card-title">Q12 · 多选 · 84人</div>
+      <div class="card-desc">导航设计存在哪些问题？</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c12"></canvas></div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insights-title">界面设计洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">🗂️</div><div class="insight-text"><strong>信息架构杂乱是首要问题</strong>46.4% 认为界面杂乱信息太多，需要内容优先级重构</div></div>
+      <div class="insight-item"><div class="insight-icon">🗺️</div><div class="insight-text"><strong>导航混乱影响体验</strong>导航栏不清晰 & 页面跳转混乱各占 42.9%</div></div>
+      <div class="insight-item"><div class="insight-icon">✅</div><div class="insight-text"><strong>颜值有一定认可</strong>33.3% 认为界面美观无问题，视觉风格有基础</div></div>
+      <div class="insight-item"><div class="insight-icon">🌙</div><div class="insight-text"><strong>夜间模式需改善</strong>11.9% 反馈夜间模式不好用，影响深夜阅读场景</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 商业模式 ──── -->
+<section id="business" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#d63b52">
+      <div class="card-title">Q13 · 多选 · 84人</div>
+      <div class="card-desc">广告问题遭遇率</div>
+      <div class="hbar-list" id="q13-bars"></div>
+    </div>
+    <div class="card" style="--accent:#d4680a">
+      <div class="card-title">Q14 · 多选 · 84人</div>
+      <div class="card-desc">会员体系存在哪些问题？</div>
+      <div class="hbar-list" id="q14-bars"></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#7c4fd4">
+      <div class="card-title">Q6 · 多选 · 84人</div>
+      <div class="card-desc">版权/付费问题遭遇率</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="c6"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#2474d4">
+      <div class="card-title">商业模式综合评分</div>
+      <div class="card-desc">广告·版权·会员三维度问题指数</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="biz-chart"></canvas></div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insights-title">商业模式洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">📢</div><div class="insight-text"><strong>弹窗广告最令人不满</strong>63.1% 遭遇弹窗广告，是体验最大杀手</div></div>
+      <div class="insight-item"><div class="insight-icon">💸</div><div class="insight-text"><strong>付费门槛过高是核心矛盾</strong>60.7% 遇到内容需付费，46.4% 认为会员价格贵</div></div>
+      <div class="insight-item"><div class="insight-icon">⚠️</div><div class="insight-text"><strong>自动续费陷阱引发信任危机</strong>23.8% 反馈自动续费问题，需透明化设计</div></div>
+      <div class="insight-item"><div class="insight-icon">🔓</div><div class="insight-text"><strong>基础功能不应付费</strong>45.2% 认为基础功能需要会员才能使用，门槛设计不合理</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── 改进期望 ──── -->
+<section id="expect" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card" style="--accent:#1e9e5e">
+      <div class="card-title">Q16 · 多选 · 84人</div>
+      <div class="card-desc">您最希望改进哪些方面？</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c16"></canvas></div>
+    </div>
+    <div class="card" style="--accent:#2474d4">
+      <div class="card-title">Q17 · 单选 · 84人</div>
+      <div class="card-desc">推荐意愿详细分布</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c17"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Priority Matrix -->
+  <div class="card" style="--accent:#c8952a; margin-bottom:20px">
+    <div class="card-title">产品改进优先级矩阵</div>
+    <div class="card-desc">基于用户诉求强度与问题严重性综合评估</div>
+    <div class="score-cards" id="priority-cards"></div>
+  </div>
+
+  <div class="insights">
+    <div class="insights-title">改进期望洞察</div>
+    <div class="insight-grid">
+      <div class="insight-item"><div class="insight-icon">🥇</div><div class="insight-text"><strong>内容质量是用户第一诉求</strong>70.2% 用户希望提高内容质量，远超其他选项</div></div>
+      <div class="insight-item"><div class="insight-icon">🚫</div><div class="insight-text"><strong>去广告呼声极高</strong>59.5% 希望减少广告，商业化设计急需调整</div></div>
+      <div class="insight-item"><div class="insight-icon">⚙️</div><div class="insight-text"><strong>功能完善迫在眉睫</strong>57.1% 希望完善功能，对应模糊搜索、背诵、创作等缺失</div></div>
+      <div class="insight-item"><div class="insight-icon">📊</div><div class="insight-text"><strong>NPS净推荐值偏低</strong>推荐者(15.5%) - 贬损者(11.9%) ≈ 3.6，亟需提升用户满意度</div></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<script>
+// 本页面完全独立，不依赖 /poem 路径下的任何资源。
+// ── Color palettes ──
+const GOLD    = '#c8952a';
+const JADE    = '#1e9e5e';
+const CRIMSON = '#d63b52';
+const AZURE   = '#2474d4';
+const LAVENDER= '#7c4fd4';
+const AMBER   = '#d4680a';
+const TEAL    = '#0f96a8';
+const MUTED   = 'rgba(107,122,153,.35)';
+
+const palette = [GOLD, JADE, AZURE, CRIMSON, LAVENDER, AMBER, TEAL,
+  '#5aa32a','#d4680a','#c2185b','#1e9e5e','#2474d4'];
+
+Chart.defaults.color = '#6b7a99';
+Chart.defaults.font.family = '"PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size   = 12;
+
+function gridColor(){ return 'rgba(107,122,153,.15)'; }
+
+// ── Nav ──
+function switchSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Horizontal bar helper ──
+function renderHBars(containerId, items, color) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const max = Math.max(...items.map(i => i.pct));
+  el.innerHTML = items.map(item => `
+    <div class="hbar-item">
+      <div class="hbar-top">
+        <span class="hbar-label">${item.label}</span>
+        <span class="hbar-val">${item.pct}%</span>
+      </div>
+      <div class="hbar-track">
+        <div class="hbar-fill" style="width:${(item.pct/max*100).toFixed(1)}%;background:${color}"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── NPS widget ──
+function renderNPS() {
+  const data = [
+    { label: '一定会', pct: 15.48, color: '#1e9e5e' },
+    { label: '可能会', pct: 52.38, color: '#5aa32a' },
+    { label: '不确定', pct: 20.24, color: '#9aa0b0' },
+    { label: '可能不会', pct: 8.33, color: '#d4680a' },
+    { label: '一定不会', pct: 3.57, color: '#d63b52' },
+  ];
+  const c = document.getElementById('nps-container');
+  c.innerHTML = `
+    <div style="margin-top:16px;font-size:12px;color:var(--muted);margin-bottom:8px">净推荐意愿分布</div>
+    <div class="nps-bar">${data.map(d=>`<div class="nps-seg" style="width:${d.pct}%;background:${d.color};color:#fff">${d.pct>8?d.label:''}</div>`).join('')}</div>
+    <div class="nps-labels"><span>强力推荐</span><span>贬损</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">${data.map(d=>`<span style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:${d.color};display:inline-block"></span>${d.label} ${d.pct}%</span>`).join('')}</div>
+    <div style="margin-top:16px;padding:12px;background:var(--card2);border-radius:8px;border:1px solid var(--border)">
+      <div style="font-size:24px;font-weight:800;color:#1e9e5e">+3.6</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">净推荐值 NPS（推荐者 15.5% − 贬损者 11.9%）</div>
+    </div>`;
+}
+
+// ── Priority cards ──
+function renderPriority() {
+  const items = [
+    { icon:'📈', label:'提高内容质量', score:70, color: JADE },
+    { icon:'🚫', label:'减少广告', score:60, color: CRIMSON },
+    { icon:'⚙️', label:'完善功能', score:57, color: AZURE },
+    { icon:'🎨', label:'优化界面设计', score:46, color: LAVENDER },
+    { icon:'💰', label:'合理收费', score:39, color: AMBER },
+  ];
+  const el = document.getElementById('priority-cards');
+  if(!el) return;
+  el.innerHTML = items.map((item,i)=>`
+    <div class="score-card">
+      <div style="font-size:28px;margin-bottom:8px">${item.icon}</div>
+      <div class="score-num" style="color:${item.color}">#${i+1}</div>
+      <div style="font-size:22px;font-weight:800;color:${item.color};margin-bottom:6px">${item.score}%</div>
+      <div class="score-lbl">${item.label}</div>
+    </div>`).join('');
+}
+
+// ════════════════ Charts ════════════════
+
+// Q1 平台使用 (bar)
+new Chart(document.getElementById('c1'), {
+  type: 'bar',
+  data: {
+    labels: ['古诗文网','西窗烛','从未使用','长相思','诗词吾爱','其他','古诗词典'],
+    datasets: [{ label:'人次', data: [69,39,54,15,12,11,10],
+      backgroundColor: [GOLD, JADE, MUTED, AZURE, LAVENDER, AMBER, TEAL],
+      borderRadius: 6, borderSkipped: false }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c=>`${c.raw}人` } } },
+    scales: {
+      x: { grid: { color: gridColor() }, ticks: { callback: v=>`${v}人` } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Q15 最严重问题 (doughnut)
+new Chart(document.getElementById('c15'), {
+  type: 'doughnut',
+  data: {
+    labels: ['功能不完善','广告太多','收费不合理','界面设计不好','内容质量差','其他'],
+    datasets: [{ data:[33,21,12,8,7,3],
+      backgroundColor:[CRIMSON,AMBER,GOLD,LAVENDER,JADE,MUTED],
+      borderWidth: 0, hoverOffset: 8 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: { position:'right', labels: { usePointStyle: true, padding: 12 } },
+      tooltip: { callbacks: { label: c=>`${c.label}: ${c.raw}人 (${(c.raw/84*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// Q2 频率 (doughnut)
+new Chart(document.getElementById('c2'), {
+  type: 'doughnut',
+  data: {
+    labels: ['很少使用','每周2-3次','每月1-2次','每周1次','每天多次','每天1次'],
+    datasets: [{ data:[32,24,10,6,8,4],
+      backgroundColor:[MUTED,JADE,AMBER,AZURE,GOLD,TEAL],
+      borderWidth: 0, hoverOffset: 6 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout:'60%',
+    plugins: {
+      legend: { position:'bottom', labels: { usePointStyle: true, padding:8, boxWidth:8, font:{size:11} } },
+      tooltip: { callbacks:{ label: c=>`${c.label}: ${c.raw}人` } }
+    }
+  }
+});
+
+// Radar 痛点
+new Chart(document.getElementById('radar'), {
+  type: 'radar',
+  data: {
+    labels: ['内容质量','搜索功能','背诵功能','界面设计','广告问题','会员体系'],
+    datasets: [{
+      label: '问题严重指数',
+      data: [45, 65, 40, 46, 63, 46],
+      backgroundColor: 'rgba(200,149,42,.12)',
+      borderColor: GOLD,
+      pointBackgroundColor: GOLD,
+      pointRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: { r: { beginAtZero: true, max:80, grid: { color: gridColor() },
+      pointLabels: { font: { size: 11 } }, ticks: { display: false } } },
+    plugins: { legend: { display: false } }
+  }
+});
+
+// Q2b 频率 (bar 横)
+new Chart(document.getElementById('c2b'), {
+  type: 'bar',
+  data: {
+    labels: ['很少使用/偶尔','每周2-3次','每月1-2次','每天多次','每周1次','每天1次'],
+    datasets: [{ label:'人次', data:[32,24,10,8,6,4],
+      backgroundColor: [MUTED,JADE,AMBER,GOLD,AZURE,TEAL],
+      borderRadius:6, borderSkipped:false }]
+  },
+  options: {
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw}人 (${(c.raw/84*100).toFixed(1)}%)`}} },
+    scales:{ x:{ grid:{color:gridColor()}, ticks:{callback:v=>`${v}人`} }, y:{grid:{display:false}} }
+  }
+});
+
+// Q3 目的
+renderHBars('q3-bars', [
+  {label:'查找原文/注释/赏析', pct:73.81},
+  {label:'兴趣爱好，欣赏诗词', pct:65.48},
+  {label:'学习古诗词（备考）', pct:54.76},
+  {label:'背诵诗词', pct:29.76},
+  {label:'创作诗词', pct:11.90},
+  {label:'社交分享', pct:7.14},
+  {label:'其他', pct:3.57},
+], JADE);
+
+// Q4 内容错误 bars
+renderHBars('q4-bars',[
+  {label:'赏析内容质量差', pct:45.24},
+  {label:'翻译生硬/不准确', pct:40.48},
+  {label:'注释不准确或错误', pct:42.86},
+  {label:'诗词原文错别字', pct:23.81},
+  {label:'没有遇到过', pct:26.19},
+  {label:'作者信息错误', pct:11.90},
+  {label:'朝代信息错误', pct:4.76},
+],CRIMSON);
+
+// Q5 内容覆盖
+renderHBars('q5-bars',[
+  {label:'冷门诗词收录不全', pct:77.38},
+  {label:'同一诗词版本未标注', pct:52.38},
+  {label:'缺乏深度赏析', pct:50.00},
+  {label:'缺乏历史文化知识', pct:45.24},
+  {label:'缺乏背景故事', pct:21.43},
+  {label:'缺乏作者生平', pct:17.86},
+  {label:'内容很全面', pct:1.19},
+],AMBER);
+
+// Q4 chart
+new Chart(document.getElementById('c4'), {
+  type:'bar',
+  data:{
+    labels:['赏析质量差','翻译不准确','注释错误','无内容错误','原文错字','作者错误','朝代错误'],
+    datasets:[{label:'遭遇率%',data:[45.24,40.48,42.86,26.19,23.81,11.90,4.76],
+      backgroundColor:[CRIMSON,AMBER,LAVENDER,JADE,GOLD,AZURE,TEAL],
+      borderRadius:5,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
+    scales:{x:{grid:{color:gridColor()},max:60,ticks:{callback:v=>`${v}%`}},y:{grid:{display:false}}}
+  }
+});
+
+// Q5 chart
+new Chart(document.getElementById('c5'), {
+  type:'bar',
+  data:{
+    labels:['冷门收录不全','版本未标注','缺深度赏析','缺历史文化','缺背景故事','缺作者生平'],
+    datasets:[{label:'反馈率%',data:[77.38,52.38,50,45.24,21.43,17.86],
+      backgroundColor:[AMBER,GOLD,JADE,TEAL,AZURE,LAVENDER],
+      borderRadius:5,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
+    scales:{x:{grid:{color:gridColor()},max:90,ticks:{callback:v=>`${v}%`}},y:{grid:{display:false}}}
+  }
+});
+
+// Q7 搜索
+renderHBars('q7-bars',[
+  {label:'不支持模糊搜索', pct:65.48},
+  {label:'搜索结果不准确', pct:40.48},
+  {label:'按条件筛选缺失', pct:32.14},
+  {label:'功能完善', pct:16.67},
+  {label:'搜索速度慢', pct:15.48},
+  {label:'其他', pct:2.38},
+],AZURE);
+
+// Q8 背诵
+renderHBars('q8-bars',[
+  {label:'没有背诵功能', pct:40.48},
+  {label:'背诵模式单一', pct:39.29},
+  {label:'无科学记忆方法', pct:32.14},
+  {label:'功能完善', pct:14.29},
+  {label:'无语音跟读', pct:14.29},
+  {label:'语音识别不准', pct:8.33},
+],JADE);
+
+// Q9 创作
+renderHBars('q9-bars',[
+  {label:'缺乏韵书查询', pct:44.05},
+  {label:'格律检测不准确', pct:40.48},
+  {label:'没有创作功能', pct:36.90},
+  {label:'缺乏创作社区', pct:29.76},
+  {label:'功能完善', pct:8.33},
+  {label:'其他', pct:3.57},
+],LAVENDER);
+
+// Q10 技术问题
+new Chart(document.getElementById('c10'), {
+  type:'doughnut',
+  data:{
+    labels:['加载速度慢','离线功能差','APP闪退卡顿','无技术问题','数据同步','其他'],
+    datasets:[{data:[32,32,25,24,14,2],
+      backgroundColor:[CRIMSON,AMBER,GOLD,JADE,AZURE,MUTED],
+      borderWidth:0,hoverOffset:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+    plugins:{legend:{position:'right',labels:{usePointStyle:true,padding:10,font:{size:11}}},
+      tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}人`}}}}
+});
+
+// Feature radar
+new Chart(document.getElementById('feature-radar'), {
+  type:'radar',
+  data:{
+    labels:['搜索功能','背诵功能','创作功能','技术稳定','离线能力','速度性能'],
+    datasets:[{
+      label:'问题严重指数',
+      data:[65,40,44,29,38,38],
+      backgroundColor:'rgba(36,116,212,.1)',
+      borderColor:AZURE,
+      pointBackgroundColor:AZURE,
+      pointRadius:4
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{r:{beginAtZero:true,max:80,grid:{color:gridColor()},
+      pointLabels:{font:{size:11}},ticks:{display:false}}},
+    plugins:{legend:{display:false}}
+  }
+});
+
+// Q11 界面设计
+new Chart(document.getElementById('c11'), {
+  type:'bar',
+  data:{
+    labels:['界面杂乱','美观无问题','配色不好','字体不清晰','操作复杂','夜间模式差','其他'],
+    datasets:[{label:'反馈率%',data:[46.43,33.33,29.76,19.05,17.86,11.90,1.19],
+      backgroundColor:[GOLD,JADE,LAVENDER,AZURE,AMBER,TEAL,MUTED],
+      borderRadius:6,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
+    scales:{x:{grid:{color:gridColor()},max:60,ticks:{callback:v=>`${v}%`}},y:{grid:{display:false}}}
+  }
+});
+
+// Q12 导航
+new Chart(document.getElementById('c12'), {
+  type:'bar',
+  data:{
+    labels:['导航栏不清晰','页面跳转混乱','功能入口太深','导航合理','其他'],
+    datasets:[{label:'反馈率%',data:[42.86,42.86,33.33,26.19,0],
+      backgroundColor:[CRIMSON,AMBER,GOLD,JADE,MUTED],
+      borderRadius:6,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
+    scales:{x:{grid:{color:gridColor()},max:60,ticks:{callback:v=>`${v}%`}},y:{grid:{display:false}}}
+  }
+});
+
+// Q13 广告
+renderHBars('q13-bars',[
+  {label:'有弹窗广告', pct:63.10},
+  {label:'广告位置显眼', pct:42.86},
+  {label:'广告太多', pct:35.71},
+  {label:'强制观看广告', pct:29.76},
+  {label:'无广告问题', pct:20.24},
+  {label:'其他', pct:1.19},
+],CRIMSON);
+
+// Q14 会员
+renderHBars('q14-bars',[
+  {label:'会员价格太贵', pct:46.43},
+  {label:'基础功能需会员', pct:45.24},
+  {label:'会员权益太少', pct:34.52},
+  {label:'无会员问题', pct:15.48},
+  {label:'自动续费陷阱', pct:23.81},
+  {label:'其他', pct:4.76},
+],AMBER);
+
+// Q6 版权
+new Chart(document.getElementById('c6'), {
+  type:'doughnut',
+  data:{
+    labels:['付费才能查看','无版权问题','付费质量差','无重复收费'],
+    datasets:[{data:[51,25,24,12],
+      backgroundColor:[CRIMSON,JADE,AMBER,LAVENDER],
+      borderWidth:0,hoverOffset:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+    plugins:{legend:{position:'right',labels:{usePointStyle:true,padding:10,font:{size:11}}},
+      tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}人 (${(c.raw/84*100).toFixed(1)}%)`}}}}
+});
+
+// Biz chart
+new Chart(document.getElementById('biz-chart'), {
+  type:'radar',
+  data:{
+    labels:['弹窗广告','付费内容','广告太多','会员价格','基础需会员','自动续费'],
+    datasets:[{
+      label:'问题指数',
+      data:[63,61,36,46,45,24],
+      backgroundColor:'rgba(214,59,82,.1)',
+      borderColor:CRIMSON,
+      pointBackgroundColor:CRIMSON,
+      pointRadius:4
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    scales:{r:{beginAtZero:true,max:80,grid:{color:gridColor()},
+      pointLabels:{font:{size:11}},ticks:{display:false}}},
+    plugins:{legend:{display:false}}
+  }
+});
+
+// Q16 改进期望
+new Chart(document.getElementById('c16'), {
+  type:'bar',
+  data:{
+    labels:['提高内容质量','减少广告','完善功能','优化界面设计','合理收费','其他'],
+    datasets:[{label:'期望率%',data:[70.24,59.52,57.14,46.43,39.29,1.19],
+      backgroundColor:[JADE,CRIMSON,AZURE,LAVENDER,AMBER,MUTED],
+      borderRadius:6,borderSkipped:false}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
+    scales:{
+      x:{grid:{display:false}},
+      y:{grid:{color:gridColor()},max:85,ticks:{callback:v=>`${v}%`}}
+    }
+  }
+});
+
+// Q17 推荐
+new Chart(document.getElementById('c17'), {
+  type:'doughnut',
+  data:{
+    labels:['可能会(52.4%)','不确定(20.2%)','一定会(15.5%)','可能不会(8.3%)','一定不会(3.6%)'],
+    datasets:[{data:[44,17,13,7,3],
+      backgroundColor:[JADE,MUTED,GOLD,AMBER,CRIMSON],
+      borderWidth:0,hoverOffset:8}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+    plugins:{legend:{position:'right',labels:{usePointStyle:true,padding:10,font:{size:12}}},
+      tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}人`}}}}
+});
+
+// Init
+renderNPS();
+renderPriority();
+
+// 防止和 /poem 相关的全局变量、样式、脚本冲突
+// 若有 window.POEM 相关变量或全局样式，均不会影响本页面
+// 若需加载本地数据，请用 fetch('./data/xxx.json') 或直接内嵌数据
+</script>
+</body>
+</html>
