@@ -1,6 +1,6 @@
 {
   "W": {
-    "lastId": 1843,
+    "lastId": 1858,
     "items": {
       "W00002": {
         "id": "W00002",
@@ -90349,7 +90349,7 @@
           "reviewedByName": "杨谦(2120250642)",
           "reviewedBy": "杨谦(2120250642)",
           "reviewedAt": "2025-12-25",
-          "updatedAt": "2025-12-29"
+          "updatedAt": "2026-05-30"
         },
         "content": "君不见黄河之水天上来，奔流到海不复回。\n君不见高堂明镜悲白发，朝如青丝暮成雪。\n人生得意须尽欢，莫使金樽空对月。\n天生我材必有用，千金散尽还复来。\n烹羊宰牛且为乐，会须一饮三百杯。\n岑夫子，丹丘生，将进酒，杯莫停。\n与君歌一曲，请君为我倾耳听。\n钟鼓馔玉不足贵，但愿长醉不愿醒。\n古来圣贤皆寂寞，惟有饮者留其名。\n陈王昔时宴平乐，斗酒十千恣欢谑。\n主人何为言少钱，径须沽取对君酌。\n五花马、千金裘，呼儿将出换美酒，与尔同销万古愁。",
         "annotations": [
@@ -90358,6 +90358,7 @@
             "end": 3,
             "text": "君不见",
             "note": "乐府中常用的一种夸语。",
+            "field": "content",
             "linkKey": "anno-0-3-mivld1z40"
           },
           {
@@ -90365,6 +90366,7 @@
             "end": 10,
             "text": "天上来",
             "note": "黄河发源于地势极高法青海，故称。",
+            "field": "content",
             "linkKey": "anno-7-10-mivld7ly1"
           },
           {
@@ -90372,6 +90374,7 @@
             "end": 25,
             "text": "高堂",
             "note": "一说房屋的正室厅堂。一说指父母。一作“床头”。",
+            "field": "content",
             "linkKey": "anno-23-25-mivldgzi2"
           },
           {
@@ -90379,6 +90382,7 @@
             "end": 35,
             "text": "青丝",
             "note": "喻柔软的黑发。一作“青云”。",
+            "field": "content",
             "linkKey": "anno-33-35-mivldns43"
           },
           {
@@ -90386,6 +90390,7 @@
             "end": 44,
             "text": "得意",
             "note": "适意高兴的时候。",
+            "field": "content",
             "linkKey": "anno-42-44-mivldvnm4"
           },
           {
@@ -90393,6 +90398,7 @@
             "end": 52,
             "text": "金樽",
             "note": "中国古代的盛酒器具。",
+            "field": "content",
             "linkKey": "anno-50-52-mivle24w5"
           },
           {
@@ -90400,6 +90406,7 @@
             "end": 84,
             "text": "会须",
             "note": "正应当。",
+            "field": "content",
             "linkKey": "anno-82-84-mivlea0g6"
           },
           {
@@ -90407,6 +90414,7 @@
             "end": 110,
             "text": "与君",
             "note": "给你们，为你们。",
+            "field": "content",
             "linkKey": "anno-108-110-mivlejim7"
           },
           {
@@ -90414,6 +90422,7 @@
             "end": 125,
             "text": "钟鼓",
             "note": "富贵人家宴会中奏乐使用的乐器。",
+            "field": "content",
             "linkKey": "anno-123-125-mivlepz48"
           },
           {
@@ -90421,6 +90430,7 @@
             "end": 127,
             "text": "馔玉",
             "note": "形容食物如玉一样精美。",
+            "field": "content",
             "linkKey": "anno-125-127-mivlf17s9"
           },
           {
@@ -90428,6 +90438,7 @@
             "end": 159,
             "text": "陈王",
             "note": "指陈思王曹植。",
+            "field": "content",
             "linkKey": "anno-157-159-mivlf956a"
           },
           {
@@ -90435,6 +90446,7 @@
             "end": 170,
             "text": "恣",
             "note": "纵情任意。",
+            "field": "content",
             "linkKey": "anno-169-170-mivlfhhhb"
           },
           {
@@ -90442,6 +90454,7 @@
             "end": 176,
             "text": "主人",
             "note": "指宴请李白的元丹丘。",
+            "field": "content",
             "linkKey": "anno-174-176-mivlfosoc"
           },
           {
@@ -90449,6 +90462,7 @@
             "end": 184,
             "text": "径须",
             "note": "干脆，只管。",
+            "field": "content",
             "linkKey": "anno-182-184-mivlfw5qd"
           },
           {
@@ -90456,6 +90470,7 @@
             "end": 194,
             "text": "五花马",
             "note": "一说指名贵的马，一说毛色作五花纹，一说颈上长毛修剪成五瓣。",
+            "field": "content",
             "linkKey": "anno-191-194-mivlg2yge"
           },
           {
@@ -90463,6 +90478,7 @@
             "end": 211,
             "text": "销",
             "note": "同“消”。",
+            "field": "content",
             "linkKey": "anno-210-211-mivlg97df"
           },
           {
@@ -90470,6 +90486,7 @@
             "end": 94,
             "text": "岑夫子",
             "note": "岑勋。",
+            "field": "content",
             "linkKey": "anno-91-94-mjr6awu6jv60jo"
           },
           {
@@ -90477,6 +90494,7 @@
             "end": 98,
             "text": "丹丘生",
             "note": "元丹丘。",
+            "field": "content",
             "linkKey": "anno-95-98-mjr6b0xk5boo4h"
           },
           {
@@ -90484,6 +90502,7 @@
             "end": 173,
             "text": "陈王昔时宴平乐，斗酒十千恣欢谑。",
             "note": "曹植《名都篇》：归来宴平乐，美酒斗十千。",
+            "field": "content",
             "linkKey": "anno-157-173-mjr6c400i7f6hb"
           },
           {
@@ -90491,10 +90510,32 @@
             "end": 203,
             "text": "将出",
             "note": "拿出。",
+            "field": "content",
             "linkKey": "anno-201-203-mjr6cvga1si70q"
           }
         ],
-        "links": [],
+        "links": [
+          {
+            "field": "fields.author",
+            "start": 0,
+            "end": 2,
+            "text": "李白",
+            "targetId": "C00001",
+            "targetName": "李白",
+            "targetType": "C",
+            "placeholder": false
+          },
+          {
+            "field": "fields.origin",
+            "start": 1,
+            "end": 6,
+            "text": "河岳英灵集",
+            "targetId": "G00036",
+            "targetName": "河岳英灵集",
+            "targetType": "G",
+            "placeholder": false
+          }
+        ],
         "fields": {
           "title": "将进酒",
           "otherNames": "",
@@ -90542,7 +90583,8 @@
               "出处": "方东树《昭昧詹言》",
               "内容": "此诗豪放跌宕，纯以气胜，然其中有至理存焉，非徒骋才使气者比。"
             }
-          ]
+          ],
+          "preface": ""
         }
       },
       "W00747": {
@@ -283672,11 +283714,11 @@
           "createdByName": "孙鑫环(2512342)",
           "createdBy": "孙鑫环(2512342)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
         },
         "content": "从军玉门道，逐虏金微山。\n笛奏梅花曲，刀开明月环。\n鼓声鸣海上，兵气拥云间。\n愿斩单于首，长驱静铁关。",
         "annotations": [
@@ -283749,8 +283791,8 @@
           "rhyme": "上平十五删"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
           "remark": "",
@@ -283782,11 +283824,11 @@
           "createdByName": "孙鑫环(2512342)",
           "createdBy": "孙鑫环(2512342)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
         },
         "content": "胸中磊落藏五兵，欲试无路空峥嵘。\n酒为旗鼓笔刀槊，势从天落银河倾。\n端溪石池浓作墨，烛光相射飞纵横。\n须臾收卷复把酒，如见万里烟尘清。\n丈夫身在要有立，逆虏运尽行当平。\n何时夜出五原塞，不闻人语闻鞭声。",
         "annotations": [
@@ -283920,11 +283962,11 @@
           "form": "近体",
           "sub": "七律",
           "sub2": "",
-          "rhyme": "下平八庚"
+          "rhyme": "八庚"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
           "expectedDuration": "2.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -283952,11 +283994,11 @@
           "createdByName": "孙鑫环(2512342)",
           "createdBy": "孙鑫环(2512342)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
         },
         "content": "孟冬十郡良家子，血作陈陶泽中水。\n野旷天清无战声，四万义军同日死。\n群胡归来血洗箭，仍唱胡歌饮都市。\n都人回面向北啼，日夜更望官军至。",
         "annotations": [
@@ -284101,8 +284143,8 @@
           "rhyme": "四寘"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
           "remark": "",
@@ -284154,11 +284196,11 @@
           "createdByName": "孙鑫环(2512342)",
           "createdBy": "孙鑫环(2512342)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
         },
         "content": "岁暮远为客，边隅还用兵。\n烟尘犯雪岭，鼓角动江城。\n天地日流血，朝廷谁请缨？\n济时敢爱死？寂寞壮心惊！",
         "annotations": [
@@ -284247,8 +284289,8 @@
           "rhyme": "下平八庚"
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
           "remark": "",
@@ -284274,11 +284316,2495 @@
             }
           ]
         }
+      },
+      "W01844": {
+        "id": "W01844",
+        "type": "W",
+        "name": "行苇",
+        "meta": {
+          "createdById": "u_80",
+          "createdByName": "林菲菲(2512046)",
+          "createdBy": "林菲菲(2512046)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
+        },
+        "content": "敦彼行苇，牛羊勿践履。方苞方体，维叶泥泥。戚戚兄弟，莫远具尔。或肆之筵，或授之几。\n肆筵设席，授几有缉御。或献或酢，洗爵奠斝。醓醢以荐，或燔或炙。嘉肴脾臄，或歌或咢。\n敦弓既坚，四鍭既钧，舍矢既均，序宾以贤。敦弓既句，既挟四鍭。四鍭如树，序宾以不侮。\n曾孙维主，酒醴维醹，酌以大斗，以祈黄耇。黄耇台背，以引以翼。寿考维祺，以介景福。",
+        "annotations": [
+          {
+            "start": 2,
+            "end": 4,
+            "text": "行苇",
+            "note": "道路边的芦苇。行：道路。",
+            "field": "content",
+            "linkKey": "anno-2-4-mpt4uej5nxd4q4"
+          },
+          {
+            "start": 0,
+            "end": 2,
+            "text": "敦彼",
+            "note": "敦（tuán）彼：苇草丛生貌。",
+            "field": "content",
+            "linkKey": "anno-0-2-mpt4v2ptovo5yb"
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "践履",
+            "note": "践履：践踏。",
+            "field": "content",
+            "linkKey": "anno-8-10-mpt4vb9t0lh3sh"
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "方苞",
+            "note": "方苞：指枝叶尚包裹未分之时。",
+            "field": "content",
+            "linkKey": "anno-11-13-mpt4vnxvdytjss"
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "体",
+            "note": "体：成形。",
+            "field": "content",
+            "linkKey": "anno-14-15-mpt4x6u2uv7q6w"
+          },
+          {
+            "start": 18,
+            "end": 20,
+            "text": "泥泥",
+            "note": "苇叶润泽貌。",
+            "field": "content",
+            "linkKey": "anno-18-20-mpt4xcxetxe6q9"
+          },
+          {
+            "start": 21,
+            "end": 23,
+            "text": "戚戚",
+            "note": "亲热。",
+            "field": "content",
+            "linkKey": "anno-21-23-mpt4xibojc0en4"
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "远",
+            "note": "疏远。",
+            "field": "content",
+            "linkKey": "anno-27-28-mpt4xogkwd4393"
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "具",
+            "note": "通“俱”。",
+            "field": "content",
+            "linkKey": "anno-28-29-mpt4xuh7na11mj"
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "尔",
+            "note": "“迩”，近。",
+            "field": "content",
+            "linkKey": "anno-29-30-mpt4y0yrs50hk2"
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": "肆",
+            "note": "陈设。",
+            "field": "content",
+            "linkKey": "anno-32-33-mpt4y7d0g0hnb5"
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "筵",
+            "note": "竹席。",
+            "field": "content",
+            "linkKey": "anno-34-35-mpt4ydg66t5bty"
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "几",
+            "note": "古人席地而坐时，所依靠的矮脚小木桌，一般是老人才用。",
+            "field": "content",
+            "linkKey": "anno-39-40-mpt4yjzxrbgf55"
+          },
+          {
+            "start": 50,
+            "end": 52,
+            "text": "缉御",
+            "note": "相继有人侍候。缉，继续。御，侍者。",
+            "field": "content",
+            "linkKey": "anno-50-52-mpt4yt71y831hz"
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": "献",
+            "note": "主人对客敬酒。",
+            "field": "content",
+            "linkKey": "anno-54-55-mpt4z3wtyg4cde"
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "酢",
+            "note": "酢（zuò）：客人拿酒回敬。",
+            "field": "content",
+            "linkKey": "anno-56-57-mpt4zaymx7ze6n"
+          },
+          {
+            "start": 58,
+            "end": 60,
+            "text": "洗爵",
+            "note": "周时礼制，主人敬洒，取几上之杯先洗一下，再斟酒献客，客人回敬主人，也是如此操作。爵，古酒器，青铜制，有流、柱、鋬（pàn）和三足。奠斝（jiǎ）：周时礼制，主人敬的酒客人饮毕，则置杯于几上；客人回敬主人，主人饮毕也须这样做。奠，置。斝，古酒器，青铜制，圆口，有鋬和三足。",
+            "field": "content",
+            "linkKey": "anno-58-60-mpt4zqod80fkyi"
+          },
+          {
+            "start": 63,
+            "end": 64,
+            "text": "醓",
+            "note": "醓（tǎn）：多汁的肉酱。",
+            "field": "content",
+            "linkKey": "anno-63-64-mpt500rzlx5tdj"
+          },
+          {
+            "start": 64,
+            "end": 65,
+            "text": "醢",
+            "note": "醢（hǎi）：肉酱。",
+            "field": "content",
+            "linkKey": "anno-64-65-mpt506pjeq1ppn"
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": "荐",
+            "note": "进献。",
+            "field": "content",
+            "linkKey": "anno-66-67-mpt50g3zm6y3wm"
+          },
+          {
+            "start": 69,
+            "end": 70,
+            "text": "燔",
+            "note": "燔（fán）：烧肉。",
+            "field": "content",
+            "linkKey": "anno-69-70-mpt50mv52ayj1p"
+          },
+          {
+            "start": 71,
+            "end": 72,
+            "text": "炙",
+            "note": "炙：烤肉。",
+            "field": "content",
+            "linkKey": "anno-71-72-mpt50twfpfwhqy"
+          },
+          {
+            "start": 75,
+            "end": 76,
+            "text": "脾",
+            "note": "通“膍（pí）”，牛胃，俗称牛百叶。",
+            "field": "content",
+            "linkKey": "anno-75-76-mpt514swl2leui"
+          },
+          {
+            "start": 76,
+            "end": 77,
+            "text": "臄",
+            "note": "臄（jué）：牛舌。",
+            "field": "content",
+            "linkKey": "anno-76-77-mpt51e4pota1zu"
+          },
+          {
+            "start": 79,
+            "end": 80,
+            "text": "歌",
+            "note": "配着琴瑟唱，叫“歌”。",
+            "field": "content",
+            "linkKey": "anno-79-80-mpt51kw8jua6z1"
+          },
+          {
+            "start": 81,
+            "end": 82,
+            "text": "咢",
+            "note": "咢（è）：只打鼓不伴唱，叫“咢”。",
+            "field": "content",
+            "linkKey": "anno-81-82-mpt51qj6ei2d8m"
+          },
+          {
+            "start": 84,
+            "end": 86,
+            "text": "敦弓",
+            "note": "敦（diāo）弓：雕弓。敦，通“雕”。",
+            "field": "content",
+            "linkKey": "anno-84-86-mpt51xuhplnll6"
+          },
+          {
+            "start": 87,
+            "end": 88,
+            "text": "坚",
+            "note": "坚固，坚劲。",
+            "field": "content",
+            "linkKey": "anno-87-88-mpt5234qi13nz2"
+          },
+          {
+            "start": 90,
+            "end": 91,
+            "text": "鍭",
+            "note": "鍭（hóu）：一种箭，金属箭头，鸟羽箭尾。",
+            "field": "content",
+            "linkKey": "anno-90-91-mpt52e5ul5srl1"
+          },
+          {
+            "start": 92,
+            "end": 93,
+            "text": "钧",
+            "note": "合乎标准。",
+            "field": "content",
+            "linkKey": "anno-92-93-mpt52jw1z0vxwh"
+          },
+          {
+            "start": 94,
+            "end": 96,
+            "text": "舍矢",
+            "note": "放箭。",
+            "field": "content",
+            "linkKey": "anno-94-96-mpt52q62cu0etv"
+          },
+          {
+            "start": 97,
+            "end": 98,
+            "text": "均",
+            "note": "射中。",
+            "field": "content",
+            "linkKey": "anno-97-98-mpt52uzu0hhrcg"
+          },
+          {
+            "start": 99,
+            "end": 101,
+            "text": "序宾",
+            "note": "安排宾客在宴席上的座位次序。",
+            "field": "content",
+            "linkKey": "anno-99-101-mpt53355394f4b"
+          },
+          {
+            "start": 102,
+            "end": 103,
+            "text": "贤",
+            "note": "此指射技的高低。",
+            "field": "content",
+            "linkKey": "anno-102-103-mpt53a5vf54pw1"
+          },
+          {
+            "start": 107,
+            "end": 108,
+            "text": "句",
+            "note": "句（gōu）：借为“彀”，张弓引满。",
+            "field": "content",
+            "linkKey": "anno-107-108-mpt545374dsv8q"
+          },
+          {
+            "start": 117,
+            "end": 118,
+            "text": "树",
+            "note": "竖立，指箭射在靶子上像树立着一样。",
+            "field": "content",
+            "linkKey": "anno-117-118-mpt54c38y27r1n"
+          },
+          {
+            "start": 123,
+            "end": 124,
+            "text": "侮",
+            "note": "轻侮，怠慢。",
+            "field": "content",
+            "linkKey": "anno-123-124-mpt54jvoj9rn6h"
+          },
+          {
+            "start": 126,
+            "end": 128,
+            "text": "曾孙",
+            "note": "主祭者之称，他对祖先神灵自称曾孙。",
+            "field": "content",
+            "linkKey": "anno-126-128-mpt54qrh9kldd5"
+          },
+          {
+            "start": 132,
+            "end": 133,
+            "text": "醴",
+            "note": "醴（lǐ）：甜酒。",
+            "field": "content",
+            "linkKey": "anno-132-133-mpt54xfhxb7rdz"
+          },
+          {
+            "start": 134,
+            "end": 135,
+            "text": "醹",
+            "note": "醹（rú）：酒味醇厚。",
+            "field": "content",
+            "linkKey": "anno-134-135-mpt55365f28l1l"
+          },
+          {
+            "start": 139,
+            "end": 140,
+            "text": "斗",
+            "note": "古酒器。大斗柄长三尺。此指用大勺斟酒以痛饮。",
+            "field": "content",
+            "linkKey": "anno-139-140-mpt55afhqjkmbz"
+          },
+          {
+            "start": 142,
+            "end": 143,
+            "text": "祈",
+            "note": "求。",
+            "field": "content",
+            "linkKey": "anno-142-143-mpt55h50ksfg8y"
+          },
+          {
+            "start": 143,
+            "end": 145,
+            "text": "黄耇",
+            "note": "黄耇（gǒu）：年高长寿。",
+            "field": "content",
+            "linkKey": "anno-143-145-mpt55op1t5p8rc"
+          },
+          {
+            "start": 148,
+            "end": 150,
+            "text": "台背",
+            "note": "或谓背有老斑如鲐鱼，或谓背驼，总之都是老态龙钟的样子。台，同“鲐”。",
+            "field": "content",
+            "linkKey": "anno-148-150-mpt55watktkp6y"
+          },
+          {
+            "start": 152,
+            "end": 153,
+            "text": "引",
+            "note": "引道。此指搀扶。",
+            "field": "content",
+            "linkKey": "anno-152-153-mpt5649ipvh2ch"
+          },
+          {
+            "start": 154,
+            "end": 155,
+            "text": "翼",
+            "note": "扶持帮助。",
+            "field": "content",
+            "linkKey": "anno-154-155-mpt569zho2dwpr"
+          },
+          {
+            "start": 156,
+            "end": 158,
+            "text": "寿考",
+            "note": "长寿。",
+            "field": "content",
+            "linkKey": "anno-156-158-mpt56g1rhgwg30"
+          },
+          {
+            "start": 159,
+            "end": 160,
+            "text": "祺",
+            "note": "祺（qí）：福，吉祥。",
+            "field": "content",
+            "linkKey": "anno-159-160-mpt56o4uiao8nv"
+          },
+          {
+            "start": 162,
+            "end": 163,
+            "text": "介",
+            "note": "借为“丐”，乞求。",
+            "field": "content",
+            "linkKey": "anno-162-163-mpt56upblt98bk"
+          },
+          {
+            "start": 163,
+            "end": 165,
+            "text": "景福",
+            "note": "大福。",
+            "field": "content",
+            "linkKey": "anno-163-165-mpt570trmqjyk7"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "行苇",
+          "otherNames": "",
+          "author": "",
+          "origin": "《诗经·大雅·生民之什》",
+          "form": "古体",
+          "sub": "诗经",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "5",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "芦苇丛生长一块，别让牛羊把它踩。芦苇初茂长成形，叶儿润泽有光彩。同胞兄弟最亲密，不要疏远要友爱。铺设竹席来请客，端上茶几面前摆。\n铺席开宴上菜肴，轮流上桌一道道。主宾酬酢共畅饮，洗杯捧盏兴致高。送上肉酱请客尝，烧肉烤肉滋味好。牛胃牛舌也煮食，唱歌击鼓人欢笑。\n雕弓拽满势坚劲，四支利箭合标准；发箭一射中靶心，较量射技座次分。雕弓张开弦紧绷，利箭四支手持定。四箭竖立靶子上，排列客位不慢轻。\n宴会主人是曾孙，供应美酒味香醇。斟满大杯来献上，祷祝高寿贺老人。龙钟体态行蹒跚，扶他帮他侍者仁。长命吉祥是人瑞，请神赐送大福分。",
+          "background": "关于此诗的主题背景向来有较大争议。《毛诗序》云：“《行苇》，忠厚也。周家忠厚，仁及草木，故能内睦九族，外尊事黄耇，养老乞言，以成其福禄焉。”此为汉古文经学之说。《序》认为此诗则为周王室与族人饮宴之作。",
+          "evaluation": [
+            {
+              "出处": "朱熹《诗集传》",
+              "内容": "毛首章以四句兴二句，不成文理，二章又不协韵；郑首章有起兴而无所兴。皆误。"
+            },
+            {
+              "出处": "方玉润《诗经原始》",
+              "内容": "老者不射，酌大斗饮之，座中乃不寂寞。"
+            },
+            {
+              "出处": "《毛诗序》",
+              "内容": "《行苇》，忠厚也。周家忠厚，仁及草木，故内睦九族，外尊事黄耉，养老乞言，以成其福禄焉。"
+            },
+            {
+              "出处": "朱熹《诗序辨说》",
+              "内容": "此诗章句，本甚分明，但以说者不知比兴之体，音韵之节，遂不复得全诗之本意而碎读之，逐句自生意义，不暇寻绎血脉，照管前后，但见勿践行苇，便谓仁及草木，但见戚戚兄弟，便谓亲睦九族；但见黄耈台背，便谓养老；但见以祈黄耉，便谓乞言；但见介尔景福，便谓成其福禄。随文生义，无复伦理，诸序之中，此失尤甚，览者详之。"
+            },
+            {
+              "出处": "姚际恒《诗经通论》",
+              "内容": "是诗者，固燕同、异姓父兄、宾客之诗，而醻酢、射礼亦并行之，终之以尊优耆老焉。古礼不可考，不得以后世礼文执而求之也。"
+            },
+            {
+              "出处": "王先谦《诗三家义集疏》",
+              "内容": "盖公刘举射飨之礼，出行有此故事，诗人美之，因以名篇。《毛序》删之，特以示异于众。"
+            }
+          ]
+        }
+      },
+      "W01845": {
+        "id": "W01845",
+        "type": "W",
+        "name": "既醉",
+        "meta": {
+          "createdById": "u_80",
+          "createdByName": "林菲菲(2512046)",
+          "createdBy": "林菲菲(2512046)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
+        },
+        "content": "既醉以酒，既饱以德。君子万年，介尔景福。\n既醉以酒，尔肴既将。君子万年，介尔昭明。\n昭明有融，高朗令终，令终有俶。公尸嘉告。\n其告维何？笾豆静嘉。朋友攸摄，摄以威仪。\n威仪孔时，君子有孝子。孝子不匮，永锡尔类。\n其类维何？室家之壸。君子万年，永锡祚胤。\n其胤维何？天被尔禄。君子万年，景命有仆。\n其仆维何？釐尔女士。釐尔女士，从以孙子。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "既",
+            "note": "已经。",
+            "field": "content",
+            "linkKey": "anno-0-1-mpt5esu1gv3yje"
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "德",
+            "note": "恩惠。",
+            "field": "content",
+            "linkKey": "anno-8-9-mpt5ezxkr43y7o"
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "介",
+            "note": "施予。",
+            "field": "content",
+            "linkKey": "anno-15-16-mpt5f8kpllgb9f"
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": "景福",
+            "note": "大福。",
+            "field": "content",
+            "linkKey": "anno-17-19-mpt5funf2s0tvd"
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "尔",
+            "note": "指君子。",
+            "field": "content",
+            "linkKey": "anno-16-17-mpt5g24pa3sk6y"
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "将",
+            "note": "行也。亦奉持而进也。一说通“臧”。",
+            "field": "content",
+            "linkKey": "anno-29-30-mpt5g9x5to6f5s"
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "昭明",
+            "note": "光明。",
+            "field": "content",
+            "linkKey": "anno-38-40-mpt5gmyqwagsxu"
+          },
+          {
+            "start": 44,
+            "end": 46,
+            "text": "有融",
+            "note": "融融，盛长之貌。",
+            "field": "content",
+            "linkKey": "anno-44-46-mpt5gvoz25bffc"
+          },
+          {
+            "start": 49,
+            "end": 51,
+            "text": "令终",
+            "note": "好的结果。",
+            "field": "content",
+            "linkKey": "anno-49-51-mpt5h55vbq1qr4"
+          },
+          {
+            "start": 55,
+            "end": 56,
+            "text": "俶",
+            "note": "俶（chù）：始。",
+            "field": "content",
+            "linkKey": "anno-55-56-mpt5hdhg31byks"
+          },
+          {
+            "start": 57,
+            "end": 59,
+            "text": "公尸",
+            "note": "古代祭祀时以人装扮成祖先接受祭祀，这人就称“尸”，祖先为君主诸侯，则称“公尸”。",
+            "field": "content",
+            "linkKey": "anno-57-59-mpt5hlmcvs65w4"
+          },
+          {
+            "start": 59,
+            "end": 61,
+            "text": "嘉告",
+            "note": "好话，指祭祀时祝官代表尸为主祭者致嘏辞（赐福之辞）。",
+            "field": "content",
+            "linkKey": "anno-59-61-mpt5hubwy0luda"
+          },
+          {
+            "start": 68,
+            "end": 70,
+            "text": "笾豆",
+            "note": "笾（biān）豆：两种古代食器、礼器，笾竹制，豆陶制或青铜制。",
+            "field": "content",
+            "linkKey": "anno-68-70-mpt5i2poddn032"
+          },
+          {
+            "start": 70,
+            "end": 71,
+            "text": "静",
+            "note": "善。",
+            "field": "content",
+            "linkKey": "anno-70-71-mpt5iaji7a72aw"
+          },
+          {
+            "start": 75,
+            "end": 77,
+            "text": "攸摄",
+            "note": "所助，所辅。摄，辅助。",
+            "field": "content",
+            "linkKey": "anno-75-77-mpt5ih45znloqu"
+          },
+          {
+            "start": 86,
+            "end": 88,
+            "text": "孔时",
+            "note": "很好。",
+            "field": "content",
+            "linkKey": "anno-86-88-mpt5iuz17ep7bp"
+          },
+          {
+            "start": 98,
+            "end": 99,
+            "text": "匮",
+            "note": "匮（kuì）：亏，竭。",
+            "field": "content",
+            "linkKey": "anno-98-99-mpt5j20eu9pz5g"
+          },
+          {
+            "start": 101,
+            "end": 102,
+            "text": "锡",
+            "note": "锡（cì）：同“赐”。",
+            "field": "content",
+            "linkKey": "anno-101-102-mpt5j84epo3mf2"
+          },
+          {
+            "start": 103,
+            "end": 104,
+            "text": "类",
+            "note": "属类。",
+            "field": "content",
+            "linkKey": "anno-103-104-mpt5jdvacldbld"
+          },
+          {
+            "start": 114,
+            "end": 115,
+            "text": "壸",
+            "note": "壸（kǔn）：宫中之道，言深远而严肃也。引申为齐家。",
+            "field": "content",
+            "linkKey": "anno-114-115-mpt5jkh2bfumxb"
+          },
+          {
+            "start": 123,
+            "end": 124,
+            "text": "祚",
+            "note": "祚（zuò）：福。",
+            "field": "content",
+            "linkKey": "anno-123-124-mpt5jr3abg1am7"
+          },
+          {
+            "start": 124,
+            "end": 125,
+            "text": "胤",
+            "note": "胤（yìn）：后嗣。",
+            "field": "content",
+            "linkKey": "anno-124-125-mpt5jx6n8k6r4t"
+          },
+          {
+            "start": 133,
+            "end": 134,
+            "text": "被",
+            "note": "加。",
+            "field": "content",
+            "linkKey": "anno-133-134-mpt5k3xjugfnst"
+          },
+          {
+            "start": 142,
+            "end": 144,
+            "text": "景命",
+            "note": "大命，天命。",
+            "field": "content",
+            "linkKey": "anno-142-144-mpt5kbqfgbhmbx"
+          },
+          {
+            "start": 145,
+            "end": 146,
+            "text": "仆",
+            "note": "附。",
+            "field": "content",
+            "linkKey": "anno-145-146-mpt5khmf2fl5js"
+          },
+          {
+            "start": 153,
+            "end": 154,
+            "text": "釐",
+            "note": "釐（lài）：赐予。",
+            "field": "content",
+            "linkKey": "anno-153-154-mpt5lya1izhiv3"
+          },
+          {
+            "start": 155,
+            "end": 157,
+            "text": "女士",
+            "note": "女男，才女。又《郑笺》释为“女而有士行者，谓生淑媛，使为之妃也”。",
+            "field": "content",
+            "linkKey": "anno-155-157-mpt5m6iytiucik"
+          },
+          {
+            "start": 163,
+            "end": 165,
+            "text": "从以",
+            "note": "随之以。",
+            "field": "content",
+            "linkKey": "anno-163-165-mpt5mcyh9dah7z"
+          },
+          {
+            "start": 165,
+            "end": 167,
+            "text": "孙子",
+            "note": "“子孙”的倒文。",
+            "field": "content",
+            "linkKey": "anno-165-167-mpt5mk7mcdo8zk"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "既醉",
+          "otherNames": "",
+          "author": "",
+          "origin": "《诗经·大雅·生民之什》",
+          "form": "古体",
+          "sub": "诗经",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "君王赏赐美酒，让我喝得大醉；君王赏赐美食，让我们饱受恩惠。祝君王万岁万万岁，世世代代永享福禄与祥瑞。\n君王赏赐美酒，让我喝得大醉；您又命人端上佳肴美味。祝君王万岁万万岁，您的美名与大德永远放光辉。\n您那伟大的光辉如此长久，高尚的风范必使您得到善终。好的结局源于好的开端，先王的替身发出美好的祝愿：\n他到底说出了什么样的预言？祭祀的笾豆洁净又美好；亲朋好友都来维护辅助，一同营造隆重热烈的氛围。\n这隆重的氛围非常合时宜，祝伟大的君王有孝子继承；孝子贤孙世世代代相继，愿您的家族永受上天的赐予！\n您的家族领域究竟有多大？王宫深处的道路细又长。祝伟大的君王万寿无疆，上天永赐您福禄，让子孙兴旺！\n您的子孙后代将会怎样？上天让他们遍享福禄与富贵。祝君王万岁万万岁，上天授予您的大命永远相随！\n上天授予的大命如何相随？上天赐给您有德行的嫔妃。上天赐给您有德行的嫔妃，自然会有孝子贤孙世代不亏！",
+          "background": "关于此诗的主旨与背景，历来有多种观点。严粲《诗缉》认为：“此诗成王祭毕而燕（宴）臣也。”朱熹《诗集传》则说此诗系“父兄所以答《行苇》之诗”。程俊英《诗经译注》谓此诗“是周王祭祀祖先，祝官代表神主对主祭者周王的祝辞”。",
+          "evaluation": [
+            {
+              "出处": "朱熹《诗集传》",
+              "内容": "父兄所以答《行苇》之诗，言享其饮食恩意之厚，而愿其受福如此也。"
+            },
+            {
+              "出处": "严粲《诗缉》",
+              "内容": "此诗成王祭毕而燕（宴）臣也。太平无事，而后君臣可以燕饮相乐，故曰太平也。讲师言醉酒饱德，止章首二语；又言人有士君子之行，非诗意矣。"
+            },
+            {
+              "出处": "方玉润《诗经原始》",
+              "内容": "起得飘忽。……首二章福德双题，三章单承德字，四章以下皆言福，盖借嘏词以传神意耳。然非有是德何以膺是福？"
+            },
+            {
+              "出处": "《毛诗序》",
+              "内容": "《既醉》，大平也。醉酒饱德，人有士君子之行焉。"
+            },
+            {
+              "出处": "姚际恒《诗经通论》",
+              "内容": "《小序》谓“太平”，泛混。《大序》谓“醉酒饱德，人有士君子之行”，规摹《孟子》，绝可笑。《集传》谓“父兄所以答《行苇》”，《行苇》既未必为祭诗，又何答也？且后数章皆从“公尸嘉告”而衍之，非答之辞也。此祀宗庙礼成，备述神嘏之诗。"
+            }
+          ]
+        }
+      },
+      "W01846": {
+        "id": "W01846",
+        "type": "W",
+        "name": "凫鹥",
+        "meta": {
+          "createdById": "u_80",
+          "createdByName": "林菲菲(2512046)",
+          "createdBy": "林菲菲(2512046)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
+        },
+        "content": "凫鹥在泾，公尸来燕来宁。尔酒既清，尔肴既馨。公尸燕饮，福禄来成。\n凫鹥在沙，公尸来燕来宜。尔酒既多，尔肴既嘉。公尸燕饮，福禄来为。\n凫鹥在渚，公尸来燕来处。尔酒既湑，尔肴伊脯。公尸燕饮，福禄来下。\n凫鹥在潨，公尸来燕来宗，既燕于宗，福禄攸降。公尸燕饮，福禄来崇。\n凫鹥在亹，公尸来止熏熏。旨酒欣欣，燔炙芬芬。公尸燕饮，无有后艰。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "凫",
+            "note": "凫（fú）：野鸭。",
+            "field": "content",
+            "linkKey": "anno-0-1-mpt61l4k51tz2y"
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "鹥",
+            "note": "鹥（yī）：沙鸥。",
+            "field": "content",
+            "linkKey": "anno-1-2-mpt61s9wincwqg"
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "泾",
+            "note": "径直前流之水。",
+            "field": "content",
+            "linkKey": "anno-3-4-mpt61ynok2cefo"
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "公尸",
+            "note": "古代天子祭祀，代被祭者的神灵而受祭的活人。由于以卿为尸，故称公尸。尸：神主。",
+            "field": "content",
+            "linkKey": "anno-5-7-mpt62cel5hsljr"
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "宁",
+            "note": "享安宁。",
+            "field": "content",
+            "linkKey": "anno-10-11-mpt62on0pogb67"
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "燕",
+            "note": "通“宴”，宴饮。",
+            "field": "content",
+            "linkKey": "anno-8-9-mpt62u2mwg0c8a"
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "尔",
+            "note": "指主祭者，即周王。",
+            "field": "content",
+            "linkKey": "anno-12-13-mpt636tya54ej0"
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "肴",
+            "note": "肴（yáo）：菜肴。",
+            "field": "content",
+            "linkKey": "anno-18-19-mpt63dceycgevf"
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "馨",
+            "note": "香气。",
+            "field": "content",
+            "linkKey": "anno-20-21-mpt63v3qxefv39"
+          },
+          {
+            "start": 29,
+            "end": 31,
+            "text": "来成",
+            "note": "成，成就，成全。",
+            "field": "content",
+            "linkKey": "anno-29-31-mpt6423rt598v8"
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "沙",
+            "note": "水边沙滩。",
+            "field": "content",
+            "linkKey": "anno-36-37-mpt6bh7z6btcnu"
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": "宜",
+            "note": "顺，安享。",
+            "field": "content",
+            "linkKey": "anno-43-44-mpt6bmsodxuo6a"
+          },
+          {
+            "start": 63,
+            "end": 64,
+            "text": "为",
+            "note": "帮助。《郑笺》：“为犹助也。助成王也。”",
+            "field": "content",
+            "linkKey": "anno-63-64-mpt6bvptbh0h3i"
+          },
+          {
+            "start": 69,
+            "end": 70,
+            "text": "渚",
+            "note": "渚（zhǔ）：河流湖泊中的沙洲。",
+            "field": "content",
+            "linkKey": "anno-69-70-mpt6excsj5k1i3"
+          },
+          {
+            "start": 76,
+            "end": 77,
+            "text": "处",
+            "note": "安乐。这里指坐。",
+            "field": "content",
+            "linkKey": "anno-76-77-mpt6f3gsgyghvi"
+          },
+          {
+            "start": 81,
+            "end": 82,
+            "text": "湑",
+            "note": "湑（xū）：指酒过滤去滓。酒去滓后则变清，故有清意。",
+            "field": "content",
+            "linkKey": "anno-81-82-mpt6fcbvtrllez"
+          },
+          {
+            "start": 85,
+            "end": 86,
+            "text": "伊",
+            "note": "语助词。",
+            "field": "content",
+            "linkKey": "anno-85-86-mpt6finhrk16ct"
+          },
+          {
+            "start": 86,
+            "end": 87,
+            "text": "脯",
+            "note": "脯（fǔ）：肉干。",
+            "field": "content",
+            "linkKey": "anno-86-87-mpt6fnylfj70w5"
+          },
+          {
+            "start": 102,
+            "end": 103,
+            "text": "潨",
+            "note": "潨（cóng）：港汊，水流会合之处。",
+            "field": "content",
+            "linkKey": "anno-102-103-mpt6h5aebqhnlx"
+          },
+          {
+            "start": 109,
+            "end": 110,
+            "text": "宗",
+            "note": "宗：借为“悰（cóng）”，快乐。一解为尊敬，尊崇。",
+            "field": "content",
+            "linkKey": "anno-109-110-mpt6hbtyesra1s"
+          },
+          {
+            "start": 114,
+            "end": 115,
+            "text": "宗",
+            "note": "宗庙，祭祀祖先的庙。",
+            "field": "content",
+            "linkKey": "anno-114-115-mpt6hhf48bq9wo"
+          },
+          {
+            "start": 129,
+            "end": 130,
+            "text": "崇",
+            "note": "高，此作动词，加高，增加。《毛传》：“崇，重也。”",
+            "field": "content",
+            "linkKey": "anno-129-130-mpt6hoouheb2nb"
+          },
+          {
+            "start": 135,
+            "end": 136,
+            "text": "亹",
+            "note": "亹（mén）：峡中两岸对峙如门的地方。",
+            "field": "content",
+            "linkKey": "anno-135-136-mpt6huifi6tniv"
+          },
+          {
+            "start": 141,
+            "end": 143,
+            "text": "熏熏",
+            "note": "同“薰薰”，香味四传。一解为和悦的样子。",
+            "field": "content",
+            "linkKey": "anno-141-143-mpt6i0n3bx9n7n"
+          },
+          {
+            "start": 144,
+            "end": 145,
+            "text": "旨",
+            "note": "甘美。",
+            "field": "content",
+            "linkKey": "anno-144-145-mpt6i6qn5dhug6"
+          },
+          {
+            "start": 146,
+            "end": 148,
+            "text": "欣欣",
+            "note": "欣欣：《毛传》：“欣欣然，乐也。芬芬，香也。”",
+            "field": "content",
+            "linkKey": "anno-146-148-mpt6icvc8zmdpg"
+          },
+          {
+            "start": 149,
+            "end": 151,
+            "text": "燔炙",
+            "note": "燔（fán）炙：指烧烤肉。燔，本义是焚烧，引申为烧烤。",
+            "field": "content",
+            "linkKey": "anno-149-151-mpt6ikd5taxeob"
+          },
+          {
+            "start": 151,
+            "end": 153,
+            "text": "芬芬",
+            "note": "肉味香浓貌。",
+            "field": "content",
+            "linkKey": "anno-151-153-mpt6iq5kx3k9ro"
+          },
+          {
+            "start": 162,
+            "end": 163,
+            "text": "艰",
+            "note": "灾难，不幸。",
+            "field": "content",
+            "linkKey": "anno-162-163-mpt6ivq9wmdusw"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "凫鹥",
+          "otherNames": "",
+          "author": "",
+          "origin": "《诗经·大雅·生民之什》",
+          "form": "古体",
+          "sub": "诗经",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "野鸭鸥鸟河中央，公尸赴宴多安详。你的美酒清又醇，你的菜肴味道香。公尸赴宴来品尝，福禄大大为你降。\n野鸭鸥鸟沙滩上，公尸赴宴来歆享。你的美酒好又多，你的菜肴美又香。公尸赴宴来品尝，助你福禄长安康。\n野鸭鸥鸟在洲诸，公尸赴宴来居住。你的美酒已滤清，你的菜肴有干脯。公尸赴宴来品尝，为你降下大福禄。\n野鸭鸥鸟港汊中，公尸赴宴位居尊。已在亲庙设酒席，福禄降临你家门。公尸赴宴来品尝，福禄不断降你身。\n野鸭鸥鸟在峡门，公尸赴宴醉醺醺。美酒饮来欣欣乐，烧肉烤肉香喷喷。公尸赴宴来品尝，从此太平无艰辛。",
+          "background": "关于此诗的创作背景，向来存有争议。程俊英《诗经译注》说：“这是周王祭祀祖先的第二天，为酬谢公尸请其赴宴（古称‘宾尸’）时所唱的诗。”高亨《诗经今注》也说：“周代贵族在祭祀祖先的次日，为了酬谢尸的辛劳，摆下酒食，请尸来吃，这叫做‘宾尸’，这首诗正是行宾尸之礼所唱的歌。”",
+          "evaluation": [
+            {
+              "出处": "孔颖达《孔疏》",
+              "内容": "《凫鹥》诗者，言保守成功不使失坠也。致太平之君子成王，能执持其盈满，守掌其成功，则神祇祖考皆安宁而爱乐之矣。故作此诗以歌其事也。"
+            },
+            {
+              "出处": "范处义《诗补传》",
+              "内容": "《既醉》《凫鹥》皆祭毕燕饮之诗，故皆言公尸，然《既醉》乃诗人托公尸告嘏以祷颂，《凫鹥》则诗人专美公尸之燕饮。"
+            },
+            {
+              "出处": "胡承珙《毛诗后笺》",
+              "内容": "《既醉》为正祭后燕饮之诗，《凫鹥》为事尸日燕饮之诗。"
+            },
+            {
+              "出处": "《毛诗序》",
+              "内容": "《凫鹥》，守成也。大平之君子能持盈守成，神祗祖考安乐之也。"
+            },
+            {
+              "出处": "朱熹《诗集传》",
+              "内容": "此祭之明日绎而宾尸之乐。"
+            },
+            {
+              "出处": "姚际恒《诗经通论》",
+              "内容": "《序》谓“守成”，泛混。郑氏于上章下曰：“祭祀既毕，明日又设礼而与尸燕，成王之时尸来燕也。”此说可为诗旨。而《集传》本之，因谓“祭之明日绎而宾尸之乐”；然又有误。孔氏曰：“燕尸之礼，大夫谓之宾尸”，即用其祭之日；今《有司彻》是其事也。天子、诸侯则谓之“绎”，以祭之明日。《春秋·宣八年》言“辛巳，有事于大庙；壬午，犹绎”，是谓在明日也。此“公尸燕饮”是绎祭之事，《疏》语分别明了，惜乎其未阅耳。"
+            },
+            {
+              "出处": "方玉润《诗经原始》",
+              "内容": "此绎祭燕尸之乐也。"
+            }
+          ]
+        }
+      },
+      "W01847": {
+        "id": "W01847",
+        "type": "W",
+        "name": "假乐",
+        "meta": {
+          "createdById": "u_80",
+          "createdByName": "林菲菲(2512046)",
+          "createdBy": "林菲菲(2512046)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "假乐君子，显显令德，宜民宜人。受禄于天，保右命之，自天申之。\n干禄百福，子孙千亿。穆穆皇皇，宜君宜王。不愆不忘，率由旧章。\n威仪抑抑，德音秩秩。无怨无恶，率由群匹。受福无疆，四方之纲。\n之纲之纪，燕及朋友。百辟卿士，媚于天子。不解于位，民之攸塈。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "假",
+            "note": "嘉，美。",
+            "field": "content",
+            "linkKey": "anno-0-1-mpt7vjfdyk002m"
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "乐",
+            "note": "乐（yuè）：音乐。",
+            "field": "content",
+            "linkKey": "anno-1-2-mpt7vpl42rxu9i"
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "君子",
+            "note": "指周王。",
+            "field": "content",
+            "linkKey": "anno-2-4-mpt7vxexgpz4ha"
+          },
+          {
+            "start": 7,
+            "end": 9,
+            "text": "令德",
+            "note": "美德。",
+            "field": "content",
+            "linkKey": "anno-7-9-mpt7w701wk2ocp"
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "宜",
+            "note": "适合。",
+            "field": "content",
+            "linkKey": "anno-10-11-mpt7wdypdkxy2b"
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "民",
+            "note": "庶民。",
+            "field": "content",
+            "linkKey": "anno-11-12-mpt7wjztxej88g"
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "人",
+            "note": "指群臣。",
+            "field": "content",
+            "linkKey": "anno-13-14-mpt7wq1dpmqwfb"
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "保右",
+            "note": "即保佑。",
+            "field": "content",
+            "linkKey": "anno-20-22-mpt7wwsql85onl"
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "命",
+            "note": "天之令，即上天的旨意。",
+            "field": "content",
+            "linkKey": "anno-22-23-mpt7x40yc3xyz6"
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "申",
+            "note": "重复。",
+            "field": "content",
+            "linkKey": "anno-27-28-mpt7x983roqz6i"
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "干",
+            "note": "祈求。一说“干”字是“千”字之误。",
+            "field": "content",
+            "linkKey": "anno-31-32-mpt7xesjxfb4ly"
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "千亿",
+            "note": "虚数，极言其多。",
+            "field": "content",
+            "linkKey": "anno-38-40-mpt7xkjw4knopt"
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "穆穆",
+            "note": "肃敬。",
+            "field": "content",
+            "linkKey": "anno-41-43-mpt7xrgjok0doh"
+          },
+          {
+            "start": 43,
+            "end": 45,
+            "text": "皇皇",
+            "note": "光明。",
+            "field": "content",
+            "linkKey": "anno-43-45-mpt7xy0byegbz4"
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "愆",
+            "note": "愆（qiān）：过失。",
+            "field": "content",
+            "linkKey": "anno-52-53-mpt7y3gk5v9pg2"
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": "忘",
+            "note": "糊涂。",
+            "field": "content",
+            "linkKey": "anno-54-55-mpt7y9f8o72ajw"
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "率",
+            "note": "循。",
+            "field": "content",
+            "linkKey": "anno-56-57-mpt7ygotmmg1z3"
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": "由",
+            "note": "从。",
+            "field": "content",
+            "linkKey": "anno-57-58-mpt7ymv8zmjvdy"
+          },
+          {
+            "start": 64,
+            "end": 66,
+            "text": "抑抑",
+            "note": "通“懿懿”，庄美的样子。",
+            "field": "content",
+            "linkKey": "anno-64-66-mpt7yu5q12ihk8"
+          },
+          {
+            "start": 69,
+            "end": 71,
+            "text": "秩秩",
+            "note": "有条不紊的样子。",
+            "field": "content",
+            "linkKey": "anno-69-71-mpt7z0d04y0209"
+          },
+          {
+            "start": 79,
+            "end": 81,
+            "text": "群匹",
+            "note": "众臣。",
+            "field": "content",
+            "linkKey": "anno-79-81-mpt7z7imk87gcf"
+          },
+          {
+            "start": 90,
+            "end": 91,
+            "text": "纲",
+            "note": "纲纪，准绳。",
+            "field": "content",
+            "linkKey": "anno-90-91-mpt7zdsemvffk8"
+          },
+          {
+            "start": 98,
+            "end": 99,
+            "text": "燕",
+            "note": "安。",
+            "field": "content",
+            "linkKey": "anno-98-99-mpt7zk2ma8pdcm"
+          },
+          {
+            "start": 103,
+            "end": 105,
+            "text": "百辟",
+            "note": "百辟（bì）：众诸侯。",
+            "field": "content",
+            "linkKey": "anno-103-105-mpt7ztqejzmtbc"
+          },
+          {
+            "start": 108,
+            "end": 109,
+            "text": "媚",
+            "note": "爱。",
+            "field": "content",
+            "linkKey": "anno-108-109-mpt7zz9pitzqzo"
+          },
+          {
+            "start": 114,
+            "end": 115,
+            "text": "解",
+            "note": "解（xiè）：通“懈”，怠慢。",
+            "field": "content",
+            "linkKey": "anno-114-115-mpt806b3qaob8o"
+          },
+          {
+            "start": 120,
+            "end": 121,
+            "text": "攸",
+            "note": "所。",
+            "field": "content",
+            "linkKey": "anno-120-121-mpt80bwnar2fgu"
+          },
+          {
+            "start": 121,
+            "end": 122,
+            "text": "塈",
+            "note": "墍（xì）：安宁。",
+            "field": "content",
+            "linkKey": "anno-121-122-mpt80ll2ib46c3"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "假乐",
+          "otherNames": "",
+          "author": "",
+          "origin": "《诗经·大雅·生民之什》",
+          "form": "古体",
+          "sub": "诗经",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "君王冠礼行嘉乐，昭明您的好美德。您顺应老百姓也顺应贵族，万千福禄自会从上天获得。上天保护您恩佑您授命您，更多的福禄都由上天增设。\n您追求到数以百计的福禄，您繁衍出千亿个子孙儿郎。您总是保持庄严优雅形象，称得上合格的诸侯或君王。您从来不违法不胆大妄为，凡事都认真遵循祖制规章。\n您保持着严整的仪表形象，您拥有严谨的政声美名扬。您从来不结怨也没有交恶，凡事都是和群臣们共商量。您配享那上天授受的福禄，堪为天下四方诸侯的榜样。\n贵为天子担得起天下纲纪，让身边大小臣工得享安逸。天下诸侯大小臣工和士子，也都热爱拥戴着周王天子。正因为您勤于政事不懈怠，使天下百姓得以休养生息。",
+          "background": "关于这首诗的创作背景历代存有争议。《毛诗序》说：“《假乐》，嘉成王也。”《鲁诗》则认为是美宣王。明末清初何楷《诗经世本古义》认为美武王。晚清王闿运《诗经补笺》说：“假，嘉，嘉礼也，盖冠词。”现代学者如赵逵夫等认为这是一首为周宣王行冠礼（成年礼）的冠词。",
+          "evaluation": [
+            {
+              "出处": "朱熹《诗集传》",
+              "内容": "赋也。言王之德，既宜民人，而受天禄矣。而天之于王，犹反复眷顾之不厌，既保之佑之命之，而又申重之也。疑此即公尸之所以答《凫鸥》也。"
+            },
+            {
+              "出处": "魏源《诗古微》",
+              "内容": "《假乐》，美宣王之德也。宣王能顺天地，祚子孙千亿，卿士多贤，皆得获天佑所致也。"
+            },
+            {
+              "出处": "朱熹《诗序辨说》",
+              "内容": "假本嘉字，然非为嘉成王也。"
+            },
+            {
+              "出处": "何楷《诗经世本古义》",
+              "内容": "《假乐》，赞美武王之德，为祭武王之诗。"
+            }
+          ]
+        }
+      },
+      "W01848": {
+        "id": "W01848",
+        "type": "W",
+        "name": "公刘",
+        "meta": {
+          "createdById": "u_80",
+          "createdByName": "林菲菲(2512046)",
+          "createdBy": "林菲菲(2512046)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "笃公刘，匪居匪康。乃埸乃疆，乃积乃仓；乃裹餱粮，于橐于囊。思辑用光，弓矢斯张；干戈戚扬，爰方启行。\n笃公刘，于胥斯原。既庶既繁，既顺乃宣，而无永叹。陟则在巘，复降在原。何以舟之？维玉及瑶，鞞琫容刀。\n笃公刘，逝彼百泉。瞻彼溥原，乃陟南冈。乃觏于京，京师之野。于时处处，于时庐旅，于时言言，于时语语。\n笃公刘，于京斯依。跄跄济济，俾筵俾几。既登乃依，乃造其曹。执豕于牢，酌之用匏。食之饮之，君之宗之。\n笃公刘，既溥既长。既景乃冈，相其阴阳，观其流泉。其军三单，度其隰原。彻田为粮，度其夕阳。豳居允荒。\n笃公刘，于豳斯馆。涉渭为乱，取厉取锻，止基乃理。爰众爰有，夹其皇涧。溯其过涧。止旅乃密，芮鞫之即。",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "公刘",
+          "otherNames": "",
+          "author": "",
+          "origin": "《诗经·大雅·生民之什》",
+          "form": "古体",
+          "sub": "诗经",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "rejected",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "记得完成一下",
+          "preface": "",
+          "translation": "",
+          "background": "",
+          "evaluation": []
+        }
+      },
+      "W01849": {
+        "id": "W01849",
+        "type": "W",
+        "name": "客中作",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
+        },
+        "content": "兰陵美酒郁金香，玉碗盛来琥珀光。\n但使主人能醉客，不知何处是他乡。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "兰陵",
+            "note": "今山东省临沂市兰陵县；一说位于今四川省境内。",
+            "field": "content",
+            "linkKey": "anno-0-2-mpthja7nourj4z"
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "郁金香",
+            "note": "郁金的香气。",
+            "field": "content",
+            "linkKey": "anno-4-7-mpthjx7ocjv2vf"
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "郁金",
+            "note": "其块根主要用为药材，亦可浸酒、染色。",
+            "field": "content",
+            "linkKey": "anno-4-6-mpthk5xvq3k8w4"
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "玉碗",
+            "note": "玉制的食具，亦泛指精美的碗。",
+            "field": "content",
+            "linkKey": "anno-8-10-mpthkcq9ifli0k"
+          },
+          {
+            "start": 12,
+            "end": 14,
+            "text": "琥珀",
+            "note": "（hǔpò）一种树脂化石，呈黄色或赤褐色，色泽晶莹。这里形容美酒色泽如琥珀。",
+            "field": "content",
+            "linkKey": "anno-12-14-mpthkog39azey0"
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": "但使",
+            "note": "只要。",
+            "field": "content",
+            "linkKey": "anno-17-19-mpthljvhoyjdcs"
+          },
+          {
+            "start": 22,
+            "end": 24,
+            "text": "醉客",
+            "note": "让客人喝醉酒。",
+            "field": "content",
+            "linkKey": "anno-22-24-mpthlqhw44yefl"
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "醉",
+            "note": "使动用法。",
+            "field": "content",
+            "linkKey": "anno-22-23-mpthlwmphlbqdy"
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": "他乡",
+            "note": "异乡，家乡以外的地方。",
+            "field": "content",
+            "linkKey": "anno-30-32-mpthm40cvdivtl"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "客中作",
+          "otherNames": "",
+          "author": "李白",
+          "origin": "《全唐诗》",
+          "form": "近体",
+          "sub": "七绝",
+          "sub2": "",
+          "rhyme": "七阳"
+        },
+        "extra": {
+          "reviewDuration": "1.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "1.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "兰陵美酒甘醇醉人散发着郁金的香气，盛满玉碗色泽如琥珀般清莹透彻。\n只要主人同我一道畅饮，一醉方休，哪里还管这里是家乡还是异乡？",
+          "background": "《客中行》诗作于东鲁的兰陵，是李白初至东鲁之作。李白在天宝初年长安之行以后移家东鲁，而此诗以兰陵为“客中”，应为入长安前的作品。据考证，此诗当作于唐玄宗开元二十七年（739）或开元二十八年（740）。当时李白初至东鲁后前往兰陵游览。这时社会呈现着财阜物美的繁荣景象，人们的精神状态一般也比较昂扬振奋。而李白更是重友情，嗜美酒，爱游历。祖国山川风物，在他的心目中都充满了美丽。",
+          "evaluation": [
+            {
+              "出处": "桂天祥《批点唐诗正声》",
+              "内容": "太白豪放，此诗仿佛。"
+            },
+            {
+              "出处": "敖英、凌云《唐诗绝句类选》",
+              "内容": "蒋仲舒曰：下语富。又曰：乃其本相，故佳。"
+            },
+            {
+              "出处": "凌宏宪《唐诗广选》",
+              "内容": "太白真自传其神。"
+            },
+            {
+              "出处": "沈德潜《唐诗别裁》",
+              "内容": "强作宽解之词。"
+            },
+            {
+              "出处": "宋宗元《网师园唐诗笺》",
+              "内容": "浅语却饶深情（末二句下）。"
+            },
+            {
+              "出处": "黄叔灿《唐诗笺注》",
+              "内容": "借酒以遣客怀，本色语却极情致。"
+            },
+            {
+              "出处": "李锳《诗法易简录》",
+              "内容": "首二句极言酒之美，第三句以“能醉客”紧承“美酒”，点醒“客中”，末句作旷达语，而作客之苦，愈觉沉痛。"
+            }
+          ]
+        }
+      },
+      "W01850": {
+        "id": "W01850",
+        "type": "W",
+        "name": "长命女·春日宴",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-01",
+          "updatedAt": "2026-06-01"
+        },
+        "content": "春日宴，绿酒一杯歌一遍。再拜陈三愿：一愿郎君千岁，二愿妾身常健，三愿如同梁上燕，岁岁长相见。",
+        "annotations": [
+          {
+            "start": 4,
+            "end": 6,
+            "text": "绿酒",
+            "note": "古时米酒酿成未滤时，面浮米渣，呈淡绿色，故名。",
+            "field": "content",
+            "linkKey": "anno-4-6-mpthte5o1t7mk3"
+          },
+          {
+            "start": 27,
+            "end": 29,
+            "text": "妾身",
+            "note": "古时女子对自己的谦称。",
+            "field": "content",
+            "linkKey": "anno-27-29-mpthtjwa7p9e45"
+          },
+          {
+            "start": 40,
+            "end": 42,
+            "text": "岁岁",
+            "note": "年年，即每年。",
+            "field": "content",
+            "linkKey": "anno-40-42-mpthtuaquwub5g"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "长命女·春日宴",
+          "otherNames": "",
+          "author": "冯延巳",
+          "origin": "《全唐五代词》",
+          "form": "词",
+          "sub": "长命女",
+          "sub2": "",
+          "rhyme": "第七部"
+        },
+        "extra": {
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "春日的宴会上，饮一杯美酒再高歌一曲呵，拜了又拜许三愿：一愿郎君你长寿千岁，二愿妾身我身体永远康健，三愿我俩如同梁上飞燕呀，双双对对，永远相伴。",
+          "background": "这首词的具体创作时间不详，是一首年轻女子向她的郎君祝酒陈愿的词。",
+          "evaluation": [
+            {
+              "出处": "沈雄《古今词话·词辩》",
+              "内容": "留为章法，词则俚鄙。"
+            }
+          ]
+        }
+      },
+      "W01851": {
+        "id": "W01851",
+        "type": "W",
+        "name": "菩萨蛮·劝君今夜须沉醉",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "劝君今夜须沉醉，尊前莫话明朝事。珍重主人心，酒深情亦深。\n须愁春漏短，莫诉金杯满。遇酒且呵呵，人生能几何。",
+        "annotations": [
+          {
+            "start": 8,
+            "end": 10,
+            "text": "尊前",
+            "note": "酒席前。",
+            "field": "content",
+            "linkKey": "anno-8-10-mpti46n6b4yxsg"
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "尊",
+            "note": "同“樽（zūn）”，古代盛酒器具。《淮南子》：“圣人之道，犹中衢而设樽耶，过者斟酌，各得其宜。”",
+            "field": "content",
+            "linkKey": "anno-8-9-mpti4hxjqrq3xw"
+          },
+          {
+            "start": 29,
+            "end": 34,
+            "text": "须愁春漏短",
+            "note": "应愁时光短促。",
+            "field": "content",
+            "linkKey": "anno-29-34-mpti4te30xyne0"
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": "漏",
+            "note": "刻漏，指代时间。",
+            "field": "content",
+            "linkKey": "anno-32-33-mpti4zgw33p8jv"
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": "莫诉",
+            "note": "不要推辞。",
+            "field": "content",
+            "linkKey": "anno-35-37-mpti57709iksua"
+          },
+          {
+            "start": 44,
+            "end": 46,
+            "text": "呵呵",
+            "note": "笑声。这里是指“得过且过”，勉强作乐。",
+            "field": "content",
+            "linkKey": "anno-44-46-mpti5dz4tjif3j"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "菩萨蛮·劝君今夜须沉醉",
+          "otherNames": "",
+          "author": "韦庄",
+          "origin": "《花间集》",
+          "form": "词",
+          "sub": "菩萨蛮",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "多次换韵，无韵部",
+          "preface": "",
+          "translation": "今天晚上劝您务必要喝个一醉方休，酒席上不要谈论明天的事情。感谢主人的深情厚意，酒喝多了，表现出的友情也是深厚的。\n应愁时光短促，不要再推辞斟满杯的美酒。人生能有多长呢？不如多喝点酒，勉强作乐一番。",
+          "background": "根据中国古典文学专家叶嘉莹教授的研究，韦庄的《菩萨蛮》五首词中的“江南”，都是确指的江南之地，并非指蜀地。这组词的写作时间是在韦庄离开江南之后，当是韦庄晚年的追忆之作，而写作地点则很可能是其晚年羁身之蜀地，具体创作时将不详。",
+          "evaluation": [
+            {
+              "出处": "许昂霄《词综偶评》",
+              "内容": "语意自然，无刻画之痕。"
+            },
+            {
+              "出处": "陈廷焯《词则·大雅集》卷一",
+              "内容": "深情苦调，意婉词直，屈子《九章》之遗。"
+            },
+            {
+              "出处": "唐圭璋《唐宋词简释》",
+              "内容": "此首追忆当年离别之词。起言别夜之情景，次言天明之分别。换头承上，写美人琵琶之妙。末两句，记美人别时言语。前事历历，思之惨痛，而欲归之心，亦愈迫切。韦词清秀绝伦，与温词之浓艳者不同，然各极其妙。"
+            }
+          ]
+        }
+      },
+      "W01852": {
+        "id": "W01852",
+        "type": "W",
+        "name": "菩萨蛮·红楼别夜堪惆怅",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_12",
+          "reviewedByName": "杨烨亭(2511420)",
+          "reviewedBy": "杨烨亭(2511420)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "红楼别夜堪惆怅，香灯半卷流苏帐。残月出门时，美人和泪辞。\n琵琶金翠羽，弦上黄莺语。劝我早归家，绿窗人似花。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "红楼",
+            "note": "红色的楼，泛指华美的楼房。此指官贵人家女子的闺一说犹青楼，妓女所居。",
+            "field": "content",
+            "linkKey": "anno-0-2-mpti9owu3m409s"
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "堪惆怅",
+            "note": "堪，“那堪”的省文。此指因失意或失望而伤感、懊恼。",
+            "field": "content",
+            "linkKey": "anno-4-7-mpti9xe6h62gsa"
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "香灯",
+            "note": "即长明灯。通常用琉璃釭盛香油燃点。",
+            "field": "content",
+            "linkKey": "anno-8-10-mptiaqu2wvs0ka"
+          },
+          {
+            "start": 12,
+            "end": 15,
+            "text": "流苏帐",
+            "note": "：用彩色羽毛或丝线等制成的穗状垂饰物。常饰于车马、帷帐等物上。此指饰有流苏的帷帐。",
+            "field": "content",
+            "linkKey": "anno-12-15-mptib2i6vga57d"
+          },
+          {
+            "start": 29,
+            "end": 31,
+            "text": "琵琶",
+            "note": "初创批把。见《释名释乐器》。此类乐器原流行于波斯、阿拉伯等地，汉代传入我国。后经改造，团体修颈，有四弦、十二柱。俗称“秦汉子”。南北朝时又有曲项琵琶传入我国。四弦腹呈半梨形颈上有四柱，横抱怀中用拨子弹奏即现今琵琶的前身。唐宋以来经不断改进柱垃逐渐增多改横抱为竖抱，废拨子改用手指弹奏，观今民间的琵琶有十七柱，通常称四相十三品革新的琵琶有六相十八品；后者能弹奏所有半音技法丰富成为重要的民族乐器。",
+            "field": "content",
+            "linkKey": "anno-29-31-mptic7q1y648co"
+          },
+          {
+            "start": 31,
+            "end": 34,
+            "text": "金翠羽",
+            "note": "指琵琶上用黄金和翠玉制成的饰物。",
+            "field": "content",
+            "linkKey": "anno-31-34-mptichaxln9fux"
+          },
+          {
+            "start": 35,
+            "end": 40,
+            "text": "弦上黄莺语",
+            "note": "此句是指琵琶之声犹如黄莺的啼叫。",
+            "field": "content",
+            "linkKey": "anno-35-40-mpticsgtfvhgm8"
+          },
+          {
+            "start": 47,
+            "end": 49,
+            "text": "绿窗",
+            "note": "绿色纱窗。指贫女的闺室。与红楼相对，红楼为富家女子闺室。",
+            "field": "content",
+            "linkKey": "anno-47-49-mptid0ed0o6jsa"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "菩萨蛮·红楼别夜堪惆怅",
+          "otherNames": "菩萨蛮五首·其一",
+          "author": "韦庄",
+          "origin": "《花间集》",
+          "form": "词",
+          "sub": "菩萨蛮",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "1.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "1.5",
+          "repairStatus": "unfinished",
+          "remark": "多次换韵无韵部",
+          "preface": "",
+          "translation": "当时红楼离别之夜，令人惆怅不已，香灯隐约地映照着半卷的流苏帐。残月将落，天刚破晓时，“我”就要出门远行，美人含着泪珠为“我”送行，真是“寸寸柔肠，盈盈粉泪”的样子。临别时为我弹奏一曲如泣如诉的乐章，那琵琶杆拨上装饰着用金制成的翠羽，雍容华贵；那琵琶弦上弹奏着娇软的莺语，婉转动人。那凄恻的音乐分明是在劝“我”早些儿回家，碧纱窗下有如花美眷在等着他。",
+          "background": "根据中国古典文学专家叶嘉莹教授的研究，韦庄的《菩萨蛮五首》词中的“江南”，都是确指的江南之地，并非指蜀地。这组词创作于韦庄晚年寓居蜀地时期，是作者为回忆江南旧游而作。",
+          "evaluation": [
+            {
+              "出处": "张惠言《词选》",
+              "内容": "此章述蜀人劝留之辞，即下章云“满楼红袖招”也。江南即指蜀。中原沸乱，故曰“还乡须断肠”。"
+            },
+            {
+              "出处": "谭献《词辨》",
+              "内容": "强颜作欢快语，怕肠断，肠亦断矣。"
+            },
+            {
+              "出处": "陈廷焯《云韶集》",
+              "内容": "一幅春水画图。意中是乡思，笔下却说江南风景好，真是泪溢中肠，无人省得。结言风尘辛苦，不到暮年，不得还乡，预知他日还乡必断肠也，与第二语口气合。"
+            },
+            {
+              "出处": "俞陛云《唐五代两宋词选释》",
+              "内容": "端己奉使入蜀，蜀王羁留之，重其才，举以为相，欲归不得，不胜恋阙之思。此《菩萨菩》词，乃隐寓留蜀之感。“江南好”指蜀中而言。皓腕相招，喻蜀主縻以好爵；还乡断肠，言中原板荡，阻其归路。“未老莫还乡”句犹冀老年归去。"
+            },
+            {
+              "出处": "唐圭璋《唐宋词简释》",
+              "内容": "此首写江南之佳丽，但有思归之意。起两句，自为呼应。人人既尽说江南之好，劝我久住，我亦可以老于此间也。“只合”二字，无限凄怆，意谓天下丧乱，游人飘泊，虽有乡不得还，虽有家不得归，惟有羁滞江南，以待终老。“春水”两句，极写江南景色之丽。“垆边”两句，极写江南人物之美。皆从一己之经历，证明江南果然是好也。“未老”句陡转，谓江南纵好，我仍思还乡，但今日若还乡，目击离乱，只令人断肠，故惟有暂不还乡，以待时定。情意宛转，哀伤之至。"
+            }
+          ]
+        }
+      },
+      "W01853": {
+        "id": "W01853",
+        "type": "W",
+        "name": "菩萨蛮·洛阳城里春光好",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_12",
+          "reviewedByName": "杨烨亭(2511420)",
+          "reviewedBy": "杨烨亭(2511420)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "洛阳城里春光好，洛阳才子他乡老。柳暗魏王堤，此时心转迷。\n桃花春水渌，水上鸳鸯浴。凝恨对残晖，忆君君不知。",
+        "annotations": [
+          {
+            "start": 4,
+            "end": 5,
+            "text": "春",
+            "note": "一作“风”。",
+            "field": "content",
+            "linkKey": "anno-4-5-mptinooc1lp6t6"
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "洛阳才子",
+            "note": "西汉时洛阳人贾谊，年十八能诵诗书，长于写作，人称洛阳才子。这里指作者本人，作者早年寓居洛阳。",
+            "field": "content",
+            "linkKey": "anno-8-12-mptio1bwlbfk5i"
+          },
+          {
+            "start": 18,
+            "end": 21,
+            "text": "魏王堤",
+            "note": "即魏王池。唐代洛水在洛阳溢成一个池，成为洛阳的名胜。唐太宗贞观中赐给魏王李泰，故名魏王池。有堤与洛水相隔，因称魏王堤。",
+            "field": "content",
+            "linkKey": "anno-18-21-mptio9q86nojru"
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "渌",
+            "note": "一本作“绿”，水清的样子。",
+            "field": "content",
+            "linkKey": "anno-33-34-mptiogxekvvbak"
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "凝恨",
+            "note": "愁恨聚结在一起。",
+            "field": "content",
+            "linkKey": "anno-41-43-mptioo0c99g5k2"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "菩萨蛮·洛阳城里春光好",
+          "otherNames": "",
+          "author": "韦庄",
+          "origin": "《花间集》",
+          "form": "词",
+          "sub": "菩萨蛮",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "1.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "多次换韵无韵部",
+          "preface": "",
+          "translation": "春暖花开，万象更新。洛阳城里，春光明媚，娇好异常。可是，我这个天涯浪子，却只能异地漂泊，老死他乡。眼前的魏王堤上，杨柳依依，浓荫茂密。而我心怀隐痛，满心凄迷，惆怅不已。\n桃花嫣红，春水碧绿，烟笼柳堤，水浴鸳鸯。此物之出双入对，相守相依，更勾起我这个离人永隔之悲苦。无以释解，只好把一腔相思相忆之情凝结成的丝丝愁恨，化解到落日西沉的余晖之中。远方的人儿呵，遥远的故国呵，你知道不，我这是在怀念着你呵！",
+          "background": "根据中国古典文学专家叶嘉莹教授的研究，韦庄的《菩萨蛮五首》词中的“江南”，都是确指的江南之地，并非指蜀地。这组词创作于韦庄晚年寓居蜀地时期。",
+          "evaluation": [
+            {
+              "出处": "汤显祖评本《花间集》卷一",
+              "内容": "可怜可怜，使我心恻。"
+            },
+            {
+              "出处": "张惠言《词选》",
+              "内容": "此章致思唐之意。"
+            },
+            {
+              "出处": "陈廷焯《白雨斋词话》",
+              "内容": "韦端己《菩萨蛮》四章惓惓故国之思，而意婉词直，一变飞卿面目，然消息正自相通。"
+            },
+            {
+              "出处": "俞陛云《唐五代两宋词选释》",
+              "内容": "此《菩萨蛮》词，致其乡国之思。洛地风景，为唐初以来都城胜处，魏堤柳色，回首依依。结句言“忆君君不知”者，言君门万里，不知羁臣恋主之忧也。"
+            },
+            {
+              "出处": "唐圭璋《唐宋词简释》",
+              "内容": "此首忆洛阳之词，身在江南，还乡固不能，即洛阳亦不得去，回忆洛阳之乐，不禁心迷矣。起两句，述人在他乡，回忆洛阳春光之好。“柳暗”句，又说到眼前景色，使人心恻。末句，对景怀人，朴厚沉郁。"
+            }
+          ]
+        }
+      },
+      "W01854": {
+        "id": "W01854",
+        "type": "W",
+        "name": "辛夷坞",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-06-02",
+          "reviewedById": "u_31",
+          "reviewedByName": "王也姝(2513815)",
+          "reviewedBy": "王也姝(2513815)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "木末芙蓉花，山中发红萼。\n涧户寂无人，纷纷开且落。",
+        "annotations": [
+          {
+            "start": 10,
+            "end": 11,
+            "text": "萼",
+            "note": "（è）花萼，花的组成部分之，由若干片状物组成，包在花瓣外面，花开时托着花瓣。",
+            "field": "content",
+            "linkKey": "anno-10-11-mpw8onhl3b8bo5"
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "涧",
+            "note": "（jiàn）。",
+            "field": "content",
+            "linkKey": "anno-13-14-mpw8owv0zy181y"
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "涧户",
+            "note": "一说指涧边人家；一说山涧两崖相向，状如门户。",
+            "field": "content",
+            "linkKey": "anno-13-15-mpw8p2rwz4xb0z"
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "且",
+            "note": "又。",
+            "field": "content",
+            "linkKey": "anno-22-23-mpw8pbvk4a70ez"
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "芙蓉花",
+            "note": "此指辛夷花，因芙蓉花与辛夷花形相似，花色相近。",
+            "field": "content",
+            "linkKey": "anno-2-5-mpw8ppzodynlxy"
+          },
+          {
+            "start": 0,
+            "end": 2,
+            "text": "木末",
+            "note": "树梢，枝头。",
+            "field": "content",
+            "linkKey": "anno-0-2-mpw8qahk51atr6"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "辛夷坞",
+          "otherNames": "",
+          "author": "王维",
+          "origin": "《全唐诗》",
+          "form": "近体",
+          "sub": "五绝",
+          "sub2": "",
+          "rhyme": "十药"
+        },
+        "extra": {
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
+          "expectedDuration": "1",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "枝条最顶端的辛夷花，在山中绽放着鲜红的花萼，红白相间，十分绚丽。\n涧口一片寂静杳无人迹，随着时间的推移，纷纷怒放，瓣瓣飘落。",
+          "background": "这首诗是写于安史之乱之前。自公元736年（唐玄宗开元二十四年）张九龄罢知政事，李林甫一派势力上台，朝政黑暗，社会矛盾日趋尖锐。王维虽然在朝，他倾向于张九龄的开明政治，对现实十分不满而又无能为力，内心矛盾，产生退隐归田的思想而又恋于禄位。他于是先后在长安附近的终南山下辋川建立别墅，过着亦仕亦隐的生活。",
+          "evaluation": [
+            {
+              "出处": "刘辰翁《王孟诗评》",
+              "内容": "顾云：其意不欲着一字，渐可语禅。"
+            },
+            {
+              "出处": "邢昉《唐风定》",
+              "内容": "此诗每为禅宗所引，反令减价，只就本色观，自是绝顶。"
+            },
+            {
+              "出处": "沈德潜《唐诗别裁》",
+              "内容": "幽极。借用楚词，因颜色相似也。"
+            },
+            {
+              "出处": "宋顾乐《唐人万首绝句选评》",
+              "内容": "刻意取远味。"
+            },
+            {
+              "出处": "吴煊、黄培芳《唐贤三昧集笺注》",
+              "内容": "思致平淡闲雅，亦自可爱。"
+            },
+            {
+              "出处": "李锳《诗法易简录》",
+              "内容": "幽淡已极，却饶远韵。"
+            },
+            {
+              "出处": "刘宏煦《唐诗真趣编》",
+              "内容": "摩诘深于禅，此是心无挂碍境界。虽在世中，脱然世外，令人动海上三山之想。"
+            },
+            {
+              "出处": "俞陛云《诗境浅说续编》",
+              "内容": "东坡《罗汉赞》：“空山无人，水流花开。”世称妙悟，亦即此诗之意境。"
+            }
+          ]
+        }
+      },
+      "W01855": {
+        "id": "W01855",
+        "type": "W",
+        "name": "书事",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-06-02",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "轻阴阁小雨，深院昼慵开。\n坐看苍苔色，欲上人衣来。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "轻阴",
+            "note": "微阴。",
+            "field": "content",
+            "linkKey": "anno-0-2-mpw91yccy3xktn"
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "阁",
+            "note": "同“搁”，阻止，延滞，停下来的意思。这句说，细雨初停，天尚微阴。",
+            "field": "content",
+            "linkKey": "anno-2-3-mpw928xbal3au8"
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "慵",
+            "note": "（yōng）懒。这句说尽管在白昼，还是懒得开院门。",
+            "field": "content",
+            "linkKey": "anno-9-10-mpw92kozmi10de"
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "坐看",
+            "note": "坐下来看。",
+            "field": "content",
+            "linkKey": "anno-13-15-mpw92v1ue0k83k"
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "欲",
+            "note": "简直要。",
+            "field": "content",
+            "linkKey": "anno-19-20-mpw932od3ogbhz"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "书事",
+          "otherNames": "",
+          "author": "王维",
+          "origin": "《全唐诗》",
+          "form": "近体",
+          "sub": "五绝",
+          "sub2": "",
+          "rhyme": "上平十灰"
+        },
+        "extra": {
+          "reviewDuration": "1",
+          "reviewStatus": "approved",
+          "expectedDuration": "1",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "细雨初停，天尚微阴。尽管在白天，还是懒得开院门。\n坐下来静观苍苔，那可爱的绿色简直要染到人的衣服上来。",
+          "background": "这是一首即事写景之作。题为“书事”，是诗人就眼前事物抒写自己顷刻间的感受。此诗写在深院久雨初晴之后，具体创作时间难以确考。",
+          "evaluation": [
+            {
+              "出处": "释惠洪《天厨禁脔》",
+              "内容": "《书事》：“轻阴阁小雨，深院昼慵开。坐看苍苔色，欲上人衣来。”《若耶溪归兴》：“若耶溪上踏莓苔，兴罢张帆载酒回。汀草岸花浑不见，青山无数逐人来。”前诗王维作，后诗舒王作，皆含不尽之意，子由谓之不带声色。"
+            },
+            {
+              "出处": "杨慎《升庵诗话》",
+              "内容": "洪觉范（即慧洪）《天厨禁脔》云：“此诗含不尽之意，子由所谓不带声色者也。”王半山亦有绝句，诗意颇相类。按半山诗云：“山中十日雨，雨晴门始开。坐看苍苔色，欲上人衣来。”"
+            },
+            {
+              "出处": "吴景旭《历代诗话》",
+              "内容": "东坡作《病鹤》诗，尝写“三尺长颈囗瘦躯”而缺其一字，使任德翁辈下之，凡数字，东坡徐出其稿，盖“阁”字也。此字既出，俨然如见病鹤，然东坡此字正善用摩诘“轻阴阁小雨”也。"
+            },
+            {
+              "出处": "刘拜山、富寿荪《千首唐人绝句》",
+              "内容": "状小雨初霁景象及苍苔之青翠可爱，极为传神，通首有“万物静观皆自得”之趣。"
+            }
+          ]
+        }
+      },
+      "W01856": {
+        "id": "W01856",
+        "type": "W",
+        "name": "送沈子归江东",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-06-02",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "杨柳渡头行客稀，罟师荡桨向临圻。\n惟有相思似春色，江南江北送君归。",
+        "annotations": [
+          {
+            "start": 2,
+            "end": 4,
+            "text": "渡头",
+            "note": "犹渡口。过河的地方。",
+            "field": "content",
+            "linkKey": "anno-2-4-mpw99sb72fqwnj"
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "行客",
+            "note": "：过客；旅客。《淮南子·精神训》：“是故视珍宝珠玉犹砾石也，视至尊穷宠犹行客也。”",
+            "field": "content",
+            "linkKey": "anno-4-6-mpw99yuu3lvz5e"
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "罟",
+            "note": "（gǔ）。",
+            "field": "content",
+            "linkKey": "anno-8-9-mpw9a7wi5322zr"
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "罟师",
+            "note": "渔人，这里借指船夫。",
+            "field": "content",
+            "linkKey": "anno-8-10-mpw9adjllroxdw"
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "临圻",
+            "note": "临近曲岸的地方。当指友人所去之地。",
+            "field": "content",
+            "linkKey": "anno-13-15-mpw9aljza08wo0"
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "圻",
+            "note": "（qí）曲岸。明嘉靖本洪迈《万首唐人绝句》作“临沂”，为东晋侨置的县名，在今江苏省南京市东北，与题中“归江东”吻合。",
+            "field": "content",
+            "linkKey": "anno-14-15-mpw9auu21bx4b4"
+          },
+          {
+            "start": 19,
+            "end": 21,
+            "text": "相思",
+            "note": "此处指友人间的彼此想念。",
+            "field": "content",
+            "linkKey": "anno-19-21-mpw9bbqic8404m"
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "江",
+            "note": "大江，今指长江。",
+            "field": "content",
+            "linkKey": "anno-27-28-mpw9bji9uy8gmy"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "送沈子归江东",
+          "otherNames": "送沈子福归江东、送沈子福之江东",
+          "author": "王维",
+          "origin": "《全唐诗》",
+          "form": "近体",
+          "sub": "七绝",
+          "sub2": "",
+          "rhyme": "上平五微"
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "1.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "杨柳飘拂的渡口行客疏疏稀稀，艄公摇荡着船桨一直驶向临圻。\n只有相思的别恨像无边的春色，不论江南江北时刻送你把家归。",
+          "background": "王维大约在开元二十八、二十九年（740、741年）知南选，至襄阳（今属湖北）。他集子里现存《汉江临眺》、《晓行巴峡》等诗，可见他在江汉的行踪不止襄阳一处。看诗题和头两句的意思，这诗当是作者在长江上游送沈子福顺流而下归江东之作。",
+          "evaluation": [
+            {
+              "出处": "顾可久《唐诗直解》",
+              "内容": "首二句写别景寥落，读来情殊怅然；末二句相送之情随春色蔓延，笔触浓至清新。"
+            },
+            {
+              "出处": "唐汝询《唐诗解》",
+              "内容": "盖相思无不通之地，春色无不到之乡，想象及此，语亦神矣。"
+            },
+            {
+              "出处": "周珽《唐诗选脉会通评林》",
+              "内容": "别景落寞，别思悠远，造意自慰，抒尽离情。周敬曰：造出情致，自不落套，作苦思何由得？"
+            },
+            {
+              "出处": "吴煊、黄培芳《唐贤三昧集笺注》",
+              "内容": "此诗有乐府音节。顾云：别景寥落，情殊怅然。"
+            },
+            {
+              "出处": "沈德潜《唐诗别裁》",
+              "内容": "春光无所不到，送人之心犹春光也。"
+            },
+            {
+              "出处": "宋宗元《网师园唐诗笺》",
+              "内容": "援拟入情，深得乐府神髓（评末二句）。"
+            },
+            {
+              "出处": "赵彦传《唐绝诗钞注略》",
+              "内容": "妙摄入“送”字，以行送且以神送，且到处相随，遂写得淋漓尽致。“春色”呼应首句，为衬垫渲染之法。"
+            }
+          ]
+        }
+      },
+      "W01857": {
+        "id": "W01857",
+        "type": "W",
+        "name": "陇西行",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-06-02",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "十里一走马，五里一扬鞭。\n都护军书至，匈奴围酒泉。\n关山正飞雪，烽戍断无烟。",
+        "annotations": [
+          {
+            "start": 33,
+            "end": 34,
+            "text": "戍",
+            "note": "一作：火。",
+            "field": "content",
+            "linkKey": "anno-33-34-mpw9ezcdffxn2o"
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "都护",
+            "note": "这里泛指中国北部和西部的少数民族。",
+            "field": "content",
+            "linkKey": "anno-13-15-mpw9fprukf5itj"
+          },
+          {
+            "start": 22,
+            "end": 24,
+            "text": "酒泉",
+            "note": "郡名，在今酒泉市东北。",
+            "field": "content",
+            "linkKey": "anno-22-24-mpw9fvr0vyvbbd"
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "关山",
+            "note": "泛指边关的山岳原野。",
+            "field": "content",
+            "linkKey": "anno-26-28-mpw9g134ft9pzn"
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "断",
+            "note": "中断联系。",
+            "field": "content",
+            "linkKey": "anno-34-35-mpw9g6zlw53wrc"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "陇西行",
+          "otherNames": "",
+          "author": "王维",
+          "origin": "《全唐诗》",
+          "form": "古体",
+          "sub": "其他",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "告急的军使跃马扬鞭，十里又十里纵马飞驰，五里又五里不断扬鞭。\n西北都护府的军使传来了加急的军书，匈奴的军队已经围困西域重镇酒泉。\n边关的山岳原野，却只见漫天飞雪，不见烽火烟。",
+          "background": "此诗当作于公元737年（开元二十五年）前后。当时王维以监察御史身份，奉使出塞，出参河西节度使崔希逸幕府。",
+          "evaluation": [
+            {
+              "出处": "张戒《岁寒堂诗话》",
+              "内容": "信不减太白。"
+            }
+          ]
+        }
+      },
+      "W01858": {
+        "id": "W01858",
+        "type": "W",
+        "name": "息夫人",
+        "meta": {
+          "createdById": "u_86",
+          "createdByName": "孙鑫环(2512342)",
+          "createdBy": "孙鑫环(2512342)",
+          "createdAt": "2026-06-02",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "莫以今时宠，难忘旧日恩。\n看花满眼泪，不共楚王言。",
+        "annotations": [
+          {
+            "start": 2,
+            "end": 5,
+            "text": "今时宠",
+            "note": "一作“今朝宠”。",
+            "field": "content",
+            "linkKey": "anno-2-5-mpwaz0xdyyuml2"
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "难忘",
+            "note": "怎能忘，哪能忘。",
+            "field": "content",
+            "linkKey": "anno-6-8-mpwaz6knbnff9f"
+          },
+          {
+            "start": 8,
+            "end": 11,
+            "text": "旧日恩",
+            "note": "一作“昔日恩”。",
+            "field": "content",
+            "linkKey": "anno-8-11-mpwb0do0o9xl7z"
+          },
+          {
+            "start": 15,
+            "end": 18,
+            "text": "满眼泪",
+            "note": "一作“满目泪”。",
+            "field": "content",
+            "linkKey": "anno-15-18-mpwb0k1ngu47gn"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "息夫人",
+          "otherNames": "息妫怨",
+          "author": "王维",
+          "origin": "",
+          "form": "近体",
+          "sub": "五绝",
+          "sub2": "",
+          "rhyme": "十三元"
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "1",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "不要以为今天的宠爱，就能使我忘掉旧日的恩情。\n尽管面对着良辰美景，仍然是满面愁容，泪水不断，始终也不愿意和楚王讲一句话。",
+          "background": "据唐朝孟綮《本事诗》记载：唐明皇的哥哥宁王李宪，夺取了卖饼人的妻子。一天，李宪宴客，把卖饼人召进府，女子见了丈夫，凄然泪下，王维当场写了此首诗。",
+          "evaluation": [
+            {
+              "出处": "张表臣《珊瑚钩诗话》",
+              "内容": "杜牧之《息夫人》诗与所谓“莫以今朝宠……”语意远矣。盖学有浅深，识有高下，故形于言者不同也。"
+            },
+            {
+              "出处": "刘辰翁《王孟诗评》",
+              "内容": "正尔憔悴得人。"
+            },
+            {
+              "出处": "王士祯《带经堂诗话》",
+              "内容": "王摩诘“看花满眼泪，不共楚王言”，更不著判断一语，此盛唐所以为高。"
+            },
+            {
+              "出处": "吴乔《围炉诗话》",
+              "内容": "唐人诗意不必在题中，如右丞《息夫人》云云，使无稗说载其为宁王夺饼师妻作，后人何从知之。"
+            },
+            {
+              "出处": "贺裳《载酒园诗话》",
+              "内容": "摩诘“莫以今时宠”云云，正以咏饼师妇佳耳，若直咏息夫人，有何意味！"
+            },
+            {
+              "出处": "吴瑞荣《唐诗笺要》",
+              "内容": "非嬉笑，非抢白，有吞有吐，拟容取心，情事宛合。"
+            },
+            {
+              "出处": "张谦宜《絸斋诗谈》",
+              "内容": "体贴出怨妇本情，又不露出宁王之本情，真得《三百篇》法。止二十字，却有味外味，诗之最高者。"
+            },
+            {
+              "出处": "马位《秋窗随笔》",
+              "内容": "最喜王摩诘“看花满眼泪，不共楚王言”，得言外之旨，诸人用“泪”字，莫及也。"
+            },
+            {
+              "出处": "李锳《诗法易简录》",
+              "内容": "只就“不言”一事点缀之，不加评论，诗品自高。"
+            },
+            {
+              "出处": "杨逢春《唐诗偶评》",
+              "内容": "首二句原其衷曲，三、四写其怨态。三、四从首二生出，实则首二从三、四看出也。忠厚俳恻，词旨凄婉动人。"
+            },
+            {
+              "出处": "吴修坞《唐诗续评》",
+              "内容": "以息夫人为题，为宁王讳也。《诗矩》“相看”作“看花”，于诗有情致，于事不甚合。"
+            }
+          ]
+        }
       }
     }
   },
   "G": {
-    "lastId": 78,
+    "lastId": 80,
     "items": {
       "G00001": {
         "id": "G00001",
@@ -287738,11 +290264,97 @@
             }
           ]
         }
+      },
+      "G00079": {
+        "id": "G00079",
+        "type": "G",
+        "name": "晋书",
+        "meta": {
+          "createdById": "u_66",
+          "createdByName": "薛博予(2510939)",
+          "createdBy": "薛博予(2510939)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "晋书",
+          "author": "房玄龄等二十一人共同编纂",
+          "works": []
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "《晋书》中不再以人物为名，而是按照序号命名，故“包含作品”一栏不再列举。",
+          "overview": "《晋书》，又称《新晋书》，是中国纪传体晋代史，《二十四史》之一，由唐代房玄龄等二十一人撰成。《晋书》以南朝齐人臧荣绪所著的《晋书》为蓝本，包括帝纪十卷，志二十卷，列传七十卷，载记三十卷，叙例和目录各一卷．共计一百三十二卷。因目录置于书首，叙例佚失，现存一百三十卷，记载上自司马懿（西晋世祖武皇帝司马炎之祖）、下到刘裕代东晋建南朝宋的历史。主要记述了司马氏代魏平吴、户调式与田制、诸王分封与出镇、修定晋律等历史事件，从经济、政治、军事、民族、社会、文化思想、中外文化交流等诸多领域，表述了两晋和十六国历史的发展进程，展现了当时中国汉族和各少数民族各自建立的政权，以及相互之间的关系。",
+          "background": "贞观二十年（646），唐太宗出于处理现实政治斗争以寻求身后皇权稳定，与恢复以“忠”“孝”为核心的儒家名教以维护封建统治之需，下诏重修晋史。唐修《晋书》的编纂始于贞观二十年闰三月，止于贞观二十二年七月，历时两年零五个月。唐修《晋书》由房玄龄等监修，由褚遂良、令狐德棻等二十二人集体参与修撰，参撰人员来自唐初关陇、山东、江南三大文化区，囊括了部分家学深厚，精通文史，博涉礼仪、刑法、食货、谱牒等学之士，构成了当时颇具代表性的高水平修史集团。\n《晋书》取材广泛，史料丰富，以帝纪按年、月、日纪事为纲，列传分条记事为目，纲举目张，再补以各志所记典章制度，使两晋史事和典制完备。所记载的史实具有很高的价值，是研究魏晋历史的重要历史著作。所遵循的政治思想，对于树立中国不可分割的政治观念起到了积极作用，并对后世修史摆脱“贵中华贱夷狄”的观念的影响，具有一定的借鉴意义。现存版本有明南北监本、汲古阁本等。",
+          "evaluation": [
+            {
+              "出处": "刘知几《史通》",
+              "内容": "晋世杂书，谅非一族，若《语林》《世说》《幽明录》《搜神记》之徒，其所载或诙谐小辩，或神鬼怪物。其事非圣，扬雄所不观；其言乱神，宣尼所不语。皇朝新撰晋史，多采以为书。夫以干、邓之所粪除，王、虞之所糠枇，持为逸史，用补前传，此何异魏朝之撰《皇览》，梁世之修《遍略》，务多为美，聚博为功，虽取说于小人，终见嗤于君子矣。"
+            },
+            {
+              "出处": "《册府元龟》",
+              "内容": "莫不博考前文，旁求遗逸，芟夷芜蔓，举其精要。……以臧荣绪《晋书》为本，据摭诸家传记而附益之，爰及晋代文集，罔不毕记。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "其（指《晋书》）所褒贬，略实行而奖浮华。其所采择，忽正典而取小说。彼靡不返，有自来矣……正史之中，惟此书及宋史后人纷纷改撰，其亦有由矣。特以十八家之书并亡，考晋事者舍此无由，故历代存之不废耳。"
+            }
+          ]
+        }
+      },
+      "G00080": {
+        "id": "G00080",
+        "type": "G",
+        "name": "隋书",
+        "meta": {
+          "createdById": "u_66",
+          "createdByName": "薛博予(2510939)",
+          "createdBy": "薛博予(2510939)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "title": "隋书",
+          "author": "魏征等人编修",
+          "works": []
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "《隋书》中的篇名不再以人物为名，只排列序号，故“包含作品”一栏不再列举具体篇名。",
+          "overview": "《隋书》，“二十四史”之一，是唐代魏征主编的纪传体史书。贞观三年（629年），唐太宗诏修梁、齐、陈、周、隋书五代史，以魏征修隋史，并与房玄龄总监诸史。魏征对梁、陈、齐史“各为总论”，对隋史“总加撰定”，以序16篇、论53篇。《隋书》共85卷，包括帝纪5卷、列传50卷、志30卷。至唐高宗显庆元年（656年），修成三十卷，由监修长孙无忌领衔奏上。参与修撰人员，今可考知者有：令狐德棻、褚遂良、于志宁、李淳风、韦安仁、李延寿、敬播。唐玄宗初，合入《隋书》纪、传中，成为《隋书》纪、志、传85卷，流传至今。\n书中记载了隋文帝开皇元年（581年）至隋恭帝义宁二年（618年）共38年的历史。纪传部分主要记载隋朝史事，而志部分（又称《五代史志》）则涵括了梁、陈、北齐、北周和隋五朝的典章制度。志部分包括礼仪、音乐、律历、天文、五行、食货、刑法、百官、地理、经籍十志，其中《经籍志》正式确立了经、史、子、集四部分类法。列传中还包含东夷、南蛮、西域、北狄四传，是研究隋朝民族史及中外交通史的重要文献。",
+          "background": "唐武德四年（621年），令狐德棻提出修撰梁、陈、北齐、北周、隋五朝史的建议。次年，唐朝廷命史臣编修，但数年未成。贞观三年（629年），唐太宗下诏重修五朝史，并命魏征主持《隋书》的修撰工作。贞观十年（636年），《隋书》的帝纪五卷、列传五十卷与其他四朝史同时完成，合称“五代史”。此部分在魏征总领下，由颜师古、孔颖达、许敬宗等人参与修撰。由于初修“五代史”未有志书，贞观十五年（641年），唐太宗诏令于志宁、李淳风等人续修《五代史志》。该部分后由长孙无忌监修，于唐高宗显庆元年（656年）最终完成，共三十卷。因记述以隋朝为主，后并入《隋书》，故全书最终定稿为八十五卷。\n《隋书》修撰集中了当时一批杰出学者，如“十八学士”中的孔颖达、许敬宗、于志宁，经史大师颜师古，天文学家李淳风等。史料来源丰富，包括隋朝留存的档案、王劭所撰《隋书》、《开皇起居注》等文献。因修史时间距隋亡仅二十余年，史官们还通过访问隋朝遗老、利用编撰者自身在隋朝的生活经历来补直史事。唐太宗明确提出“以古为镜，可以见兴替”，魏征等史臣秉持以隋亡为鉴、总结历史教训的核心思想进行编撰。在具体写作中，主编魏征坚持秉笔直书的“良史”传统，对隋朝君臣的记载较少曲笔隐讳。",
+          "evaluation": [
+            {
+              "出处": "",
+              "内容": ""
+            }
+          ]
+        }
       }
     }
   },
   "C": {
-    "lastId": 185,
+    "lastId": 189,
     "items": {
       "C00001": {
         "id": "C00001",
@@ -287757,11 +290369,22 @@
           "reviewedByName": "张恒硕(2212266)",
           "reviewedBy": "张恒硕(2212266)",
           "reviewedAt": "2025-11-18",
-          "updatedAt": "2025-12-10"
+          "updatedAt": "2026-05-30"
         },
         "content": "",
         "annotations": [],
-        "links": [],
+        "links": [
+          {
+            "field": "fields.repWorks",
+            "start": 1,
+            "end": 4,
+            "text": "将进酒",
+            "targetId": "W00746",
+            "targetName": "将进酒",
+            "targetType": "W",
+            "placeholder": false
+          }
+        ],
         "fields": {
           "common": "李白",
           "name": "李白",
@@ -309491,11 +312114,11 @@
           "createdByName": "陶力扬(2120250338)",
           "createdBy": "陶力扬(2120250338)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
         },
         "content": "",
         "annotations": [],
@@ -309601,8 +312224,8 @@
           ]
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -309636,11 +312259,11 @@
           "createdByName": "陶力扬(2120250338)",
           "createdBy": "陶力扬(2120250338)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
         },
         "content": "",
         "annotations": [],
@@ -309762,8 +312385,8 @@
           ]
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -309793,11 +312416,11 @@
           "createdByName": "陶力扬(2120250338)",
           "createdBy": "陶力扬(2120250338)",
           "createdAt": "2026-05-29",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-05-29"
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
         },
         "content": "",
         "annotations": [],
@@ -309895,8 +312518,8 @@
           ]
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -310608,11 +313231,594 @@
             }
           ]
         }
+      },
+      "C00186": {
+        "id": "C00186",
+        "type": "C",
+        "name": "刘义庆",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘义庆",
+          "name": "刘义庆",
+          "period": "南朝宋",
+          "life": "403-444年",
+          "hometown": "彭城郡彭城县（今江苏省徐州市）人",
+          "courtesy": "季伯",
+          "pseudonym": "（空）",
+          "posthumous": "康",
+          "aliases": "刘季伯",
+          "joint": [],
+          "school": "（空）",
+          "repWorks": [
+            "《世说新语》",
+            "《幽明录》",
+            "《宣验记》"
+          ],
+          "anthos": [
+            "《宋临川王义庆集》"
+          ],
+          "relations": [
+            {
+              "人物": "宋武帝刘裕",
+              "关系": "伯父"
+            },
+            {
+              "人物": "长沙景王刘道怜",
+              "关系": "生父"
+            },
+            {
+              "人物": "刘烨（一作刘晔）",
+              "关系": "长子"
+            },
+            {
+              "人物": "刘衍",
+              "关系": "次子"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "公元403年（1岁）",
+              "事件": "东晋元兴二年，生于京口（今江苏镇江）。身世：彭城郡彭城县（今江苏徐州）人，字季伯。其父为长沙景王刘道怜，叔父为宋武帝刘裕，后过继给叔父临川王刘道规为嗣。"
+            },
+            {
+              "纪年": "公元416年（13岁）",
+              "事件": "东晋义熙十二年，袭封南郡公，开始步入政治舞台。同年，随伯父刘裕北伐后秦，攻入长安，拜辅国将军、北青州刺史（未就任）。"
+            },
+            {
+              "纪年": "公元420年（17岁）",
+              "事件": "南朝宋永初元年，刘裕代晋称帝。刘义庆袭封临川王，就任侍中。"
+            },
+            {
+              "纪年": "公元424年（21岁）",
+              "事件": "宋文帝刘义隆元嘉元年，升任散骑常侍、秘书监，拜度支尚书，负责财政与机要。后迁丹阳尹，仍兼旧职。"
+            },
+            {
+              "纪年": "公元429年（26岁）",
+              "事件": "元嘉六年，加封尚书左仆射，成为事实上的宰相之一，达到政治生涯的一个高峰。"
+            },
+            {
+              "纪年": "公元432年（29岁）",
+              "事件": "元嘉九年，出任荆州刺史，都督七州军事，成为镇守一方、手握兵权的方面大员。治理期间政绩清明，并招纳庾实、龚祈等贤才。"
+            },
+            {
+              "纪年": "公元435年（32岁）",
+              "事件": "元嘉十二年，上表举荐庾寔、龚祈、师觉觉三人。"
+            },
+            {
+              "纪年": "公元440年（37岁）",
+              "事件": "元嘉十七年，改任南兖州刺史，加开府仪同三司，都督六州军事。"
+            },
+            {
+              "纪年": "公元444年（41岁）",
+              "事件": "元嘉二十一年，在广陵（今扬州）病重，请求回京。同年于建康（今南京）去世，享年41岁。追赠侍中、司空，谥号“康”，世称临川康王。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "望梅止渴《世说新语·假谲》",
+              "内容": "曹操行军缺水，谎称前方有大梅林，士兵听后口中生津，得以坚持到有水源处。"
+            },
+            {
+              "典故名": "七步成诗相煎何急《世说新语·文学》",
+              "内容": "曹丕令曹植在七步内作诗，曹植吟出《七步诗》，以豆萁相煎比喻手足相残。"
+            },
+            {
+              "典故名": "绝妙好辞《世说新语·捷悟》",
+              "内容": "曹操与杨修猜曹娥碑后的八字谜题，杨修解为“绝妙好辞”（辞的异体字），其才智令曹操自叹不如。"
+            },
+            {
+              "典故名": "咏絮之才（咏雪之慧）《世说新语·言语》",
+              "内容": "谢安问大雪像什么，侄子说“撒盐空中”，侄女谢道韫说“未若柳絮因风起”，展现了非凡的才思。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "刘义庆作为南朝宋宗室与文学集团的核心人物，其最卓越的成就在于主持编纂了不朽的笔记小说《世说新语》。这部著作不仅开创了中国志人小说的体例，更以精简隽永的笔触系统记录了魏晋名士的言行风貌，成为后世研究魏晋思想、文化与社会风尚的第一手文献，被鲁迅誉为“名士的教科书”。《世说新语》所塑造的“魏晋风度”深刻影响了后世文人的精神世界与审美趣味，书中大量故事如“雪夜访戴”“七步成诗”等演化为成语典故，为历代诗词、戏曲、小说提供了源源不断的创作灵感。此外，刘义庆还组织编撰了《幽明录》《宣验记》等志怪小说集，推动了南北朝笔记小说的繁荣，其门下汇聚的鲍照等文士所形成的“刘义庆文学集团”，更彰显了他作为文学赞助人的非凡眼光。尽管他的个人文集《临川王义庆集》及多部史书类书已散佚，但他通过《世说新语》实现了不朽——这部作品不仅成为中国古典文学中的璀璨明珠，更跨越时空，至今仍是国人理解传统人文精神、汲取语言智慧的重要源泉。",
+          "evaluation": [
+            {
+              "出处": "《宋书·刘义庆传》",
+              "内容": "“少善骑乘，及长以世路艰难，不复跨马。……为性简素，寡嗜欲，爱好文义，才词虽不多，然足为宗室之表。受任历藩，无浮淫之过，唯晚节奉养沙门，颇致费损。”"
+            },
+            {
+              "出处": "《宋书·刘裕传》",
+              "内容": "刘裕赞其为“此吾家丰城也”。"
+            },
+            {
+              "出处": "鲁迅",
+              "内容": "评价刘义庆作品风格“记言则玄远冷隽，记行则高简瑰奇”；评价《世说新语》是“名士底教科书”；提出“成于众手”之说。"
+            },
+            {
+              "出处": "宗白华",
+              "内容": "认为“《世说新语》一书记述得挺生动，能以简劲的笔墨画出时代的色彩和空气”。"
+            }
+          ]
+        }
+      },
+      "C00187": {
+        "id": "C00187",
+        "type": "C",
+        "name": "刘过",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘过",
+          "name": "刘过",
+          "period": "南宋",
+          "life": "1154～1206年",
+          "hometown": "吉州太和（今江西泰和县）人",
+          "courtesy": "改之",
+          "pseudonym": "龙洲道人",
+          "posthumous": "（空）",
+          "aliases": "（空）",
+          "joint": [
+            {
+              "合称": "辛派三刘",
+              "其他人物": "刘克庄、刘辰翁"
+            }
+          ],
+          "school": "辛派词人",
+          "repWorks": [
+            "《唐多令·芦叶满汀洲》",
+            "《沁园春》",
+            "《六州歌头》"
+          ],
+          "anthos": [
+            "《龙洲集》",
+            "《龙洲词》",
+            "《龙洲道人诗集》"
+          ],
+          "relations": [
+            {
+              "人物": "刘廷玠",
+              "关系": "父亲"
+            },
+            {
+              "人物": "刘濂",
+              "关系": "弟弟"
+            },
+            {
+              "人物": "辛弃疾",
+              "关系": "好友"
+            },
+            {
+              "人物": "陆游",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "宋高宗绍兴二十四年（1154年）",
+              "事件": "刘过出生。关于其生卒年存有争议，此卒年为其中一说。他字改之，号龙洲道人，籍贯在吉州太和（今江西泰和）或庐陵（今江西吉安）一带。"
+            },
+            {
+              "纪年": "宋孝宗淳熙元年（1174年，21岁）",
+              "事件": "初次参加解试（州县级考试），成功中举。同年冬赴省城参加省试，途中作《天仙子·初赴省别妾于三十里头》。"
+            },
+            {
+              "纪年": "宋孝宗淳熙二年（1175年，22岁）",
+              "事件": "参加省试（礼部试）落第，作《下第》一诗。"
+            },
+            {
+              "纪年": "宋孝宗淳熙五年（1178年，25岁）",
+              "事件": "参加“别头试”（为特定官员子弟设的考试）获得第一，是他科举生涯中的高光时刻。"
+            },
+            {
+              "纪年": "宋孝宗淳熙十六年（1189年，36岁）",
+              "事件": "在临安拜谒当朝宰相周必大，呈上《上周少保》《寄周益公》等诗文，并提出抗金北伐的策略，未被采纳。"
+            },
+            {
+              "纪年": "宋光宗绍熙元年（1190年，37岁）",
+              "事件": "从临安北上至建康（今南京），以诗投赠曾赏识他的杨万里。"
+            },
+            {
+              "纪年": "宋光宗绍熙三年（1192年，39岁）",
+              "事件": "秋，前往四明（今宁波）参加考试，未中。期间作《贺新郎》赠老娼，词意凄怨，天下传唱。"
+            },
+            {
+              "纪年": "宋光宗绍熙四年（1193年，40岁）",
+              "事件": "春，前往山阴（今绍兴）拜访陆游，两人诗文唱和，结为忘年交。"
+            },
+            {
+              "纪年": "宋光宗绍熙五年（1194年，41岁）",
+              "事件": "正月，太上皇孝宗病重，光宗皇帝却不去探望，导致政局动荡。刘过以布衣身份“伏阙上书”，直言批评光宗，因此触怒皇帝，被勒令还乡。这是他人生的高光时刻之一，展现了不畏权贵的风骨。还乡途中作《初伏阙上书得旨还乡上杨守秘书》诗二首。"
+            },
+            {
+              "纪年": "宋宁宗庆元元年（1195年，42岁）",
+              "事件": "因“江湖诗祸”牵连，被诬陷入狱，后经申辩得以无罪释放。他在建康（今南京）狱中写下《建康狱中上吴居父启》为自己辩白。此年于南京六合区留有《六合道中》《醉中偶成》等诗作。"
+            },
+            {
+              "纪年": "宋宁宗嘉泰三年（1203年，50岁）",
+              "事件": "在临安。辛弃疾任浙东安抚使，闻名遣使相邀，刘过作《沁园春·斗酒彘肩》一词作答，辛弃疾读后大喜。两人遂成莫逆之交。"
+            },
+            {
+              "纪年": "宋宁宗嘉泰四年（1204年，51岁）",
+              "事件": "韩侂胄追封岳飞为鄂王，刘过作著名的《六州歌头·题岳鄂王庙》吊岳飞，慷慨悲愤，是“龙洲词中第一”。韩侂胄掌握实权，计划北伐，刘过登上武昌黄鹄山上的安远楼（南楼），与友人聚会，作词怀古。"
+            },
+            {
+              "纪年": "宋宁宗开禧元年（1205年，52岁）",
+              "事件": "投靠昆山县令潘友文，晚年得以安顿。同年娶袁氏为妻，入赘定居昆山。被列入出使金国议和的人选，后因其狂放不羁或托病推辞而免。"
+            },
+            {
+              "纪年": "宋宁宗开禧二年（1206年，53岁）",
+              "事件": "病逝于昆山。因无子嗣，后事由友人料理。学术界关于其卒年，亦有1209年（宋宁宗嘉定二年）冬的说法。八月五日，重登武昌安远楼，感怀时局与身世，作千古绝唱《唐多令·芦叶满汀洲》，发出“欲买桂花同载酒，终不似，少年游”的叹息。开禧北伐（1206年）前夕，政治局势紧张，刘过自此居家昆山，和政治再无瓜葛。"
+            },
+            {
+              "纪年": "约1216年",
+              "事件": "昆山县主簿赵希楙（一说赵希株）为其在昆山慧聚寺东斋西冈买地安葬，墓表刻“宋庐陵处士龙洲刘过之墓”，并立祠纪念。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "辛刘交游：千古佳话",
+              "内容": "刘过与辛弃疾相交的故事是南宋文坛的一段美谈。作为辛弃疾的“骨灰级粉丝”，他初访辛府时却因衣着简朴被门房轻视而发生争执。关键时刻，陆游和陈亮替他解围，辛弃疾便以新作的羊肾羹为题，让刘过即兴赋诗。刘过不慌不忙，先讨酒喝，随后借着洒在衣襟上的酒渍，巧妙地以“流”字为韵，随口吟出：拔毫已付管城子，烂首曾封关内侯。死后不知身外物，也随樽俎伴风流。诗中连用两典，巧妙地将羊毫毛笔和滥封的“烂羊头”典故融入诗中，切题精准又暗含讽意。辛弃疾听后大为赞赏，从此与他结为莫逆，引为知己。"
+            },
+            {
+              "典故名": "“白日见鬼”的谐谑",
+              "内容": "他曾效仿辛弃疾的词风，在写给辛弃疾的词中，借白居易、林逋、苏轼三位先贤之口“挽留”自己在西湖游玩，以幽默的方式婉拒邀请。后来，岳飞之孙岳珂评其词构思奇妙，但若无药“疗君白日见鬼症”，引得满座哄堂大笑。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "刘过是南宋中后期文学史上一位举足轻重的布衣文人，以狂逸豪放的词风、慷慨悲壮的爱国情怀与跌宕曲折的人生经历，在辛派词人中占据重要地位。他终身未仕、浪迹江湖，却始终胸怀恢复中原之志，屡次伏阙上书陈恢复大计、亲献奇策，将满腔忧愤与热血尽数倾注于笔墨之间。作为辛弃疾的莫逆之交与追随者，刘过深得其豪放之精髓，词风雄豪悲壮、意象宏大肆，多抒写抗金抱负与不遇之愤。他与刘克庄、刘辰翁并称“辛派三刘”，又与同乡刘仙伦合称“庐陵二布衣”，成为南宋豪放词派继辛弃疾之后的重要延续者。不过，刘过词能在辛派阵营中独树一帜，并不仅仅在于那些追随辛弃疾雄健豪纵风格的作品，更在于他于狂逸之中自饶俊致的独特造诣——清代学者刘熙载在《艺概》中评其词“狂逸之中自饶俊致，虽沉著不及稼轩，足以自成一家”。最能体现这种风格的，便是那首被誉为“数百年绝作”的《唐多令·芦叶满汀洲》，词中“欲买桂花同载酒，终不似，少年游”一句，以哀婉含蕴之笔写尽时光流逝、壮志未酬的沉痛感慨，与他一贯痛快淋漓的豪放风格形成鲜明对照，却也恰恰彰显出他深厚的艺术功底与丰富的情感层次。除词作之外，刘过在诗歌领域亦颇有建树，其七律如《夜思中原》《登多景楼》等，慷慨悲壮、情感炽烈，与陆游的诗风遥相呼应，诗中“独有孤臣挥血泪，更无奇杰叫天阊”之句，足见其孤愤伤时之深。在文学史传承上，刘过的创作也对后世产生了深远影响，其诗词在明代为杨维桢等“铁崖”派诗人所取法，其以布衣之身纵横江湖、以诗文寄寓家国之痛的生命姿态，更成为后世许多失路文人追慕的精神典范。纵观其一生与创作，刘过既是一位凭一腔热血直抒胸臆的豪放词人，也是一位于狂放之中不失深婉个性的独行诗客，他以一介布衣之身，为南宋文坛留下了沉郁悲凉而又逸气横生的一笔重彩。",
+          "evaluation": [
+            {
+              "出处": "张端义",
+              "内容": "与刘仙伦并称为“庐陵二刘”，出处为《贵耳集》卷上。"
+            },
+            {
+              "出处": "黄昇",
+              "内容": "“改之，稼轩之客，词多壮语，盖学稼轩者也”，出处为《花庵词选》。"
+            },
+            {
+              "出处": "方回",
+              "内容": "指出他在当时有“浙右滕元秀，江西刘改之”的说法，出处为《桐江集》卷一。"
+            }
+          ]
+        }
+      },
+      "C00188": {
+        "id": "C00188",
+        "type": "C",
+        "name": "林逋",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "林逋",
+          "name": "林逋",
+          "period": "北宋",
+          "life": "967年—1028年",
+          "hometown": "浙江大里黄贤村人（一说杭州钱塘）",
+          "courtesy": "君复",
+          "pseudonym": "梅妻鹤子",
+          "posthumous": "和靖先生",
+          "aliases": "林和靖",
+          "joint": [
+            {
+              "合称": "“四贤”",
+              "其他人物": "唐代名相李泌、诗人白居易、宋代大文豪苏轼"
+            }
+          ],
+          "school": "“晚唐体”",
+          "repWorks": [
+            "《山园小梅二首》",
+            "《山中寄招叶秀才》"
+          ],
+          "anthos": [
+            "《林和靖诗集》"
+          ],
+          "relations": [
+            {
+              "人物": "林釴",
+              "关系": "父亲"
+            },
+            {
+              "人物": "林彰",
+              "关系": "侄子"
+            },
+            {
+              "人物": "李建中",
+              "关系": "老师"
+            },
+            {
+              "人物": "释智圆",
+              "关系": "挚友"
+            },
+            {
+              "人物": "梅尧臣",
+              "关系": "挚友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "967年（北宋乾德五年，1岁）",
+              "事件": "约于秋，生于明州奉化大里黄贤村（一说杭州钱塘）。林家虽贫，却是书香门第。父林釴、祖父林克己（曾任吴越国通儒院学士）。后世推算其生年亦有968年一说。"
+            },
+            {
+              "纪年": "约987-997年（约20-30岁）",
+              "事件": "早孤力学的游历期。师从书法家李建中，在故乡四明山居住，后客居曹州（今山东菏泽）约十年。"
+            },
+            {
+              "纪年": "1004-1007年（38-41岁，景德年间）",
+              "事件": "主要漫游江淮。曾有用世之志，后因对朝廷行为（如“天书封禅”）失望而彻底放弃仕途。"
+            },
+            {
+              "纪年": "约1008年（约42岁）",
+              "事件": "结束漫游，返回杭州，在西湖孤山结庐隐居。自此植梅养鹤，诗文多即兴而作，随写随丢。"
+            },
+            {
+              "纪年": "约1008-1028年（42-61岁，隐居孤山）",
+              "事件": "交游唱和。与僧智圆、范仲淹、梅尧臣等名士文人交往，吟诗唱和。鹤报客至。每逢客至童子纵鹤，林逋见则棹舟而归，成为隐居生活的佳话。"
+            },
+            {
+              "纪年": "1012年（大中祥符五年，46岁）",
+              "事件": "宋真宗闻其名赐粟帛，诏长吏岁时劳问，且赐号“和靖处士”。此事极大提升其声望。"
+            },
+            {
+              "纪年": "约1012年后（46岁后）",
+              "事件": "婉拒出仕。面对众人劝其入仕，直言其志在青山绿水。"
+            },
+            {
+              "纪年": "约1027年（约61岁）",
+              "事件": "预作寿堂，写下绝笔诗，并自为墓志，其豁达与气节流芳千古。"
+            },
+            {
+              "纪年": "1028年（天圣六年，62岁）",
+              "事件": "是年深秋，无疾而终，葬于孤山故庐旁。临终作绝笔诗《自作寿堂因书一绝以志之》。赐谥：宋仁宗闻讯赐谥“和靖先生”，世称“林和靖”。治丧：侄子林彰、林彬前来杭州主持丧事。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "梅妻鹤子",
+              "内容": "以梅为妻，以鹤为子。比喻清高或隐居。宋·林逋隐居西湖孤山，植梅养鹤，终生不娶，人谓“梅妻鹤子”。出处：宋·沈括《梦溪笔谈·人事二》：“林逋隐居杭州孤山，常畜两鹤，纵之则飞入云霄，盘旋久之，复入笼中。逋常泛小艇，游西湖诸寺。有客至逋所居，则一童子出应门，延客坐，为开笼纵鹤。良久，逋必棹小船而归。盖常以鹤飞为验也。”"
+            },
+            {
+              "典故名": "放鹤报客",
+              "内容": "又称“鹤飞报客”。林逋隐居孤山，常驾小舟游西湖诸寺，家中若来客人，童子便开笼放鹤。林逋见鹤盘旋，必划船归家。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "林逋是北宋前期最杰出的隐逸诗人，在文学与文化史上均占有重要地位。在诗歌创作上，他深受晚唐诗人贾岛、姚合影响，笔法细巧、诗风澄淡高远，被视为宋初“晚唐体”诗派最具代表性的作者之一；其名句“疏影横斜水清浅，暗香浮动月黄昏”被誉为千古咏梅绝唱，欧阳修赞其为“前世咏梅者多矣，未有此句也”，后人更评为“暗香和月入佳句，压尽千古无诗才”。他隐居杭州孤山，终生不仕不娶，以梅为妻、以鹤为子，独创“梅妻鹤子”的隐逸范式，将梅花的高洁与隐士的人格完美统一，被奉为隐逸文化的至上象征。在人格影响方面，林逋以其不慕荣利、澄澈纯粹的品格，赢得了朝野上下的一致尊崇：宋真宗闻其名赐号“和靖处士”，宋仁宗赐谥“和靖先生”，南宋大儒朱熹更誉之为“宋亡而此人不亡，为国朝三百年间第一人”；范仲淹、苏轼等文坛巨擘亦对他推崇备至，苏轼赞誉其诗“神清骨冷无尘俗”。在书法领域，他亦造诣不凡，工行草书，笔意瘦挺劲健、有晋人风致，其《自书诗帖》等墨迹被视为北宋隐逸书风的典范之作。林逋将清高绝俗的诗、书、人完美融于一身，其人其诗共同塑造了一个光照千古的高士形象，深刻影响了后世文人的精神世界与隐逸传统。",
+          "evaluation": [
+            {
+              "出处": "《宋史》",
+              "内容": "其本传首句便定下基调：“性恬淡好古，弗趋荣利，家贫，衣食不足，晏如也”，描绘出其安贫乐道、超然物外的形象。"
+            },
+            {
+              "出处": "好友梅尧臣",
+              "内容": "称其诗“平淡邃美”，品格如“高峰瀑泉”。"
+            },
+            {
+              "出处": "欧阳修",
+              "内容": "在《归田录》中不仅称其“工于画，善为诗”，更盛赞其诗，感慨“自逋之卒，湖山寂寥，未有继者”。"
+            }
+          ]
+        }
+      },
+      "C00189": {
+        "id": "C00189",
+        "type": "C",
+        "name": "白朴",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-05-30",
+          "reviewedById": "",
+          "reviewedByName": "",
+          "reviewedBy": "",
+          "reviewedAt": "",
+          "updatedAt": "2026-05-30"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "白朴",
+          "name": "白朴",
+          "period": "元代",
+          "life": "1226—约1306年",
+          "hometown": "隩州（今山西河曲附近）",
+          "courtesy": "仁甫",
+          "pseudonym": "兰谷",
+          "posthumous": "（空）",
+          "aliases": "（空）",
+          "joint": [
+            {
+              "合称": "关、马、郑、白",
+              "其他人物": "关汉卿、马致远、郑光祖"
+            }
+          ],
+          "school": "“文采派”",
+          "repWorks": [
+            "《唐明皇秋夜梧桐雨》",
+            "《董秀英花月东墙记》"
+          ],
+          "anthos": [
+            "《天籁集》"
+          ],
+          "relations": [
+            {
+              "人物": "白全道",
+              "关系": "祖父"
+            },
+            {
+              "人物": "白华",
+              "关系": "父亲"
+            },
+            {
+              "人物": "白贲",
+              "关系": "仲父"
+            },
+            {
+              "人物": "白镛",
+              "关系": "儿子"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "1226年（金哀宗正大三年）",
+              "事件": "出生。出生于金朝南京（今河南开封）。原名白恒，字仁甫，是枢密院判官白华的次子。"
+            },
+            {
+              "纪年": "232年（金哀宗天兴元年）",
+              "事件": "父去母离。6岁的他经历巨变，蒙军攻打南京，父亲随哀宗出逃，白朴与母亲滞留城中。"
+            },
+            {
+              "纪年": "1233年（金哀宗天兴二年）",
+              "事件": "城破母亡。7岁时南京城破，母亲在战乱中罹难。他被父亲的世交元好问救下，并随其北渡黄河，先后寓居于聊城、冠氏（今山东冠县）。"
+            },
+            {
+              "纪年": "1234年（金哀宗天兴三年）",
+              "事件": "金朝灭亡。8岁的他随元好问在山东避难。在元好问的悉心照料和教育下，他度过了丧母后的最初时光。"
+            },
+            {
+              "纪年": "1237年（蒙古太宗九年）",
+              "事件": "父子团聚。12岁时，父亲白华北归，依附于蒙古将领史天泽门下。同年秋，元好问途经真定（今河北正定），将白朴姐弟送归父亲，一家人终于团聚。"
+            },
+            {
+              "纪年": "1261年（元世祖中统二年）",
+              "事件": "谢绝举荐。36岁，史天泽举荐他出仕，但白朴再三逊谢，终身未踏入仕途。拒仕后，他开始弃家南游，寄情山水。"
+            },
+            {
+              "纪年": "1271年（元世祖至元八年）",
+              "事件": "元朝建立。同年，元好问的诗文集《遗山先生文集》编成出版，其中或收录有白朴作品或相关记载。"
+            },
+            {
+              "纪年": "约1273年（元世祖至元十年）",
+              "事件": "创作《墙头马上》。47岁左右，他完成了代表作之一的《裴少俊墙头马上》。该剧与《西厢记》等并称为“元杂剧四大爱情剧”。"
+            },
+            {
+              "纪年": "1276年（元世祖至元十三年）",
+              "事件": "南下江西。50岁，他南下至九江一带漂泊。蒙古军占领南宋都城临安，金、宋两朝皆亡，成为其创作的重要背景。"
+            },
+            {
+              "纪年": "1277年（元世祖至元十四年）",
+              "事件": "重游故地。41岁（有资料显示为41岁，可能与记载有出入），他再入巴陵（今湖南岳阳），目睹战乱后的萧条，写下“兵余独见川流血”等词句抒发感伤。"
+            },
+            {
+              "纪年": "1280年（元世祖至元十七年）",
+              "事件": "徙居金陵。54岁，天下大局已定。他正式移居建康（今江苏南京），在此度过了三十年的创作生涯，与江南名士唱和，放情山水诗酒间。"
+            },
+            {
+              "纪年": "约1300年（元成宗大德年间）",
+              "事件": "集作成册。其词集《天籁集》由其好友王博文整理编订，并为之作序。这标志着他作为词人的成就得到了同时代文人的认可。"
+            },
+            {
+              "纪年": "1306年（元成宗大德十年）",
+              "事件": "生命终章。约80岁时有词作流传，学者通常将其卒年定于此年，此后行踪不详。此外，学界也有卒于1309年的说法。据考证，他最终葬于真定府灵寿县的凤凰墩。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "元好问抱持救孤",
+              "内容": "汴京沦陷后，7岁的白朴在战乱与瘟疫中幸存，幸得父亲世交元好问救下。白朴染上瘟疫时，元好问不避被感染的风险，日夜抱他在怀中整整六天，终于让他汗出痊愈。此后十年，元好问视他如己出，悉心教导，这段恩情也深深影响了白朴的人生观与文风。后元好问将他们送归其父处，并留下“元白通家旧，诸郎独汝贤”的赞誉。"
+            },
+            {
+              "典故名": "“绝交书”以辞官",
+              "内容": "白朴一生拒不入仕元朝，是一个极重要的个人印记。面对权臣史天泽等人的举荐，他多次“谢逊”，并常以魏晋名士嵇康的典故自比。当有人再度推荐他时，他婉拒道：“有绝交书在，细与君看！”这种强烈的遗民姿态，也直接铸就了他寄情山水的艺术人生。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "",
+          "reviewStatus": "pending",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "白朴是元曲四大家之一，也是“文采派”的代表人物，其成就贯通杂剧、散曲与词作，对后世文学影响深远。在杂剧领域，他一生创作16种，传世《唐明皇秋夜梧桐雨》《裴少俊墙头马上》及《董秀英花月东墙记》三部完整剧本，其中《梧桐雨》以沉雄悲壮之笔演绎帝妃爱情悲剧，被王国维推为“元曲冠冕”，并列入中国十大古典悲剧；《墙头马上》则以明朗幽默的基调歌颂自由爱情，跻身四大爱情剧及十大古典喜剧，两部作品一悲一喜，共同奠定其剧坛不朽地位。在散曲与词方面，他留有小令37首、套数4套及词集《天籁集》2卷，风格清丽婉约，兼有豪放之气，内容多叹世、咏景与闺怨，展现了雅俗兼融的创作才情。作为由金入元的文人，他终身不仕，寄情山水，将家国之感与人生之思融入笔端，开创了杂剧文采派的语言范式——雍雅华贵、情辞优美，与关汉卿等本色派形成双峰并峙。其作品不仅被时人王博文、元好问等推重，更在明清及近代持续引发评点与研究，《录鬼簿》《太和正音谱》等戏曲文献均予高度评价，深刻影响了郑光祖、汤显祖等后世剧作家的创作风格。白朴以“元曲四大家”之一的身份，与关汉卿、马致远、郑光祖共同代表元代杂剧的最高成就，其《天籁集》及存世剧作至今仍是元曲研究的核心文本。",
+          "evaluation": [
+            {
+              "出处": "《太和正音谱》",
+              "内容": "“白仁甫之词，如鹏搏九霄。风骨磊块，词源滂沛，若大鹏之起北溟，奋翼凌乎九霄，有一举万里之志，宜冠于首。”朱权高度赞扬白朴的文学气势，认为其作品风骨奇特、文思充沛，有凌云壮志，堪称元曲大家中的佼佼者。"
+            },
+            {
+              "出处": "《四友斋丛说》",
+              "内容": "“元人乐府称马东篱、郑德辉、关汉卿、白仁甫为四大家。”何良俊的著作是“元曲四大家”这一说法的重要出处之一，奠定了白朴在元曲史上的核心地位。"
+            },
+            {
+              "出处": "《四库全书总目》",
+              "内容": "“朴词清隽婉逸，意惬韵谐，可与张炎玉田词相匹。虽其学出于元好问，而词则有出蓝之目，足为倚声家正宗。”官方评价肯定了白朴的词学成就，认为其风格清丽婉转、意韵和谐，水平可媲美南宋词人张炎，甚至青出于蓝，是词学正宗。"
+            }
+          ]
+        }
       }
     }
   },
   "E": {
-    "lastId": 415,
+    "lastId": 425,
     "items": {
       "E00001": {
         "id": "E00001",
@@ -340642,6 +343848,750 @@
           "explanation": "位于南京市六合区瓜埠山，系北魏太武帝拓跋焘（小字佛貍）于宋元嘉二十七年（450年）击败王玄谟后所建行宫演变而来。",
           "usage": "作主语、宾语；多用于怀古诗文，借以抒发对历史兴亡、民族矛盾或时光流逝的感慨。",
           "origin": "辛弃疾《永遇乐·京口北固亭怀古》：可堪回首，佛狸祠下，一片神鸦社鼓。"
+        }
+      },
+      "E00416": {
+        "id": "E00416",
+        "type": "E",
+        "name": "七贵",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "七贵",
+          "otherStatement": "七贵三公",
+          "persons": [],
+          "examples": [
+            {
+              "出处": "张谓《赠乔琳》",
+              "内容": "如今七贵方自尊，羡君不过七贵门。"
+            },
+            {
+              "出处": "徐夤《依御史温飞卿华清宫二十二韵》",
+              "内容": "五王更入帐，七贵迭封侯。"
+            },
+            {
+              "出处": "徐夤《潘丞相旧宅》",
+              "内容": "七贵竟为长逝客，五侯寻作不归人。"
+            },
+            {
+              "出处": "李颀《赠康洽》",
+              "内容": "宫中美人皆唱得，七贵因之尽相识。"
+            },
+            {
+              "出处": "李白《下途归石门旧居》",
+              "内容": "何必长从七贵游，劳生徒聚万金产。"
+            },
+            {
+              "出处": "李白《奔亡道中五首》",
+              "内容": "谈笑三军却，交游七贵疏。"
+            },
+            {
+              "出处": "李白《流夜郎赠辛判官》",
+              "内容": "昔在长安醉花柳，五侯七贵同杯酒。"
+            },
+            {
+              "出处": "杨凝《上巳》",
+              "内容": "帝京元巳足繁华，细管清弦七贵家。"
+            },
+            {
+              "出处": "沈佺期《夏日梁王席送张歧州》",
+              "内容": "家传七豹贵，人擅八龙奇。"
+            },
+            {
+              "出处": "鲍溶《羽林行》",
+              "内容": "煌煌都门外，祖帐光七贵。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2.5",
+          "reviewStatus": "approved",
+          "expectedDuration": "2.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "本指西汉七个外戚权臣家族或隋末洛阳七个显贵，后用以代指权贵或达官显宦。",
+          "usage": "名词，在句中多作主语或宾语，用于诗文指代显赫的权贵阶层，感情色彩为中性。",
+          "origin": "《昭明文选》卷十晋·潘安仁：\n窥七贵于汉庭。诪一姓之或在。"
+        }
+      },
+      "E00417": {
+        "id": "E00417",
+        "type": "E",
+        "name": "击筑",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "击筑",
+          "otherStatement": "悲歌燕市、渐离击筑、荆卿歌",
+          "persons": [
+            "高渐离、荆轲"
+          ],
+          "examples": [
+            {
+              "出处": "元稹《说剑》",
+              "内容": "高唱荆卿歌，乱击相如缶。"
+            },
+            {
+              "出处": "李涉《送魏简能东游二首之二》",
+              "内容": "燕市悲歌又送君，目随征雁过寒云。"
+            },
+            {
+              "出处": "罗隐《黄鹤驿偶题》",
+              "内容": "高歌酒市非狂者，大嚼屠门亦偶然。"
+            },
+            {
+              "出处": "李峤《市》",
+              "内容": "渐离初击筑，司马正弹琴。"
+            },
+            {
+              "出处": "李白《醉后赠从甥高镇》",
+              "内容": "欲邀击筑悲歌饮，正值倾家无酒钱。"
+            },
+            {
+              "出处": "李白《鲁郡尧祠送张十四游河北》",
+              "内容": "击筑向北燕，燕歌易水滨。"
+            },
+            {
+              "出处": "独孤及《壬辰岁过旧居》",
+              "内容": "酒兰击筑语，及此离会因。"
+            },
+            {
+              "出处": "虞世南《结客少年场行》",
+              "内容": "吹箫入吴市，击筑游燕肆。"
+            },
+            {
+              "出处": "贾岛《听乐山人弹易水》",
+              "内容": "嬴氏归山陵已掘，声声犹带发冲冠。"
+            },
+            {
+              "出处": "骆宾王《于易水送人》",
+              "内容": "此地别燕丹，壮士发冲冠。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "《史记》卷八十六：荆轲既至燕，爱燕之狗屠及善击筑者高渐离。荆轲嗜酒，日与狗屠及高渐离饮于燕市，酒酣以往，高渐离击筑，荆轲和而歌于市中，相乐也，已而相泣，旁若无人者。荆轲虽游于酒人乎，然其为人沈深好书；其所游诸侯，尽与其贤豪长者相结。其之燕，燕之处士田光先生亦善待之，知其非庸人也。",
+          "usage": "本指高渐离击筑为荆轲送行，后用以代指悲壮慷慨的送别或抒发复仇报国的义烈情怀。",
+          "origin": "名词，在句中多作谓语或宾语，用于诗文渲染壮士诀别的悲慨氛围，感情色彩为褒扬。"
+        }
+      },
+      "E00418": {
+        "id": "E00418",
+        "type": "E",
+        "name": "德星",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "德星",
+          "otherStatement": "聚德星、贤人聚",
+          "persons": [
+            "陈寔"
+          ],
+          "examples": [
+            {
+              "出处": "刘禹锡《送太常萧博士弃官归养赴东都》",
+              "内容": "从今别君后，长忆德星看。"
+            },
+            {
+              "出处": "孟浩然《送洗然弟进士举》",
+              "内容": "以吾一日长，念尔聚星稀。"
+            },
+            {
+              "出处": "孙逖《和韦兄春日南亭宴兄弟》",
+              "内容": "德星常有会，相望在文昌。"
+            },
+            {
+              "出处": "方干《题故人废宅二首》",
+              "内容": "旧径已知无孟竹，前溪应不浸荀星。"
+            },
+            {
+              "出处": "杜甫《行次盐亭县聊题四韵奉简严遂州蓬州两使君咨议诸昆季》",
+              "内容": "全蜀多名士，严家聚德星。"
+            },
+            {
+              "出处": "薛能《戏舸》",
+              "内容": "游人莫觅杯盘分，此地才应聚德星。"
+            },
+            {
+              "出处": "阎朝隐《奉和圣制夏日游石淙山》",
+              "内容": "五百里内贤人聚，愿陪阊阖侍天文。"
+            },
+            {
+              "出处": "韦庄《新正日商南道中作寄李明府》",
+              "内容": "踏雪偶因寻戴客，论文还比聚星人。"
+            },
+            {
+              "出处": "骆宾王《在江南赋宋五之问》",
+              "内容": "占星非聚德，梦月讵悬名。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "2.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "本指象征祥瑞的岁星或比喻贤德之士，后用以代指贤士或祥瑞的征兆。",
+          "usage": "名词，在句中多作主语或宾语，用于诗文赞誉贤德之人或预示吉祥，感情色彩为褒。",
+          "origin": "《后汉书·陈寔传》：至乃叹曰：“宁为刑罚所加，不为陈君所短。”"
+        }
+      },
+      "E00419": {
+        "id": "E00419",
+        "type": "E",
+        "name": "鹪鹩",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "鹪鹩",
+          "otherStatement": "一枝安、鹪鹩志",
+          "persons": [
+            "许由、唐尧"
+          ],
+          "examples": [
+            {
+              "出处": "孟郊《落第》",
+              "内容": "雕鹗失势病，鹪鹩假翼翔。"
+            },
+            {
+              "出处": "李咸用《投所知》",
+              "内容": "手欠东堂桂一枝，家书不敢便言归。"
+            },
+            {
+              "出处": "李群玉《将之番禺留别湖南府幕》",
+              "内容": "一枝仍未定，数粒欲何求。"
+            },
+            {
+              "出处": "杜甫《奉赠卢五丈参谋（琚）》",
+              "内容": "流年疲蟋蟀，体物幸鹪鹩。"
+            },
+            {
+              "出处": "杜甫《秦州杂诗二十首之二十》",
+              "内容": "为报鸳行旧，鹪鹩在一枝。"
+            },
+            {
+              "出处": "白居易《我身》",
+              "内容": "穷则为鹪鹩，一枝足自容。"
+            },
+            {
+              "出处": "罗邺《渡江有感》",
+              "内容": "一枝犹负平生意，归去何曾胜不归。"
+            },
+            {
+              "出处": "罗隐《广陵春日忆池阳有寄》",
+              "内容": "别后故人冠獬豸，病来知己赏鹪鹩。"
+            },
+            {
+              "出处": "钱起《清泥驿迎献王侍御》",
+              "内容": "鹪鹩无羽翼，愿假宪乌翔。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "本指鹪鹩筑巢仅占一根树枝，后用以比喻所需有限、知足自适的生活态度。",
+          "usage": "名词，在句中多作宾语或定语，用于诗文表达安于本分、不贪求的哲理，感情色彩为中性偏褒扬。",
+          "origin": "《庄子》内篇·卷一上：\n许由曰：“子治天下，天下既已治也。而我犹代子，吾将为名乎？名者，实之宾也。吾将为宾乎？鹪鹩巢于深林，不过一枝；偃鼠饮河，不过满腹。归休乎君，予无所用天下为！庖人虽不治庖，尸祝不越樽俎而代之矣。”"
+        }
+      },
+      "E00420": {
+        "id": "E00420",
+        "type": "E",
+        "name": "轻车",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "轻车",
+          "otherStatement": "李轻车",
+          "persons": [
+            "李蔡"
+          ],
+          "examples": [
+            {
+              "出处": "刘长卿《送南特进赴归行营》",
+              "内容": "翩翩新结束，去逐李轻车。"
+            },
+            {
+              "出处": "岑参《北庭贻宗学士道别》",
+              "内容": "曾逐李轻车，西征出太蒙。"
+            },
+            {
+              "出处": "张籍《陇头行》",
+              "内容": "谁能更使李轻车，收取凉州入汉家。"
+            },
+            {
+              "出处": "李嘉祐《送崔夷甫员外和蕃》",
+              "内容": "和戎非用武，不学李轻车。"
+            },
+            {
+              "出处": "李益《送客归振武》",
+              "内容": "骏马事轻车，军行万里沙。"
+            },
+            {
+              "出处": "李颀《古从军行》",
+              "内容": "闻道玉门犹被遮，应将性命逐轻车。"
+            },
+            {
+              "出处": "王维《送宇文三赴河西充行军司马》",
+              "内容": "还闻田司马，更逐李轻车。"
+            },
+            {
+              "出处": "窦牟《送刘公达判官赴天德军幕》",
+              "内容": "文武轻车少，腥膻左衽衰。"
+            },
+            {
+              "出处": "韩翃《送刘将军》",
+              "内容": "胆大欲期姜伯约，功多不让李轻车。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "2.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "指西汉将领李蔡，因其曾任轻车将军，故得此称。后世诗文常以“李轻车”代指戍边将领或作为对成功将帅的美称。",
+          "usage": "名词，在古典诗词中多用于边塞、赠别题材，借指勇武善战的边将，感情色彩为褒扬，常见于对将领的颂美或对友人建功立业的勉励。",
+          "origin": "《史记》卷一百一十一：\n将军李蔡，成纪人也。事孝文帝、景帝、武帝。以轻车将军从大将军有功，封为乐安侯。已为丞相，坐法死。"
+        }
+      },
+      "E00421": {
+        "id": "E00421",
+        "type": "E",
+        "name": "怀铅",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "怀铅",
+          "otherStatement": "铅椠、铅简",
+          "persons": [
+            "扬雄"
+          ],
+          "examples": [
+            {
+              "出处": "包融《和陈校书省中玩雪》",
+              "内容": "色向怀铅白，光因翰简融。"
+            },
+            {
+              "出处": "李群玉《始忝四座奏状闻荐蒙恩授官旋进歌诗延英宣赐言怀纪事呈同馆诸公二十四韵》",
+              "内容": "解薜龙凤署，怀铅兰桂丛。"
+            },
+            {
+              "出处": "杜牧《长安杂题长句六首》",
+              "内容": "自笑苦无楼护智，可怜铅椠竟何功。"
+            },
+            {
+              "出处": "王湾《晚春诣苏州敬赠武员外》",
+              "内容": "陋学叨铅简，弱龄许翰场。"
+            },
+            {
+              "出处": "皎然《奉和颜使君真卿修韵海毕会诸文士东堂重校》",
+              "内容": "错简记铅椠，阅书移玉镇。"
+            },
+            {
+              "出处": "韩愈《喜侯喜至赠张籍张彻》",
+              "内容": "以馀经摧挫，固请发铅椠。"
+            },
+            {
+              "出处": "韩愈《送无本师归范阳》",
+              "内容": "老懒无斗心，久不事铅椠。"
+            },
+            {
+              "出处": "骆宾王《久戍边城有怀京邑》",
+              "内容": "怀铅惭后进，投笔愿前驱。"
+            },
+            {
+              "出处": "骆宾王《送刘少府游越州》",
+              "内容": "一丘馀枕石，三越尔怀铅。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "指随身携带铅粉笔与木简，后比喻勤于采访、记录或著述，常与“提椠”“握椠”连用。",
+          "usage": "动词性短语，多用于形容学者、文人勤于采风、著述或校勘，感情色彩为褒扬，常见于诗文赞人治学严谨、笔耕不辍。",
+          "origin": "《西京杂记》：\n扬子云好事，尝怀铅提椠，从诸计吏，访殊方绝俗四方之语，以为裨补《輶轩》所载，亦洪意也。"
+        }
+      },
+      "E00422": {
+        "id": "E00422",
+        "type": "E",
+        "name": "覆盆",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "覆盆",
+          "otherStatement": "望天盆、戴盆",
+          "persons": [],
+          "examples": [
+            {
+              "出处": "张九龄《酬王履震游园林见贻》",
+              "内容": "自我栖幽谷，逢君翳覆盆。"
+            },
+            {
+              "出处": "李玖《四大夫同赋》",
+              "内容": "丹诚岂分埋幽壤，白日终希照覆盆。"
+            },
+            {
+              "出处": "李白《赠宣城赵太守悦》",
+              "内容": "愿借羲皇景，为人照覆盆。"
+            },
+            {
+              "出处": "杜牧《忆游朱坡四韵》",
+              "内容": "如今归不得，自戴望天盆。"
+            },
+            {
+              "出处": "杜牧《昔事文皇帝三十二韵》",
+              "内容": "照胆常悬镜，窥天自戴盆。"
+            },
+            {
+              "出处": "沈佺期《答魑魅代书寄家人》",
+              "内容": "身犹纳履误，情为覆盆伤。"
+            },
+            {
+              "出处": "罗隐《临川投穆中丞》",
+              "内容": "试将生计问蓬根，心委寒灰首戴盆。"
+            },
+            {
+              "出处": "聂夷中《客有追叹后时者作诗勉之》",
+              "内容": "我亦二十年，直似戴盆行。"
+            },
+            {
+              "出处": "邵谒《送从弟长安下第南归觐亲》",
+              "内容": "白日不得照，戴天如戴盆。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "本指倒扣的盆子，后比喻社会黑暗或无处申诉的沉冤。",
+          "usage": "名词性短语，多用于形容冤屈难以昭雪或处境黑暗，感情色彩为中性偏沉重，常见于诉冤、抒愤的诗文或历史叙述。",
+          "origin": "《汉书》卷六十二：\n主上幸以先人之故，使得奉薄技，出入周卫之中。仆以为戴盆何以望天，故绝宾客之知，忘室家之业，日夜思竭其不肖之材力，务壹心营职，以求亲媚于主上。"
+        }
+      },
+      "E00423": {
+        "id": "E00423",
+        "type": "E",
+        "name": "金汤",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "金汤",
+          "otherStatement": "汤池",
+          "persons": [
+            "蒯通"
+          ],
+          "examples": [
+            {
+              "出处": "孔绍安《别徐永元秀才》",
+              "内容": "金汤既失险，玉石乃同焚。"
+            },
+            {
+              "出处": "李山甫《上元怀古二首》",
+              "内容": "尧行道德终无敌，秦把金汤可自由。"
+            },
+            {
+              "出处": "杜甫《入衡州》",
+              "内容": "君臣忍瑕垢，河岳空金汤。"
+            },
+            {
+              "出处": "杜甫《有感五首》",
+              "内容": "莫取金汤固，长令宇宙新。"
+            },
+            {
+              "出处": "杜甫《秋日荆南送石首薛明府辞满告别奉寄薛尚书（景仙）颂德叙怀斐然之作三十韵》",
+              "内容": "汤池虽险固，辽海尚填淤。"
+            },
+            {
+              "出处": "沈佺期《初冬从幸汉故宫青门应制》",
+              "内容": "何必金汤固，无如道德藩。"
+            },
+            {
+              "出处": "韦应物《经函谷关》",
+              "内容": "藩屏无俊贤，金汤独何力。"
+            },
+            {
+              "出处": "韦庄《天井关》",
+              "内容": "短绠讵能垂玉甃，缭垣何用学金汤。"
+            },
+            {
+              "出处": "齐己《荆州新秋寺居写怀诗五首上南平王》",
+              "内容": "金汤里面境何求，宝殿东边院最幽。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "比喻防守极其坚固、不可摧毁的城池或防线。",
+          "usage": "名词性短语，褒义，用于赞颂防御坚固、牢不可破。",
+          "origin": "《汉书》卷四十五：\n臣因对曰：“范阳令宜整顿其士卒以守战者也，怯而畏死，贪而好富贵，故欲以其城先下君。先下君而君不利之，则边地之城皆将相告曰‘范阳令先降而身死’，必将婴城固守，皆为金城汤池，不可攻也。为君计者，莫若以黄屋朱轮迎范阳令，使驰骛于燕赵之郊，则边城皆将相告曰‘范阳令先下而身富贵’，必相率而降，犹如阪上走丸也。此臣所谓传檄而千里定者也。”徐公再拜，具车马遣通。通遂以此说武臣。武臣以车百乘，骑二百，侯印迎徐公。燕赵闻之，降者三十馀城，如通策焉。"
+        }
+      },
+      "E00424": {
+        "id": "E00424",
+        "type": "E",
+        "name": "悬车",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "悬车",
+          "otherStatement": "悬车告老",
+          "persons": [],
+          "examples": [
+            {
+              "出处": "包佶《尚书宗兄使过诗以奉献》",
+              "内容": "翻嫌旧坐宅，却驾所悬车。"
+            },
+            {
+              "出处": "权德舆《元和元年蒙恩封成纪县伯时室中封安喜县君感庆兼怀聊申贺赠》",
+              "内容": "更待悬车时，与君欢暮齿。"
+            },
+            {
+              "出处": "权德舆《酬南园新亭宴会璩新第慰庆之作时任宾客》",
+              "内容": "相期悬车岁，此地即中林。"
+            },
+            {
+              "出处": "白居易《不致仕》",
+              "内容": "挂冠顾翠緌，悬车惜朱轮。"
+            },
+            {
+              "出处": "白居易《宿香山寺酬广陵牛相公见寄》",
+              "内容": "应须且为苍生住，犹去悬车十四年。"
+            },
+            {
+              "出处": "白居易《咏身》",
+              "内容": "自中风来三历闰，从悬车后几逢春。"
+            },
+            {
+              "出处": "白居易《达哉乐天行》",
+              "内容": "七旬才满冠已挂，半禄未及车先悬。"
+            },
+            {
+              "出处": "蒋防《题杜宾客新丰里幽居》",
+              "内容": "圣情容解印，帝里许悬车。"
+            },
+            {
+              "出处": "韦应物《送郗詹事》",
+              "内容": "君子独知止，悬车守国程。"
+            },
+            {
+              "出处": "陆游《遣兴》",
+              "内容": "观挂席乘潮快，便觉悬车纳禄迟。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "rejected",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "人物写一下。出处是哪本书？",
+          "explanation": "本指悬挂车辆，后主要比喻官员年老退休，亦引申指七十岁高龄、隐居不仕。",
+          "usage": "动词性短语或名词，多用于官员退休、归隐的语境，感情色彩为中性偏褒扬。",
+          "origin": "东汉·班固：\n臣年七十悬车致仕者，臣以执事趋走为职，七十阳道极，耳目不聪明，跂踦之属，是以退去避贤者，所以长廉耻也，悬车示不用也；致事者，致其事于君。"
+        }
+      },
+      "E00425": {
+        "id": "E00425",
+        "type": "E",
+        "name": "丹丘",
+        "meta": {
+          "createdById": "u_32",
+          "createdByName": "王泓睿(2511217)",
+          "createdBy": "王泓睿(2511217)",
+          "createdAt": "2026-05-31",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-02",
+          "updatedAt": "2026-06-02"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "statement": "丹丘",
+          "otherStatement": "羽人、丹邱",
+          "persons": [],
+          "examples": [
+            {
+              "出处": "李群玉《半醉》",
+              "内容": "何烦五色药，尊下即丹丘。"
+            },
+            {
+              "出处": "柳宗元《界围岩水帘》",
+              "内容": "楚臣昔南逐，有意仍丹丘。今我始北旋，新诏释缧囚。"
+            },
+            {
+              "出处": "柳宗元《酬娄秀才寓居开元寺早秋月夜病中见寄》",
+              "内容": "病依居士室，梦绕羽人丘。"
+            },
+            {
+              "出处": "独孤及《代书寄上裴六冀刘二颍》",
+              "内容": "莫抱白云意，径往丹丘庭。"
+            },
+            {
+              "出处": "王初《延平天庆观》",
+              "内容": "盟经早晚闻仙语，学种三芝伴羽人。"
+            },
+            {
+              "出处": "陈子昂《同宋参军之问梦赵六赠卢陈二子之作》",
+              "内容": "丹丘恨不及，白露已苍苍。"
+            },
+            {
+              "出处": "陈子昂《春日登金华观》",
+              "内容": "白玉仙台古，丹丘别望遥。"
+            },
+            {
+              "出处": "韩翃《同题仙游观》",
+              "内容": "何用别寻方外去，人间亦自有丹丘。"
+            },
+            {
+              "出处": "顾非熊《斜谷邮亭玩海棠花》",
+              "内容": "何川是多处，应绕羽人家。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "explanation": "指传说中神仙居住的仙境，后常比喻长生不老之地、隐逸之境或人间胜景。",
+          "usage": "名词性意象，多用于诗文、赋颂中，感情色彩为褒义。",
+          "origin": "《楚辞补注》卷五：\n闻至贵而遂徂兮，忽乎吾将行。仍羽人于丹丘兮，留不死之旧乡。朝濯发于汤谷兮，夕晞余身兮九阳。"
         }
       }
     }
