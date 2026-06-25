@@ -1,6 +1,6 @@
 {
   "W": {
-    "lastId": 1890,
+    "lastId": 1891,
     "items": {
       "W00002": {
         "id": "W00002",
@@ -172446,7 +172446,7 @@
           "createdById": "u_79",
           "createdByName": "刘叙增(2120250690)",
           "createdBy": "刘叙增(2120250690)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_31",
           "reviewedByName": "王也姝(2513815)",
           "reviewedBy": "王也姝(2513815)",
@@ -199958,7 +199958,7 @@
           "createdById": "u_88",
           "createdByName": "周睿宁(2510573)",
           "createdBy": "周睿宁(2510573)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_4",
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
@@ -200572,7 +200572,7 @@
           "createdById": "u_85",
           "createdByName": "许佳茗(2120252153)",
           "createdBy": "许佳茗(2120252153)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_3",
           "reviewedByName": "张欣阳(2413707)",
           "reviewedBy": "张欣阳(2413707)",
@@ -264211,7 +264211,7 @@
           "createdById": "u_99",
           "createdByName": "张琬竺(2510575)",
           "createdBy": "张琬竺(2510575)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_4",
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
@@ -264463,7 +264463,7 @@
           "createdById": "u_99",
           "createdByName": "张琬竺(2510575)",
           "createdBy": "张琬竺(2510575)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_4",
           "reviewedByName": "陈思润(2510572)",
           "reviewedBy": "陈思润(2510572)",
@@ -273923,7 +273923,7 @@
           "createdById": "u_107",
           "createdByName": "周雨瑶(2510685)",
           "createdBy": "周雨瑶(2510685)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_3",
           "reviewedByName": "张欣阳(2413707)",
           "reviewedBy": "张欣阳(2413707)",
@@ -288211,7 +288211,7 @@
           "createdById": "u_75",
           "createdByName": "孟京艳(1120240307)",
           "createdBy": "孟京艳(1120240307)",
-          "createdAt": "2026-06-10",
+          "createdAt": "2026-06-24",
           "reviewedById": "u_12",
           "reviewedByName": "杨烨亭(2511420)",
           "reviewedBy": "杨烨亭(2511420)",
@@ -290368,7 +290368,7 @@
         },
         "extra": {
           "reviewDuration": "1.5",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "1.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -290494,7 +290494,7 @@
         },
         "extra": {
           "reviewDuration": "3",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -290660,7 +290660,7 @@
         },
         "extra": {
           "reviewDuration": "3.5",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -290826,7 +290826,7 @@
         },
         "extra": {
           "reviewDuration": "2.5",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "2.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -290912,7 +290912,7 @@
         },
         "extra": {
           "reviewDuration": "1",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -291078,7 +291078,7 @@
         },
         "extra": {
           "reviewDuration": "1",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -291284,7 +291284,7 @@
         },
         "extra": {
           "reviewDuration": "1",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -291598,7 +291598,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "2",
           "repairStatus": "unfinished",
           "remark": "",
@@ -291696,7 +291696,7 @@
         },
         "extra": {
           "reviewDuration": "1",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "1.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -291846,7 +291846,7 @@
         },
         "extra": {
           "reviewDuration": "1",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "1.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -292012,7 +292012,7 @@
         },
         "extra": {
           "reviewDuration": "2.5",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "2.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -292166,7 +292166,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "2.5",
           "repairStatus": "unfinished",
           "remark": "",
@@ -292404,7 +292404,7 @@
         },
         "extra": {
           "reviewDuration": "2.5",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -292502,7 +292502,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -292513,6 +292513,956 @@
             {
               "出处": "无",
               "内容": "无。"
+            }
+          ]
+        }
+      },
+      "W01891": {
+        "id": "W01891",
+        "type": "W",
+        "name": "月赋",
+        "meta": {
+          "createdById": "u_83",
+          "createdByName": "高速(2120251393)",
+          "createdBy": "高速(2120251393)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "陈王初丧应、刘，端忧多暇。绿苔生阁，芳尘凝榭。悄焉疚怀，不怡中夜。\n乃清兰路，肃桂苑，腾吹寒山，弭盖秋阪。临浚壑而怨遥，登崇岫而伤远。于时斜汉左界，北陆南躔，白露暧空，素月流天。沉吟齐章，殷勤陈篇，抽毫进牍，以命仲宣。\n仲宣跪而称曰：臣东鄙幽介，长自丘樊。昧道懵学，孤奉明恩。臣闻沈潜既义，高明既经，日以阳德，月以阴灵。擅扶光于东沼，嗣若英于西冥。引玄兔于帝台，集素娥于后庭。朒脁警阙，朏魄示冲，顺辰通烛，从星泽风。增华台室，扬采轩宫。委照而吴业昌，沦精而汉道融。\n若夫气霁地表，云敛天末，洞庭始波，木叶微脱。菊散芳于山椒，雁流哀于江濑。升清质之悠悠，降澄辉之蔼蔼。列宿掩缛，长河韬映，柔祇雪凝，圆灵水镜。连观霜缟，周除冰净。君王乃厌晨欢，乐宵宴，收妙舞，弛清县。去烛房，即月殿，芳酒登，鸣琴荐。\n若乃凉夜自凄，风篁成韵，亲懿莫从，羇孤递进。聆皋禽之夕闻，听朔管之秋引。于是弦桐练响，音容选和，徘徊房露，惆怅阳阿。声林虚籁，沦池灭波，情纡轸其何托，愬皓月而长歌。歌曰：\n美人迈兮音尘阙，隔千里兮共明月。\n临风叹兮将焉歇，川路长兮不可越。\n歌响未终，余景就毕，满堂变容，回遑如失。又称歌曰：\n月既没兮露欲晞，岁方晏兮无与归。\n佳期可以还，微霜沾人衣。\n陈王曰：善。乃命执事，献寿羞璧，敬佩玉音，复之无斁。",
+        "annotations": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "陈王",
+            "note": "即曹植。",
+            "field": "content",
+            "linkKey": "anno-4-6-mqhgv5n2gabth0"
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "应、刘",
+            "note": "即应玚和刘桢。",
+            "field": "content",
+            "linkKey": "anno-8-11-mqhgvet1ncculw"
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "端忧",
+            "note": "正在忧愁之中。端：正。",
+            "field": "content",
+            "linkKey": "anno-12-14-mqhgvpktd8svv0"
+          },
+          {
+            "start": 23,
+            "end": 25,
+            "text": "悄焉",
+            "note": "忧愁的样子。",
+            "field": "content",
+            "linkKey": "anno-27-29-mqhgw69uyv6hqq"
+          },
+          {
+            "start": 25,
+            "end": 27,
+            "text": "疚怀",
+            "note": "伤怀，忧心。",
+            "field": "content",
+            "linkKey": "anno-29-31-mqhgwi3mxx3az2"
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "怡",
+            "note": "愉快。",
+            "field": "content",
+            "linkKey": "anno-33-34-mqhgwr1xtm79go"
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": "中夜",
+            "note": "半夜。",
+            "field": "content",
+            "linkKey": "anno-34-36-mqhgx0uhvd7a6n"
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "肃",
+            "note": "肃静。",
+            "field": "content",
+            "linkKey": "anno-45-46-mqhgxfm5dutq18"
+          },
+          {
+            "start": 43,
+            "end": 47,
+            "text": "腾吹寒山",
+            "note": "在寒山上奏乐。",
+            "field": "content",
+            "linkKey": "anno-49-53-mqhgxp65cab8iu"
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": "弭",
+            "note": "停。",
+            "field": "content",
+            "linkKey": "anno-54-55-mqhgxwoixt1yk2"
+          },
+          {
+            "start": 49,
+            "end": 50,
+            "text": "盖",
+            "note": "车盖，这里代指车。",
+            "field": "content",
+            "linkKey": "anno-55-56-mqhgy4rqitivl0"
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": "阪",
+            "note": "山坡。",
+            "field": "content",
+            "linkKey": "anno-57-58-mqhgydn10jr2rj"
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": "浚",
+            "note": "深。",
+            "field": "content",
+            "linkKey": "anno-60-61-mqhgymzmcddo6r"
+          },
+          {
+            "start": 61,
+            "end": 63,
+            "text": "崇岫",
+            "note": "（xiù）高高的峰峦。",
+            "field": "content",
+            "linkKey": "anno-67-69-mqhgyx9e19sn7o"
+          },
+          {
+            "start": 70,
+            "end": 71,
+            "text": "汉",
+            "note": "天河。",
+            "field": "content",
+            "linkKey": "anno-76-77-mqhgz7qle9d2fz"
+          },
+          {
+            "start": 71,
+            "end": 73,
+            "text": "左界",
+            "note": "象是划在天空的左边。",
+            "field": "content",
+            "linkKey": "anno-77-79-mqhgzfxynqohv4"
+          },
+          {
+            "start": 74,
+            "end": 78,
+            "text": "北陆南躔",
+            "note": "北陆星向南移动。",
+            "field": "content",
+            "linkKey": "anno-80-84-mqhgzoi6eydpp4"
+          },
+          {
+            "start": 77,
+            "end": 78,
+            "text": "躔",
+            "note": "日月星宿运行的度次。",
+            "field": "content",
+            "linkKey": "anno-83-84-mqhgzwry2ygol7"
+          },
+          {
+            "start": 81,
+            "end": 82,
+            "text": "暧",
+            "note": "蔽，充满。",
+            "field": "content",
+            "linkKey": "anno-87-88-mqhh04e6qr5p85"
+          },
+          {
+            "start": 89,
+            "end": 91,
+            "text": "沉吟",
+            "note": "沉思吟味。",
+            "field": "content",
+            "linkKey": "anno-95-97-mqhh0dauhd56yc"
+          },
+          {
+            "start": 91,
+            "end": 93,
+            "text": "齐章",
+            "note": "指《诗经·齐风》，其中《东方之日》篇里有“东方之月兮”的句子。",
+            "field": "content",
+            "linkKey": "anno-97-99-mqhh0o662t66gb"
+          },
+          {
+            "start": 94,
+            "end": 96,
+            "text": "殷勤",
+            "note": "殷切习思。",
+            "field": "content",
+            "linkKey": "anno-100-102-mqhh0vmhfurnbr"
+          },
+          {
+            "start": 96,
+            "end": 98,
+            "text": "陈篇",
+            "note": "指《诗经·陈风》，其中《月出》篇里有“月出皎兮”的句子。",
+            "field": "content",
+            "linkKey": "anno-102-104-mqhh149mh71gad"
+          },
+          {
+            "start": 106,
+            "end": 108,
+            "text": "仲宣",
+            "note": "王粲的字。",
+            "field": "content",
+            "linkKey": "anno-112-114-mqhh1crymnivlx"
+          },
+          {
+            "start": 119,
+            "end": 120,
+            "text": "鄙",
+            "note": "边境。",
+            "field": "content",
+            "linkKey": "anno-127-128-mqhh1laapnsxmv"
+          },
+          {
+            "start": 120,
+            "end": 122,
+            "text": "幽介",
+            "note": "指出身寒微。",
+            "field": "content",
+            "linkKey": "anno-128-130-mqhh1sylt603dy"
+          },
+          {
+            "start": 126,
+            "end": 127,
+            "text": "樊",
+            "note": "藩篱，丘樊指居处简索。",
+            "field": "content",
+            "linkKey": "anno-134-135-mqhh20xkma0u4c"
+          },
+          {
+            "start": 128,
+            "end": 132,
+            "text": "昧道懵学",
+            "note": "（měng）不通大道闇于学问。",
+            "field": "content",
+            "linkKey": "anno-136-140-mqhh2csmmh09b6"
+          },
+          {
+            "start": 133,
+            "end": 137,
+            "text": "孤奉明恩",
+            "note": "白白地受了君王的恩惠。",
+            "field": "content",
+            "linkKey": "anno-141-145-mqhh2kqyrg5s6a"
+          },
+          {
+            "start": 133,
+            "end": 134,
+            "text": "孤",
+            "note": "同“辜”。",
+            "field": "content",
+            "linkKey": "anno-141-142-mqhh2t2ivbi0ef"
+          },
+          {
+            "start": 140,
+            "end": 142,
+            "text": "沈潜",
+            "note": "指地。",
+            "field": "content",
+            "linkKey": "anno-148-150-mqhh30uqjle5t7"
+          },
+          {
+            "start": 143,
+            "end": 144,
+            "text": "义",
+            "note": "合宜。",
+            "field": "content",
+            "linkKey": "anno-151-152-mqhh3a2mftb1ef"
+          },
+          {
+            "start": 145,
+            "end": 147,
+            "text": "高明",
+            "note": "指天。",
+            "field": "content",
+            "linkKey": "anno-153-155-mqhh3g2u9rn9cy"
+          },
+          {
+            "start": 148,
+            "end": 149,
+            "text": "经",
+            "note": "纲常。",
+            "field": "content",
+            "linkKey": "anno-156-157-mqhh3ncuklz8wi"
+          },
+          {
+            "start": 150,
+            "end": 154,
+            "text": "日以阳德",
+            "note": "日具有阳的德行。",
+            "field": "content",
+            "linkKey": "anno-158-162-mqhh3vp45ohpwt"
+          },
+          {
+            "start": 155,
+            "end": 159,
+            "text": "月以阴灵",
+            "note": "月具有阴的精华。",
+            "field": "content",
+            "linkKey": "anno-163-167-mqhh43rixw0gl2"
+          },
+          {
+            "start": 160,
+            "end": 161,
+            "text": "擅",
+            "note": "同“禅”，传位禅让。",
+            "field": "content",
+            "linkKey": "anno-168-169-mqhh4e3h9mfvxb"
+          },
+          {
+            "start": 161,
+            "end": 163,
+            "text": "扶光",
+            "note": "扶桑之光，指日光。",
+            "field": "content",
+            "linkKey": "anno-169-171-mqhh4w8en753yo"
+          },
+          {
+            "start": 164,
+            "end": 166,
+            "text": "东沼",
+            "note": "指汤谷，传说中日出之处。",
+            "field": "content",
+            "linkKey": "anno-172-174-mqhh52t984an85"
+          },
+          {
+            "start": 167,
+            "end": 168,
+            "text": "嗣",
+            "note": "继续。",
+            "field": "content",
+            "linkKey": "anno-175-176-mqhh59q0tuj1q5"
+          },
+          {
+            "start": 168,
+            "end": 169,
+            "text": "若",
+            "note": "若木，神话传说中大树名，日落的地方。",
+            "field": "content",
+            "linkKey": "anno-176-177-mqhh6bvsla42bw"
+          },
+          {
+            "start": 169,
+            "end": 170,
+            "text": "英",
+            "note": "华西冥：指昧谷，传说中日入之处。",
+            "field": "content",
+            "linkKey": "anno-177-178-mqhh6rxmc1qc6h"
+          },
+          {
+            "start": 175,
+            "end": 177,
+            "text": "玄兔",
+            "note": "传说中的月中玉兔。这里代月。",
+            "field": "content",
+            "linkKey": "anno-183-185-mqhh6z2ujwsm7z"
+          },
+          {
+            "start": 178,
+            "end": 180,
+            "text": "帝台",
+            "note": "帝王的台榭。",
+            "field": "content",
+            "linkKey": "anno-186-188-mqhh7b138pyyx5"
+          },
+          {
+            "start": 182,
+            "end": 184,
+            "text": "素娥",
+            "note": "指嫦娥。",
+            "field": "content",
+            "linkKey": "anno-190-192-mqhh7muympgeb9"
+          },
+          {
+            "start": 185,
+            "end": 187,
+            "text": "后庭",
+            "note": "帝王的后宫。",
+            "field": "content",
+            "linkKey": "anno-193-195-mqhh7v7pduyhc7"
+          },
+          {
+            "start": 188,
+            "end": 189,
+            "text": "朒",
+            "note": "（nǜ）月初的缺月。",
+            "field": "content",
+            "linkKey": "anno-196-197-mqhh8d59282xm7"
+          },
+          {
+            "start": 189,
+            "end": 190,
+            "text": "脁",
+            "note": "（tiǎo）月末的缺月或月行失常轨。",
+            "field": "content",
+            "linkKey": "anno-197-198-mqhh8p7u4jw5fd"
+          },
+          {
+            "start": 190,
+            "end": 191,
+            "text": "警",
+            "note": "警惕。",
+            "field": "content",
+            "linkKey": "anno-198-199-mqhh8wu6ozo0zq"
+          },
+          {
+            "start": 191,
+            "end": 192,
+            "text": "阙",
+            "note": "同“缺”，缺点错误。",
+            "field": "content",
+            "linkKey": "anno-199-200-mqhh93htl9caxd"
+          },
+          {
+            "start": 193,
+            "end": 194,
+            "text": "朏",
+            "note": "（fěi）月初生明，月光不强，叫做朏或者叫做魄。",
+            "field": "content",
+            "linkKey": "anno-201-202-mqhh9fv7ts5sed"
+          },
+          {
+            "start": 196,
+            "end": 197,
+            "text": "冲",
+            "note": "谦虚谨慎。",
+            "field": "content",
+            "linkKey": "anno-204-205-mqhh9nypee2ehz"
+          },
+          {
+            "start": 198,
+            "end": 200,
+            "text": "顺辰",
+            "note": "指月球顺着十二月的次序而言。",
+            "field": "content",
+            "linkKey": "anno-206-208-mqhh9wyizy0754"
+          },
+          {
+            "start": 200,
+            "end": 202,
+            "text": "通烛",
+            "note": "普遍照耀。",
+            "field": "content",
+            "linkKey": "anno-208-210-mqhha426xmwdp6"
+          },
+          {
+            "start": 205,
+            "end": 206,
+            "text": "泽",
+            "note": "雨。",
+            "field": "content",
+            "linkKey": "anno-213-214-mqhhabh26lsl8l"
+          },
+          {
+            "start": 218,
+            "end": 219,
+            "text": "委",
+            "note": "向下照耀。",
+            "field": "content",
+            "linkKey": "anno-226-227-mqhham5qdsqs16"
+          },
+          {
+            "start": 219,
+            "end": 220,
+            "text": "照",
+            "note": "指月光。",
+            "field": "content",
+            "linkKey": "anno-227-228-mqhhatpmy41xfg"
+          },
+          {
+            "start": 225,
+            "end": 226,
+            "text": "沦",
+            "note": "向下照耀。",
+            "field": "content",
+            "linkKey": "anno-233-234-mqhhb14101oare"
+          },
+          {
+            "start": 226,
+            "end": 227,
+            "text": "精",
+            "note": "指月光。",
+            "field": "content",
+            "linkKey": "anno-234-235-mqhhb8pyd5i52k"
+          },
+          {
+            "start": 236,
+            "end": 237,
+            "text": "霁",
+            "note": "雨止。",
+            "field": "content",
+            "linkKey": "anno-246-247-mqhhblw9sivr52"
+          },
+          {
+            "start": 259,
+            "end": 261,
+            "text": "山椒",
+            "note": "山顶。",
+            "field": "content",
+            "linkKey": "anno-269-271-mqhhc07ydql5jn"
+          },
+          {
+            "start": 267,
+            "end": 268,
+            "text": "濑",
+            "note": "从沙石上流过的急水。",
+            "field": "content",
+            "linkKey": "anno-277-278-mqhhc9zyybwdf8"
+          },
+          {
+            "start": 270,
+            "end": 272,
+            "text": "清质",
+            "note": "指月亮。",
+            "field": "content",
+            "linkKey": "anno-280-282-mqhhchki04anso"
+          },
+          {
+            "start": 283,
+            "end": 285,
+            "text": "列宿",
+            "note": "众星。",
+            "field": "content",
+            "linkKey": "anno-293-295-mqhhcr8abb35aw"
+          },
+          {
+            "start": 285,
+            "end": 286,
+            "text": "掩",
+            "note": "掩盖。",
+            "field": "content",
+            "linkKey": "anno-295-296-mqhhcz0i2tk674"
+          },
+          {
+            "start": 286,
+            "end": 287,
+            "text": "缛",
+            "note": "繁，指星光灿烂。",
+            "field": "content",
+            "linkKey": "anno-296-297-mqhhd6dzsomjj4"
+          },
+          {
+            "start": 288,
+            "end": 290,
+            "text": "长河",
+            "note": "指天河。",
+            "field": "content",
+            "linkKey": "anno-298-300-mqhhded29folg3"
+          },
+          {
+            "start": 290,
+            "end": 291,
+            "text": "韬",
+            "note": "隐藏。",
+            "field": "content",
+            "linkKey": "anno-300-301-mqhhdntrbdbeh8"
+          },
+          {
+            "start": 291,
+            "end": 292,
+            "text": "映",
+            "note": "照耀。",
+            "field": "content",
+            "linkKey": "anno-301-302-mqhhdv3p0max0p"
+          },
+          {
+            "start": 293,
+            "end": 295,
+            "text": "柔祇",
+            "note": "（qí）指地。",
+            "field": "content",
+            "linkKey": "anno-303-305-mqhhe5m9qca4pt"
+          },
+          {
+            "start": 298,
+            "end": 300,
+            "text": "圆灵",
+            "note": "指天。",
+            "field": "content",
+            "linkKey": "anno-308-310-mqhhefhv4gysex"
+          },
+          {
+            "start": 304,
+            "end": 305,
+            "text": "观",
+            "note": "供帝王游憩的离宫别馆。",
+            "field": "content",
+            "linkKey": "anno-314-315-mqhhf0p2ggmuvu"
+          },
+          {
+            "start": 303,
+            "end": 305,
+            "text": "连观",
+            "note": "连接宫观。",
+            "field": "content",
+            "linkKey": "anno-313-315-mqhhflxqzljrv6"
+          },
+          {
+            "start": 305,
+            "end": 307,
+            "text": "霜缟",
+            "note": "象霜一样的洁白。",
+            "field": "content",
+            "linkKey": "anno-315-317-mqhhfuxiish18b"
+          },
+          {
+            "start": 308,
+            "end": 310,
+            "text": "周除",
+            "note": "四周的宫殿的台阶。",
+            "field": "content",
+            "linkKey": "anno-318-320-mqhhg245kllpt0"
+          },
+          {
+            "start": 328,
+            "end": 329,
+            "text": "弛",
+            "note": "放下。",
+            "field": "content",
+            "linkKey": "anno-338-339-mqhhga72oyyqkm"
+          },
+          {
+            "start": 330,
+            "end": 331,
+            "text": "县",
+            "note": "即悬。",
+            "field": "content",
+            "linkKey": "anno-340-341-mqhhgpgq284o5u"
+          },
+          {
+            "start": 329,
+            "end": 331,
+            "text": "清县",
+            "note": "指悬挂着的钟磬。",
+            "field": "content",
+            "linkKey": "anno-339-341-mqhhgyefm4eud6"
+          },
+          {
+            "start": 336,
+            "end": 337,
+            "text": "即",
+            "note": "就。",
+            "field": "content",
+            "linkKey": "anno-346-347-mqhhh66yx6muiy"
+          },
+          {
+            "start": 60,
+            "end": 61,
+            "text": "登",
+            "note": "进酒。",
+            "field": "content",
+            "linkKey": "anno-352-353-mqhhhesbmz9o7j"
+          },
+          {
+            "start": 346,
+            "end": 347,
+            "text": "荐",
+            "note": "进献。",
+            "field": "content",
+            "linkKey": "anno-356-357-mqhhhmb5yjl0j2"
+          },
+          {
+            "start": 356,
+            "end": 358,
+            "text": "风篁",
+            "note": "（huáng）风吹竹林。",
+            "field": "content",
+            "linkKey": "anno-368-370-mqhhi1m2f171j0"
+          },
+          {
+            "start": 361,
+            "end": 363,
+            "text": "亲懿",
+            "note": "即懿亲，指笃好的亲族。",
+            "field": "content",
+            "linkKey": "anno-373-375-mqhhibkj68w3gx"
+          },
+          {
+            "start": 366,
+            "end": 368,
+            "text": "羇孤",
+            "note": "（jī）指流落在外的人。",
+            "field": "content",
+            "linkKey": "anno-378-380-mqhhip42ug9v6f"
+          },
+          {
+            "start": 371,
+            "end": 373,
+            "text": "聆皋",
+            "note": "（gāo）：鹤。《诗经》：“鹤鸣于九皋”。",
+            "field": "content",
+            "linkKey": "anno-383-385-mqhhj5pdcn3fre"
+          },
+          {
+            "start": 375,
+            "end": 377,
+            "text": "夕闻",
+            "note": "晚间的叫声。",
+            "field": "content",
+            "linkKey": "anno-387-389-mqhhjf6yzxswvy"
+          },
+          {
+            "start": 379,
+            "end": 381,
+            "text": "朔管",
+            "note": "笛子。",
+            "field": "content",
+            "linkKey": "anno-391-393-mqhhjnsdm2bkxf"
+          },
+          {
+            "start": 382,
+            "end": 384,
+            "text": "秋引",
+            "note": "秋天的曲调。",
+            "field": "content",
+            "linkKey": "anno-394-396-mqhhjw3azeqzuv"
+          },
+          {
+            "start": 387,
+            "end": 389,
+            "text": "弦桐",
+            "note": "琴。",
+            "field": "content",
+            "linkKey": "anno-399-401-mqhhk44iadrr6s"
+          },
+          {
+            "start": 389,
+            "end": 390,
+            "text": "练",
+            "note": "选择。",
+            "field": "content",
+            "linkKey": "anno-401-402-mqhhkbpiinoeni"
+          },
+          {
+            "start": 399,
+            "end": 401,
+            "text": "房露",
+            "note": "古曲名。",
+            "field": "content",
+            "linkKey": "anno-411-413-mqhhkmcevuwhhw"
+          },
+          {
+            "start": 409,
+            "end": 410,
+            "text": "虚",
+            "note": "停息。",
+            "field": "content",
+            "linkKey": "anno-421-422-mqhhkwvqxfypkt"
+          },
+          {
+            "start": 410,
+            "end": 411,
+            "text": "籁",
+            "note": "风吹孔窍所发出的音响。",
+            "field": "content",
+            "linkKey": "anno-422-423-mqhhl63hpyg8gg"
+          },
+          {
+            "start": 225,
+            "end": 226,
+            "text": "沦",
+            "note": "微波。",
+            "field": "content",
+            "linkKey": "anno-424-425-mqhhldmivuwner"
+          },
+          {
+            "start": 418,
+            "end": 420,
+            "text": "纡轸",
+            "note": "隐痛在心，郁结不解。",
+            "field": "content",
+            "linkKey": "anno-430-432-mqhhllp9jy4bnx"
+          },
+          {
+            "start": 424,
+            "end": 425,
+            "text": "愬",
+            "note": "（sù）向着。",
+            "field": "content",
+            "linkKey": "anno-436-437-mqhhlykaaapjwn"
+          },
+          {
+            "start": 437,
+            "end": 438,
+            "text": "迈",
+            "note": "往。",
+            "field": "content",
+            "linkKey": "anno-451-452-mqhhm7tel5tqnb"
+          },
+          {
+            "start": 439,
+            "end": 441,
+            "text": "音尘",
+            "note": "信息。",
+            "field": "content",
+            "linkKey": "anno-453-455-mqhhmjderntamp"
+          },
+          {
+            "start": 191,
+            "end": 192,
+            "text": "阙",
+            "note": "通“缺”。",
+            "field": "content",
+            "linkKey": "anno-455-456-mqhhmse5fb6sc4"
+          },
+          {
+            "start": 476,
+            "end": 477,
+            "text": "就",
+            "note": "接近，即将。",
+            "field": "content",
+            "linkKey": "anno-494-495-mqhhntxxksm6bi"
+          },
+          {
+            "start": 484,
+            "end": 486,
+            "text": "回遑",
+            "note": "内心彷徨，没有着落。",
+            "field": "content",
+            "linkKey": "anno-502-504-mqhho1v9y4o5ld"
+          },
+          {
+            "start": 501,
+            "end": 502,
+            "text": "晞",
+            "note": "干。",
+            "field": "content",
+            "linkKey": "anno-521-522-mqhhoa5x45jjad"
+          },
+          {
+            "start": 505,
+            "end": 506,
+            "text": "晏",
+            "note": "晚。",
+            "field": "content",
+            "linkKey": "anno-525-526-mqhhokii9be2sa"
+          },
+          {
+            "start": 512,
+            "end": 514,
+            "text": "佳期",
+            "note": "约会，这里指期会的人。",
+            "field": "content",
+            "linkKey": "anno-534-536-mqhhotnlwr4f3l"
+          },
+          {
+            "start": 533,
+            "end": 535,
+            "text": "执事",
+            "note": "这里指左右侍奉的人。",
+            "field": "content",
+            "linkKey": "anno-557-559-mqhhp1nlyc9a5a"
+          },
+          {
+            "start": 536,
+            "end": 538,
+            "text": "献寿",
+            "note": "进酒祝贺。",
+            "field": "content",
+            "linkKey": "anno-560-562-mqhhpa9ln8b1lj"
+          },
+          {
+            "start": 538,
+            "end": 539,
+            "text": "羞",
+            "note": "进献。",
+            "field": "content",
+            "linkKey": "anno-562-563-mqhhpgyqvwswz8"
+          },
+          {
+            "start": 542,
+            "end": 543,
+            "text": "佩",
+            "note": "带。",
+            "field": "content",
+            "linkKey": "anno-566-567-mqhhpojuowrz8j"
+          },
+          {
+            "start": 543,
+            "end": 545,
+            "text": "玉音",
+            "note": "对别人言辞的敬称。",
+            "field": "content",
+            "linkKey": "anno-567-569-mqhhpvtzm8iopa"
+          },
+          {
+            "start": 546,
+            "end": 547,
+            "text": "复",
+            "note": "指反复诵读。",
+            "field": "content",
+            "linkKey": "anno-570-571-mqhhq3bnuu6erp"
+          },
+          {
+            "start": 549,
+            "end": 550,
+            "text": "斁",
+            "note": "（yi）厌烦。",
+            "field": "content",
+            "linkKey": "anno-573-574-mqhhqd6aqzqf7g"
+          }
+        ],
+        "links": [],
+        "fields": {
+          "title": "月赋",
+          "otherNames": "",
+          "author": "谢庄",
+          "origin": "《文选》",
+          "form": "古体",
+          "sub": "其他",
+          "sub2": "",
+          "rhyme": ""
+        },
+        "extra": {
+          "reviewDuration": "5",
+          "reviewStatus": "approved",
+          "expectedDuration": "9.5",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "preface": "",
+          "translation": "陈思王曹植，因友人应瑒和刘桢之先后去世，闲居在家，不免忧思重重。阁下长满了绿苔，台榭间落花纷纷，心里默默在难过不快乐。\n于是，半夜里起来去清扫长满了兰草的道路，整理桂苑，在寒山之中奏起了音乐。面临深谷，登上高山，心中的苦闷伤感更甚。在出行时从简，于秋坡上行走，不再打着大伞。是时，横斜的银河在东方划出一条界线，太阳运行的方位与线路，也发生了变化，已从夏至时的偏北移向了冬至后的偏南，现在季节正处在秋冬之交。腾腾的雾露，使天空朦朦胧胧的，而明月的光芒却仍然漫天照射。他用低声沉吟《诗经·齐风》的“东方之月”；反复念诵《诗经·陈风》的“月出皎兮”。并即拿出笔和木板交给王粲，请他撰写文章。\n王粲向陈王曹植施以跪拜礼后说：我生在东方僻壤，长在山野中的一个不学无术之士，本领有限，深怕有负君王重托之恩德。据我所知，地沉静在下，天高朗在上，天地形成之后，日具有“阳”的德性，月具有“阴”的精华。太阳挟着扶桑光彩自水里出来，月亮当太阳落入长满若木花的幽谷后，相继出来。且引着黑兔奔驰在天帝之台榭，又聚嫦娥于帝之后宫。月初，月亮出现在东方，月底，月亮出现在西方，它则以上弦下弦之“月缺”现象，警戒人们不可自满；初生的月与成形之月，则以月之盈亏，启示人们应保持谦虚态度。月亮，一般都顺着地支十二个时辰运行，当月行至某一星宿时，就会发生天象的变化：如遇到毕宿星，就会下雨；遇到箕宿星就会刮风等。月亮还能为三台星座的星增加光华；也能为轩辕星座的星发扬光彩。月亮的光华照进三国东吴，而孙吴之帝业就繁荣昌盛；照到西汉，而使李夫人育女为皇后，汉道因此大顺大通。\n当雾气散去，大地一片澄洁，乌云都蜷缩到天边，洞庭湖开始兴波作浪，湖边秋树也首见落叶。黄菊的芳香弥漫于山巅，寒雁的哀鸣也流浇在沙滩上。见那清朗的明月冉冉升起，向大地播散下柔和的光辉。群星的光华被清朗的月光所掩盖，那长长的银河，也因明月而失去了清晖。皎洁的月光照耀得大地如蒙上了一层白雪；那蔚蓝天空在月光下有如澄明透辙的镜子。宫中一爿爿高楼，被月光照得同霜一样的洁白，周围的台阶，也被照得似冰一样的明净。在如此月夜美景的逗诱下，君王讨厌白昼娱乐，而喜欢夜晚的欢宴。于是，停止了一切歌舞与音乐，离开点着辉煌蜡烛的宫室，来到月光照射着的厅堂，端上喷香的美酒，奏起幽雅悦耳的琴音，终于在月光下陶醉了。\n在这凄凉的月光如水的寒夜中，竹林里发出一种如歌似乐的声响。这时，至亲好友都不在身边，聚拢来的是一些孤身羁旅在外的人们。大家在听着夜晚鹤鸣之声，特感凄清；又闻到北方民族的音乐，奏的是一些凄凉的曲调。这些游子，也抚琴调起弦来，选奏那些风格委婉的乐曲。比如：饱含迟徊怨慕情调的《防露》和《阳阿》等古乐曲。于是，原来那些树林因风而发出的天然声响，现在也消失了；原来满是波纹的池水，此时波纹也不见了。总之，大气沉寂，万物歇息。在这种情景下，游子们心情郁结，满腹悲苦向何处寄托？找谁宣泄？惟有对着寒月倾诉。\n其歌道：“远方的良人啊，音讯隔绝。地虽千里之隔，而明月却可共享。迎风叹息啊，哪能停歇不唱！可是山山水水路程实在太远，难以跨越。”\n歌声未歇，而残月影子却将沉没。于是，满屋子里的人们都变了颜色，在徘徊着，彷徨着，像丢失了什么似的。\n又接着唱道：“月亮已落啊白露将干，时间已晚啊无人与我归还。在这美好的日子里回去吧，秋天的微霜会沾湿了人的衣衫。”\n曹植说：好。于是命令侍从的下人，捧酒祝贺，进献玉璧。并表示牢记王粲的美言，反复诵读，永不厌烦。",
+          "background": "关于《月赋》的创造年代，现有史料没有直接明确记载。但可以考证求出答案。谢庄《月赋》以虚构陈王曹植与文学侍从王粲的对话来描绘月亮，抒发羁旅孤独、“怨遥”、“伤远”之感，思人怀归之情。这正切合元嘉二十八年（451）间刘骏与谢庄的各自身份、处境和他们的关系。所以谢庄创作《月赋》是在南朝刘宋元嘉二十八年六月之后的秋天。当时是作给武陵王刘骏等人看的。",
+          "evaluation": [
+            {
+              "出处": "孟棨《本事诗》",
+              "内容": "“宋武帝曾吟谢庄《月赋》，称叹良久，谓颜延之曰：‘希逸此作，可谓前不见古人，后不见来者，昔陈王何足尚邪！’”"
+            },
+            {
+              "出处": "李元度《赋学正鹄》",
+              "内容": "“自月升写到月没，无限深情。”"
+            },
+            {
+              "出处": "许梿《六朝文絜》",
+              "内容": "“此赋假陈王、仲宣立局，与小谢《雪赋》同意。兹刻遗雪取月者，以雪描写著迹，月则意趣洒然。所谓写神则生，写貌则死。”"
+            },
+            {
+              "出处": "鲍桂星《赋则》",
+              "内容": "“神韵凄婉，风调高秀，其中佳句，真乃一字一珠。”"
+            },
+            {
+              "出处": "浦起龙《古文眉诠》",
+              "内容": "“不多粘月，只写对月，故神远。”"
             }
           ]
         }
@@ -296070,7 +297020,7 @@
     }
   },
   "C": {
-    "lastId": 226,
+    "lastId": 263,
     "items": {
       "C00001": {
         "id": "C00001",
@@ -320910,7 +321860,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -320995,7 +321945,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321142,7 +322092,7 @@
         },
         "extra": {
           "reviewDuration": "4",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321278,7 +322228,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321427,7 +322377,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321590,7 +322540,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321691,7 +322641,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321770,7 +322720,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -321913,7 +322863,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322100,7 +323050,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322215,7 +323165,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322354,7 +323304,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322458,7 +323408,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322543,7 +323493,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322666,7 +323616,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322774,7 +323724,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "4",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322881,7 +323831,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -322969,7 +323919,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323074,7 +324024,7 @@
         },
         "extra": {
           "reviewDuration": "2",
-          "reviewStatus": "approved",
+          "reviewStatus": "archived",
           "expectedDuration": "",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323100,11 +324050,11 @@
           "createdByName": "刘梦雅(1120240300)",
           "createdBy": "刘梦雅(1120240300)",
           "createdAt": "2026-06-14",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-06-14"
+          "reviewedById": "u_12",
+          "reviewedByName": "杨烨亭(2511420)",
+          "reviewedBy": "杨烨亭(2511420)",
+          "reviewedAt": "2026-06-16",
+          "updatedAt": "2026-06-16"
         },
         "content": "",
         "annotations": [],
@@ -323158,10 +324108,6 @@
               "关系": "词友"
             },
             {
-              "人物": "周密",
-              "关系": "词友"
-            },
-            {
               "人物": "袁桷",
               "关系": "文坛友人"
             },
@@ -323195,8 +324141,8 @@
           "relatedE": []
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323230,11 +324176,11 @@
           "createdByName": "刘梦雅(1120240300)",
           "createdBy": "刘梦雅(1120240300)",
           "createdAt": "2026-06-14",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-06-14"
+          "reviewedById": "u_12",
+          "reviewedByName": "杨烨亭(2511420)",
+          "reviewedBy": "杨烨亭(2511420)",
+          "reviewedAt": "2026-06-16",
+          "updatedAt": "2026-06-16"
         },
         "content": "",
         "annotations": [],
@@ -323306,8 +324252,8 @@
           "relatedE": []
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "2",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323341,11 +324287,11 @@
           "createdByName": "刘梦雅(1120240300)",
           "createdBy": "刘梦雅(1120240300)",
           "createdAt": "2026-06-14",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-06-14"
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
         },
         "content": "",
         "annotations": [],
@@ -323419,8 +324365,8 @@
           "relatedE": []
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "3",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323454,11 +324400,11 @@
           "createdByName": "刘梦雅(1120240300)",
           "createdBy": "刘梦雅(1120240300)",
           "createdAt": "2026-06-14",
-          "reviewedById": "",
-          "reviewedByName": "",
-          "reviewedBy": "",
-          "reviewedAt": "",
-          "updatedAt": "2026-06-14"
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
         },
         "content": "",
         "annotations": [],
@@ -323517,8 +324463,8 @@
           "relatedE": []
         },
         "extra": {
-          "reviewDuration": "",
-          "reviewStatus": "pending",
+          "reviewDuration": "3",
+          "reviewStatus": "archived",
           "expectedDuration": "3",
           "repairStatus": "unfinished",
           "remark": "",
@@ -323539,6 +324485,3992 @@
             {
               "出处": "吴融序文",
               "内容": "江左风雅，自贞元而后，先生独擅大名，后进无不取法。"
+            }
+          ]
+        }
+      },
+      "C00227": {
+        "id": "C00227",
+        "type": "C",
+        "name": "姚合",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "姚合",
+          "name": "姚合",
+          "period": "中唐",
+          "life": "约779年-约855年",
+          "hometown": "陕州硖石",
+          "courtesy": "大凝",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "姚少监",
+          "joint": [
+            {
+              "合称": "姚贾",
+              "其他人物": "贾岛"
+            }
+          ],
+          "school": "苦吟诗派",
+          "repWorks": [
+            "《武功县中作三十首》《闲居》《秋夜月中登天坛》《寄贾岛》"
+          ],
+          "anthos": [
+            "《姚少监诗集》十卷",
+            "《全唐诗》收其诗七卷"
+          ],
+          "relations": [
+            {
+              "人物": "贾岛",
+              "关系": "诗友"
+            },
+            {
+              "人物": "张籍",
+              "关系": "诗友"
+            },
+            {
+              "人物": "王建",
+              "关系": "诗友"
+            },
+            {
+              "人物": "方干",
+              "关系": "后辈门生"
+            },
+            {
+              "人物": "李频",
+              "关系": "后辈门生"
+            },
+            {
+              "人物": "周朴",
+              "关系": "后辈门生"
+            },
+            {
+              "人物": "郑谷",
+              "关系": "后辈门生"
+            },
+            {
+              "人物": "郑谷",
+              "关系": "后辈门生"
+            },
+            {
+              "人物": "曹邺",
+              "关系": "后辈门生"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "早年",
+              "事件": "家境贫寒，潜心苦学，苦炼五律字句。"
+            },
+            {
+              "纪年": "816年",
+              "事件": "登进士第，起步仕途。"
+            },
+            {
+              "纪年": "大和年间",
+              "事件": "出任杭州刺史，理政宽和，公务之余广交东南文士。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "创立武功体：以《武功县中作》为标志，细致描摹小官清贫闲寂、细碎日常心境，题材写实、格调清峭，自成一体。\n姚贾并称，统领苦吟一脉：与贾岛并肩，修正大历诗的空泛，把炼字炼意推到极致，是中唐转向晚唐诗风的关键枢纽。\n影响整个晚唐五代诗坛：方干、李频、郑谷、齐己等几乎全部晚唐主流诗人都效仿姚合五律笔法，是晚唐近体诗最重要范式之一。\n题材拓宽：不只山林隐逸，大量书写底层小吏宦况、民生细微景象，贴近现实，语言浅白不堆砌典故。\n吏治与文教兼顾：为官清廉仁厚，在杭州时礼遇寒门诗人，提携后进，维系东南诗文风气。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "合多历下邑，官况萧条，山县荒凉，凋敝之间，最能模写，时号武功体。"
+            },
+            {
+              "出处": "《四库全书总目提要・姚少监诗集》",
+              "内容": "其诗源出贾岛，刻意炼句，清隽稳切，虽魄力不及盛唐，而于五律一体，开晚唐数百年风气。"
+            },
+            {
+              "出处": "方回《瀛奎律髓》",
+              "内容": "姚合诗专在细小情景，幽淡清寒，初学律诗者最宜取法。"
+            },
+            {
+              "出处": "胡震亨《唐音癸签》",
+              "内容": "姚合诗专在细小情景，幽淡清寒，初学律诗者最宜取法。"
+            }
+          ]
+        }
+      },
+      "C00228": {
+        "id": "C00228",
+        "type": "C",
+        "name": "德隐",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "贯休",
+          "name": "德隐",
+          "period": "晚唐至五代前蜀",
+          "life": "832年-912年",
+          "hometown": "婺州兰溪",
+          "courtesy": "德隐",
+          "pseudonym": "禅月大师",
+          "posthumous": "无",
+          "aliases": "西岳僧",
+          "joint": [
+            {
+              "合称": "唐三高僧",
+              "其他人物": "皎然、齐己"
+            }
+          ],
+          "school": "禅诗派",
+          "repWorks": [
+            "《献钱尚父》《入蜀呈王建》《酷吏词》《春晚书山家屋壁二首》《十六罗汉图》《风骚旨格》"
+          ],
+          "anthos": [
+            "《西岳集》《禅月集》《全唐诗》"
+          ],
+          "relations": [
+            {
+              "人物": "圆贞禅师",
+              "关系": "启蒙出家恩师"
+            },
+            {
+              "人物": "处默",
+              "关系": "同门僧友，年少隔篱唱和论诗"
+            },
+            {
+              "人物": "钱镠",
+              "关系": "投谒权贵，因不肯改诗拂衣决裂"
+            },
+            {
+              "人物": "王建",
+              "关系": "蜀地君主，礼遇极厚，赐禅月大师封号"
+            },
+            {
+              "人物": "昙域",
+              "关系": "弟子"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "832年",
+              "事件": "生于兰溪，七岁入和安寺出家，日诵经书千字，过目不忘。"
+            },
+            {
+              "纪年": "894年",
+              "事件": "谒吴越王钱镠，献诗“满堂花醉三千客，一剑霜寒十四州”，拒绝改“十四”为“四十州”，直言“诗难改，孤云野鹤何天不可飞”，愤然离开杭州。"
+            },
+            {
+              "纪年": "903年",
+              "事件": "拜见前蜀王建，献诗“一瓶一钵垂垂老，千水千山得得来”，深得君主敬重，赐紫衣、禅月大师，专建龙华禅院安居。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "诗僧三大家之一：存诗数量仅次齐己，诗作格局开阔，不局限禅门闲吟，大量讽喻苛政、战乱民生，风骨刚直雄健，打破僧诗空寂浅淡的通病。\n诗书画三绝：草书自成“姜体”；《十六罗汉图》独创胡貌梵相奇崛造型，夸张古野，成为后世佛画罗汉的经典范式，宋徽宗十分推崇其画作。\n人格风骨标杆：身为方外之人，不屈服权贵威压，宁弃礼遇不改诗句，孤高刚直的气节为时人与后世称颂。\n诗学传承：《风骚旨格》延续晚唐诗格体系，以禅理论诗；交游提携一众东南寒士诗人，串联起晚唐五代江南、巴蜀文坛脉络。\n文献留存：《禅月集》完整保存唐末乱世社会风貌、僧门生活与割据政权人事，是晚唐五代重要文学史料。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "休一条直气，海内无双，笔吐猛锐之气，乐府古律，当时所宗，崛奇有神力。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "唐释工诗最著者，皎然、齐己、贯休三家；贯休诗豪健奇峭，讽喻之篇尤见肝胆。"
+            },
+            {
+              "出处": "吴融《西岳集序》",
+              "内容": "上人之作多以理胜，复创新意，取景于混茫自然之间，不流于凡俗轻靡。"
+            }
+          ]
+        }
+      },
+      "C00229": {
+        "id": "C00229",
+        "type": "C",
+        "name": "吉中孚",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "吉中孚",
+          "name": "吉中孚",
+          "period": "唐代",
+          "life": "约730—约790",
+          "hometown": "楚州山阳",
+          "courtesy": "子猷",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "大历十才子",
+              "其他人物": "李端、卢纶、韩翃、钱起、司空曙、崔峒、苗发、耿湋、夏侯审"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《送归中丞使新罗册立吊祭》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "张氏",
+              "关系": "妻子"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "开元十八年（公元730年）",
+              "事件": "出生于楚州山阳。"
+            },
+            {
+              "纪年": "大历年间（公元766年—779年）",
+              "事件": "早年曾出家为道士，后还俗。他来到长安，成为宰相元载府上的嘉宾，并受其举荐，征拜为秘书省校书郎。此后，他常与卢纶、李端、钱起等文人在驸马郭暧府上唱和，声名震动京师。"
+            },
+            {
+              "纪年": "大历八年（公元773年）",
+              "事件": "在京师应吏部铨试。"
+            },
+            {
+              "纪年": "建中元年（780年）",
+              "事件": "进士及第，被授予京兆万年县尉之职。"
+            },
+            {
+              "纪年": "兴元元年（784年）",
+              "事件": "由司封郎中、知制诰被擢升为谏议大夫，并充任翰林学士。"
+            },
+            {
+              "纪年": "贞元二年（786年）",
+              "事件": "升迁为户部侍郎，并兼任判度支两税。"
+            },
+            {
+              "纪年": "贞元四年（788年）",
+              "事件": "权判吏部侍郎，同年八月改任中书舍人。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "吉中孚作为“大历十才子”之一，在唐代诗坛享有盛名。他不仅以诗闻名，而且擅长撰拟诏旨，贞元初与陆贽、韦执谊、吴通元等同为翰林学士“同视草”。吉中孚于文雅之余，亦善理财，贞元二年迁户部侍郎，“判度支两税”，掌管国家的财政收支与夏、秋两税事务。其诗《送归中丞使新罗册立吊祭》格律规整，字句精工，反映出唐代中国与新罗的友好往来。吉中孚是淮安历史上第一位进士、第一位“大历十才子”成员、第一位夫妻皆善诗的诗人。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "神骨清虚，吟咏高雅。"
+            }
+          ]
+        }
+      },
+      "C00230": {
+        "id": "C00230",
+        "type": "C",
+        "name": "吴融",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "吴融",
+          "name": "吴融",
+          "period": "晚唐",
+          "life": "约850年-903年",
+          "hometown": "越州山阴",
+          "courtesy": "子华",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "无",
+          "joint": [],
+          "school": "无",
+          "repWorks": [
+            "《华清宫》《途中见杏花》《子规》《金桥感事》"
+          ],
+          "anthos": [
+            "《唐英歌诗》三卷",
+            "《全唐诗》编其诗四卷"
+          ],
+          "relations": [
+            {
+              "人物": "韩偓",
+              "关系": "诗友"
+            },
+            {
+              "人物": "方干",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "889年",
+              "事件": "登进士第，踏上仕途。"
+            },
+            {
+              "纪年": "903年",
+              "事件": "朱温势力把持朝政，时局彻底崩坏，吴融辞官归隐山阴故里，不久病逝。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "晚唐诗风过渡人物：远承温李绮艳精工，又因乱世增添沉郁悲凉，一改单纯艳情题材，大量书写战乱、兴亡、羁旅之叹。\n讽咏咏史功力深厚：《华清宫》等咏古诗借前朝盛衰讽喻晚唐颓势，含蓄尖锐，传诵千古。\n朝堂文学担当：身为翰林学士，朝廷重要制诏文书多出自其手，文笔典雅得体，兼具公文与文学双重功底。\n记录乱世实景：诗作完整留存唐末藩镇战乱、帝王奔逃、民生凋敝的社会图景，具备极高史料参考价值。\n提携东南文士：在京城为官时，多次举荐、礼遇方干、贯休等江南布衣诗人，助力东南诗人群体扩大声望。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "融工辞翰，藻丽丰赡，初效温、李，晚岁流离，诗多凄怨之音。"
+            },
+            {
+              "出处": "《四库全书总目提要・唐英歌诗》",
+              "内容": "其诗音节谐雅，秾丽之中时露风骨，虽不及商隐之深婉，要非晚唐纤靡一派可比。"
+            },
+            {
+              "出处": "胡震亨《唐音癸签》",
+              "内容": "吴子华才情富丽，遭乱后篇什转沉，温李余响，至此一变。"
+            }
+          ]
+        }
+      },
+      "C00231": {
+        "id": "C00231",
+        "type": "C",
+        "name": "崔峒",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "崔峒",
+          "name": "崔峒",
+          "period": "唐代",
+          "life": "不详",
+          "hometown": "博陵",
+          "courtesy": "",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "大历十才子",
+              "其他人物": "李端、卢纶、吉中孚、韩翃、钱起、司空曙、崔峒、苗发、耿湋、夏侯审"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《书情寄上苏州韦使君兼呈吴县李明府》",
+            "《清江曲内一绝》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "天宝十四载（公元755年）",
+              "事件": "安史之乱爆发，崔峒为避战乱，离开故乡博陵，流寓并避地于江淮一带。"
+            },
+            {
+              "纪年": "大历初年（公元约766年）",
+              "事件": "由崔圆举荐，被任命为左拾遗，并奉命出使江淮地区搜求图书。"
+            },
+            {
+              "纪年": "大历十年（公元775年）",
+              "事件": "以左拾遗的身份充任使者，前往江淮地区访求图书。此后入集贤院担任学士。"
+            },
+            {
+              "纪年": "大历末年至建中初年（公元约779年—780年）",
+              "事件": "崔峒曾游历浙东地区，在越中（今浙江绍兴一带）送别王使君赴任江华。"
+            },
+            {
+              "纪年": "建中年间（公元780年—783年）",
+              "事件": "因事被贬，出任潞州（潞府）功曹参军。"
+            },
+            {
+              "纪年": "贞元初年（公元约785年）",
+              "事件": "约卒于这一时期。其最终官职史载不一，有记载称其官终右补阙，也有说法称其官终州刺史或玄武令。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "崔峒作为“大历十才子”之一，其诗歌创作遵循该群体的共同艺术倾向。诗歌主题以歌颂升平、吟咏山水和称道隐逸为主，擅长写作送别诗和隐居题材的诗歌。在诗歌艺术上，讲究格律辞藻，追求清雅闲淡的风格，并工于白描写景。大历十才子都擅长五言律诗，风格大致相同，个性表现不强烈，遣词造句偏重于工整精练。受特定心境和意绪支配，崔峒诗歌选用的词语往往带有凄清萧瑟、暗淡的色彩，因而整体上具有凄凉的风格，如常用“秋风、落叶、夕照、寒雁”等意象。在表现手法上喜用白描，多用描述性意象，虽为生活中常见事物，但描写细致，刻画逼真，常能勾勒出“诗中有画”的优美诗境。",
+          "evaluation": [
+            {
+              "出处": "高仲武《中兴间气集》",
+              "内容": "崔拾遗，文彩炳然，意思方雅。"
+            }
+          ]
+        }
+      },
+      "C00232": {
+        "id": "C00232",
+        "type": "C",
+        "name": "苗发",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "苗发",
+          "name": "苗发",
+          "period": "唐代",
+          "life": "不详",
+          "hometown": "潞州壶关",
+          "courtesy": "",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "大历十才子",
+              "其他人物": "李端、卢纶、吉中孚、韩翃、钱起、司空曙、崔峒、苗发、耿湋、夏侯审"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《送司空曙之苏州》《送孙德谕罢官往黔州》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "苗晋卿",
+              "关系": "父亲"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "天宝初年至中期（约公元742年—750年）",
+              "事件": "出生于潞州壶关。他自幼成长于长安权贵圈层，家中常有名士往来，为其日后的诗歌创作与社交奠定了基础。"
+            },
+            {
+              "纪年": "大历五年（公元770年）",
+              "事件": "步入仕途，出任尚书都官员外郎。"
+            },
+            {
+              "纪年": "大历九年至十二年（公元774年—777年）",
+              "事件": "离开京城，出任乐平县令。这段地方经历让他得以接触基层生活，其诗歌中偶尔出现的自然意象便源于此时的观察。"
+            },
+            {
+              "纪年": "大历年间（公元766年—779年）",
+              "事件": "作为“大历十才子”的核心成员之一，苗发在长安历任朝散大夫、秘书丞，封龙门县开国男。后调回中央，历任驾部员外郎、兵部员外郎。这一时期是他与卢纶、司空曙、李益等诗人交游唱和最为频繁的阶段。"
+            },
+            {
+              "纪年": "贞元三年（公元787年）前",
+              "事件": "去世。其好友司空曙曾作《哭苗员外呈张参军诗》悼念他。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "苗发是唐代宗大历年间著名的“大历十才子”之一。据姚合《极玄集》与《新唐书·卢纶传》记载，十才子具体成员为李端、卢纶、吉中孚、韩翃、钱起、司空曙、苗发、崔峒、耿湋、夏侯审。在“大历十才子”中，有三位山西籍诗人，苗发为其中之一，另两位为耿湋、卢纶。\n苗发虽因诗作大多散佚，今存诗仅两首，但在当时诗名颇著，“当时名士，咸与赠答”。其现存诗作是研究大历诗风和中唐社会变迁的组成部分。“大历十才子”作为中唐前期重要的诗人群体，在诗歌发展史上具有承前启后的地位，对律诗创作新格局的形成有贡献，而苗发作为其中一员，亦参与并体现了这一群体的整体风貌与历史价值。",
+          "evaluation": [
+            {
+              "出处": "",
+              "内容": ""
+            }
+          ]
+        }
+      },
+      "C00233": {
+        "id": "C00233",
+        "type": "C",
+        "name": "顾况",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_4",
+          "reviewedByName": "陈思润(2510572)",
+          "reviewedBy": "陈思润(2510572)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-18"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "顾况",
+          "name": "顾况",
+          "period": "盛唐末至中唐",
+          "life": "约727年-约815年",
+          "hometown": "苏州海盐",
+          "courtesy": "逋翁",
+          "pseudonym": "华阳山人、华阳真逸",
+          "posthumous": "无",
+          "aliases": "顾著作",
+          "joint": [],
+          "school": "无",
+          "repWorks": [
+            "《囝》《公子行》《宫词》《过山农家》《海鸥咏》"
+          ],
+          "anthos": [
+            "《华阳集》三十卷（后世辑存）",
+            "《全唐诗》收录其四卷诗作"
+          ],
+          "relations": [
+            {
+              "人物": "白居易",
+              "关系": "伯乐"
+            },
+            {
+              "人物": "韦应物",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "757年",
+              "事件": "登进士第，时值安史之乱，仕途起步坎坷。"
+            },
+            {
+              "纪年": "786年",
+              "事件": "李泌入朝为相，举荐顾况任秘书省著作郎。"
+            },
+            {
+              "纪年": "晚年",
+              "事件": "辞官后入茅山修道，自号华阳山人，纵情山水、修道吟咏，漫游江浙皖多地。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "finished",
+          "remark": "",
+          "achievements": "新乐府开路者：早于元、白推行写实讽喻诗，《囝》直白揭露闽地虐童阉奴陋习，直面民间疾苦，开启通俗讽谏新诗风。\n伯乐佳话流传：识拔初出茅庐的白居易，一段诗文赏识故事成为文坛惜才典范。\n文风不拘一格：古体自由奔放，句式长短错落，俚语俗字皆可入诗；山水小诗清新质朴，充满田园生活气息。\n道隐文学代表：晚年修道，诗作融入道家隐逸思想，清空淡远，影响中唐山水隐逸一脉。\n书画兼善：工于绘画、书法，有画作传世记载，是全能型文人。",
+          "evaluation": [
+            {
+              "出处": "《旧唐书》",
+              "内容": "况能文，性诙谐，不修检操，诗多讥诮。"
+            },
+            {
+              "出处": "《四库全书总目提要・华阳集》",
+              "内容": "其诗不蹈袭盛唐熟径，务出新意，俚俗奇峭相间，实为元白新乐府之前导。"
+            },
+            {
+              "出处": "皇甫湜《顾况诗集序》",
+              "内容": "吴中山泉气状，英淑怪丽，故先生发于文词，亦奇逸非常。"
+            },
+            {
+              "出处": "《唐才子传》",
+              "内容": "才情宏放，诗句奇诡，多刺时之作，傲睨权贵。"
+            }
+          ]
+        }
+      },
+      "C00234": {
+        "id": "C00234",
+        "type": "C",
+        "name": "夏侯审",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "夏侯审",
+          "name": "夏侯审",
+          "period": "唐代",
+          "life": "不详",
+          "hometown": "亳州谯县",
+          "courtesy": "",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "大历十才子",
+              "其他人物": "李端、卢纶、吉中孚、韩翃、钱起、司空曙、崔峒、苗发、耿湋、夏侯审"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《咏被中绣鞋》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "永泰二年或大历元年（公元766年）",
+              "事件": "出生。据其妻李氏卒于唐宣宗大中七年（853年）且享年八十八岁的墓志铭推算，夏侯审大约出生于这一时期。"
+            },
+            {
+              "纪年": "建中元年（公元780年）",
+              "事件": "在礼部侍郎令狐峘主持的科举考试中，以“军谋越众”科第一名的成绩及第，释褐被任命为校书郎。"
+            },
+            {
+              "纪年": "兴元元年（公元784年）",
+              "事件": "秋，赴任宣城宁国县丞（或称宁国尉）。"
+            },
+            {
+              "纪年": "贞元年间（公元785年—805年）",
+              "事件": "历任参军、监察御史（或殿中侍御史）、主客员外郎、膳部员外郎等职。其最终官职据现代学者考证为祠部郎中（一说侍御史）。"
+            },
+            {
+              "纪年": "贞元十六年（公元800年）",
+              "事件": "去世。据出土的《唐故赠秘书郎崔公（贞道）夏侯夫人真源县太君墓志铭并序》中“贞元十六年，尚书府君即世”的记载，可确知其卒于这一年。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "夏侯审是中唐时期重要的诗歌流派“大历十才子”成员之一。据姚合《极玄集》和《新唐书》载，“大历十才子”指唐代宗大历年间活跃于诗坛的十位诗人：李端、卢纶、吉中孚、韩翃、钱起、司空曙、苗发、崔峒、耿湋、夏侯审。他们多为失意的中下层士大夫或权门清客，诗歌主题多为歌颂升平、吟咏山水、求道隐逸，诗作格律精严，字句工致，标志着诗风从盛唐的雄浑转向中唐的清远孤寂。夏侯审于唐德宗建中元年（公元780年）试“军谋越众”科及第，释褐授校书郎，后历任参军、宁国县丞、监察御史等职。据现代学者陶敏、陈尚君等人考证，其终官可能为祠部郎中，而非《新唐书》所载的侍御史。初于华山下购买田园为别业，晚年退居其中。其吟诗颇多，但传世甚少，《全唐诗》仅录其诗一首。夏侯审传世的唯一诗作为《咏被中绣鞋》。这是一首咏物艳情诗，诗中描写两情相悦，情真意切。然而从总体上来说，其格调不高，思想与艺术上均无突出特色，被元结斥为“指咏时物，含谐丝竹，与歌儿舞女生污惑之声于私室”的作品之列。作为“大历十才子”这一代表性诗人群体的一员，夏侯审的创作活动是研究中唐大历诗风的重要一环。近年来，随着卢纶、耿湋、李益等“十才子”成员墓志的出土及相关碑志文献的发现，包括夏侯审在内的这一诗人群体生平事迹得到更全面的印证，其研究在诗人生平、交游网络及文学活动等方面仍有较大开拓空间，学术价值日益凸显。",
+          "evaluation": [
+            {
+              "出处": "李嘉祐",
+              "内容": "袖中多丽句。"
+            }
+          ]
+        }
+      },
+      "C00235": {
+        "id": "C00235",
+        "type": "C",
+        "name": "程垓",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "程垓",
+          "name": "程垓",
+          "period": "南宋",
+          "life": "约1140年-嘉定六年（1213）后",
+          "hometown": "眉山",
+          "courtesy": "正伯",
+          "pseudonym": "书舟",
+          "posthumous": "无",
+          "aliases": "无",
+          "joint": [],
+          "school": "婉约词派",
+          "repWorks": [
+            "《酷相思・月挂霜林寒欲坠》《摸鱼儿・掩凄凉黄昏庭院》《满庭芳・南枝》《摊破江城子・娟娟霜月又侵门》"
+          ],
+          "anthos": [
+            "《书舟词》"
+          ],
+          "relations": [
+            {
+              "人物": "程之才",
+              "关系": "祖父"
+            },
+            {
+              "人物": "陆游",
+              "关系": "挚友"
+            },
+            {
+              "人物": "杨万里",
+              "关系": "伯乐"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "1186年",
+              "事件": "远赴临安游历求仕，拜谒陆游等名士，陆游为其藏品题跋，后返回蜀地。"
+            },
+            {
+              "纪年": "1192年",
+              "事件": "年过半百，杨万里赏识其才，举荐他赴京参加贤良方正科考试，最终未能入仕授官。"
+            },
+            {
+              "纪年": "1194年",
+              "事件": "同乡王称整理其词作并作序，此时程垓词名已传至京城士大夫间。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "蜀中重要婉约词人：眉山文脉接续者，虽为苏轼后辈，不走豪放路径，专精柔情羁旅婉约，填补南宋蜀中婉约词空白。\n白描言情造诣极高：不用晦涩典故，以通俗直白口语刻画离别相思、漂泊乡愁，情感真挚入骨，《酷相思》成为宋代离别词标杆。\n词调创制与打磨：《酷相思》为其经典代表词调，因情设腔，句式错落贴合心绪，后世多有效仿和作。\n融合两派长处：兼具柳永细腻铺陈与苏轼蜀地清俊气韵，柔而不艳靡，俊而不粗疏，在南宋中后期婉约词里风格辨识度极强。\n文献留存完整：《书舟词》完整保存百五十余首词作，是研究南宋布衣文人漂泊心境、江南蜀地风物的一手文学资料。",
+          "evaluation": [
+            {
+              "出处": "冯煦《蒿庵论词》",
+              "内容": "程正伯凄婉绵丽，与周密《绝妙好词》所录家法相近。"
+            },
+            {
+              "出处": "《四库全书总目提要・书舟词》",
+              "内容": "垓词多写闺情羁旅，意境凄恻，格在柳、秦之间，不失蜀中文士清俊本色。"
+            },
+            {
+              "出处": "王称《书舟词序》",
+              "内容": "程正伯以诗词名，乡之人所知也，都下朝士，多称道其佳句。"
+            }
+          ]
+        }
+      },
+      "C00236": {
+        "id": "C00236",
+        "type": "C",
+        "name": "陈与义",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "陈与义",
+          "name": "陈与义",
+          "period": "",
+          "life": "1090年—1138年",
+          "hometown": "洛阳",
+          "courtesy": "去非",
+          "pseudonym": "简斋",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "江西诗派“三宗”",
+              "其他人物": "黄庭坚、陈师道、"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《送人归京师》《拜诏》《北征》"
+          ],
+          "anthos": [
+            "《简斋集》"
+          ],
+          "relations": [
+            {
+              "人物": "张友正",
+              "关系": "外祖父"
+            },
+            {
+              "人物": "陈希亮",
+              "关系": "曾祖父"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "政和三年（公元1113年）",
+              "事件": "二十四岁时以太学上舍释褐，登甲科进士，被授职开德府（今河南濮阳）教授，正式步入仕途。"
+            },
+            {
+              "纪年": "宣和年间（公元1119年—1125年）",
+              "事件": "因《墨梅》诗受到宋徽宗赏识，仕途迅速升迁，历任太学博士、著作佐郎、司勋员外郎、符宝郎等职。后因受宰相王黼案牵连，被贬谪监陈留酒税。"
+            },
+            {
+              "纪年": "靖康元年（公元1126年）",
+              "事件": "金兵大举南侵，逼近汴京。陈与义因父丧暂居陈留，恰逢靖康之难爆发，北宋灭亡。他被迫弃官，携家眷踏上仓皇南渡的流亡之路。"
+            },
+            {
+              "纪年": "建炎二年至绍兴元年（公元1128年—1131年）",
+              "事件": "经历了长达五年的颠沛流离，避乱襄汉，转徙湖湘，逾岭峤，辗转于河南、湖北、湖南、广东、福建等地。这段苦难的行旅经历使其诗风大变，由前期的明净清新转为沉郁悲壮，爱国主义与忧国之情成为创作主旋律。"
+            },
+            {
+              "纪年": "绍兴元年（公元1131年）",
+              "事件": "历经五年多磨难抵达绍兴（南宋行在）。此后颇受宋高宗青睐，四五年间历任中书舍人、礼部侍郎、给事中、翰林学士、参知政事（副宰相）等要职。"
+            },
+            {
+              "纪年": "绍兴六年至七年（公元1136年—1137年）",
+              "事件": "因宋高宗偏安江左、无意收复中原，作为主战派的陈与义深感绝望，多次以病托辞退职。虽被任命为资政殿学士知湖州等闲职，但多含安慰意味。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "严羽《沧浪诗话》在“以人而论”诗体时，将陈与义的诗称为“陈简斋体”。“简斋体”的早年流连光景之作，观察细致，描写生动，饶有情趣。善用直致、浅语入诗，重意境，重白描。后期的“简斋体”取法杜诗，得其沉雄之韵，规模宏大，声调浏亮；对仗着重上下句之间气脉的内在联系，潜气内转，意境圆融，风格雄浑沉郁。陈与义是南北宋之际的杰出诗人，在他的600余首作品中，近六分之一涉及佛禅元素，佛禅思想对陈与义的文学创作理论和实践有着重要影响。他在诗论中既注重诗句锻炼也注重自然感发，这与渐修和顿悟的参禅方法相通。在实践中先有外部题材、语汇的丰富，运用佛典释语创作游览或寓居寺庙、结交僧侣文人、自然山林题材的作品；后有内在诗境心态的转变，善于创造“空”“静”的诗境、拥有浑成的禅心。佛禅思想对他的影响由外而内、由显而隐，其佛禅作品晚年达到了“浑成”的境界。",
+          "evaluation": [
+            {
+              "出处": "《宋书》",
+              "内容": "体物寓兴，清邃纡余，高举横厉，上下陶（渊明）、谢（灵运、眺）、韦（应物）、柳（永）之间。"
+            }
+          ]
+        }
+      },
+      "C00237": {
+        "id": "C00237",
+        "type": "C",
+        "name": "王柏",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "王柏",
+          "name": "王柏",
+          "period": "宋朝",
+          "life": "1197年-1274年",
+          "hometown": "婺州金华",
+          "courtesy": "会之",
+          "pseudonym": "长啸（后又改号鲁斋）",
+          "posthumous": "宪，文宪",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "金华四先生",
+              "其他人物": "何基、金履祥、许谦"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《夜宿赤松梅师房》"
+          ],
+          "anthos": [
+            "《鲁斋清风录》"
+          ],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "嘉定年间（约公元1227年前后）",
+              "事件": "年逾三十岁时，王柏顿悟家学渊源，认为“长啸非圣门持敬之道”，遂改号为“鲁斋”。他捐弃世俗举业，转而拜朱熹的再传弟子何基为师，质实坚苦，致力于研讨性命之学。"
+            },
+            {
+              "纪年": "景定二年（公元1261年）",
+              "事件": "朝廷颁令将吕祖谦、张栻的神位从祀孔庙。正值吕祖谦逝世将近80周年，作为吕氏世交后人及理学传人的王柏心潮澎湃，于清明节专程赶赴明招山祭拜，并连吟十首绝句（《拜明招二先生墓有感》）以寄托哀思与崇敬。"
+            },
+            {
+              "纪年": "咸淳十年（公元1274年）",
+              "事件": "王柏逝世，享年七十八岁。"
+            },
+            {
+              "纪年": "德祐元年（公元1275年）",
+              "事件": "朝廷特赠其为承事郎。太常寺以其“广博德能，行善可纪”，赠谥号为“宪”。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "他承袭程（颐）朱（熹）理学的“理一分殊”论，重“分殊”甚于言“理一”。认为“统体一太极者”，即谓“理一”。如以《易》言，《大传》曰“易有太极”；此为易之理一，及生两仪、四象、八卦，又为六十四卦，三百八十四爻，每卦每交备具有一太极；四十九策之中，每揲每变各具有一太极，即所谓易之分殊。又以人身而言，四肢百骸，疾痛病痒，莫不相关，犹理一。然目视耳听，手持足行，口言心维，不可以通用，谓分殊。并提出“理一易言也，分殊未易识也”。认为圣人于天下之理，无一物不知，故能于日用之间，应接事物，无一理不当。学者不尽心于格物致知，究其分殊，则不能识其理一。只有在“理一”前提下，通过“分殊”才能归于“理一”。\n他还从“理一分殊”的观点出发，主张不得无故毁坏草木虫鱼等生物，应“立法定制，品节禁戒”，“著书立言，开导劝止”。并把“分殊理一”的认识论用于学术上，主张“由传以求经”，重视儒家经传。但怀疑精神又使他不拘守经传教条，不轻信盲从。认为圣人之道以书而传，亦以书而晦。其因是汉代经学各主其传，训访之义各是其说，穿凿支离，诡受以饰私，故有执其词而害义者，有袭其说而诬其义者，使圣人之道反而晦蚀残毁，不得大明于天下。所以必须恢复被汉儒所割裂破碎的经学本来面目，故探讨经学之实者不能无所疑，有是非之见者不能无所辩。\n他对传统的儒家经典多有质疑。认为《诗》三百篇不是一个时代的作品，亦不尽出于周公所定，孔子所删。周公时诗不满百篇，孔子所删之诗乃是周公以后庞杂之诗。经秦楚书之后，今之所谓三百篇，是否周公、孔子之旧，更值得怀疑。又以“正道”身份，把其中的爱情诗视为“淫”诗。主观断定这些情诗早被孔子删去，是汉儒又把这些诗杂进《诗经》，不合圣人删经本旨，因此，要求“有力者请于朝而再放黜之”，以一洗千古之芜秽。他以驳斥所谓“孔壁之书皆科斗文字”之说，论证《古文尚书》可疑。而《今文尚书》同样值得怀疑。因汉初优生已年老，口不能言。使其女传言以授晁错。伏生其女为齐人，晁错为□州人，语音各异，所以错讹甚多，故应纠其谬。他以此作《书疑》九卷，重订错简，移易补缀。其书虽不严谨，纰缪甚多，然也颇具学术成就。指出姚方兴所增二十八字中“玄德”二字不见于《六经》，是晋代老庄之言，揭露《古文尚书》之伪。在《尧典疑》中提出对上古史的怀疑。在《大诰疑》中，批判了宗教神学思想。\n他推崇《四书》，称之为“经天纬地之具，治世立教之书”。然而对《四书》及朱熹的集注也有不少疑论。疑《大学》、《中庸》出于《子思》二十三篇之内，疑《论语》出于古《家语》，疑《孟子》是自著之书。他疑经的目的是为发展理学。王柏的“分殊理一”和疑经思想，进一步促进了理学的发展。因推广朱学有功，受到后世封建统治者的褒扬，列为理学正宗。著作繁多，计八百余卷，但大部分散佚。失散各地无法寻求。",
+          "evaluation": [
+            {
+              "出处": "",
+              "内容": ""
+            }
+          ]
+        }
+      },
+      "C00238": {
+        "id": "C00238",
+        "type": "C",
+        "name": "马戴",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-15",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "马戴",
+          "name": "马戴",
+          "period": "晚唐",
+          "life": "约799年-约869年",
+          "hometown": "曲阳",
+          "courtesy": "虞臣",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "无",
+          "joint": [],
+          "school": "苦吟诗派",
+          "repWorks": [
+            "《灞上秋居》《楚江怀古三首・其一》《出塞》《蓟门怀古》"
+          ],
+          "anthos": [
+            "《马戴诗集》二卷",
+            "《全唐诗》收录其诗二卷"
+          ],
+          "relations": [
+            {
+              "人物": "贾岛",
+              "关系": "好友"
+            },
+            {
+              "人物": "姚合",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "844年",
+              "事件": "登进士第。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "晚唐五律第一流：历代诗评公认其五言律诗造诣远超同期姚、贾，炼字精工，气韵沉雄，无细碎寒俭之态，兼有盛唐雄浑遗风。\n边塞诗重振风骨：晚唐诗坛多写闺情闲愁，马戴独多边塞行役之作，苍凉壮阔，接续高岑边塞脉络。\n题材多元厚重：除边塞外，羁旅秋怀、怀古山水、宦途失意皆落笔深刻，情景交融感染力极强。\n引领东南苦吟后辈：李频、方干等大批东南寒士效仿其五律章法，是连接中唐姚贾与晚唐郑谷、齐己的关键过渡人物。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "戴诗壮丽，居晚唐诸公之上，优游不迫，沉著痛快，声价甚高。"
+            },
+            {
+              "出处": "严羽《沧浪诗话》",
+              "内容": "马戴五律独出晚唐，不减盛唐。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "其诗源出贾岛，而骨格清峭，魄力较厚，故在晚唐为巨擘。"
+            },
+            {
+              "出处": "沈德潜《唐诗别裁集》",
+              "内容": "晚唐五律，当推虞臣为第一，气象阔大，无纤卑习气。"
+            }
+          ]
+        }
+      },
+      "C00239": {
+        "id": "C00239",
+        "type": "C",
+        "name": "司空图",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "司空图",
+          "name": "司空图",
+          "period": "晚唐",
+          "life": "837年-908年",
+          "hometown": "河中虞乡",
+          "courtesy": "表圣",
+          "pseudonym": "知非子、耐辱居士",
+          "posthumous": "无",
+          "aliases": "司空郎中",
+          "joint": [],
+          "school": "山水隐逸诗",
+          "repWorks": [
+            "《独望》《河湟有感》《二十四诗品》《与李生论诗书》"
+          ],
+          "anthos": [
+            "《一鸣集》三十卷",
+            "《全唐诗》存其诗三卷"
+          ],
+          "relations": [
+            {
+              "人物": "王凝",
+              "关系": "恩师"
+            },
+            {
+              "人物": "郑谷",
+              "关系": "诗友"
+            },
+            {
+              "人物": "吴融",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "869年",
+              "事件": "登进士第，受观察使王凝器重，入幕为官。"
+            },
+            {
+              "纪年": "908年",
+              "事件": "听闻唐哀帝遇害，司空图悲痛绝食而死，守完唐臣气节。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "划时代诗论成就：《二十四诗品》是中国古典美学核心典籍，归纳雄浑、冲淡、含蓄等二十四种诗歌境界，构建系统诗歌审美体系。\n提出韵味理论：主张诗歌“不着一字，尽得风流”，强调含蓄悠远的言外之味，深刻影响宋代严羽、王士禛神韵说。\n隐逸诗歌典范：诗作多写山居风物，清淡闲远；亦有《河湟有感》等忧国诗篇，暗藏乱世亡国之痛。\n气节垂范后世：身处王朝覆灭之际，隐居不仕伪朝，以死殉唐，成为文人坚守忠义的代表。\n奠定山水冲淡一派审美标准，后世山水诗词、书画品评均大量借鉴《二十四诗品》美学概念。",
+          "evaluation": [
+            {
+              "出处": "《旧唐书・司空图传》",
+              "内容": "图有文才，避乱隐居，节操凛然，终不失唐朝臣子之节。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "《二十四诗品》深解诗中三昧，分品标格，为论诗者圭臬。"
+            },
+            {
+              "出处": "杨慎《升庵诗话》",
+              "内容": "表圣论诗，首重冲淡，古今言意境者无以过之。"
+            }
+          ]
+        }
+      },
+      "C00240": {
+        "id": "C00240",
+        "type": "C",
+        "name": "吴潜",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "吴潜",
+          "name": "吴潜",
+          "period": "南宋中后期",
+          "life": "1195年-1262年",
+          "hometown": "宣州宁国",
+          "courtesy": "毅夫",
+          "pseudonym": "履斋",
+          "posthumous": "无",
+          "aliases": "履斋先生",
+          "joint": [],
+          "school": "辛派豪放词",
+          "repWorks": [
+            "《满江红・豫章滕王阁》《水调歌头・焦山》《水龙吟・举头西北浮云》《满江红・送李御带珙》"
+          ],
+          "anthos": [
+            "《履斋遗集》《许国公奏稿》",
+            "词集《履斋诗余》"
+          ],
+          "relations": [
+            {
+              "人物": "吴柔胜",
+              "关系": "父亲"
+            },
+            {
+              "人物": "吴渊",
+              "关系": "兄弟"
+            },
+            {
+              "人物": "姜夔",
+              "关系": "诗友"
+            },
+            {
+              "人物": "刘克庄",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "1217年",
+              "事件": "高中状元，对策直言切直，受宋理宗赏识，初授承事郎。"
+            },
+            {
+              "纪年": "1251年",
+              "事件": "拜右丞相兼枢密使，封崇国公；次年因直谏罢相。"
+            },
+            {
+              "纪年": "1259年",
+              "事件": "元军围困鄂州，国难临危复起，拜左丞相、许国公，主持抗元防务，力主整兵备战。"
+            },
+            {
+              "纪年": "1262年",
+              "事件": "在循州遭贾似道派人下毒，含恨离世。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "政坛功勋：南宋罕见状元宰相，主战派核心重臣，深谙军政、水利、民生，多次上疏抵御蒙古、减免赋税，是末世难得实干忠良。\n词坛辛派殿军：存词数量居南宋前列，打破词专写风月的局限，以词承载家国危亡、壮志难酬的悲愤，风骨直追辛弃疾。\n题材兼容广阔：既有登临怀古、抗元忧时的豪放篇章，也有羁旅、咏梅、闲居的婉约小品，刚柔兼具。\n提携词坛后辈：收留吴文英为幕僚，长期唱和切磋，推动南宋后期江浙词人群体发展。\n文献史料价值：奏疏完整记录南宋末年边防、财政、朝堂党争实况；词作完整留存乱世士大夫的精神悲歌。",
+          "evaluation": [
+            {
+              "出处": "《宋史・吴潜传》",
+              "内容": "潜忠亮刚直，洞悉边事，忧国忘身，为贾似道所忌，卒死于贬所，天下惜之。"
+            },
+            {
+              "出处": "《四库全书总目提要・履斋遗集》",
+              "内容": "其词激昂凄劲，类辛弃疾，凡忧时感事之作，沉郁顿挫，足为南宋词中巨擘。"
+            },
+            {
+              "出处": "冯煦《蒿庵论词》",
+              "内容": "履斋忧国之怀，时时流露，稼轩一派，至此而不绝。"
+            }
+          ]
+        }
+      },
+      "C00241": {
+        "id": "C00241",
+        "type": "C",
+        "name": "皇甫冉",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "皇甫冉",
+          "name": "皇甫冉",
+          "period": "盛唐末至中唐",
+          "life": "约717年-约770年",
+          "hometown": "润州丹阳",
+          "courtesy": "茂政",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "无",
+          "joint": [
+            {
+              "合称": "二皇甫",
+              "其他人物": "皇甫曾"
+            }
+          ],
+          "school": "无",
+          "repWorks": [
+            "《春思》《巫山峡》《送魏十六还苏州》《秋日东郊作》"
+          ],
+          "anthos": [
+            "《皇甫冉诗集》三卷",
+            "《全唐诗》收录其诗两卷"
+          ],
+          "relations": [
+            {
+              "人物": "皇甫曾",
+              "关系": "弟弟"
+            },
+            {
+              "人物": "张继",
+              "关系": "诗友"
+            },
+            {
+              "人物": "刘长卿",
+              "关系": "诗友"
+            },
+            {
+              "人物": "钱起",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "756年",
+              "事件": "登进士第，时值安史之乱爆发，无法正常赴官，辗转避乱江浙。"
+            },
+            {
+              "纪年": "大历初",
+              "事件": "奉命出使江淮省亲，途中遍历山水，写下大量写景送别名篇。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "大历诗风先行者：创作早于卢纶、李端等大历十才子，诗作冲淡清丽，褪去盛唐雄浑，开启中唐浅淡清幽的主流格调。\n五言律诗造诣精深：炼句工整、意境空灵，写景不堆砌辞藻，送别诗情景相融，流传极广。\n江南地域文学代表：长期活动于吴越，大量描摹江南水乡风物，完整保存盛唐江南山水风貌。\n兄弟诗坛佳话：与皇甫曾双双以诗闻名，二人酬唱合集风行一时，成为唐代兄弟诗人典范。\n记录安史之乱中士人的流离漂泊，诗作暗含乱世离乱之叹，具备一定史料价值。",
+          "evaluation": [
+            {
+              "出处": "独孤及《皇甫冉集序》",
+              "内容": "其诗发秀自天，出言隽永，属词必丽，立意必深，当世诗人罕有其匹。"
+            },
+            {
+              "出处": "《唐才子传》",
+              "内容": "茂政诗性灵超拔，多飘泊羁旅之思，清逸可诵，为大历名家。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "冉诗高逸，远胜当时台阁应酬之作，五言尤擅，开十才子一派。"
+            },
+            {
+              "出处": "沈德潜《唐诗别裁》",
+              "内容": "皇甫冉诗清辞秀句，不染尘俗，送别诸作最为动人。"
+            }
+          ]
+        }
+      },
+      "C00242": {
+        "id": "C00242",
+        "type": "C",
+        "name": "京兆万年",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "韩偓",
+          "name": "京兆万年",
+          "period": "晚唐",
+          "life": "约842年-约923年",
+          "hometown": "京兆万年",
+          "courtesy": "致光",
+          "pseudonym": "玉山樵人，香奁主人",
+          "posthumous": "无",
+          "aliases": "韩翰林",
+          "joint": [],
+          "school": "香奁体；晚年纪实感时诗",
+          "repWorks": [
+            "《已凉》《寒食夜》《故都》《安贫》《惜花》"
+          ],
+          "anthos": [
+            "《香奁集》《玉山樵人集》《全唐诗》"
+          ],
+          "relations": [
+            {
+              "人物": "李商隐",
+              "关系": "姨父"
+            },
+            {
+              "人物": "李商隐",
+              "关系": "君臣"
+            },
+            {
+              "人物": "吴融",
+              "关系": "诗友"
+            },
+            {
+              "人物": "司空图",
+              "关系": "诗友"
+            },
+            {
+              "人物": "郑谷",
+              "关系": "诗友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "889年",
+              "事件": "登进士第，逐步入朝任职。"
+            },
+            {
+              "纪年": "901-903年",
+              "事件": "宦官韩全诲劫持昭宗前往凤翔，韩偓一路扈从随行，迁兵部侍郎、翰林学士承旨；天复三年随昭宗返回长安，因当众抵触朱温专权，被贬濮州司马。"
+            },
+            {
+              "纪年": "907年",
+              "事件": "朱温废唐哀帝，建立后梁，唐朝灭亡。韩偓诗文只用干支甲子纪年，终身不使用后梁年号，坚守唐臣气节。"
+            },
+            {
+              "纪年": "910年",
+              "事件": "离开沙县，短暂寓居漳州；次年定居福建南安丰州，筑草堂隐居，自号玉山樵人，不复过问世事。"
+            },
+            {
+              "纪年": "923年",
+              "事件": "终老南安龙兴寺，安葬于葵山之阳，享年八十二岁。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "独创香奁体：《香奁集》专写女子情态、闺阁情思，笔触柔婉细腻，语言清丽，自成一体，后世效仿者众多。\n晚唐第一流纪实诗人：晚年脱离艳情，诗作完整记录唐末藩镇作乱、长安陷落、帝王流亡、朱温篡唐全过程，被称作“诗史”，史料价值极高。\n律诗法度严谨：七律功力冠绝晚唐，对仗工整，情景交融，兼具李商隐的深婉与杜甫沉郁写实之风。\n文人气节典范：身处王朝倾覆之际，宁遭贬谪、漂泊南方，绝不屈身叛臣伪朝，忠义风骨为后世推崇。\n打通绮艳言情与家国悲歌两种诗路，打破晚唐诗人题材单一的局限。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "偓自号玉山樵人，工诗，早年绮丽，晚值流离，多凄怆忠愤之语。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "其香奁诗，词藻靡丽；及乱后所作，伤时感事，忠愤之气溢于篇章，非徒以艳体见长。"
+            },
+            {
+              "出处": "吴乔《围炉诗话》",
+              "内容": "韩致光晚唐完人，诗分两境，香奁写情，感诗写乱，各造绝顶。"
+            },
+            {
+              "出处": "沈德潜评",
+              "内容": "致光七律，悲而不靡，晚唐难得有骨力之作。"
+            }
+          ]
+        }
+      },
+      "C00243": {
+        "id": "C00243",
+        "type": "C",
+        "name": "刘辰翁",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘辰翁",
+          "name": "刘辰翁",
+          "period": "南宋理宗至元成宗",
+          "life": "1232年-1297年",
+          "hometown": "吉州庐陵灌溪",
+          "courtesy": "会孟",
+          "pseudonym": "须溪",
+          "posthumous": "无",
+          "aliases": "刘须溪",
+          "joint": [],
+          "school": "豪放词",
+          "repWorks": [
+            "《兰陵王・丙子送春》《永遇乐・璧月初晴》《西江月・新秋写兴》《须溪四景诗》《世说新语》《杜诗》《李长吉诗》"
+          ],
+          "anthos": [
+            "《须溪先生全集》《须溪词》"
+          ],
+          "relations": [
+            {
+              "人物": "江万里",
+              "关系": "恩师"
+            },
+            {
+              "人物": "文天祥",
+              "关系": "同门"
+            },
+            {
+              "人物": "刘将孙",
+              "关系": "长子"
+            },
+            {
+              "人物": "邓剡",
+              "关系": "至交好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "1232年",
+              "事件": "生于庐陵书香门第，幼年丧父，家贫苦读。"
+            },
+            {
+              "纪年": "1262年",
+              "事件": "登进士；廷试对策直言弹劾贾似道弄权，理宗置其丙等，不得清要官职；以母老自请出任濂溪书院山长。"
+            },
+            {
+              "纪年": "1265年",
+              "事件": "随江万里入朝，授临安府教授；次年江万里罢相，辰翁一同遭排挤。"
+            },
+            {
+              "纪年": "1276-1297年",
+              "事件": "隐居庐陵须溪畔，终身不仕元朝，闭门讲学、评点古籍、创作诗词；只用干支纪年，绝不使用元代年号，四方学子慕名从学。"
+            },
+            {
+              "纪年": "1297年",
+              "事件": "病逝故里；长子刘将孙整理其全部诗文、词稿，汇编《须溪先生全集》。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "遗民词第一人：存词三百五十余首，数量冠绝宋末；以词存史，直面临安陷落、故国残破，不刻意隐晦，沉痛真挚，有“词史”之誉。\n苏辛豪放词正统传人：继承辛弃疾慷慨悲壮，摒弃粗率，融入遗民独有的凄怆，拓展豪放词的家国悲情维度，打破南宋后期词坛纤弱风气。\n古代评点文学集大成者：系统评点杜诗、李贺、《世说新语》，点评重真情、重兴寄，开创通俗点评体例，深刻影响明清小说、诗歌评点范式。\n庐陵文脉传承核心：宋亡后隐居讲学数十年，聚拢江南遗民文士，维系庐陵欧阳、杨、文一脉文脉，保存宋代诗文传统。\n节义典范：元朝多次有人举荐出仕，一概拒绝；隐居数十年坚守宋臣身份，诗文不书元朝年号，成为宋元之际文人守节标杆。",
+          "evaluation": [
+            {
+              "出处": "《四库全书总目提要・须溪集》",
+              "内容": "辰翁生于宋末，目击国亡，词多感怆；评点诸书，独抒己见，不拘前人窠臼，宋元间别成一派。"
+            },
+            {
+              "出处": "王国维《人间词话附录》",
+              "内容": "刘须溪词，直书时事，不假雕饰，而悲感自溢，宋末词人无出其右。"
+            },
+            {
+              "出处": "刘将孙《须溪词序》",
+              "内容": "先公词，率皆伤时念乱，俯仰今昔，一字一句，皆写黍离之悲。"
+            },
+            {
+              "出处": "近代词论冯煦《蒿庵论词》",
+              "内容": "须溪近稼轩，而凄惋过之，故国之思，时时流露行间。"
+            }
+          ]
+        }
+      },
+      "C00244": {
+        "id": "C00244",
+        "type": "C",
+        "name": "谢昼",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-16",
+          "reviewedById": "u_15",
+          "reviewedByName": "吴鑫淼(2511437)",
+          "reviewedBy": "吴鑫淼(2511437)",
+          "reviewedAt": "2026-06-17",
+          "updatedAt": "2026-06-17"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "皎然",
+          "name": "谢昼",
+          "period": "盛唐末至中唐",
+          "life": "约720年-约803年",
+          "hometown": "湖州长城",
+          "courtesy": "清昼",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "释皎然、谢昼",
+          "joint": [
+            {
+              "合称": "唐三高僧",
+              "其他人物": "贯休、齐己"
+            }
+          ],
+          "school": "禅境诗",
+          "repWorks": [
+            "《寻陆鸿渐不遇》《饮茶歌诮崔石使君》《杼山集》《诗式》《诗议》《诗评》"
+          ],
+          "anthos": [
+            "《杼山集》《全唐诗》"
+          ],
+          "relations": [
+            {
+              "人物": "谢灵运",
+              "关系": "先祖"
+            },
+            {
+              "人物": "陆羽",
+              "关系": "莫逆之交"
+            },
+            {
+              "人物": "顾况",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "韦应物",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "刘长卿",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "张志和",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "孟郊",
+              "关系": "文坛挚友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "720年",
+              "事件": "生于湖州谢氏世家，自幼通读儒、道典籍，承山水诗家学。"
+            },
+            {
+              "纪年": "755年",
+              "事件": "安史之乱爆发，返回湖州定居，先后居苕溪草堂、杼山妙喜寺。"
+            },
+            {
+              "纪年": "785年",
+              "事件": "定稿诗学专著《诗式》，系统总结诗歌取境、体式、创作法则。"
+            },
+            {
+              "纪年": "贞元中期",
+              "事件": "唐德宗听闻其诗名，下诏集贤院征集其诗文入秘阁，是唐代唯一获朝廷收编全集的僧人。"
+            },
+            {
+              "纪年": "803年",
+              "事件": "终老湖州杼山，门人建砖塔安葬其灵骨。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "唐代诗僧第一人：存诗数量、题材广度、艺术水准冠绝有唐一代诗僧，山水诗融禅意，空灵淡远，独树一帜。\n古典诗论里程碑：《诗式》是唐代最完整系统的诗学著作，提出“取境”“意境”理论，区分十九种诗体，直接启发司空图《二十四诗品》、严羽《沧浪诗话》。\n中华茶道奠基人：最早以诗歌完整阐释茶道精神，《饮茶歌》确立“饮茶得道”理念，奠定茶文学根基，与陆羽并称茶界双璧。\n中唐江南文坛领袖：依托妙喜寺聚集大批文人，联句唱和风气影响大历十才子，推动盛唐雄浑向中唐清淡空灵诗风转型。\n禅诗范式开创者：以日常山水、茶事、闲居写禅心，不空谈佛理，情景禅三者合一，为后世禅诗固定创作范式。",
+          "evaluation": [
+            {
+              "出处": "《宋高僧传・皎然传》",
+              "内容": "文章隽丽，当时号为释门伟器，凡所作诗，皆造幽微之境。"
+            },
+            {
+              "出处": "《四库全书总目提要・杼山集》",
+              "内容": "唐代僧诗，以皎然为第一；《诗式》剖析格律，深探诗家秘要，为古今论诗之准。"
+            },
+            {
+              "出处": "辛文房《唐才子传》",
+              "内容": "清昼工诗，极于禅味，山水诸作，脱去尘俗，开晚唐清寂一派。"
+            }
+          ]
+        }
+      },
+      "C00245": {
+        "id": "C00245",
+        "type": "C",
+        "name": "张乔",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "张乔",
+          "name": "张乔",
+          "period": "晚唐",
+          "life": "约836年-约890年",
+          "hometown": "池州青阳",
+          "courtesy": "伯迁",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "无",
+          "joint": [
+            {
+              "合称": "九华四俊",
+              "其他人物": "许棠、张蠙、周繇"
+            }
+          ],
+          "school": "晚唐苦吟派",
+          "repWorks": [
+            "《河湟旧卒》《书边事》《月中桂》《促织》《将归江淮书》"
+          ],
+          "anthos": [
+            "《张乔诗集》《全唐诗》"
+          ],
+          "relations": [
+            {
+              "人物": "许棠",
+              "关系": "同乡挚友"
+            },
+            {
+              "人物": "许棠",
+              "关系": "同乡挚友"
+            },
+            {
+              "人物": "周繇",
+              "关系": "同乡挚友"
+            },
+            {
+              "人物": "贾岛",
+              "关系": "诗学宗师"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "836年",
+              "事件": "生于池州青阳，年少隐居九华山耕读，闭门苦学十余年。"
+            },
+            {
+              "纪年": "860年",
+              "事件": "与许棠同隐庐山，潜心研习近体诗，宗法贾岛清瘦炼字笔法。"
+            },
+            {
+              "纪年": "870年",
+              "事件": "赴长安参加京兆府解试，试《月中桂》，以“根非生下土，叶不坠秋风”拔得全场第一，诗名震动京城。"
+            },
+            {
+              "纪年": "872-878年",
+              "事件": "漫游北方边塞，遍历河朔、泾原，目睹边疆戍卒疾苦，写下大量边塞纪实诗作。"
+            },
+            {
+              "纪年": "880年",
+              "事件": "黄巢起义攻破长安，天下大乱，张乔放弃仕途，南归隐居九华山，不复出游。"
+            },
+            {
+              "纪年": "880-890年",
+              "事件": "山中闭门吟咏，多写乱世流离、故土乡愁，创作《河湟旧卒》等讽时名篇；约890年终老九华山中。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "咸通十哲五律翘楚：晚唐东南布衣诗人代表，五言律诗炼句精工、意境清寂，承袭贾岛苦吟传统却少寒俭细碎之气。\n晚唐边塞写实名家：不同于盛唐边塞豪情，聚焦老兵流落、边土荒废，《河湟旧卒》真实记录河湟沦陷数十年百姓苦难，具备诗史价值。\n皖南地域文学标杆：诗作大量描摹九华山、秋浦山水风光，完整保存唐代池州自然风貌与乡土生活，是皖江文学重要史料。\n九华文人群核心：串联池州本土诗人与京城咸通诗人群，带动东南山林苦吟风气，深刻影响郑谷等后辈诗人。\n咏物、咏怀功力深厚：《促织》等小诗借寻常小物寄托乱世失意，含蓄悲凉，短小而余味悠长。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "乔有高致，十年不窥园以苦学，诗句清雅，迥少其伦，与东南诸子齐名一时。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "其诗源出贾岛，工于五律，边塞诸篇，悯恤戍卒，多存时事，非徒模山范水而已。"
+            },
+            {
+              "出处": "胡震亨《唐音癸签》",
+              "内容": "张乔写景清润，写边沉痛，咸通诸子中最为有骨力。"
+            }
+          ]
+        }
+      },
+      "C00246": {
+        "id": "C00246",
+        "type": "C",
+        "name": "郑燮",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "郑燮",
+          "name": "郑燮",
+          "period": "清代",
+          "life": "1963年-1766年",
+          "hometown": "江苏兴化",
+          "courtesy": "克柔",
+          "pseudonym": "理庵、板桥，世称板桥先生",
+          "posthumous": "无",
+          "aliases": "郑板桥、七品官耳",
+          "joint": [
+            {
+              "合称": "扬州八怪",
+              "其他人物": "金农、黄慎、李鱓、李方膺、汪士慎、高翔、罗聘"
+            }
+          ],
+          "school": "扬州画派",
+          "repWorks": [],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "郑之本",
+              "关系": "父亲"
+            },
+            {
+              "人物": "陆震",
+              "关系": "恩师"
+            },
+            {
+              "人物": "金农",
+              "关系": "挚友"
+            },
+            {
+              "人物": "高翔",
+              "关系": "挚友"
+            },
+            {
+              "人物": "李鱓",
+              "关系": "挚友"
+            },
+            {
+              "人物": "黄慎",
+              "关系": "挚友"
+            },
+            {
+              "人物": "程羽宸",
+              "关系": "知己"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "1693年",
+              "事件": "十月二十五日生于兴化古板桥，三岁生母汪氏离世，家境贫寒。"
+            },
+            {
+              "纪年": "1714年",
+              "事件": "22岁师从陆震学习填词；24岁考中秀才。"
+            },
+            {
+              "纪年": "1723年",
+              "事件": "父亲病逝，家中负债累累，31岁赴扬州卖画为生，漂泊十年。"
+            },
+            {
+              "纪年": "1736年",
+              "事件": "44岁入京会试，殿试二甲进士，刻章“康熙秀才，雍正举人，乾隆进士”。"
+            },
+            {
+              "纪年": "1742年",
+              "事件": "49岁授山东范县知县，为官清廉，体恤底层百姓。"
+            },
+            {
+              "纪年": "1748年",
+              "事件": "潍县大旱饥荒，郑燮不顾阻拦开仓放粮、捐俸赈灾，为百姓诉讼得罪当地豪绅与上官。"
+            },
+            {
+              "纪年": "1753年",
+              "事件": "61岁遭诬陷弹劾，愤而辞官，离任时百姓沿街相送，绘《潍县竹石图》告别乡邻。"
+            },
+            {
+              "纪年": "1753年-1766年",
+              "事件": "重返扬州，专职卖画，书画风格大成，往来文人商贾不绝，写下大量题画诗、家书、道情。"
+            },
+            {
+              "纪年": "1766年",
+              "事件": "七十三岁病逝兴化故居，自撰墓志铭。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "3",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "诗书画三绝，扬州八怪领军人物：打破清代画坛摹古保守风气，以写意兰竹石寄托品格，笔墨简练洒脱，开创平民化文人画新风。\n独创“六分半书”：融合隶书、行书、楷书，字体错落如乱石铺街，辨识度极高，清代书法独树一帜。\n经典创作美学理论：提出“眼中之竹-胸中之竹-手中之竹”三段创作论，厘清观察、构思、落笔的艺术规律，至今为美术理论核心观点。\n现实主义诗文标杆：诗作不写风月空文，直击民间疾苦，“一枝一叶总关情”将民生关怀融入题画；《道情十首》通俗浅白，传唱民间。\n清官文人典范：十二年县令生涯不贪一钱，灾年舍身救民，辞官不恋官场；人格气节与艺术融为一体，后世文人推崇。\n拓宽文人画内涵：将民生、家国、人格寄托写入画幅，诗、书、画、印完整合一，完善文人画综合表达范式。",
+          "evaluation": [
+            {
+              "出处": "《清史稿・艺术传》",
+              "内容": "燮善画竹，诗书法亦工，为官爱民，去官后鬻画扬州，文辞慷慨，多讽世语。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "板桥题画诗文，直白恳切，体恤民情，脱尽文人虚浮习气，书画自成一格。"
+            },
+            {
+              "出处": "金农",
+              "内容": "板桥墨竹古今独步，字如乱石铺阶，诗道情皆醒世良言，性情孤高，千载难遇。"
+            },
+            {
+              "出处": "近代美术史家黄宾虹",
+              "内容": "扬州八怪之中，郑板桥影响最广，写竹寄节，笔墨平民化，开启近现代写意花鸟脉络。"
+            }
+          ]
+        }
+      },
+      "C00247": {
+        "id": "C00247",
+        "type": "C",
+        "name": "李峤",
+        "meta": {
+          "createdById": "u_108",
+          "createdByName": "刘梦雅(1120240300)",
+          "createdBy": "刘梦雅(1120240300)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "李峤",
+          "name": "李峤",
+          "period": "初唐至盛唐初",
+          "life": "约645年-714年",
+          "hometown": "赵郡赞皇",
+          "courtesy": "巨山",
+          "pseudonym": "无",
+          "posthumous": "无",
+          "aliases": "李巨山、赵国公",
+          "joint": [
+            {
+              "合称": "文章四友",
+              "其他人物": "苏味道、崔融、杜审言"
+            }
+          ],
+          "school": "初唐宫廷诗人",
+          "repWorks": [
+            "《风》《杂咏诗》《汾阴行》"
+          ],
+          "anthos": [
+            "《李峤集》《全唐诗》《杂咏诗》"
+          ],
+          "relations": [
+            {
+              "人物": "苏味道",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "崔融",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "杜审言",
+              "关系": "文坛挚友"
+            },
+            {
+              "人物": "狄仁杰",
+              "关系": "同僚"
+            },
+            {
+              "人物": "武则天",
+              "关系": "君主"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "645年",
+              "事件": "生于赞皇，幼年有神人赠双笔之梦，年少精通五经，少年即擅诗文。"
+            },
+            {
+              "纪年": "664年",
+              "事件": "十九岁登进士第，授安定县尉；后举制策甲科，迁长安尉。"
+            },
+            {
+              "纪年": "698年",
+              "事件": "拜鸾台侍郎、同凤阁鸾台平章事，首次拜相；朝廷重要文书、制诰皆专属李峤草拟。"
+            },
+            {
+              "纪年": "707-710年",
+              "事件": "二次、三度拜相，封赵国公，官至中书令，为当朝文坛领袖，人称“文章宿老”。"
+            },
+            {
+              "纪年": "710年",
+              "事件": "睿宗即位，因曾依附武三思、张易之，被贬怀州刺史，不久辞官致仕。"
+            },
+            {
+              "纪年": "713年",
+              "事件": "唐玄宗登基，再贬滁州别驾，后改庐州别驾。"
+            },
+            {
+              "纪年": "714年",
+              "事件": "病逝于庐州任上，终年七十岁。"
+            }
+          ],
+          "relatedE": []
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "律诗定型关键人物：晚于初唐四杰，与文章四友一同打磨五言近体，完善对仗、声律规范，为盛唐律诗成熟奠定基础。\n古代咏物诗开创宗师：《杂咏诗》120首分天象、草木、器物、鸟兽十二门类，一物一诗，体系完整，是中国首部大型咏物组诗；很早就传入日本，成为平安时代贵族启蒙课本，影响东亚千年蒙学。\n武周至中宗文坛宗主：朝廷重大典册、封禅文、大赦诏均出自其手，辞采富丽、用典精工，时人尊为一代文宗；同辈文人凋零后，独掌文坛数十年。\n《汾阴行》千古怀古绝唱：七言歌行咏汉武帝祭祀汾阴旧事，盛衰对比苍凉沉郁，唐玄宗晚年听闻此曲，慨叹“李峤真才子也”。\n启蒙文学价值深远：五言小诗《风》语言浅白、画面生动，千年来为儿童启蒙必读，流传家喻户晓。",
+          "evaluation": [
+            {
+              "出处": "《旧唐书・李峤传》",
+              "内容": "峤富才思，有所属缀，人多传讽，朝廷大手笔，多特命峤为之，当时称为一代之雄。"
+            },
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "其诗隶事丰赡，格律严整，开中晚唐咏物一体，《杂咏》百二十首，规模空前。"
+            },
+            {
+              "出处": "《唐才子传》",
+              "内容": "巨山五言，典重流丽，虽风骨不及四杰，而法度精严，为律诗轨范。"
+            }
+          ]
+        }
+      },
+      "C00248": {
+        "id": "C00248",
+        "type": "C",
+        "name": "李咸用",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "李咸用",
+          "name": "李咸用",
+          "period": "晚唐",
+          "life": "不详",
+          "hometown": "袁州",
+          "courtesy": "",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "",
+              "其他人物": ""
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《猛虎行》《西门行》《春雨》"
+          ],
+          "anthos": [
+            "《文献通考》"
+          ],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "唐宣宗大中年间（公元847年—859年）",
+              "事件": "李咸用大约出生于这一时期。他出身没落贵族家庭，早年曾有过较为优裕的生活，但随后家道中落，一生穷困潦倒。"
+            },
+            {
+              "纪年": "唐僖宗乾符年间（公元874年—879年）",
+              "事件": "正值黄巢起义爆发前夕，天下动荡。李咸用屡试不第，长期流落江湖，四处干谒权贵以求出路，但均未能如愿入仕。"
+            },
+            {
+              "纪年": "唐僖宗中和年间（公元881年—885年）",
+              "事件": "黄巢攻陷长安，唐僖宗逃往蜀地。李咸用在此期间经历了战乱带来的颠沛流离，其诗作中留下了大量反映乱世之苦与个人怀才不遇的悲凉之句。"
+            },
+            {
+              "纪年": "唐僖宗光启年间（公元885年—888年）",
+              "事件": "约在这一时期，李咸用曾短暂依附于地方藩镇幕府，担任过推官等低级幕职，但始终未能获得正式的朝廷官职。"
+            },
+            {
+              "纪年": "唐昭宗大顺、景福年间（公元890年—893年）",
+              "事件": "约卒于这一时期。他一生穷愁潦倒，最终在贫病交加中离世，终年不详。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "晨钟暮鼓",
+              "内容": "语本唐·李咸用《山中》诗：“朝钟暮鼓不到耳，明月孤云长挂情。”意思①唐李咸用《山中》诗：“朝钟暮鼓不到耳，明月孤云长挂情”。佛寺中晨撞钟暮击鼓以报时，后因以“晨钟暮鼓”谓时日推移。②比喻令人警悟的话。暮：傍晚。佛教规矩，寺里晚上打鼓，晚上敲钟。比喻可以使人警觉醒悟的话。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "丰富晚唐诗歌面貌：在晚唐诗坛，李咸用与罗隐、杜荀鹤、来鹏等人共同构成了“晚唐现实主义与苦吟诗派”的重要分支。他的存在丰富了晚唐诗歌的题材与情感维度，使这一时期的文学史更加立体。对后世文人的共鸣：他的诗作中那种“怀才不遇”与“身世飘零”的悲剧感，在后世封建社会动荡时期（如宋末、明末）引起了无数落魄文人的强烈共鸣。文献收录与流传：其作品被历代重要的诗歌总集收录，如《全唐诗》收录其诗一卷（约一百九十余首），《唐才子传》等也对其生平与诗风有专门记载，确立了他在唐诗史上的稳固地位。",
+          "evaluation": [
+            {
+              "出处": "",
+              "内容": ""
+            }
+          ]
+        }
+      },
+      "C00249": {
+        "id": "C00249",
+        "type": "C",
+        "name": "刘昚虚",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘昚虚",
+          "name": "刘昚虚",
+          "period": "盛唐",
+          "life": "约714年—约767年",
+          "hometown": "洪州新吴",
+          "courtesy": "全乙、挺卿",
+          "pseudonym": "易轩",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "",
+              "其他人物": ""
+            }
+          ],
+          "school": "山水田园诗派",
+          "repWorks": [
+            "《阙题》",
+            "《江南曲》",
+            "《浔阳陶氏别业》",
+            "《登庐山峰顶寺》"
+          ],
+          "anthos": [
+            "《鶺鸰集》"
+          ],
+          "relations": [
+            {
+              "人物": "孟浩然、王昌龄",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "开元二十二年（公元734年）",
+              "事件": "中进士。此后步入仕途，历任左春坊司经局校书郎、崇文馆校书郎、洛阳尉、夏县令等职。这些多为从九品的小吏，主要工作是为皇太子或皇亲国戚勘对经史、校检典籍。"
+            },
+            {
+              "纪年": "天宝四载（公元745年）",
+              "事件": "约在此时，因厌倦官场规矩且不慕荣利，他在壮年时期辞官归田，开始游历天下。"
+            },
+            {
+              "纪年": "天宝年间（公元约742年—756年）",
+              "事件": "期间与孟浩然、王昌龄、高适等盛唐诗人交游唱和。孟浩然晚年病重时，刘昚虚曾作诗寄怀；孟浩然去世后，他又写下《寄江滔求孟六遗文》悼念故友。"
+            },
+            {
+              "纪年": "至德年间及以后（约公元756年之后）",
+              "事件": "知命之年（50岁左右）后，他回到江西故里，在洪州建昌县桃源里（今江西靖安）构筑“深柳读书堂”隐居，著书自娱，不再涉足仕途。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "刘昚虚是盛唐山水田园诗派的代表人物之一，与王维、孟浩然、裴迪、储光羲、常建、张子容等人共同形成了盛唐的山水田园诗人群。其诗作在当世即享有盛名，殷璠编选的《河岳英灵集》将其列于常建、李白、王维之后，收录其诗11首，并评价其诗“情幽兴远，思苦语奇，忽有所得，便惊众听”，认为“声律宛态，无出其右”，是自南朝永明年间以来江南一带的杰出诗人。",
+          "evaluation": [
+            {
+              "出处": "《河岳英灵集》",
+              "内容": "“情幽兴远，思苦语奇，忽有所得，便惊众听”、“声律宛态，无出其右”。"
+            },
+            {
+              "出处": "《渔洋诗话》",
+              "内容": "“超远幽夐，在王、孟、王昌龄、常建、祖咏伯仲之间”。"
+            },
+            {
+              "出处": "《刘全乙先生考》",
+              "内容": "“渊永深厚超然，上逼汉魏，下薄六朝”。"
+            },
+            {
+              "出处": "《友贻草题辞》",
+              "内容": "诵刘昚虚诗，弗患其少。"
+            }
+          ]
+        }
+      },
+      "C00250": {
+        "id": "C00250",
+        "type": "C",
+        "name": "张泌",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "张泌",
+          "name": "张泌",
+          "period": "唐末",
+          "life": "生卒年约与韩偓（842年-914年）相当",
+          "hometown": "淮南（一说南阳郡泌阳县）",
+          "courtesy": "子澄",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "",
+              "其他人物": ""
+            }
+          ],
+          "school": "花间派",
+          "repWorks": [
+            "《浣溪沙》（晚逐香车）《江城子》《胡蝶儿》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "唐僖宗至唐昭宗时期（约公元880年—907年）",
+              "事件": "张泌在这一时期登进士第。随后，他为了谋求出路，与罗隐、韦庄、郑谷等晚唐文人一样，长期滞留长安，四处漂泊，传食诸侯。"
+            },
+            {
+              "纪年": "唐末天祐年间至五代初（约公元907年—920年代）",
+              "事件": "唐朝灭亡前后，张泌主要活动在武安军节度使马殷统治的湖湘桂一带（今湖南、广西等地）。他曾入马殷幕府，与易静等人共同推动了武安军地区的文艺繁荣。唐亡后，他最可能在马楚政权担任舍人，也不排除曾在前蜀任职。"
+            },
+            {
+              "纪年": "五代十国时期（约10世纪中叶）",
+              "事件": "张泌在这一时期创作了大量诗词与小说。他是“花间派”的代表人物之一，今存曲子词28首、诗19首，以及小说《韦安道传》（又名《后土夫人传》）和《妆楼记》。其词作风格多涉艳情，用字工炼，描绘细腻，介于温庭筠与韦庄之间。"
+            },
+            {
+              "纪年": "北宋初年（约公元960年之后）",
+              "事件": "关于其晚年行踪，部分史料将其与南唐的张佖混淆。但根据现代学者考证，张泌与南唐李后主时代的张佖互不相干，其最终卒年及晚年确切事迹在正史中已不可考。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "他的诗词小说绝大多数作于唐末时期，尤以写湖湘桂一带风物的作品为多。其词大多为艳情词，风格介乎温庭筠、韦庄之间而倾向于韦庄。用字工炼，章法巧妙，描绘细腻，用语流便。",
+          "evaluation": [
+            {
+              "出处": "",
+              "内容": ""
+            }
+          ]
+        }
+      },
+      "C00251": {
+        "id": "C00251",
+        "type": "C",
+        "name": "周密",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-17",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "周密",
+          "name": "周密",
+          "period": "宋末元初",
+          "life": "1232年－1298年或1308年",
+          "hometown": "吴兴",
+          "courtesy": "公谨",
+          "pseudonym": "号草窗（又号霄斋、蘋洲、萧斋，晚年号弁阳老人、四水潜夫、华不注山人）",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "二窗",
+              "其他人物": "吴文英"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《草窗旧事》《萍洲渔笛谱》"
+          ],
+          "anthos": [
+            "《绝妙好词笺》"
+          ],
+          "relations": [
+            {
+              "人物": "周孝恭",
+              "关系": "五世祖"
+            },
+            {
+              "人物": "周位",
+              "关系": "高祖"
+            },
+            {
+              "人物": "周秘",
+              "关系": "曾祖"
+            },
+            {
+              "人物": "周珌",
+              "关系": "祖父"
+            },
+            {
+              "人物": "章良能",
+              "关系": "外祖父"
+            },
+            {
+              "人物": "周晋",
+              "关系": "父亲"
+            },
+            {
+              "人物": "章氏",
+              "关系": "母亲"
+            },
+            {
+              "人物": "杨伯喦",
+              "关系": "外舅"
+            },
+            {
+              "人物": "张谦",
+              "关系": "好友"
+            },
+            {
+              "人物": "鲜于枢",
+              "关系": "好友"
+            },
+            {
+              "人物": "王英孙",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "绍定五年（公元1232年）",
+              "事件": "周密出生于临安府富阳县（今浙江杭州富阳）县衙。周密少年时期随父周晋仕宦，四处奔走，辗转于东南闽浙的山水名胜，其眼界和学识也不断增长。"
+            },
+            {
+              "纪年": "端平元年（公元1234年）",
+              "事件": "周晋在富阳任上得罪李宗勉（即李文清）家人，后李宗勉入朝为官，遂被免官。周密随父亲离开富阳，蛰居湖州。"
+            },
+            {
+              "纪年": "嘉熙四年（公元1240年）",
+              "事件": "周晋调为福建路建宁曹署官，周密随父第一次入闽。次年，周密随父亲返回浙江。应在此时，周密随父曾至临安。"
+            },
+            {
+              "纪年": "淳祐六年（公元1246年）",
+              "事件": "周密随父到衢州。在这里，周密除结识当时的衢州知州杨伯喦外，还与衢州通判牟子才、牟峨父子相识。次年，杨伯喦衡州任满，周晋也带着周密离开衡州，赴任柯山。从1248年至1252年的五年时间，周密履历不详。学者夏承焘认为此为周密在太学学习时期。"
+            },
+            {
+              "纪年": "宝祐初年（公元1252年）",
+              "事件": "周密以门荫应试吏部铨试，为第十三名。"
+            },
+            {
+              "纪年": "宝祐三年（公元1255年）",
+              "事件": "周密再次随父入闽。周晋于宝祐四年（1256年）致仕后，回到湖州，不久即去世。周密也由此告别了县衙之内的生活，敛丧的同时结束了他的少年时代，转而走向了思想的成熟期。"
+            },
+            {
+              "纪年": "景定二年（公元1261年）",
+              "事件": "周密自荐进入临安府知府马光祖幕下，协理京畿漕运。并还任职和剂惠民药局。"
+            },
+            {
+              "纪年": "景定四年（公元1263年）",
+              "事件": "因为毗陵（今江苏武进）民田最多和朝廷推行的限田政策，周密被朝廷派往昆陵催督买田，他对公田之法的危害认识颇清，到任后便废除浮额，却忤逆当时宰相贾似道的意思，为避免惹祸上身，周密旋即辞官，回乡侍奉病母。次年，母亲去世后，周密将父母二人合葬在故乡湖州。"
+            },
+            {
+              "纪年": "咸淳元年（公元1265年）",
+              "事件": "周密与陈厚等人一同出任两浙运司掾属，虽然有管理的才干，却得不到重用。"
+            },
+            {
+              "纪年": "咸淳十年（公元1274年）",
+              "事件": "周密又出任丰储仓检查。由于朝中贾似道为首的奸臣的排除异己，周密始终都只能奔波于下层，其救世之心也渐渐熄灭。"
+            },
+            {
+              "纪年": "景炎元年（公元1276年）",
+              "事件": "周密出任义乌知县。同年正月，临安城破。随南宋的覆灭，周密也结束了仕宦生涯，回到湖州开始隐居。"
+            },
+            {
+              "纪年": "景炎二年（公元1277年）",
+              "事件": "湖州为元兵所攻破。周密不得已离开故土，举家迁至杭州，依姻亲杨伯岳后人杨大受、杨大芳而居。周密一开始居住在洪福桥杨府，后因杨府大火，便迁居湖滨杨氏别墅。之后又移居杭州癸辛街。"
+            },
+            {
+              "纪年": "元世祖至元二十三年（公元1286年）",
+              "事件": "时值临安城破十载，周密邀请当时的名流文士王沂孙、戴表元、仇远、白珽、屠约、张楧等十四人共聚杨氏池堂，吟咏唱和，共抒遗民情怀。"
+            },
+            {
+              "纪年": "至元二十八年（公元1291年）",
+              "事件": "周密写成史料笔记《齐东野语》。"
+            },
+            {
+              "纪年": "至元二十九年（公元1292年）",
+              "事件": "周密撰成笔记丛刊《癸辛杂识》。"
+            },
+            {
+              "纪年": "元贞元年（公元1295年）",
+              "事件": "周密好友赵孟頫任济南路总管府事期满，自齐州回到故乡吴兴。祖籍济南的周密听闻赵孟頫转述其任官时的见闻，心生怀乡之情。赵孟頫便作《鹊华秋色图》描绘济南风光，赠予周密。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "5",
+          "reviewStatus": "approved",
+          "expectedDuration": "6",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "周密早年生活较为安逸，虽有奔走之劳，但仍不乏壮志与激情，交游唱和是其生活的主要内容，诗书之乐是其生活的重要情趣所在。这种生活方式及精神状态在宋末士大夫群体中具有相当的典型性。这不仅构成周密的创作基础，而且决定诗歌内容和价值取向。较之以他的词创作，这四百余首诗以更为丰富的视角刻画和展现出作家的生存面貌与情感世界，完整地塑造出一位在乱世中异于流俗、志趣高雅的文人形象。周密词最主要的特色是格律严谨、结构缜密，风格秀雅、字句精美。在结构风格上，往往接近周邦彦。因为姜夔、吴文英也都是取法周邦彦又自成家数，所以周词也有不少借鉴姜夔、吴文英的痕迹。在表现手法上，同他的散文小品一样，周密最善于写景，体物异常细腻、准确形象。",
+          "evaluation": [
+            {
+              "出处": "《草窗韵语》",
+              "内容": "周公谨盛年美质，趣尚修雅。步长吉、搴灵均，将追古人而后之。视彼采掇风云月露，柔声曼色，卑卑然自以为工者，不足云矣。天地间，生意无尽，言发于声，乃生意之至精者也。君自命草窗，果于此有得。机动籁鸣，必有不求工而自工者，其进未可量也。"
+            },
+            {
+              "出处": "《挽周明府公谨》",
+              "内容": "彭泽归来厌宦情，弁阳山下买山耕。春风秋月供吟啸，月夕风期寄死生。铭墓古人堪仿佛，著书心事更分明。但能似此存清节，野史还须记姓名。"
+            },
+            {
+              "出处": "《酹江月》",
+              "内容": "昔登霞翁之门，翁为余言：草窗乐府妙天下。因请其所赋观之，不宁惟协比律吕，而意味迥不凡，花间柳氏真可为舆台矣。翁之赏音，信夫。近观《徵招》《酹月》之作，凄凉掩抑，顿挫激昂，此时此意，犹宋玉之悼屈平也欤。一唱三叹，使人泫然。"
+            },
+            {
+              "出处": "《弁阳老人自铭跋》",
+              "内容": "弁阳君抱崛奇而老忧患，据会通而观变化，反博趋约，落其英华，澄然一室，固已深玩至理而有得。观其所自铭，兢兢以百年之泽，一身之承为不易，力为其所当为，以求无愧于心，无坠于先训。盖有临深履薄，好学不羡久生之意，非徒示旷达而已。余以其能折衷于道，得所归宿，用援先好书诸左方云。"
+            },
+            {
+              "出处": "《踏莎行·题草窗词卷》",
+              "内容": "白石飞仙，紫霞凄调（此句为周密词的特色。既有姜夔词的“野云孤飞、去留无迹”的清空，又有杨缵词凄婉的情韵。周密词学姜夔，又曾学音律于杨缵，兼有清刚峭拔、凄侧缠绵的风格），断歌人听知音少。几番幽梦欲回时，旧家池馆生青草。风月交游，山川怀抱，凭谁说与春知道？空留离恨满江南，相思一夜苹花老。"
+            },
+            {
+              "出处": "《题周公谨蜡屐集后》",
+              "内容": "以余观公谨，非能为诗，不能不为诗也！悠然而长，黯然而幽。有圆转流丽之新声，无惨淡经营之苦思，谓之寓者，非耶？虽然，公谨一出门，则遥集纷纷矣！独无感乎？感则悲，悲则吟，岂独有取于蜡屐之区区乎？故曰：公谨非能为诗，而不能不为诗者也！"
+            },
+            {
+              "出处": "《周公瑾〈弁阳诗〉序》",
+              "内容": "公谨少年诗，流丽钟情，春融雪荡，翘然称其材大夫也；壮年典实明瞻，覩之如陈周庭鲁庙遗器，蔚蔚然称其博雅多识君子也；晚年展转荆棘霜露之间，感慨激发，抑郁悲壮，每一篇出，令人百忧生焉，又乌乌然称其为累臣羇客也。公谨盛年，藏书万卷，居饶馆榭，游足僚友。其所居弁阳在吴兴，山水清峭，遇好风佳时，载酒肴，浮扁舟，穷旦夕赋咏于其间，就使失禄不仕，浮沉明时，但如苏子美、沈睿达軰，亦有足乐者。今皆无之，虽其弁阳且不得居，颓颜皤鬂，离乡索立，而歌欷歔如此。而人方美其诗工，不知于公谨何如哉？"
+            },
+            {
+              "出处": "《题周草窗画像卷》",
+              "内容": "宋运既伹，吴有三山郑所南，杭有弁阳周草窗先生，皆以无所职守，而志节不屈著称，介然特立，足以增亡国之光。"
+            },
+            {
+              "出处": "《曝书亭集》",
+              "内容": "词人之作，自《草堂诗余》盛行，屏去激楚阳阿，而巴人之唱齐进矣。周公谨《绝妙好词选本》虽未全醇然，中多俊语，方诸草堂所录，雅俗殊分，顾流布者。公谨自有《苹洲渔笛谱》，其词足与陈衡仲、王圣与、张叔夏方驾。"
+            },
+            {
+              "出处": "《绝妙好词笺》",
+              "内容": "公谨生于宋末，以博雅名东南，所作音节凄清，情寄深远，非徒以绮丽胜者。兹选披沙拣金，合一百三十二人，为词不满四百，亦云精矣。余尝论选家以今稽古，病在不亲，榖梁所谓听远音者，闻其疾而不闻其舒也。若同时之人，征搜该博，参互详审，其去疻痏、正谬悠，较之后代，难易什伯。"
+            },
+            {
+              "出处": "《四库全书总目》",
+              "内容": "密所编南宋歌词，去取谨严，犹在曾慥乐府雅词、黄升花庵词选之上。又宋人词集，今多不传，并作者姓名，亦不尽见于世，零玑碎玉，皆赖此以存。于词选中最为善本，初为仁采摭诸书以为之笺，各详其里居出处，或因词而考证其本事，或因人而附载其佚闻，以及诸家评论之语，与其人之名篇秀句，不见于此集者，咸附録之。所笺多泛滥旁涉，不尽切于本词，未免有嗜博之弊，然宋词多不标题，读者每不详其事。如陆淞之瑞鹤仙，韩元吉之水龙吟，辛弃疾之祝英台近，尹焕之唐多令，杨恢之二郎神，非参以他书得其源委，有不解为何语者。其疏通证明之功，亦有不可泯者矣。"
+            },
+            {
+              "出处": "《宋四家词选目录序论》",
+              "内容": "①草窗镂冰刻楮，精妙绝伦；但立意不高，取韵不远，当与玉田抗行，未可方驾王、吴也。②公瑾只是词人，颇有名信，未能自克，故虽才情诣力，色色绝人，终不能超然暇举。"
+            },
+            {
+              "出处": "《雕菰楼词话》",
+              "内容": "周密《绝妙好词》所选，皆同于己者，一味轻柔润腻而已。黄玉林《花庵绝妙词选》，不名一家，其中如刘克庄诸作，磊落抑塞，真气百倍，非白石、玉田辈所能到。可知南宋人词，不尽草窗一派也。"
+            },
+            {
+              "出处": "《七家词选》",
+              "内容": "草窗词尽洗靡曼，独标清丽，有韶倩之色，有绵渺之思，与梦窗旨趣相侔。二窗并称，允矣无忝。其于律亦极严谨，盖交游甚广，深有切之益。"
+            },
+            {
+              "出处": "《新元史》",
+              "内容": "密学问渊雅，为宋相马廷鸾所知。与王沂中、张炎、仇远等相倡和。其诗感慨激发，乐府尤工。有《蜡屐集》《弁阳诗集》《苹洲渔笛谱》。密著书甚多，其《齐东野语》《癸辛杂语》《绝妙好词》，皆盛行于世。"
+            },
+            {
+              "出处": "《人间词话》",
+              "内容": "①朱子《清邃阁论诗》谓：“古人诗中有句，今人诗更无句，只是一直说将去。这般诗一日作百首也得。”余谓北宋之词有句，南宋以后便无句。玉田、草窗之词，所谓“一日作百首也得”者也。②苏辛，词中之狂。白石犹不失为狷。若梦窗、梅溪、玉固、草窗、西麓辈，面目不同，同归于乡愿而已。梅溪、梦窗、玉田、草窗、西麓诸家，词虽不同，然同失之肤浅。虽时代使然，亦其才分有限也。近人弃周鼎而宝康瓠，实难索解。"
+            },
+            {
+              "出处": "《宋词通论》",
+              "内容": "①草窗词风实与梦窗异趣，……他的词几乎完全与玉田是一样的风格。这在文学史上是一种最少见的例子。②玉田似更空灵，出蓝之喻，当之无愧。其次则虽同系寄慨之作，而草窗则更兼碧山凄婉之长，与玉田仅以清超或冷越出之者，又复少异其容貌矣。总之，二家作风极相类似，欲加以断然的辨析，实至感困难。昔人每以草窗比梦窗“二窗”并称，几成定论。然试一相质证，则草窗词风，实与梦窗异趣，其神似玉田处，亦迄无人道及。"
+            },
+            {
+              "出处": "《中国文学发展史》",
+              "内容": "①周密的著作很多，如齐东野语、癸辛杂识、浩然齐雅谈、武林旧事诸书，或记文坛掌故，或叙社会风俗，或记文物制度，都是很重要的史料。②其词工丽精巧，善于咏物，颇近梦窗。因此，他与吴文英世称为“二窗”。但因其身经亡国，故晚年之作，颇有沉咽凄楚之音，又与张炎相近。③草窗集中，工于咏物者颇多。如水龙吟之咏白莲，国香慢之咏水仙，齐天乐之咏蝉，都是前人一致推赏之作。《一萼红·登蓬莱阁有感》《法曲献仙音·吊雪香亭梅》是两首表现亡国之痛的作品，情意深厚，含蓄曲折，立意高远，可称佳作。可知在那个国破家亡的环境里，当日的词人，无论如何觉溺于典雅工巧之中，这一点时代的愁恨，总是无法掩藏的了。"
+            },
+            {
+              "出处": "《中国文学史》",
+              "内容": "周密与吴文英过从，以词唱和，一时有二窗之目。独标清丽，不为堆垛，视梦窗松秀过之，比白石深婉差似。固不必如梦窗之敷陈华藻。然饶韵致而乏意境，颇婉秀而未沉郁；所以味不厚，焰不长也。"
+            },
+            {
+              "出处": "《唐宋词流派史》",
+              "内容": "①周密作词取法于周邦彦，他年轻时即登杨缵之门学词，所得自然多为清真语丽律协的大晟词法。②周密的词继承周邦彦格律精严、雅艳浑融之风，造句用意，十分矜慎，声律节度，辨析入微。周密以缜密为主，清空如姜夔者并不多见，周密所作也并无吴文英那种质实晦涩的特征。因此他只能是清真派，他在继承和发展清真一派的词艺上有一定的贡献，不失为清真派的殿军。"
+            }
+          ]
+        }
+      },
+      "C00252": {
+        "id": "C00252",
+        "type": "C",
+        "name": "刘沧",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-18",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘沧",
+          "name": "刘沧",
+          "period": "晚唐",
+          "life": "生卒年均不详，比杜牧、许浑年辈略晚，约唐懿宗咸通中前后在世",
+          "hometown": "汶阳",
+          "courtesy": "蕴灵",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "",
+              "其他人物": ""
+            }
+          ],
+          "school": "格律诗派",
+          "repWorks": [
+            "《咸阳怀古》《经炀帝行宫》《秋日过昭陵》《长洲怀古》"
+          ],
+          "anthos": [
+            "《新唐书艺文志》"
+          ],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "约唐德宗贞元年间（约公元798-799年）",
+              "事件": "出生于汶阳（今山东宁阳）。"
+            },
+            {
+              "纪年": "唐宣宗大中八年（公元854年）",
+              "事件": "多次落榜后终于中第，当时已白发苍苍，与李频同榜。"
+            },
+            {
+              "纪年": "唐懿宗咸通年间（约公元860-874年）",
+              "事件": "及第后任华原尉，后迁龙门令。约卒于咸通中前后。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "刘沧是晚唐时期的重要诗人，在唐诗史上占有独特地位，后世称其为“晚唐小家”。他尤以七言律诗见长，是晚唐怀古诗的代表人物。其怀古咏史诗成就突出，被认为高于同期的许浑，在咏史诗上独树一帜。他的创作承上启下，既继承唐诗抒情的风骨格调，又对宋诗的载道言理有所引领，对后世咏史诗影响深远。刘沧与许浑、赵嘏等诗人齐名，共同推动了晚唐诗歌的发展。清编《全唐诗》收录其诗102首。其诗歌主体风格“悲而不壮”，多通过历史遗迹抒发兴衰之感，诗作充斥着哀伤苍凉、气韵悠长的意境，被誉为“衰世之音”。胡震亨《唐音统签》评价其“诗长于怀古，悲而不壮，语带秋意”；《石林诗话》亦称其长洲、咸阳、邺都等怀古作品“今古废兴、山河陈迹，凄凉感慨之意，读之可为一唱而三叹”。刘沧的诗作及其艺术成就对后世产生了持续影响：《唐才子传》称其诗“句法绝同赵嘏、许浑”；其诗作中“灞桥风雪”等意象也成为宋元诗人创作的原型。",
+          "evaluation": [
+            {
+              "出处": "胡震亨",
+              "内容": "“刘沧诗长于怀古，悲而不壮，语带秋意，衰世之音也欤？”"
+            }
+          ]
+        }
+      },
+      "C00253": {
+        "id": "C00253",
+        "type": "C",
+        "name": "李群玉",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-18",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "李群玉",
+          "name": "李群玉",
+          "period": "唐代",
+          "life": "808—862年",
+          "hometown": "澧州",
+          "courtesy": "文山",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "唐代湖南三诗人",
+              "其他人物": "齐己、胡曾"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《乌夜号》《雨夜呈长官》"
+          ],
+          "anthos": [
+            "《李群玉集》"
+          ],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "大中八年（公元854年）",
+              "事件": "由宰相裴休、令狐绹举荐，赴京进献诗歌三百篇，得唐宣宗赏识，授弘文馆校书郎。"
+            },
+            {
+              "纪年": "大中十一年后（约857年后）",
+              "事件": "任校书郎三年后，辞官回归故里。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "李群玉一生交游广，足迹遍及河南、河北、陕西、大江南北。李群玉著有诗前集3卷，后集5卷。《全唐诗》录他的诗263首。他是晚唐重要诗人，与齐己、胡曾被列为唐代湖南三诗人。唐末周朴《吊李群玉》诗赞道：“群玉诗名冠李唐，投书换得校书郎。吟魂醉魄归何处，空有幽兰隔岸香。”",
+          "evaluation": [
+            {
+              "出处": "《湖南通志》",
+              "内容": "诗笔妍丽，才力遒健。"
+            },
+            {
+              "出处": "周朴《吊李群玉》",
+              "内容": "群玉诗名冠李唐，投书换得校书郎。吟魂醉魄归何处，空有幽兰隔岸香。"
+            }
+          ]
+        }
+      },
+      "C00254": {
+        "id": "C00254",
+        "type": "C",
+        "name": "齐己",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-24",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "齐己",
+          "name": "齐己",
+          "period": "唐末",
+          "life": "863年－937年",
+          "hometown": "宁乡",
+          "courtesy": "得生",
+          "pseudonym": "衡岳沙弥",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "三大诗僧",
+              "其他人物": "贯休、皎然"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《过西塞山》《寄仰山长老》"
+          ],
+          "anthos": [
+            "《白莲集》"
+          ],
+          "relations": [
+            {
+              "人物": "贯休",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "咸通十年（公元869年）",
+              "事件": "7岁为大沩山（今属湖南长沙）同庆寺牧牛，常以竹枝写诗，因诗句清丽被劝出家，拜“沩仰宗”慧寂为师。"
+            },
+            {
+              "纪年": "中和元年（公元881年）",
+              "事件": "出家后游历各地，自号“衡岳沙弥”。"
+            },
+            {
+              "纪年": "光化三年（公元900年）",
+              "事件": "以《早梅》诗谒郑谷，郑谷改“数枝开”为“一枝开”，遂拜为“一字师”。"
+            },
+            {
+              "纪年": "贞明七年（公元921年）",
+              "事件": "被“荆南节度使”高季兴强留，任龙兴寺（今属安徽滁州）僧正。作《渚宫莫问篇》明志。"
+            },
+            {
+              "纪年": "天福二年（公元937年）",
+              "事件": "圆寂于江陵。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "0",
+          "reviewStatus": "rejected",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "重复了",
+          "achievements": "",
+          "evaluation": [
+            {
+              "出处": "徐东野",
+              "内容": "才高思远，无所不通。"
+            },
+            {
+              "出处": "吴乔",
+              "内容": "齐己《剑客》诗，杰作也。“夜来何处火，烧出古人冢”，非晚唐人无此诗思。"
+            },
+            {
+              "出处": "薛雪",
+              "内容": "唐释齐己作《风骚旨格》，六诗、六义、十体、十势、二十式、四十门、六断、三格，皆系以诗，不减司空表圣。独是“十势”立名最恶，宛然少年棍谱，暇日当为易去乃妙。"
+            }
+          ]
+        }
+      },
+      "C00255": {
+        "id": "C00255",
+        "type": "C",
+        "name": "胡曾",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-18",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "胡曾",
+          "name": "胡曾",
+          "period": "唐代",
+          "life": "约840年-？",
+          "hometown": "邵阳",
+          "courtesy": "静轩",
+          "pseudonym": "秋田",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "",
+              "其他人物": ""
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《南阳》《东海》"
+          ],
+          "anthos": [],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "开成年间（约公元840年）",
+              "事件": "约生于邵州邵阳（今属湖南）。"
+            },
+            {
+              "纪年": "咸通年间（约公元860-874年）",
+              "事件": "多次参加进士考试，均未及第，滞留长安。"
+            },
+            {
+              "纪年": "咸通十二年（公元871年）",
+              "事件": "任剑南西川节度使路岩的掌书记，曾代其撰写《答南诏牒》。"
+            },
+            {
+              "纪年": "乾符元年（公元874年）",
+              "事件": "继任高骈的掌书记，后随其调任荆南。"
+            },
+            {
+              "纪年": "乾符五年（公元878年）",
+              "事件": "高骈调任荆南节度使，胡曾随往任汉南从事。"
+            },
+            {
+              "纪年": "乾符至中和年间（约公元874-885年）",
+              "事件": "曾代理或出任延唐县令，晚年病逝（一说约885年）。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "胡曾天分高爽，意度不凡，工于诗，尤擅咏史。有《咏史诗》150首，皆七绝，每首以地名为题，评咏当地历史人物与事件。其本旨，是托古讽今，意存劝戒。其诗通俗明快，褒贬明确，唐末五代时颇传诵，著有《安定集》10卷，久已不传。",
+          "evaluation": [
+            {
+              "出处": "《唐才子传》",
+              "内容": "天分高爽，意度不凡。"
+            },
+            {
+              "出处": "《唐诗纪事》",
+              "内容": "前蜀王衍宴饮无度，内侍宋光溥咏《姑苏台》诗，王衍为之罢宴。"
+            }
+          ]
+        }
+      },
+      "C00256": {
+        "id": "C00256",
+        "type": "C",
+        "name": "徐照",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-20",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "徐照",
+          "name": "徐照",
+          "period": "南宋",
+          "life": "约1160年—1211年",
+          "hometown": "永嘉",
+          "courtesy": "道晖、灵晖",
+          "pseudonym": "山民",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "永嘉四灵",
+              "其他人物": "徐玑、翁卷、赵师秀"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《舟上》《三峡吟》《促促词》《缫丝曲》"
+          ],
+          "anthos": [
+            "《芳兰轩集》"
+          ],
+          "relations": [
+            {
+              "人物": "叶适",
+              "关系": "老师"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "绍兴三十年左右（约公元1160年）",
+              "事件": "出生于永嘉。徐照家境清寒，但一生嗜苦茗、游山水、喜吟咏，以诗游历于士大夫之间。"
+            },
+            {
+              "纪年": "淳熙年间（公元1174年—1189年）",
+              "事件": "在这一时期，徐照开始游历四方，行迹遍及今湖南、江西、江苏、四川等地。"
+            },
+            {
+              "纪年": "宗庆元年（公元1195年）",
+              "事件": "徐照的好友兼同乡赵师秀（同为“永嘉四灵”之一）在这一年出任上元主簿。徐照与赵师秀、徐玑、翁卷等人交往密切，他们同为叶适的门生，且字中均带“灵”字，被叶适合称为“永嘉四灵”。"
+            },
+            {
+              "纪年": "嘉泰三年（公元1203年）",
+              "事件": "随徐玑赴任永州司理。"
+            },
+            {
+              "纪年": "嘉定四年（公元1211年）",
+              "事件": "卒，死后友人集资安葬。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "南宋中后期，江西诗派的影响已渐趋衰弱，永嘉四灵主观上想打破江西诗派的藩篱，论诗贬斥江西而取法晚唐，在一定程度上矫正了江西诗派末流的弊病。徐照一生大半在家乡温州度过，其大量优秀诗篇都是歌咏永嘉山水，并以组诗形式予以咏叹，如《游雁荡山》八首。徐照曾随徐玑赴任永州司理参军，这是他离家最远、时间最久的一次游历。沿途及在湘中饱览风光，并将见闻化作诗材，使其山水诗画面更为开阔，且有意“诗将远地传”。徐照身居乡村，了解社会下层生活，因此一些诗作能反映现实生活，如《促促词》反映社会不公、农户困穷。徐照诗集中与朋友的唱和诗占了很大比例，尤多与“永嘉四灵”中其他三位及永嘉诗友的唱和，他认为真心的友谊是漂泊者的安慰和寄托。",
+          "evaluation": [
+            {
+              "出处": "方回",
+              "内容": "眼前事，道著便新。"
+            },
+            {
+              "出处": "吴子良",
+              "内容": "徐照在四灵中尤为“清瘦”，其诗风清隽之处在此，但卑靡之处亦在此，这是时代风气升降之际诗人难以自知的局限。"
+            }
+          ]
+        }
+      },
+      "C00257": {
+        "id": "C00257",
+        "type": "C",
+        "name": "徐玑",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-20",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "徐玑",
+          "name": "徐玑",
+          "period": "南宋",
+          "life": "1162年-1214年",
+          "hometown": "浙江温州永嘉松台里",
+          "courtesy": "文渊、致中",
+          "pseudonym": "灵渊",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "永嘉四灵",
+              "其他人物": "徐照、翁卷、赵师秀"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《黄碧》《新凉》"
+          ],
+          "anthos": [
+            "《泉山集》《二薇亭诗集》"
+          ],
+          "relations": [
+            {
+              "人物": "徐定",
+              "关系": "父亲"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "绍兴三十二年（公元1162年）",
+              "事件": "出生于泉州晋江。其父徐定曾任泉州知州，后徐玑随父迁居永嘉（今浙江温州）。"
+            },
+            {
+              "纪年": "淳熙十一年（公元1184年）",
+              "事件": "徐玑在这一年考中进士，正式步入仕途。"
+            },
+            {
+              "纪年": "淳熙末年至庆元年间（约公元1189年—1200年）",
+              "事件": "徐玑开始出任地方官，历任建安主簿、龙溪丞、武当与长泰县令等职。在任期间，他体恤民情，颇有政声，但因其性格耿直、不慕荣利，仕途一直未能显达。"
+            },
+            {
+              "纪年": "嘉泰二年至嘉定初年（公元1202年—1208年）",
+              "事件": "徐玑在江南一带游历，与徐照、翁卷、赵师秀等人交往密切。他们同为叶适的门生，且字号中均带有“灵”字，在诗坛上共同提倡晚唐诗风，被世人合称为“永嘉四灵”。"
+            },
+            {
+              "纪年": "嘉定七年（公元1214年）",
+              "事件": "徐玑病逝于任上，终年五十三岁。他一生为官清廉，死后家无余财，其挚友赵师秀等人集资为其办理丧事并安葬。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "徐玑和他的三位同乡好友——字灵晖的徐照，字灵舒的翁卷，号灵秀的赵师秀——并称“四灵”，对后来的江湖诗派有开启作用。“四灵”学贾岛、姚合，标榜野逸清瘦的作风，题材窄，诗境浅，甚至流于琐屑，徐玑自不例外。在诗歌理论上，徐玑强调声韵格律和字句锻炼，认为“诗思出门多”，灵感源于自然山水，反对连篇累牍的冗芜诗风。",
+          "evaluation": [
+            {
+              "出处": "《四库全书总目提要》",
+              "内容": "清巧之致，亦复可观。"
+            },
+            {
+              "出处": "赵师秀",
+              "内容": "名与浪仙（贾岛）俱。"
+            }
+          ]
+        }
+      },
+      "C00258": {
+        "id": "C00258",
+        "type": "C",
+        "name": "翁卷",
+        "meta": {
+          "createdById": "u_103",
+          "createdByName": "逯久琛(2120250305)",
+          "createdBy": "逯久琛(2120250305)",
+          "createdAt": "2026-06-20",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "翁卷",
+          "name": "翁卷",
+          "period": "南宋",
+          "life": "1163年-1245年",
+          "hometown": "温州乐清",
+          "courtesy": "续古、灵舒",
+          "pseudonym": "",
+          "posthumous": "",
+          "aliases": "",
+          "joint": [
+            {
+              "合称": "永嘉四灵",
+              "其他人物": "徐照、徐玑、赵师秀"
+            }
+          ],
+          "school": "",
+          "repWorks": [
+            "《野望》《东阳路旁蚕妇》《山雨》"
+          ],
+          "anthos": [
+            "《苇碧轩集》"
+          ],
+          "relations": [
+            {
+              "人物": "",
+              "关系": ""
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "隆兴元年（1163年）",
+              "事件": "出生于温州。"
+            },
+            {
+              "纪年": "淳熙十年（公元1183年）",
+              "事件": "乡荐，为举人，但未中进士。"
+            },
+            {
+              "纪年": "庆元年间（公元1195年—1200年）",
+              "事件": "翁卷与同郡的徐照、徐玑、赵师秀交往极为密切。四人同为理学名家叶适的门生，且字号中均带有“灵”字，在诗坛上共同提倡晚唐姚合、贾岛的清瘦诗风，被世人合称为“永嘉四灵”。"
+            },
+            {
+              "纪年": "淳祐五年（公元1245年）",
+              "事件": "病逝，时年八十三。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "",
+              "内容": ""
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "2",
+          "reviewStatus": "approved",
+          "expectedDuration": "",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "翁卷在“永嘉四灵”中是唯一的布衣，这使得他的诗歌少了几分文官的庙堂之气，多了一份底层文人的野逸与真切。他一生清贫，但安贫乐道，其诗风清新自然，尤以描写乡村田园生活的绝句最为后人称道（如著名的《乡村四月》）。翁卷以其诗歌成就，在中国文学史上占据一席之地，给后人留下一份难得的精神文化遗产，也为他自己在那个多事之秋的南宋获得了一丝丝生存的精神慰藉。",
+          "evaluation": [
+            {
+              "出处": "叶适《翁卷〈西岩集〉序》",
+              "内容": "知声韵之学，翁氏世业也。以故人人能诗，而灵舒、常子两先生特著……若灵舒，则自吐性情，靡所依傍，伸纸疾书，意尽而止。乃读者或疑其易，近率淡，近浅；不知诗道之坏，每坏于伪，坏于险。"
+            },
+            {
+              "出处": "刘克庄《赠翁卷》",
+              "内容": "非止擅唐风，尤于选体工。有时千载事，只在一联中。"
+            },
+            {
+              "出处": "《四库全书》",
+              "内容": "其流派（指永嘉四灵）多学晚唐，又从九僧而降之，喜为槎牙萧飒之语，不免寒瘦；然其（指翁卷）苦意淬炼，要亦能自成一家……盖（翁卷）在宋，江湖派中，犹矫矫自立者矣。"
+            },
+            {
+              "出处": "张宏生",
+              "内容": "翁卷为永嘉四灵之一，四灵提倡晚唐诗风，得叶适所赏，有名于时，但亦滋争议。其诗似贾岛、姚合、刘体仁、方干，又有谓其诗不为晚唐体所限者。同时江湖诗人多效其体。"
+            },
+            {
+              "出处": "莫砺锋、赵晓兰主编《宋诗精华》",
+              "内容": "（翁卷）诗以清苦为主，工刻划。如“冰干半池水，花落一根梅”（《冬日过道上人旧房》）、“一阶春草碧，几片落花轻”（《春日和刘朋远韵》）皆为人传诵……他一生落拓江湖，为“永嘉四灵”之一……风格峻洁秀润，在当时诗名颇著。"
+            }
+          ]
+        }
+      },
+      "C00259": {
+        "id": "C00259",
+        "type": "C",
+        "name": "王实甫",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-06-21",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "王实甫",
+          "name": "王实甫",
+          "period": "元代",
+          "life": "1260年-1336年",
+          "hometown": "河北省保定市定兴（今定兴县）",
+          "courtesy": "实甫",
+          "pseudonym": "（空）",
+          "posthumous": "（空）",
+          "aliases": "王德信",
+          "joint": [
+            {
+              "合称": "元曲四大家",
+              "其他人物": "与关汉卿、白朴、马致远并称"
+            }
+          ],
+          "school": "“文采派”",
+          "repWorks": [
+            "《崔莺莺待月西厢记》"
+          ],
+          "anthos": [
+            "《吕蒙正风雪破窑记》",
+            "《四大王歌舞丽春堂》"
+          ],
+          "relations": [
+            {
+              "人物": "王逖勤",
+              "关系": "父亲"
+            },
+            {
+              "人物": "王结",
+              "关系": "儿子"
+            },
+            {
+              "人物": "关汉卿",
+              "关系": "好友"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "约1255年-1260年",
+              "事件": "出生：关于其出生年份有不同说法，一说约生于1255年至1260年间，另一更常见的说法是1260年。"
+            },
+            {
+              "纪年": "约1260年-1295年",
+              "事件": "早年曾为官，但宦途坎坷。曾任陕西县令、陕西行台监察御史等职。"
+            },
+            {
+              "纪年": "约1295年-1300年",
+              "事件": "弃官归隐：约四十岁时，因“与台臣议不合”而弃官归隐。"
+            },
+            {
+              "纪年": "1295年-1307年",
+              "事件": "弃官后，他的主要创作活动集中在元成宗元贞、大德年间。此时他常在演艺场所出入，与演员交往密切。"
+            },
+            {
+              "纪年": "约1295年-1307年",
+              "事件": "《西厢记》创作：其代表作《西厢记》也大约创作于这一时期。"
+            },
+            {
+              "纪年": "1336年-1337年",
+              "事件": "去世：关于其卒年同样存在争议。一说为1336年，另一说为1337年之后，还有记载称其“终年八十余岁”。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "八拜之交",
+              "内容": "指结拜为异姓兄弟姐妹的关系。典故出自《西厢记》第一本第一折，张生提及他与白马将军杜确为“八拜之交”。后来张生正是凭借这层关系，写信请来杜确解了普救寺之围。"
+            },
+            {
+              "典故名": "锦囊佳制",
+              "内容": "意为优美的诗文。出自《西厢记》第二本第一折：“昨宵个锦囊佳制明勾引，今日个玉堂人物难亲近。”这个成语的源头可追溯到唐代诗人李贺将诗句投入锦囊的故事。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "王实甫作为元代剧坛“文采派”的巅峰代表，其一生最卓越的成就即是以不朽杰作《西厢记》彻底革新了中国古典戏曲的面貌，该剧凭借“愿普天下有情的都成了眷属”这一振聋发聩的反封建主题，不仅将爱情剧的思想深度推向了前所未有的高度，更以五本二十一折的空前体制打破了元杂剧的刻板定式，在结构上为长篇戏剧创作开辟了新纪元；在语言艺术上，他精妙地兼收唐诗宋词的瑰丽意境与元代民间口语的泼辣生机，锻造出既典雅蕴藉又酣畅淋漓的“文采派”风格，使曲词具备了独立的文学审美价值，从而与关汉卿的本色派双峰并峙，共同奠定了元曲的黄金时代。其影响绵延数百年，直接滋养了后世汤显祖的“至情”理想与曹雪芹的“情本”创作，同时该剧也跨越国界成为西方了解中国戏剧文化的重要窗口，最终使王实甫不仅稳居中国古典戏剧大师的殿堂核心，更在世界文学版图中镌刻下了不可磨灭的东方印记。",
+          "evaluation": [
+            {
+              "出处": "明初朱权",
+              "内容": "誉其词“如花间美人”，称赞其作品“铺叙委婉，深得骚人之趣”、“极有佳句”。"
+            },
+            {
+              "出处": "明代贾仲明",
+              "内容": "盛赞其“作词章，风韵美”，并称“新杂剧，旧传奇，《西厢记》天下夺魁”。"
+            },
+            {
+              "出处": "明代王世贞",
+              "内容": "称《西厢记》为“北曲故当以《西厢》压卷”。"
+            },
+            {
+              "出处": "明代王骥德",
+              "内容": "认为《西厢记》“法与词两善其极”，“遂擅千古绝调”。"
+            },
+            {
+              "出处": "明代李贽",
+              "内容": "称赞《西厢记》为“化工”之作，意指其艺术技巧已臻化境。"
+            }
+          ]
+        }
+      },
+      "C00260": {
+        "id": "C00260",
+        "type": "C",
+        "name": "王粲",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-06-21",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "王粲",
+          "name": "王粲",
+          "period": "东汉末年",
+          "life": "177年－217年",
+          "hometown": "山阳郡高平（今山东微山）",
+          "courtesy": "仲宣",
+          "pseudonym": "（空）",
+          "posthumous": "（空）",
+          "aliases": "七子之冠冕",
+          "joint": [
+            {
+              "合称": "建安七子",
+              "其他人物": "孔融、陈琳、徐干、阮瑀、应玚、刘桢"
+            }
+          ],
+          "school": "建安文学（建安风骨）",
+          "repWorks": [
+            "《登楼赋》《七哀诗》"
+          ],
+          "anthos": [
+            "《王侍中集》"
+          ],
+          "relations": [
+            {
+              "人物": "刘表",
+              "关系": "旧主"
+            },
+            {
+              "人物": "曹操",
+              "关系": "后主"
+            },
+            {
+              "人物": "王龚",
+              "关系": "曾祖父"
+            },
+            {
+              "人物": "王谦",
+              "关系": "父亲"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "东汉熹平六年（177年）",
+              "事件": "王粲出生于山阳郡高平县（今山东省微山县两城镇）。出身名门望族，曾祖父王龚官至太尉，祖父王畅官至司空，皆位列三公。父亲王谦曾任大将军何进长史。"
+            },
+            {
+              "纪年": "东汉初平元年（190年）",
+              "事件": "董卓挟持汉献帝西迁长安，王粲随父亲一同迁居长安。"
+            },
+            {
+              "纪年": "东汉初平年间（191年—192年）",
+              "事件": "王粲前往拜访著名学者蔡邕。当时蔡邕家中宾客满座，听说王粲在门外，急忙“倒屣迎之”（倒穿着鞋子迎接）。众人见王粲年仅十五六岁、身材矮小，都感到惊讶，蔡邕却说：“这孩子才学广博，我比不上。我要把家里的藏书文章都送给他。”"
+            },
+            {
+              "纪年": "东汉初平二年（192年）",
+              "事件": "因关中局势混乱，王粲离开长安，前往荆州投靠荆州牧刘表。"
+            },
+            {
+              "纪年": "东汉初平四年（193年）",
+              "事件": "王粲十七岁时，司徒征辟他为黄门侍郎，但他因长安局势混乱，没有赴任。此后客居荆州，有志难伸，心情郁郁。刘表因王粲相貌丑陋、身体柔弱且不拘小节，始终未予重用。"
+            },
+            {
+              "纪年": "东汉建安三年（198年）",
+              "事件": "长沙太守张羡举兵背叛刘表，刘表发兵讨伐。王粲奉命执笔撰写《三辅论》以宣示出征，申明用兵乃是“去暴举顺”。"
+            },
+            {
+              "纪年": "东汉建安十三年（208年）",
+              "事件": "丞相曹操南征荆州。恰逢刘表病逝，王粲力劝刘表之子刘琮举荆州投降曹操。归顺后深得曹操信任，被任命为丞相掾，赐爵关内侯。同年，王粲随曹操南下，在汉水边宴饮时进言分析天下形势，指出袁绍“好贤而不能用”、刘表“坐观时变”，进一步巩固了在曹操心中的地位。"
+            },
+            {
+              "纪年": "东汉建安十八年（213年）",
+              "事件": "魏王国建立，王粲升任侍中。"
+            },
+            {
+              "纪年": "东汉建安年间（213年后）",
+              "事件": "王粲因博学多识，常与卫觊等人共同负责重建因战乱而废弛的礼仪典章制度。曾与钟繇讨论“非圣人不能致太平”。"
+            },
+            {
+              "纪年": "东汉建安二十年（215年）",
+              "事件": "随曹操征讨张鲁，参与汉中战役。"
+            },
+            {
+              "纪年": "东汉建安二十一年（216年）",
+              "事件": "随曹操南征孙权。"
+            },
+            {
+              "纪年": "东汉建安二十二年（217年）",
+              "事件": "王粲在南征孙权北还途中病逝，终年四十一岁。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "倒屣相迎",
+              "内容": "王粲十几岁时去拜访名士蔡邕。当时蔡邕府上高朋满座，听闻王粲来访，他竟着急得倒穿着鞋子就出门迎接。王粲进屋后，众人见他年幼矮小都很惊讶，蔡邕则当众称赞王粲才华出众，并表示自己不如他，愿将家中藏书全部相赠。"
+            },
+            {
+              "典故名": "驴鸣送葬",
+              "内容": "王粲有个特别的爱好——喜欢听驴叫。他去世后，好友曹丕（后为魏文帝）前来吊丧。在葬礼上，曹丕对众人说，王粲生前爱听驴叫，我们每个人都学一声驴叫来送别他吧。于是，葬礼上响起了一片驴叫声。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "王粲作为东汉末年“建安七子”中成就最卓著的文学家，被后世推为“七子之冠冕”，其作品以情感真挚、辞采精炼、格调苍凉著称，深刻反映了汉末战乱与民生疾苦，代表作《登楼赋》将怀乡忧思与身世之感熔铸于高远壮阔的景致之中，堪称抒情小赋的典范，《七哀诗》则以沉痛笔触勾勒出“白骨蔽平原”的惨烈图景，成为建安诗歌现实主义精神的标志性篇章；在文学理论上，他推崇“建安风骨”的刚健品格，其创作既承袭汉赋的铺陈传统，又开拓了五言诗的抒情深度，对魏晋南北朝文学的发展产生了深远影响。同时，他作为曹操幕府的重要幕僚，积极参与魏国典章制度的重建，在政治与礼制建设上亦有所贡献，其博闻强识与卓越才情使他在文学史与政治史上均留下了不可磨灭的印记。",
+          "evaluation": [
+            {
+              "出处": "南朝·刘勰《文心雕龙·才略》",
+              "内容": "称其“仲宣溢才，捷而能密，文多兼善，辞少瑕累。摘其诗赋，则七子之冠冕乎！”刘勰不仅从才思敏捷、文辞缜密、兼善各体等方面肯定其成就，更将其推为建安七子之首。同时他也指出王粲性情急躁敏锐，故文章“锋芒外露，构思敏捷”。"
+            },
+            {
+              "出处": "三国魏·曹丕《典论·论文》",
+              "内容": "评价其“王粲长于辞赋”，并指出其《初征》《登楼》《槐赋》《征思》等赋作，“虽张（衡）、蔡（邕）不过也”。不过，曹丕对王粲的诗歌评价相对不高。"
+            },
+            {
+              "出处": "南朝梁·钟嵘《诗品》",
+              "内容": "评其诗“其源出于李陵。发愀怆之词，文秀而质羸。在曹（植）、刘（桢）间，别构一体。方陈思（曹植）不足，比魏文（曹丕）有馀。”认为王粲诗风凄怆哀怨、文辞秀美，在建安诸子中自成一格。"
+            }
+          ]
+        }
+      },
+      "C00261": {
+        "id": "C00261",
+        "type": "C",
+        "name": "吴均",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-06-21",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "吴均",
+          "name": "吴均",
+          "period": "南朝梁",
+          "life": "469年－520年",
+          "hometown": "吴兴故鄣（今浙江安吉）",
+          "courtesy": "叔庠",
+          "pseudonym": "（空）",
+          "posthumous": "（空）",
+          "aliases": "吴均体",
+          "joint": [
+            {
+              "合称": "（无明确合称）",
+              "其他人物": "（无）"
+            }
+          ],
+          "school": "吴均体",
+          "repWorks": [
+            "《与朱元思书》《与施从事书》《与顾章书》"
+          ],
+          "anthos": [
+            "《吴均集》"
+          ],
+          "relations": [
+            {
+              "人物": "柳恽",
+              "关系": "上司或举荐者"
+            },
+            {
+              "人物": "萧伟",
+              "关系": "上司"
+            },
+            {
+              "人物": "何逊",
+              "关系": "同僚"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "南朝宋泰始五年（469年）",
+              "事件": "吴均出生于吴兴故鄣（今浙江省安吉县）。出身贫寒，家世寒贱，但自幼聪慧好学，有俊才。"
+            },
+            {
+              "纪年": "南朝齐时期（479年—502年）",
+              "事件": "吴均勤奋读书，学业有成，其文章得到当时著名文学家、史学家沈约的赏识，沈约“见其文，倍加称赏”。"
+            },
+            {
+              "纪年": "梁天监初年（502年—503年）",
+              "事件": "梁武帝萧衍建立南朝梁，吴均出仕，初为郡主簿。"
+            },
+            {
+              "纪年": "梁天监二年（503年）",
+              "事件": "吴兴太守柳恽召吴均补任主簿，常引其一同赋诗。"
+            },
+            {
+              "纪年": "梁天监六年（507年）",
+              "事件": "建安王萧伟任扬州刺史，召吴均为记室，掌文翰。"
+            },
+            {
+              "纪年": "梁天监年间（萧伟迁江州后）",
+              "事件": "萧伟迁江州（今江西九江），吴均随行，补为国侍郎，兼府城局。后还京，除奉朝请。"
+            },
+            {
+              "纪年": "梁天监年间（任奉朝请期间）",
+              "事件": "吴均上表请求撰《齐书》，求借《齐起居注》及《群臣行状》，梁武帝不许。"
+            },
+            {
+              "纪年": "梁天监年间（具体年份不详）",
+              "事件": "吴均私撰《齐春秋》，成稿三十卷。书中如实记载梁武帝萧衍曾为齐明帝佐命之臣，武帝不悦，以“其书不实”为名，派中书舍人刘之遴诘问数十条，吴均竟支离无对。武帝下令将书焚毁，并免去吴均官职。"
+            },
+            {
+              "纪年": "梁天监年间（免官后不久）",
+              "事件": "梁武帝又召吴均，令其撰《通史》，起三皇迄齐代。吴均撰写了本纪、世家部分。"
+            },
+            {
+              "纪年": "梁普通元年（520年）",
+              "事件": "吴均去世，时年五十二岁。其奉诏所撰《通史》的列传部分尚未完成。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "田真叹荆",
+              "内容": "出自志怪小说集《续齐谐记》。讲述京兆田真三兄弟分家，欲将堂前一株紫荆树砍为三截。次日树竟枯死，田真感叹“树本同株……是人不如木也”，兄弟深受感动遂不分家，树也复苏。后世用此典比喻兄弟手足情深。"
+            },
+            {
+              "典故名": "洛水白獭",
+              "内容": "出自《续齐谐记》。魏明帝游洛水，见白獭可爱却无法靠近。侍中徐景山知其嗜食鲻鱼，便画鲻鱼悬于岸上，群獭中计被擒。此典常用来称赞人善于发挥所长。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "吴均作为南朝梁时期杰出的文学家与史学家，其一生虽仕途坎坷却著述颇丰，在文学与史学两个领域均留下了深刻印记。在文学上，他以“清拔有古气”的独特文风开创了“吴均体”，其山水小品文如《与朱元思书》以洗练明快的笔触描绘富春江畔的奇山异水，将骈文的工整韵律与散文的舒展自如完美融合，成为六朝山水文学的典范之作；其志怪小说《续齐谐记》则以简淡雅致的语言记录了诸多民间传说，对后世唐宋传奇的创作产生了深远影响。在史学上，他秉笔直书、不畏权贵，私撰《齐春秋》虽因触怒梁武帝而遭焚毁，却彰显了一位史学家刚正不阿的品格，其奉诏所修《通史》虽未竟全功，亦体现了他贯通古今的史学抱负。吴均以一己之才情与风骨，在六朝文学的星空中独树一帜，其作品所蕴含的清峻之气与山水情怀，至今仍滋养着后世文人的精神世界。",
+          "evaluation": [
+            {
+              "出处": "《梁书·吴均传》",
+              "内容": "评价其：“均文体清拔有古气，好事者或敩之，谓为‘吴均体’。”这是对吴均文学风格最核心的定调，“清拔有古气”意为他的文章清新挺拔，有古人的风骨。"
+            },
+            {
+              "出处": "《南史》",
+              "内容": "在记载其私撰《齐春秋》被焚时，也侧面反映了其性格中刚直不阿、秉笔直书的一面。"
+            }
+          ]
+        }
+      },
+      "C00262": {
+        "id": "C00262",
+        "type": "C",
+        "name": "刘向",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-06-21",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "刘向",
+          "name": "刘向",
+          "period": "西汉",
+          "life": "前77年—前6年（或公元前77年－公元前6年）",
+          "hometown": "沛郡丰邑（今江苏徐州）",
+          "courtesy": "子政",
+          "pseudonym": "（空）",
+          "posthumous": "（空）",
+          "aliases": "刘中垒",
+          "joint": [
+            {
+              "合称": "（空）",
+              "其他人物": "（空）"
+            }
+          ],
+          "school": "经学家、目录学家、文学家（儒家）",
+          "repWorks": [
+            "《新序》《说苑》《列女传》《战国策》《列仙传》《五经通义》（辑本）",
+            "《别录》（亡佚）"
+          ],
+          "anthos": [
+            "《刘中垒集》"
+          ],
+          "relations": [
+            {
+              "人物": "刘歆",
+              "关系": "儿子"
+            },
+            {
+              "人物": "楚元王刘交",
+              "关系": "远祖"
+            },
+            {
+              "人物": "刘富",
+              "关系": "曾祖父"
+            },
+            {
+              "人物": "刘德",
+              "关系": "父亲"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "前77年",
+              "事件": "出生。本名更生，字子政，是汉高祖之弟楚元王刘交的四世孙。"
+            },
+            {
+              "纪年": "前66年",
+              "事件": "任辇郎。凭借父亲刘德的地位，被任命为辇郎，步入仕途。"
+            },
+            {
+              "纪年": "前60年",
+              "事件": "擢为谏大夫。二十岁（古人以虚岁计）时，因品行端正被提拔为谏大夫。"
+            },
+            {
+              "纪年": "前58年",
+              "事件": "任谏大夫（另一记载）。"
+            },
+            {
+              "纪年": "约前54年",
+              "事件": "因献方术下狱。因迷恋神仙之说，向宣帝进献方术，声称可以炼金，试验失败后被判死罪。"
+            },
+            {
+              "纪年": "约前53年",
+              "事件": "兄赎出狱，受习《谷梁》。依靠兄长刘安民献上一半封地得以赎罪。出狱后，被召学习《谷梁春秋》。"
+            },
+            {
+              "纪年": "前51年",
+              "事件": "石渠阁讲经。作为代表参与石渠阁会议，与诸儒讲论《五经》同异。会后被任命为郎中、给事黄门。"
+            },
+            {
+              "纪年": "前48年",
+              "事件": "元帝朝重用。汉元帝即位，刘向被提拔为散骑宗正、给事中。"
+            },
+            {
+              "纪年": "前47年",
+              "事件": "首次下狱，免为庶人。与外戚宦官弘恭、石显斗争失败，被下狱，后免为庶人。"
+            },
+            {
+              "纪年": "前32年",
+              "事件": "成帝朝复用，改名“向”。汉成帝即位，刘向被重新起用，拜为中郎，并更名为“向”。"
+            },
+            {
+              "纪年": "前26年",
+              "事件": "领校秘书。受命主持校勘国家藏书，这是其一生最重要的学术工作。"
+            },
+            {
+              "纪年": "前23年",
+              "事件": "任中垒校尉。被任命为中垒校尉，世称“刘中垒”。"
+            },
+            {
+              "纪年": "约前22-前7年",
+              "事件": "编纂《别录》与诸书。在校书期间，撰成《别录》（中国目录学之祖），并编纂了《新序》《说苑》《列女传》等著作。"
+            },
+            {
+              "纪年": "前6年",
+              "事件": "去世。刘向去世，享年七十二岁。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "燃藜夜读",
+              "内容": "这是刘向最著名的个人典故。传说他在天禄阁校书至深夜，烛尽灯灭仍在暗室背诵经书。一位黄衣老人（太乙之精）用青藜杖吹出火光照亮，并传授《洪范》五行之文。此典象征专心学问得神助。刘姓后人因此以“藜照堂”为堂号。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "刘向是西汉后期一位承前启后的学术巨匠，其成就与影响横跨文献学、史学、文学与思想多个领域，堪称中国古典学术体系的构建者之一。在文献学上，他领校秘书近二十年，系统整理国家藏书，撰成中国第一部图书分类目录《别录》，不仅确立了“叙录体”的目录学范式，更通过分类、校勘与辨伪为后世文献整理树立了标杆；在典籍传承上，他编纂《楚辞》使之成为诗歌总集之祖，与子刘歆共同整理《山海经》使其得以传世，同时辑校《战国策》并为之作序，奠定了诸多重要典籍的文本基础。在思想观念上，他所撰《新序》《说苑》以历史故事喻理劝诫，开“类书”先声且影响后世蒙学与官箴文化，《列女传》则首创以女性群体为传主的传记体裁，对传统伦理教化产生深远影响。其治学尊崇《谷梁春秋》而兼采诸子，既继承了董仲舒的春秋公羊学精神，又因“推灾异以谏时政”而保持了经世致用的儒者本色，使之成为汉代今文经学中极具批判意识与政治关怀的代表人物。刘向的编撰体例、分类思想与叙事方式不仅直接开启了其子刘歆乃至班固《汉书·艺文志》的学术传统，更通过《说苑》《新序》等著作的流传持续浸润后世文学与史观，其综理旧籍、融会百家之功，实为中华典籍文化得以薪火相传的关键一环。",
+          "evaluation": [
+            {
+              "出处": "《汉书》的崇高赞誉",
+              "内容": "者班固将刘向与孟子、司马迁等先贤并列，称赞他们“皆博物洽闻，通达古今，其言有补于世”，充分肯定其博学与思想的世用价值。书中还收录了他十篇言辞刚正的奏疏，展现其忠诚正直的品格。"
+            },
+            {
+              "出处": "唐代的官方认可",
+              "内容": "唐太宗将其列为配享孔庙的二十一位大儒之一，标志着他在官方儒家道统中获得了崇高地位。"
+            },
+            {
+              "出处": "现代史学家范文澜",
+              "内容": "西汉有《史记》和《别录》二书，足可“辉煌千古”，将刘向的目录学成就与司马迁的史学巨著并列。后世学者也公认其校雠学、目录学理论有效指导了后世文献整理。"
+            }
+          ]
+        }
+      },
+      "C00263": {
+        "id": "C00263",
+        "type": "C",
+        "name": "孙武",
+        "meta": {
+          "createdById": "u_109",
+          "createdByName": "陶力扬(2120250338)",
+          "createdBy": "陶力扬(2120250338)",
+          "createdAt": "2026-06-21",
+          "reviewedById": "u_3",
+          "reviewedByName": "张欣阳(2413707)",
+          "reviewedBy": "张欣阳(2413707)",
+          "reviewedAt": "2026-06-24",
+          "updatedAt": "2026-06-24"
+        },
+        "content": "",
+        "annotations": [],
+        "links": [],
+        "fields": {
+          "common": "孙武",
+          "name": "孙武",
+          "period": "春秋末期",
+          "life": "约公元前545年—约公元前470年",
+          "hometown": "齐国乐安（今山东省北部，一说广饶县，一说惠民县）",
+          "courtesy": "长卿",
+          "pseudonym": "（空）",
+          "posthumous": "（空）",
+          "aliases": "（空）",
+          "joint": [
+            {
+              "合称": "孙吴",
+              "其他人物": "吴起"
+            }
+          ],
+          "school": "兵家",
+          "repWorks": [
+            "《孙子兵法》"
+          ],
+          "anthos": [
+            "《空》"
+          ],
+          "relations": [
+            {
+              "人物": "陈完",
+              "关系": "先祖"
+            },
+            {
+              "人物": "田无宇",
+              "关系": "曾祖父"
+            },
+            {
+              "人物": "孙书",
+              "关系": "祖父"
+            },
+            {
+              "人物": "孙凭",
+              "关系": "父亲"
+            },
+            {
+              "人物": "鲍姜",
+              "关系": "妻子"
+            }
+          ],
+          "chrono": [
+            {
+              "纪年": "约公元前545年",
+              "事件": "孙武出生于齐国乐安（今山东北部）。他是陈国公子陈完（田完）的后裔。"
+            },
+            {
+              "纪年": "公元前543年",
+              "事件": "孙武在齐国。此时郑国子产执政，郑国大治。"
+            },
+            {
+              "纪年": "公元前539年",
+              "事件": "孙武在齐国。其同宗田氏家族施行惠政，“大斗出，小斗进”，深得民心。"
+            },
+            {
+              "纪年": "公元前535年",
+              "事件": "孙武在齐国。楚国的章华宫落成。"
+            },
+            {
+              "纪年": "公元前532年",
+              "事件": "孙武在齐国。齐国爆发内乱，田、鲍两族与栾、高两族发生大规模冲突。"
+            },
+            {
+              "纪年": "约公元前531年-前515年",
+              "事件": "为避齐国内乱，孙武出奔吴国。"
+            },
+            {
+              "纪年": "公元前528年",
+              "事件": "孙武在吴国。楚国新君楚平王初立，施惠于民，结好邻国，息兵五年。"
+            },
+            {
+              "纪年": "约公元前515年",
+              "事件": "孙武在吴国隐居，潜心研究兵学，著《孙子兵法》十三篇。孙武在吴国结识了来自楚国的伍子胥，两人成为挚友。"
+            },
+            {
+              "纪年": "公元前514年",
+              "事件": "吴王阖闾即位，任用伍子胥辅佐，整军经武，图谋破楚。经伍子胥七次举荐，孙武以《孙子兵法》十三篇晋见吴王阖闾。吴王读后大加赞赏，并命其演练宫女，孙武斩二宠妃以明军纪。吴王遂拜孙武为将军。"
+            },
+            {
+              "纪年": "公元前512年",
+              "事件": "孙武与伍子胥辅佐吴王，攻破钟吾国和徐国。"
+            },
+            {
+              "纪年": "约公元前512年-前506年",
+              "事件": "孙武与伍子胥采取“疲楚”战略，将吴军分三部轮番袭扰楚军，使楚军疲于奔命。期间攻占了楚国的舒邑、六、灊等城邑。"
+            },
+            {
+              "纪年": "公元前506年",
+              "事件": "孙武与伍子胥争取唐、蔡两国为盟国。孙武、伍子胥等佐吴王阖闾，以3万吴军大破20万楚军，五战五捷，攻入楚国郢都（今湖北荆州）。此战后，吴国开始争霸中原。"
+            },
+            {
+              "纪年": "约公元前505年后",
+              "事件": "孙武五十多岁时，因好友伍子胥被吴王夫差杀害，对吴国朝政心灰意冷，选择归隐。"
+            },
+            {
+              "纪年": "约公元前505年后",
+              "事件": "孙武隐居乡间，继续修订其《孙子兵法》。"
+            },
+            {
+              "纪年": "约公元前470年（或前480年）",
+              "事件": "孙武寿终正寝。"
+            }
+          ],
+          "relatedE": [
+            {
+              "典故名": "三令五申",
+              "内容": "孙武初到吴国，以《孙子兵法》十三篇晋见吴王阖闾。吴王想考验他的实际能力，便问他能否用妇女来练兵。孙武将180名宫女分为两队，让吴王最宠爱的两名美姬担任队长。他详细讲解了操练的口令和军法，并“三令五申”。然而当他击鼓发令时，宫女们却觉得有趣，大笑不止。孙武自责“约束不明”后再次申令，但宫女们依旧大笑。孙武认为这是队长之过，下令将两名美姬队长斩首。吴王见状大惊，急忙派人求情。孙武以“将在军，君命有所不受”为由，坚持将二人斩首示众。之后重新任命队长，再次操练时，所有宫女都令行禁止，阵法严整。"
+            }
+          ]
+        },
+        "extra": {
+          "reviewDuration": "3",
+          "reviewStatus": "approved",
+          "expectedDuration": "4",
+          "repairStatus": "unfinished",
+          "remark": "",
+          "achievements": "孙武的成就与影响，主要体现为开创了东方兵学的先河，并将理论完美付诸于战争实践。他作为兵家鼻祖，所著《孙子兵法》十三篇，以“慎战”、“全胜”为核心，构建了世界上最早、最完备的军事理论体系，其“知己知彼，百战不殆”、“攻其无备，出其不意”等思想深刻揭示了战争普遍规律，不仅超越了时代，更被后世誉为“兵学圣典”，位列《武经七书》之首。在实战层面，他辅佐吴王阖闾，以三万吴军大破二十万楚军，五战五捷攻克郢都，几乎灭亡楚国，创造了中国军事史上以少胜多的经典战例“柏举之战”，展现了其卓越的统帅才能。其思想影响远超军事领域，深刻渗透到政治、商业、管理乃至体育竞技等现代社会的竞争策略之中，自唐代起被尊为“武成王庙”十哲之一，宋代被列为“武庙七十二将”之首，其著作更是被译为数十种文字，成为全球公认的具有普世价值的战略宝典，对后世兵学家、政治家、企业家产生了跨越千年的深远影响。",
+          "evaluation": [
+            {
+              "出处": "唐太宗",
+              "内容": "“观诸兵书，无出孙武”。"
+            },
+            {
+              "出处": "明茅元仪",
+              "内容": "给出了至高评价：“前孙子者，孙子不遗；后孙子者，不能遗孙子”。"
+            },
+            {
+              "出处": "毛泽东",
+              "内容": "高度评价其“知己知彼，百战不殆”的思想，认为它是“包括学习和使用两个阶段”的战争规律。"
             }
           ]
         }
