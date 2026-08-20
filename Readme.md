@@ -1,8 +1,9 @@
-**发布**：
+## 发布
 ```bash
-pm2 restart poem-api
+sudo systemctl restart poem-api
 ```
-# 待改
+
+## 待改
 1. 去冗：
     定义了但没使用的变量和函数。
     前后端未统一实现的功能。
